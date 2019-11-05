@@ -26,6 +26,21 @@ Der Barkeeper bietet im Verlauf des Spieles folgende Gegenstände zum Verkauf an
 ## Level
 Das Level soll einen Saloon aus dem wilden Westen repräsentieren und besteht aus großen Bartheke und mehreren Tischen mit Stühlen. Diese sind so angeordnet, dass der Spieler sich frei und ohne große Mühe bewegen kann. Der Spieler kann darüber hinaus die Anordnung strategisch nutzen, um seinen Gegnern auszuweichen.
 
+## Assets
+### Models + Texturen
+- Flaschen
+- Teke
+- Stühle
+- Barhocker
+- Tische (rund, eckig)
+- Pistole
+- Öllampe
+
+### Charaktere (inkl. Animationen und Texturen)
+- Spieler
+- Gegner
+- Barkeeper
+
 ## Interface
 ### HUD
 Das HUD besteht aus:
