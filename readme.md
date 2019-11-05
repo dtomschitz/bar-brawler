@@ -35,6 +35,7 @@ Das Level soll einen Saloon aus dem wilden Westen repräsentieren und besteht au
 - Tische (rund, eckig)
 - Pistole
 - Öllampe
+- Bilder mit Rahmen
 
 ### Charaktere (inkl. Animationen und Texturen)
 - Spieler
