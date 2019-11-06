@@ -15,7 +15,7 @@ Ziel des Spieles ist es, so viele Runden wie möglich zu überstehen, ohne KO ge
 Für jeden erledigen Gegner erhält der Spieler einen Geldbetrag, dessen Höhe variieren kann. Durch das erworbene Geld kann der Spieler beim Barkeeper neue Items kaufen, die ihm im Kampf gegen neue und härtere Gegner helfen.
 
 ### Gegnertypen
-Im Spiel gibt es nur einen speziellen Typ von Gegner, wobei Anzahl und Stärke ansteigen, um die Schwierigkeit zu erhöhen. Außerdem ist es möglich, dass Gegner nach einer gewissen Anzahl an Runden auch eine Pistole mit sich führen können, mit der sie dem Spieler erheblichen Schaden zufügen können.
+Im Spiel gibt es nur einen speziellen Typ von Gegner, wobei Anzahl und Stärke ansteigen, um die Schwierigkeit zu erhöhen. Außerdem ist es möglich, dass Gegner nach einer gewissen Anzahl an Runden auch eine Flasche oder eine Pistole mit sich führen können, mit der sie dem Spieler erheblichen Schaden zufügen können.
 
 ### Barkeeper
 Der Barkeeper bietet im Verlauf des Spieles folgende Gegenstände zum Verkauf an:
@@ -82,3 +82,10 @@ Der erste Prototyp soll eine simples Layout des Levels ohne jegliche Texturen un
 - [ ] Assets und Source Code
 - [ ] Lauffähige Version des Spiels
 - [ ] Vollständiger Eintrag in der Stage  
+
+## Teamrollen
+- **Christof Schwarzenberger**: Modellierung/Level Designer
+- **David Tomschitz**: Gameplay Programmierung
+- **Duane Englert**: Game Design/Gameplay Programmierung
+- **Flo Rapp**: Künstliche Intelligenz
+- **Sundar Arz**: Charakterdesign/Animationen
