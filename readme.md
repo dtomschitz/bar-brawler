@@ -84,11 +84,11 @@ Der erste Prototyp soll eine simples Layout des Levels ohne jegliche Texturen un
 - [ ] Angepasster Projektplan
 - [ ] Prototyp 1.
 
-**Milestone 3**: 
+**Milestone 3**:
 - [ ] Vortrag beim MI-Präsentationstag
 - [ ] Vorführung bei der MediaNight
 
-**Milestone 4**: 
+**Milestone 4**:
 - [ ] Projektdokumentation
 - [ ] Assets und Source Code
 - [ ] Lauffähige Version des Spiels
@@ -98,5 +98,5 @@ Der erste Prototyp soll eine simples Layout des Levels ohne jegliche Texturen un
 - **Christof Schwarzenberger**: Modellierung/Level Designer
 - **David Tomschitz**: Gameplay Programmierung
 - **Duane Englert**: Game Design/Gameplay Programmierung
-- **Flo Rapp**: Künstliche Intelligenz
+- **Florian Rapp**: Künstliche Intelligenz
 - **Sundar Arz**: Charakterdesign/Animationen
