@@ -29,7 +29,7 @@ Das Level soll einen Saloon aus dem wilden Westen repräsentieren und besteht au
 ## Assets
 ### Models + Texturen
 - Flaschen
-- Teke
+- Theke
 - Stühle
 - Barhocker
 - Tische (rund, eckig)
@@ -59,7 +59,7 @@ Der Spieler kann sich mittels der Tasten A, S, D, W frei im Level bewegen und du
 **1. Prototyp**
 Der erste Prototyp soll eine simples Layout des Levels ohne jegliche Texturen und die Hauptmechaniken beinhalten. Zu diesen Zählt: 
 1.	die Steuerung des Spielers
-2. eine einfache Physik (Collision, Springen, Treffer)
+2.  eine einfache Physik (Collision, Springen, Treffer)
 3.	eine einfache KI die den Spieler angreift
 4.	ein System um die Gegner in Wellen auf den Spieler zu kommen zu lassen
 5. *Simple Schlag Animationen sowohl für den Gegner als auch für den Spieler*	
