@@ -9,28 +9,30 @@ Raufe dich mit den anderen Gästen - Kaufe dir neue Waffen - Trinke deinen Feuer
 Der Spieler kämpft in mehreren Runden gegen Gegner, welche zunehmend stärker werden und den Spieler mit verschiedenen Gegenständen und Attacken angreifen.
 
 ## Gameplay
-Ziel des Spieles ist es, so viele Runden wie möglich zu überstehen, ohne KO geschlagen zu werden. 
-Dies kann durch geschicktes Kämpfen und durch erworbene Gegenstände erreicht werden. 
-Hier zu zählen beispielsweise neue Waffen, aber auch Medipacks in Form eines Shots(oder auch Feuerwasser) mit dem der Spieler seine Lebenspunkte bis zu einem vordefinierten Punkt wieder auffüllen kann. 
-Diese Items können in einer kurzen Pause zwischen den Levels beim Barkeeper erworben werden. 
-Sollte sich der Spieler dafür entscheiden keine Items zu erwerben kann die Pause übersprungen werden. 
-Das Level soll Möglichkeiten bieten die KI in die Irre zu führen, aber auch genug Platz, um sich frei zu bewegen.  
-Die KI soll in einem gewissem Maße voraussehbar sein, damit der Spieler Strategien entwickeln kann seinen Schaden zu reduzieren. 
-Ausgeschlossen davon sind spezielle Attacken der Angreifer.  
+Ziel des Spieles ist es, so viele Runden wie möglich zu überstehen, ohne KO geschlagen zu werden. Dies kann durch geschicktes Kämpfen und durch erworbene Gegenstände erreicht werden. Hier zu zählen beispielsweise neue Waffen, aber auch Medipacks in Form eines Shots(oder auch Feuerwasser) mit dem der Spieler seine Lebenspunkte bis zu einem vordefinierten Punkt wieder auffüllen kann. Diese Items können in einer kurzen Pause zwischen den Levels beim Barkeeper erworben werden. Sollte sich der Spieler dafür entscheiden keine Items zu erwerben kann die Pause übersprungen werden. Wird der Spieler in einer Runde KO geschlagen, verliert er all seine Items und die Runden Anzahl wird zurückgesetzt. 
+Das Level sollte die Möglichkeiten bieten die KI in die Irre zu führen, aber auch genug Platz bieten, um sich frei zu bewegen.  
+Die Bewegungen der KI sollten deshalb in einem gewissen Maß voraussehbar sein, damit der Spieler seine eigenen Strategien entwickeln kann.
 
 ### Economy
 Für jeden erledigten Gegner erhält der Spieler einen Geldbetrag, dessen Höhe variieren kann. 
-Durch das erworbene Geld kann der Spieler beim Barkeeper neue Items kaufen, die ihm im Kampf gegen neue und härtere Gegner helfen.
+Durch das erworbene Geld kann der Spieler beim Barkeeper neue Items kaufen, die ihm im Kampf gegen neue und härtere Gegner helfen. Die gesammte Summe kann der Spieler jederzeit im HUD sehen.
 
 ### Gegnertypen
-Im Spiel gibt es nur einen speziellen Typ von Gegner, wobei Anzahl und Stärke ansteigen, um die Schwierigkeit zu erhöhen. 
-Außerdem ist es möglich, dass Gegner nach einer gewissen Anzahl an Runden auch eine Flasche oder eine Pistole mit sich führen können, mit der sie dem Spieler erheblichen Schaden zufügen können.
+Im Spiel gibt es nur einen speziellen Typ von Gegner, wobei Anzahl und Stärke ansteigen, um die Schwierigkeit zu erhöhen. Die Gegner werden nach einer gewissen Anzahl an Runden deshalb mit Flaschen oder auch Pistolen ausgestatt, mit der sie dem Spieler erheblichen Schaden zufügen können. Um dem Spieler trotzdem die Chance zu geben die Runde zu überleben, werden maximal 1-2 Gegner mit diesen Waffen ausgestattet. Je nach Ausstattung der Gegner ist es auch Möglich, das diese ihre Flasche oder wenn sie eine Pistole hatte, die Munition fallen lassen.
 
 ### Barkeeper
 Der Barkeeper bietet im Verlauf des Spieles folgende Gegenstände zum Verkauf an:
 - verschieden große Getränke, die Lebenspunkte des Spielers wieder füllen
 - Flaschen, die erhöhten Schaden verursachen
-- eine Pistole, die die meisten Gegner mit einem Schuss ausschaltet 
+- eine Revolver, der die meisten Gegner mit einem Schuss ausschaltet
+- Munition für den Revolver
+
+### Items
+Die Items kann der Spieler zu jeder Zeit im HUD sehen und durch definierte Tasten auswählen.
+- *Feuerwasser:* Gibt dem Spieler eine gewisse Anzahl an Lebenspunkten wieder (gibt es in verschiedenen Varianten)
+- *Flasche:* Fügt Gegner erhöten Schaden zu, kann aber nach einer Gewissen Zeit zerstört werden
+- *Revolver:* Kann Gegner mit einem Schuss töten, Munition ist jedoch rar. Einmal gekauft, kann der Spieler seine Waffe nicht mehr verlieren.
+- *Munition:* Wird für den Revolver benötigt
 
 ## Level
 Das Level soll einen Saloon aus dem wilden Westen repräsentieren und besteht aus großen Bartheke und mehreren Tischen mit Stühlen. 
@@ -43,7 +45,9 @@ Diese sind so angeordnet, dass der Spieler sich frei und ohne große Mühe beweg
 - Stühle
 - Barhocker
 - Tische (rund, eckig)
-- Pistole
+- Revolver
+- Munition
+- Geld / Münzen
 - Öllampe
 - Bilder mit Rahmen
 
@@ -65,8 +69,6 @@ Der Spieler kann sich mittels der Tasten A, S, D, W frei im Level bewegen und du
 Durch das klicken der linke Maustaste können einzelne Schläge ausgeführt werden. Die rechte Taste dient hingegen dazu Schläge der Gegner zu blocken.
 
 ## Milestones
-**Platform:** Computer
-
 **1. Prototyp**
 Der erste Prototyp soll eine simples Layout des Levels ohne jegliche Texturen und die Hauptmechaniken beinhalten. Zu diesen Zählt: 
 1.	die Steuerung des Spielers
