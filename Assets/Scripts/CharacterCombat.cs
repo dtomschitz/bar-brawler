@@ -6,9 +6,9 @@ using UnityEngine;
 public class CharacterCombat : MonoBehaviour
 {
     public float attackRate = 1f;
-    private float attackCountdown = 0f;
+    private float attackCooldown = 0f;
 
-    public event System.Action onAttack;
+    public event System.Action OnAttack;
 
     CharacterStats playerStats;
     CharacterStats enemyStats;
@@ -20,23 +20,27 @@ public class CharacterCombat : MonoBehaviour
 
     void Update()
     {
-        attackCountdown -= Time.deltaTime;
+        attackCooldown -= Time.deltaTime;
     }
 
-    public void Attack(CharacterStats enemyStats)
+    public void Attack(CharacterStats stats)
     {
-        if (attackCountdown <= 0f)
+        if (attackCooldown <= 0f)
         {
-            this.enemyStats = enemyStats;
-            attackCountdown = 1f / attackRate;
+            this.enemyStats = stats;
+            attackCooldown = 0f;
+            DoDamge(stats, .15f);
 
-            StartCoroutine(DoDamge(enemyStats, .15f));
+            if (OnAttack != null)
+            {
+                OnAttack();
+            }
         }
     }
 
-    IEnumerator DoDamge(CharacterStats stats, float delay)
+    void DoDamge(CharacterStats stats, float delay)
     {
-        yield return new WaitForSeconds(delay);
+        //yield return new WaitForSeconds(delay);
         Debug.Log(transform.name + " damage: " + playerStats.damage);
         enemyStats.TakeDamage(playerStats.damage);
     }

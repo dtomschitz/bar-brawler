@@ -16,6 +16,12 @@ public class PlayerController : MonoBehaviour
     public Transform pivot;
     public float rotateSpeed;
 
+    public delegate void OnFocusChanged(Interactable newFocus);
+    public OnFocusChanged onFocusChangedCallback;
+    Interactable focus;
+
+    public Camera camera;
+
     public GameObject playerModel;
 
     void Start()
@@ -68,9 +74,43 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
+                Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit, 100f))
+                {
+                    Interactable interactable = hit.collider.GetComponent<Interactable>();
+                    if (interactable != null)
+                    {
+                        //TODO: Automatic rotation to target
+
+                        SetFocus(interactable);
+                    }
+                }
+
                 StartCoroutine(AttackRoutine());
             }
         }
+    }
+
+    void SetFocus(Interactable newFocus)
+    {
+        if (onFocusChangedCallback != null)
+        {
+            onFocusChangedCallback.Invoke(newFocus);
+        }
+
+        if (focus != newFocus && focus != null)
+        {
+            focus.OnUnfocused();
+        }
+
+        focus = newFocus;
+        if (focus != null)
+        {
+            focus.OnFocused(transform);
+        }
+
     }
 
     IEnumerator AttackRoutine()

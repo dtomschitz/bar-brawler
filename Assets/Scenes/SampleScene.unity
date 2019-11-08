@@ -180,6 +180,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebd3a80d19d54064d9cad1321cd1b193, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stats: {fileID: 880297845}
+  combat: {fileID: 880297846}
   player: {fileID: 880297838}
 --- !u!4 &247322026
 Transform:
@@ -464,6 +466,7 @@ GameObject:
   - component: {fileID: 880297844}
   - component: {fileID: 880297843}
   - component: {fileID: 880297845}
+  - component: {fileID: 880297846}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -565,6 +568,7 @@ MonoBehaviour:
   animator: {fileID: 916890089}
   pivot: {fileID: 1329877445}
   rotateSpeed: 20
+  camera: {fileID: 963194227}
   playerModel: {fileID: 916890088}
 --- !u!143 &880297844
 CharacterController:
@@ -598,6 +602,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 20
   damage: 2
+--- !u!114 &880297846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880297838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 190acec39c47a5743bf6ce592a9cfd32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackRate: 1
 --- !u!1 &916890088 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 26cd1262cb389be4ba75d2e30b721390,
@@ -625,6 +642,8 @@ GameObject:
   - component: {fileID: 925491159}
   - component: {fileID: 925491163}
   - component: {fileID: 925491165}
+  - component: {fileID: 925491166}
+  - component: {fileID: 925491167}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -757,6 +776,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lookRadius: 10
+--- !u!114 &925491166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925491158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 932127210fa4921489682ad25f6a8c3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 2
+  interaction: {fileID: 925491162}
+--- !u!114 &925491167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925491158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f128285fac5cc884997e5e9a0d2754d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 10
+  damage: 2
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0

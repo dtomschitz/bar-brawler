@@ -8,4 +8,6 @@ public class PlayerStats : CharacterStats
     {
         base.Start();
     }
+
+    //TODO: Add equipment handling
 }
