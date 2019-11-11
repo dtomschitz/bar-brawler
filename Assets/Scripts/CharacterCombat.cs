@@ -5,9 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterStats))]
 public class CharacterCombat : MonoBehaviour
 {
-    public float attackRate = 1f;
-    private float attackCooldown = 0f;
 
+    public float attackRate = 1f;
     public event System.Action OnAttack;
 
     CharacterStats playerStats;
@@ -20,28 +19,25 @@ public class CharacterCombat : MonoBehaviour
 
     void Update()
     {
-        attackCooldown -= Time.deltaTime;
+        // attackCooldown -= Time.deltaTime;
     }
 
     public void Attack(CharacterStats stats)
     {
-        if (attackCooldown <= 0f)
-        {
-            this.enemyStats = stats;
-            attackCooldown = 0f;
-            DoDamge(stats, .15f);
+        this.enemyStats = stats;
+        StartCoroutine(DoDamge(stats, .15f));
 
-            if (OnAttack != null)
-            {
-                OnAttack();
-            }
+
+        if (OnAttack != null)
+        {
+            OnAttack();
         }
     }
 
-    void DoDamge(CharacterStats stats, float delay)
+    IEnumerator DoDamge(CharacterStats stats, float delay)
     {
-        //yield return new WaitForSeconds(delay);
         Debug.Log(transform.name + " damage: " + playerStats.damage);
         enemyStats.TakeDamage(playerStats.damage);
+        yield return new WaitForSeconds(delay);
     }
 }
