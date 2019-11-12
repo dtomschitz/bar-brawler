@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterStats))]
-public class CharacterCombat : MonoBehaviour
+public class EntityCombat : MonoBehaviour
 {
 
     public float attackRate = 1f;

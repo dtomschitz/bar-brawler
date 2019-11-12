@@ -15,7 +15,8 @@ public class Enemy : Interactable
 
     public override void Interact()
     {
-        CharacterCombat combat = Player.instace.combat;
+        EntityCombat combat = Player.instace.combat;
+        Debug.Log(combat);
         combat.Attack(stats);
     }
 

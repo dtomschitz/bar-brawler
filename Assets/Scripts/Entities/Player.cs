@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     #endregion;
 
     public PlayerStats stats;
-    public CharacterCombat combat;
+    public EntityCombat combat;
     public GameObject player;
 
     void Start()
