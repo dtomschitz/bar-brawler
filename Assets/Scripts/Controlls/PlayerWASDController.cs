@@ -2,106 +2,39 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-
-[RequireComponent(typeof(PlayerMovement))]
-public class PlayerController : MonoBehaviour
+public class PlayerWASDController : MonoBehaviour
 {
+
+    public float moveSpeed;
+    public float jumpForce;
+    public CharacterController character;
+
+    public float gravityScale;
+    private Vector3 moveDirection;
+    public GameObject playerModel;
+    public Transform pivot;
+    public float rotateSpeed;
     public Animator animator;
 
     public delegate void OnFocusChanged(Interactable newFocus);
     public OnFocusChanged onFocusChanged;
     Interactable focus;
 
-    public LayerMask movementMask;
-    //public LayerMask interactionMask;
-
     private Camera camera;
-    private PlayerMovement movement;
 
     void Start()
     {
-        movement = GetComponent<PlayerMovement>();
+        character = GetComponent<CharacterController>();
         camera = Camera.main;
     }
 
     void Update()
     {
-        //if (EventSystem.current.IsPointerOverGameObject()) return;
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, movementMask))
-            {
-                movement.Move(hit.point);
-                SetFocus(null);
-            }
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                Interactable interactable = hit.collider.GetComponent<Interactable>();
-                if (interactable != null)
-                {
-                    StartCoroutine(AttackRoutine());
-                    SetFocus(hit.collider.GetComponent<Interactable>());
-                }
-            }
-        }   
+        Movement();
+        HandleInput();
     }
 
-    void SetFocus(Interactable newFocus)
-    {
-        if (onFocusChanged != null)
-        {
-            onFocusChanged.Invoke(newFocus);
-        }
-
-        if (focus != newFocus && focus != null)
-        {
-            focus.OnUnfocused();
-        }
-
-        focus = newFocus;
-        if (focus != null)
-        {
-            focus.OnFocused(transform);
-        }
-
-    }
-
-    IEnumerator AttackRoutine()
-    {
-        animator.SetBool("punch", true);
-        yield return new WaitForSeconds(0.15f);
-        animator.SetBool("punch", false);
-
-    }
-
-
-    //public float moveSpeed;
-    // public float jumpForce;
-    // public CharacterController character;
-
-    // public float gravityScale;
-    // private Vector3 moveDirection;
-    //public GameObject playerModel;
-    // public Transform pivot;
-    // public float rotateSpeed;
-
-    /*void Start()
-    {
-      //  character = GetComponent<CharacterController>();
-    }
-
-    void Update()
-    {
-        //Movement();
-        //HandleInput();
-    }
-
-   void Movement()
+    void Movement()
     {
         //moveDirection = new Vector3(Input.GetAxis("Horizontal") * moveSpeed, moveDirection.y, Input.GetAxis("Vertical") * moveSpeed);
         float yStore = moveDirection.y;
@@ -140,7 +73,7 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-             /*   Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+                /*Ray ray = camera.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
 
                 if (Physics.Raycast(ray, out hit, 100f))
@@ -151,10 +84,39 @@ public class PlayerController : MonoBehaviour
                         //TODO: Automatic rotation to target 
                         SetFocus(interactable);
                     }
-                }
+                }*/
 
                 StartCoroutine(AttackRoutine());
             }
         }
-    }*/
+    }
+
+
+    void SetFocus(Interactable newFocus)
+    {
+        if (onFocusChanged != null)
+        {
+            onFocusChanged.Invoke(newFocus);
+        }
+
+        if (focus != newFocus && focus != null)
+        {
+            focus.OnUnfocused();
+        }
+
+        focus = newFocus;
+        if (focus != null)
+        {
+            focus.OnFocused(transform);
+        }
+
+    }
+
+    IEnumerator AttackRoutine()
+    {
+        animator.SetBool("punch", true);
+        yield return new WaitForSeconds(0.15f);
+        animator.SetBool("punch", false);
+
+    }
 }

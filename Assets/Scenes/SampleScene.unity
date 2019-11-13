@@ -457,6 +457,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &834282405 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 26cd1262cb389be4ba75d2e30b721390,
+    type: 3}
+  m_PrefabInstance: {fileID: 1784624637}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &880297838
 GameObject:
   m_ObjectHideFlags: 0
@@ -468,10 +474,12 @@ GameObject:
   - component: {fileID: 880297842}
   - component: {fileID: 880297841}
   - component: {fileID: 880297840}
+  - component: {fileID: 880297850}
   - component: {fileID: 880297848}
   - component: {fileID: 880297843}
   - component: {fileID: 880297839}
   - component: {fileID: 880297844}
+  - component: {fileID: 880297849}
   - component: {fileID: 880297847}
   - component: {fileID: 880297845}
   - component: {fileID: 880297846}
@@ -580,7 +588,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 880297838}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0ba8e499eaa35af4e90131c39bfccbec, type: 3}
   m_Name: 
@@ -623,7 +631,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 880297838}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 655c0ff307d56894eb2d7ec9f68bd204, type: 3}
   m_Name: 
@@ -635,7 +643,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 880297838}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 10
@@ -650,6 +658,44 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &880297849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880297838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f4a9c05051a4a240be5a17c9cc63805, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 10
+  jumpForce: 15
+  character: {fileID: 880297850}
+  gravityScale: 5
+  playerModel: {fileID: 834282405}
+  pivot: {fileID: 1329877445}
+  rotateSpeed: 20
+  animator: {fileID: 1784624639}
+--- !u!143 &880297850
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880297838}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &925491158
 GameObject:
   m_ObjectHideFlags: 0

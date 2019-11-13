@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
         if (target != null)
         {
             Move(target.position);
-            //FaceTarget();
+            FaceTarget();
         }
     }
 
