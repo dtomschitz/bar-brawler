@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
 
     public delegate void OnFocusChanged(Interactable newFocus);
     public OnFocusChanged onFocusChanged;
-    Interactable focus;
+    EntityInteraction focus;
 
     public LayerMask movementMask;
     //public LayerMask interactionMask;
@@ -41,17 +41,17 @@ public class PlayerController : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-                Interactable interactable = hit.collider.GetComponent<Interactable>();
+                EntityInteraction interactable = hit.collider.GetComponent<EntityInteraction>();
                 if (interactable != null)
                 {
                     StartCoroutine(AttackRoutine());
-                    SetFocus(hit.collider.GetComponent<Interactable>());
+                    SetFocus(hit.collider.GetComponent<EntityInteraction>());
                 }
             }
         }   
     }
 
-    void SetFocus(Interactable newFocus)
+    void SetFocus(EntityInteraction newFocus)
     {
         if (onFocusChanged != null)
         {

@@ -19,6 +19,9 @@ public class Player : MonoBehaviour
     public EntityCombat combat;
     public GameObject player;
 
+    public int money { get; protected set; }
+
+
     void Start()
     {
         stats.OnHealthIsZero += Die;
@@ -27,5 +30,15 @@ public class Player : MonoBehaviour
     void Die()
     {
         //TODO: Playe Die 
+    }
+
+    public void AddMoney(int amount)
+    {
+        money += amount;
+    }
+
+    public void RemoveMoney(int amount)
+    {
+        money -= amount;
     }
 }

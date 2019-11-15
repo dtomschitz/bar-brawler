@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterStats))]
-public class Enemy : Interactable
+public class Enemy : EntityInteraction
 {
     public CharacterStats stats;
     public GameObject DamagePopup;

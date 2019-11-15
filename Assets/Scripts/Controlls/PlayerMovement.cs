@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
             agent.stoppingDistance = interactable.radius * .8f;
             agent.updateRotation = false;
 
-            target = interactable.interaction;
+            target = interactable.gameObject.transform;
         } else
         {
             agent.stoppingDistance = 0f;

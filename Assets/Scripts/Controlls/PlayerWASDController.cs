@@ -18,14 +18,11 @@ public class PlayerWASDController : MonoBehaviour
 
     public delegate void OnFocusChanged(Interactable newFocus);
     public OnFocusChanged onFocusChanged;
-    Interactable focus;
-
-    private Camera camera;
+    EntityInteraction focus;
 
     void Start()
     {
         character = GetComponent<CharacterController>();
-        camera = Camera.main;
     }
 
     void Update()
@@ -73,26 +70,25 @@ public class PlayerWASDController : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                /*Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
+                SetFocus(null);
+                StartCoroutine(AttackRoutine());
+            }
 
-                if (Physics.Raycast(ray, out hit, 100f))
+            if (Input.GetKey(KeyCode.E))
+            {
+                /*RaycastHit[] raycastHits = Physics.RaycastAll(transform.position, Vector3.zero, 3f);
+                for (RaycastHit raycastHit in raycastHits)
                 {
-                    Interactable interactable = hit.collider.GetComponent<Interactable>();
-                    if (interactable != null)
-                    {
-                        //TODO: Automatic rotation to target 
-                        SetFocus(interactable);
-                    }
+
                 }*/
 
-                StartCoroutine(AttackRoutine());
+            //TODO: interact with barkeeper
             }
         }
     }
 
 
-    void SetFocus(Interactable newFocus)
+   void SetFocus(EntityInteraction newFocus)
     {
         if (onFocusChanged != null)
         {
@@ -109,7 +105,6 @@ public class PlayerWASDController : MonoBehaviour
         {
             focus.OnFocused(transform);
         }
-
     }
 
     IEnumerator AttackRoutine()
