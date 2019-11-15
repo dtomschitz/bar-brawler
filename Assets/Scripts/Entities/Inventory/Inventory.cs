@@ -18,17 +18,17 @@ public class Inventory : MonoBehaviour
     public delegate void OnItemChanged();
     public OnItemChanged onItemChanged;
 
-    public List<Item> items = new List<Item>();
+    public List<UsableItem> items = new List<UsableItem>();
     public int maxItems = 10;
 
-    public void AddItem(Item item) {
+    public void AddItem(UsableItem item) {
         if (items.Count >= maxItems) return;
 
         items.Add(item);
         if (onItemChanged != null) onItemChanged.Invoke();
     }
 
-    public void removeItem(Item item)
+    public void removeItem(UsableItem item)
     {
         items.Remove(item);
         if (onItemChanged != null) onItemChanged.Invoke();

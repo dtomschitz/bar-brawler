@@ -6,6 +6,17 @@ public class CameraController : MonoBehaviour
 {
 
     public Transform target;
+    public Vector3 offset;
+    public float smoothSpeed = 0.125f;
+
+    private void LateUpdate()
+    {
+        Vector3 desiredPosition = target.position + offset;
+        //Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
+        transform.position = desiredPosition;
+    }
+
+    /*public Transform target;
     public Transform pivot;
 
     public Vector3 offset;
@@ -82,5 +93,5 @@ public class CameraController : MonoBehaviour
         }
 
         transform.LookAt(target);
-    }
+    }*/
 }
