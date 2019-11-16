@@ -11,7 +11,6 @@ public class Collectable : Interactable
         if (other.tag == "Player")
         {
             Interact();
-            Inventory.instance.AddItem(item);
             Destroy(gameObject);
         }
     }
