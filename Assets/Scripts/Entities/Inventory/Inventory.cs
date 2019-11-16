@@ -21,11 +21,13 @@ public class Inventory : MonoBehaviour
     public List<UsableItem> items = new List<UsableItem>();
     public int maxItems = 10;
 
-    public void AddItem(UsableItem item) {
-        if (items.Count >= maxItems) return;
+    public bool AddItem(UsableItem item) {
+        if (items.Count >= maxItems) return false;
 
         items.Add(item);
         if (onItemChanged != null) onItemChanged.Invoke();
+
+        return true;
     }
 
     public void removeItem(UsableItem item)
