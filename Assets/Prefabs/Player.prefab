@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 3715901529848092189}
   - component: {fileID: 3715901529848092179}
   - component: {fileID: 3715901529848092177}
+  - component: {fileID: 6395161801041573152}
   - component: {fileID: 3715901529848092178}
   m_Layer: 0
   m_Name: Player
@@ -203,6 +204,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 200
   damage: 20
+--- !u!114 &6395161801041573152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3715901529848092170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af6645426213f724ab079bd9d03a1d8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items: []
+  maxItems: 10
 --- !u!114 &3715901529848092178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,6 +238,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3715901529848092182}
     m_Modifications:
+    - target: {fileID: -6057140222963153312, guid: 26cd1262cb389be4ba75d2e30b721390,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 3832a6032acb7e848a0ef7aeef186bff, type: 2}
     - target: {fileID: -927199367670048503, guid: 26cd1262cb389be4ba75d2e30b721390,
         type: 3}
       propertyPath: m_Name
@@ -278,11 +298,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0.11374218
       objectReference: {fileID: 0}
-    - target: {fileID: -6057140222963153312, guid: 26cd1262cb389be4ba75d2e30b721390,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 3832a6032acb7e848a0ef7aeef186bff, type: 2}
     - target: {fileID: -5865163338561875921, guid: 26cd1262cb389be4ba75d2e30b721390,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
