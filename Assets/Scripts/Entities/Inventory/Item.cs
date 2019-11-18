@@ -5,6 +5,8 @@ public class UsableItem : ScriptableObject
 {
     new public string name = "Neues Item";
     public Sprite icon = null;
+    public bool addToInventory = true;
+
 
     public virtual void Use()
     {
@@ -13,6 +15,6 @@ public class UsableItem : ScriptableObject
 
     public virtual void Remove()
     {
-
+        PlayerInventory.instance.RemoveItem(this);
     }
 }

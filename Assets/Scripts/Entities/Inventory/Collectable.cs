@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Collectable : Interactable
+public class Collectable : MonoBehaviour
 {
     public UsableItem item;
 
@@ -11,15 +11,21 @@ public class Collectable : Interactable
         SphereCollider collider = GetComponent<SphereCollider>();
         if (collider)
         {
-            collider.radius = radius;
+            collider.radius = 1f;
         }
+    }
+
+    public virtual void OnCollection()
+    {
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
-            Interact();
+            OnCollection();
+            bool itemAdded = PlayerInventory.instance.AddItem(item);
             Destroy(gameObject);
         }
     }

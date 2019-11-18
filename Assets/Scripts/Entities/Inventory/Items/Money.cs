@@ -6,7 +6,7 @@ public class Money : Collectable
 {
     public int amount = 10;
 
-    public override void Interact()
+    public override void OnCollection()
     {
         Player.instace.AddMoney(amount);
     }
