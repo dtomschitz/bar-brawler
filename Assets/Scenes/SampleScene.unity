@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.5748171, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -161,7 +161,6 @@ GameObject:
   m_Component:
   - component: {fileID: 247322026}
   - component: {fileID: 247322025}
-  - component: {fileID: 247322027}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -182,6 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 880297845}
+  inventory: {fileID: 880297843}
   combat: {fileID: 880297846}
   player: {fileID: 880297838}
   money: 0
@@ -199,21 +199,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &247322027
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 247322024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9ad5d1a2716eaa4294d3ff8d31081e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  items: []
-  currentSelected: {fileID: 0}
-  maxItems: 10
 --- !u!1001 &322821818
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1487,7 +1472,7 @@ GameObject:
   - component: {fileID: 880297849}
   - component: {fileID: 880297847}
   - component: {fileID: 880297845}
-  - component: {fileID: 7733143483290985540}
+  - component: {fileID: 880297843}
   - component: {fileID: 880297846}
   m_Layer: 0
   m_Name: Player
@@ -1571,6 +1556,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}
+--- !u!114 &880297843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880297838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af6645426213f724ab079bd9d03a1d8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items: []
+  currentSelected: {fileID: 0}
+  maxItems: 10
 --- !u!114 &880297844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3630,11 +3630,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 880297842}
     m_Modifications:
-    - target: {fileID: -6057140222963153312, guid: 26cd1262cb389be4ba75d2e30b721390,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 3832a6032acb7e848a0ef7aeef186bff, type: 2}
     - target: {fileID: -927199367670048503, guid: 26cd1262cb389be4ba75d2e30b721390,
         type: 3}
       propertyPath: m_Name
@@ -3690,6 +3685,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0.11374218
       objectReference: {fileID: 0}
+    - target: {fileID: -6057140222963153312, guid: 26cd1262cb389be4ba75d2e30b721390,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 3832a6032acb7e848a0ef7aeef186bff, type: 2}
     - target: {fileID: -5865163338561875921, guid: 26cd1262cb389be4ba75d2e30b721390,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4096,18 +4096,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4033eb1469e03304cb4104ff8f430924, type: 3}
---- !u!114 &7733143483290985540
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 880297838}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af6645426213f724ab079bd9d03a1d8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  items: []
-  currentSelected: {fileID: 0}
-  maxItems: 10

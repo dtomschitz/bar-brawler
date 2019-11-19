@@ -19,7 +19,7 @@ public class Enemy : EntityInteraction
     {
         if (stats.isDead()) return;
 
-        EntityCombat combat = Player.instace.combat;
+        EntityCombat combat = Player.instance.combat;
         combat.Attack(stats);
 
         if (DamagePopup) ShowDamagePopup();

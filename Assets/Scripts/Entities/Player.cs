@@ -6,16 +6,17 @@ public class Player : MonoBehaviour
 {
     #region Singelton
 
-    public static Player instace;
+    public static Player instance;
 
     void Awake()
     {
-        instace = this;
+        instance = this;
     }
 
     #endregion;
 
     public PlayerStats stats;
+    public Inventory inventory;
     public EntityCombat combat;
     public GameObject player;
 

@@ -8,6 +8,6 @@ public class Money : Collectable
 
     public override void OnCollection()
     {
-        Player.instace.AddMoney(amount);
+        Player.instance.AddMoney(amount);
     }
 }

@@ -9,6 +9,6 @@ public class Drink : UsableItem
 
     public override void Use()
     {
-        Player.instace.stats.Heal(healingAmount);
+        Player.instance.stats.Heal(healingAmount);
     }
 }

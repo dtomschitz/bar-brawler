@@ -9,7 +9,7 @@ public class HitColider : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Player player = Player.instace;
+        Player player = Player.instance;
         Enemy enemy = other.gameObject.GetComponent<Enemy>();
         if (enemy != null && enemy != player)
         {
