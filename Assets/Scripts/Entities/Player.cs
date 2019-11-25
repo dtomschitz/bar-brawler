@@ -25,6 +25,10 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+        stats = player.GetComponent<PlayerStats>();
+        inventory = player.GetComponent<Inventory>();
+        combat = player.GetComponent<EntityCombat>();
         stats.OnHealthIsZero += Die;
     }
 

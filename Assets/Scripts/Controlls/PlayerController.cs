@@ -2,106 +2,36 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-
-[RequireComponent(typeof(PlayerMovement))]
 public class PlayerController : MonoBehaviour
 {
+
+    public float moveSpeed;
+    public float jumpForce;
+    public CharacterController character;
+
+    public float gravityScale;
+    private Vector3 moveDirection;
+    public GameObject playerModel;
+    public Transform pivot;
+    public float rotateSpeed;
     public Animator animator;
 
     public delegate void OnFocusChanged(Interactable newFocus);
     public OnFocusChanged onFocusChanged;
     EntityInteraction focus;
 
-    public LayerMask movementMask;
-    //public LayerMask interactionMask;
-
-    private Camera camera;
-    private PlayerMovement movement;
-
     void Start()
     {
-        movement = GetComponent<PlayerMovement>();
-        camera = Camera.main;
+        character = GetComponent<CharacterController>();
     }
 
     void Update()
     {
-        //if (EventSystem.current.IsPointerOverGameObject()) return;
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, movementMask))
-            {
-                movement.Move(hit.point);
-                SetFocus(null);
-            }
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                EntityInteraction interactable = hit.collider.GetComponent<EntityInteraction>();
-                if (interactable != null)
-                {
-                    StartCoroutine(AttackRoutine());
-                    SetFocus(hit.collider.GetComponent<EntityInteraction>());
-                }
-            }
-        }   
+        Movement();
+        HandleInput();
     }
 
-    void SetFocus(EntityInteraction newFocus)
-    {
-        if (onFocusChanged != null)
-        {
-            onFocusChanged.Invoke(newFocus);
-        }
-
-        if (focus != newFocus && focus != null)
-        {
-            focus.OnUnfocused();
-        }
-
-        focus = newFocus;
-        if (focus != null)
-        {
-            focus.OnFocused(transform);
-        }
-
-    }
-
-    IEnumerator AttackRoutine()
-    {
-        animator.SetBool("punch", true);
-        yield return new WaitForSeconds(0.15f);
-        animator.SetBool("punch", false);
-
-    }
-
-
-    //public float moveSpeed;
-    // public float jumpForce;
-    // public CharacterController character;
-
-    // public float gravityScale;
-    // private Vector3 moveDirection;
-    //public GameObject playerModel;
-    // public Transform pivot;
-    // public float rotateSpeed;
-
-    /*void Start()
-    {
-      //  character = GetComponent<CharacterController>();
-    }
-
-    void Update()
-    {
-        //Movement();
-        //HandleInput();
-    }
-
-   void Movement()
+    void Movement()
     {
         //moveDirection = new Vector3(Input.GetAxis("Horizontal") * moveSpeed, moveDirection.y, Input.GetAxis("Vertical") * moveSpeed);
         float yStore = moveDirection.y;
@@ -140,21 +70,48 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-             /*   Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-
-                if (Physics.Raycast(ray, out hit, 100f))
-                {
-                    Interactable interactable = hit.collider.GetComponent<Interactable>();
-                    if (interactable != null)
-                    {
-                        //TODO: Automatic rotation to target 
-                        SetFocus(interactable);
-                    }
-                }
-
+                SetFocus(null);
                 StartCoroutine(AttackRoutine());
             }
+
+            if (Input.GetKey(KeyCode.E))
+            {
+                /*RaycastHit[] raycastHits = Physics.RaycastAll(transform.position, Vector3.zero, 3f);
+                for (RaycastHit raycastHit in raycastHits)
+                {
+
+                }*/
+
+            //TODO: interact with barkeeper
+            }
         }
-    }*/
+    }
+
+
+   void SetFocus(EntityInteraction newFocus)
+    {
+        if (onFocusChanged != null)
+        {
+            onFocusChanged.Invoke(newFocus);
+        }
+
+        if (focus != newFocus && focus != null)
+        {
+            focus.OnUnfocused();
+        }
+
+        focus = newFocus;
+        if (focus != null)
+        {
+            focus.OnFocused(transform);
+        }
+    }
+
+    IEnumerator AttackRoutine()
+    {
+        animator.SetBool("punch", true);
+        yield return new WaitForSeconds(0.15f);
+        animator.SetBool("punch", false);
+
+    }
 }
