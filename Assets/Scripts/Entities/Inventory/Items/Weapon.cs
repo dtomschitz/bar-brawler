@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Neue Waffe", menuName = "Inventory/Weapon")]
-public class Weapon : UsableItem
+public class Weapon : Equippable
 {
     public int damageModifier;
     // Start is called before the first frame update

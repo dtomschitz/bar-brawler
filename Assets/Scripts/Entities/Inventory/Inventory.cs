@@ -7,12 +7,12 @@ public class Inventory : MonoBehaviour
     public delegate void OnItemChanged();
     public OnItemChanged onItemChanged;
 
-    public List<UsableItem> items = new List<UsableItem>();
-    public UsableItem currentSelected;
+    public List<Item> items = new List<Item>();
+    public Item currentSelected;
     public int maxItems = 10;
 
 
-    public bool AddItem(UsableItem item) {
+    public bool AddItem(Item item) {
         if (item.addToInventory)
         {
             if (items.Count >= maxItems) return false;
@@ -25,7 +25,7 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
-    public void RemoveItem(UsableItem item)
+    public void RemoveItem(Item item)
     {
         items.Remove(item);
         if (onItemChanged != null) onItemChanged.Invoke();

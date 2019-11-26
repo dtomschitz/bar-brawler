@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Drink")]
-public class Drink : UsableItem
+public class Drink : Equippable
 {
     public int healingAmount;
 

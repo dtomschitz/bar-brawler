@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Collectable : MonoBehaviour
 {
-    public UsableItem item;
+    public Item item;
 
     private void Awake()
     {
