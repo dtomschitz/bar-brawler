@@ -34,7 +34,7 @@ public class EquipmentManager : MonoBehaviour
         if (currentItem != null)
         {
             oldItem = currentItem;
-            inventory.AddItem(oldItem);
+            //inventory.AddItem(oldItem);
         }
 
         if (onEquipmentChanged != null)  onEquipmentChanged.Invoke(item, oldItem);
@@ -43,12 +43,12 @@ public class EquipmentManager : MonoBehaviour
         if (item.prefab) AttachToHand(item.prefab);
     }
 
-    public void Unequip(Equippable item)
+    public void Unequip()
     {
         if (currentItem != null)
         {
             Equippable oldItem = currentItem;
-            inventory.AddItem(oldItem);
+           // inventory.AddItem(oldItem);
 
             currentItem = null;
             if (currentMesh != null) Destroy(currentMesh.gameObject);

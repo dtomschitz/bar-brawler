@@ -66,24 +66,10 @@ public class PlayerController : MonoBehaviour
 
     void HandleInput()
     {
-        if (character.isGrounded)
+        if (Input.GetMouseButtonDown(0))
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                SetFocus(null);
-                StartCoroutine(AttackRoutine());
-            }
-
-            if (Input.GetKey(KeyCode.E))
-            {
-                /*RaycastHit[] raycastHits = Physics.RaycastAll(transform.position, Vector3.zero, 3f);
-                for (RaycastHit raycastHit in raycastHits)
-                {
-
-                }*/
-
-            //TODO: interact with barkeeper
-            }
+            SetFocus(null);
+            StartCoroutine(AttackRoutine());
         }
     }
 

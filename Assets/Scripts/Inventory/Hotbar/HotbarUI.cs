@@ -2,8 +2,8 @@
 
 public class HotbarUI : MonoBehaviour
 {
-    HotbarSlot[] slots;
     Inventory inventory;
+    HotbarSlot[] slots;
 
     void Start()
     {
@@ -11,10 +11,9 @@ public class HotbarUI : MonoBehaviour
         inventory.onItemChanged += UpdateUI;
 
         slots = GetComponentsInChildren<HotbarSlot>();
-        Debug.Log(slots.Length);
     }
 
-    private void Update()
+    void Update()
     {
         UpdateUI();
     }
@@ -25,7 +24,7 @@ public class HotbarUI : MonoBehaviour
         {
             if (i < inventory.items.Count)
             {
-                slots[i].Add(inventory.items[i]);
+                slots[i].Add(inventory.items[i], i == Player.instance.GetSelectedHotbarIndex());
             } else
             {
                 slots[i].Clear();

@@ -8,7 +8,6 @@ public class Equippable : Item
 
     public override void Use()
     {
-
-        Remove();
+        EquipmentManager.instance.Equip(this);
     }
 }

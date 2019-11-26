@@ -18,10 +18,13 @@ public class Inventory : MonoBehaviour
     public delegate void OnItemChanged();
     public OnItemChanged onItemChanged;
 
-    public List<Item> items = new List<Item>();
-    public Item currentSelected;
+    public List<Item> items;
     public int maxItems = 5;
 
+    private void Start()
+    {
+        items = new List<Item>(maxItems);
+    }
 
     public bool AddItem(Item item) {
         if (item.addToInventory)
