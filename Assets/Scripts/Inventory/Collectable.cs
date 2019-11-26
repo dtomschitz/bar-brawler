@@ -25,7 +25,7 @@ public class Collectable : MonoBehaviour
         if (other.tag == "Player")
         {
             OnCollection();
-            bool itemAdded = Player.instance.inventory.AddItem(item);
+            bool itemAdded = Inventory.instance.AddItem(item);
             Destroy(gameObject);
         }
     }

@@ -4,12 +4,23 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
+    #region Singleton
+
+    public static Inventory instance;
+
+    void Awake()
+    {
+        instance = this;
+    }
+
+    #endregion
+
     public delegate void OnItemChanged();
     public OnItemChanged onItemChanged;
 
     public List<Item> items = new List<Item>();
     public Item currentSelected;
-    public int maxItems = 10;
+    public int maxItems = 5;
 
 
     public bool AddItem(Item item) {

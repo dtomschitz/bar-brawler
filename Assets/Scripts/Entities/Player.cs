@@ -16,7 +16,6 @@ public class Player : MonoBehaviour
     #endregion;
 
     public PlayerStats stats;
-    public Inventory inventory;
     public EntityCombat combat;
     public GameObject player;
 
@@ -26,7 +25,6 @@ public class Player : MonoBehaviour
     void Start()
     {
         stats = player.GetComponent<PlayerStats>();
-        inventory = player.GetComponent<Inventory>();
         combat = player.GetComponent<EntityCombat>();
         stats.OnHealthIsZero += Die;
     }

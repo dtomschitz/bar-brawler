@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Money
   icon: {fileID: 0}
-  addToInventory: 1
+  addToInventory: 0

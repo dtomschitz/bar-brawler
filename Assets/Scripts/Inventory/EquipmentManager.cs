@@ -25,7 +25,7 @@ public class EquipmentManager : MonoBehaviour
     Inventory inventory;
     void Start()
     {
-        inventory = Player.instance.inventory;
+        inventory = Inventory.instance;
     }
 
     public void Equip(Equippable item)
