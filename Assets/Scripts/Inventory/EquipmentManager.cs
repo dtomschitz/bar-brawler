@@ -40,6 +40,11 @@ public class EquipmentManager : MonoBehaviour
         if (onEquipmentChanged != null)  onEquipmentChanged.Invoke(item, oldItem);
 
         currentItem = item;
+        if (item is Weapon)
+        {
+            Player.instance.animator.SetWeapon((item as Weapon).weaponType);
+        }
+
         if (item.prefab) AttachToHand(item.prefab);
     }
 

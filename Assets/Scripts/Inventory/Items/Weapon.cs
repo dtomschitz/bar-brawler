@@ -6,15 +6,12 @@ using UnityEngine;
 public class Weapon : Equippable
 {
     public int damageModifier;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public WeaponType weaponType;
+}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+public enum WeaponType
+{
+    FIST,
+    BOTTLE,
+    REVOLVER
 }

@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class PlayerAnimator : EntityAnimator
 {
-    public WeaponAnimation[] weaponAnimations;
-    WeaponAnimation currentWeaponAnimation;
+    //public WeaponAnimation[] weaponAnimations;
+    //WeaponAnimation currentWeaponAnimation;
 
     void Awake()
     {
-        currentWeaponAnimation = weaponAnimations[0];
+        //currentWeaponAnimation = weaponAnimations[0];
     }
 
     protected override void Start()
@@ -17,11 +17,16 @@ public class PlayerAnimator : EntityAnimator
         base.Start();
     }
 
-    protected override void OnAttack()
+    void Update()
     {
-        if (currentWeaponAnimation != null)
+        animator.SetFloat("speed", (Mathf.Abs(Input.GetAxis("Vertical")) + Mathf.Abs(Input.GetAxis("Horizontal"))));
+    }
+
+    public override void OnAttack()
+    {
+       /* if (currentWeaponAnimation != null)
         {
-        }
+        }*/
         base.OnAttack();
     }
 }

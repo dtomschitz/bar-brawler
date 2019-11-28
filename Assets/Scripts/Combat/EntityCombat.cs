@@ -5,9 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterStats))]
 public class EntityCombat : MonoBehaviour
 {
-
     public float attackRate = 1f;
     public event System.Action OnAttack;
+
+    public CombatState state;
 
     CharacterStats playerStats;
     CharacterStats enemyStats;
@@ -15,6 +16,7 @@ public class EntityCombat : MonoBehaviour
     void Start()
     {
         playerStats = GetComponent<CharacterStats>();
+        state = CombatState.IDLE;
     }
 
     void Update()
@@ -26,12 +28,7 @@ public class EntityCombat : MonoBehaviour
     {
         this.enemyStats = stats;
         StartCoroutine(DoDamge(stats, .15f));
-
-
-        if (OnAttack != null)
-        {
-            OnAttack();
-        }
+        OnAttack?.Invoke();
     }
 
     IEnumerator DoDamge(CharacterStats stats, float delay)
@@ -40,4 +37,15 @@ public class EntityCombat : MonoBehaviour
         enemyStats.TakeDamage(playerStats.damage);
         yield return new WaitForSeconds(delay);
     }
+
+    public bool IsAttacking()
+    {
+        return state == CombatState.ATTACKING;
+    }
+}
+
+public enum CombatState
+{
+    IDLE,
+    ATTACKING
 }

@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1958637424263231013}
   - component: {fileID: 1958637424263231017}
   - component: {fileID: 1958637424263231018}
+  - component: {fileID: -4816089952803089221}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -131,11 +132,11 @@ MonoBehaviour:
   moveSpeed: 10
   jumpForce: 15
   character: {fileID: 1958637424263231014}
+  playerAnimator: {fileID: 0}
   gravityScale: 5
   playerModel: {fileID: 7210636514038083179}
   pivot: {fileID: 3091706507016140858, guid: a7ea2827e49e9dd4294c2f60de5fee1b, type: 3}
   rotateSpeed: 20
-  animator: {fileID: 7210636514038083178}
 --- !u!114 &1958637424263231017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,6 +164,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackRate: 1
+  state: 0
+--- !u!114 &-4816089952803089221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1958637424263231026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a09c8fa630c8bc479e87573209fa89b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 7210636514038083178}
+  combat: {fileID: 0}
 --- !u!1 &7210636513121801240
 GameObject:
   m_ObjectHideFlags: 0
@@ -884,9 +900,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7210636514864983911}
   m_Layer: 0
-  m_Name: itemLeft
+  m_Name: hand
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1

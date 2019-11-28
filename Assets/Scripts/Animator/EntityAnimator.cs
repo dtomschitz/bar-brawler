@@ -1,21 +1,25 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 public class EntityAnimator : MonoBehaviour
 {
     public Animator animator;
-
-    EntityCombat combat;
+    public EntityCombat combat;
 
     protected virtual void Start()
     {
+        animator = GetComponentInChildren<Animator>();
         combat = GetComponent<EntityCombat>();
-        combat.OnAttack += OnAttack;
+        //combat.OnAttack += OnAttack;
     }
 
-    protected virtual void OnAttack()
+    public virtual void OnAttack()
     {
-        animator.SetTrigger("Attack");
+        animator.SetTrigger("attack");
+    }
+
+    public void SetWeapon(WeaponType type)
+    {
+        animator.SetInteger("weapon", (int) type);
     }
 }

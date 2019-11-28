@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
 
     public PlayerStats stats;
     public EntityCombat combat;
+    public PlayerAnimator animator;
     public GameObject player;
 
     public int money;
@@ -39,6 +40,8 @@ public class Player : MonoBehaviour
         inventory = Inventory.instance;
         stats = player.GetComponent<PlayerStats>();
         combat = player.GetComponent<EntityCombat>();
+        animator = player.GetComponent<PlayerAnimator>();
+
         stats.OnHealthIsZero += Die;
 
         Debug.Log(equipment);

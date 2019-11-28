@@ -9,12 +9,13 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     public CharacterController character;
 
+    public PlayerAnimator playerAnimator;
+
     public float gravityScale;
     private Vector3 moveDirection;
     public GameObject playerModel;
     public Transform pivot;
     public float rotateSpeed;
-    public Animator animator;
 
     public delegate void OnFocusChanged(Interactable newFocus);
     public OnFocusChanged onFocusChanged;
@@ -23,6 +24,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         character = GetComponent<CharacterController>();
+        playerAnimator = GetComponent<PlayerAnimator>();
     }
 
     void Update()
@@ -33,7 +35,6 @@ public class PlayerController : MonoBehaviour
 
     void Movement()
     {
-        //moveDirection = new Vector3(Input.GetAxis("Horizontal") * moveSpeed, moveDirection.y, Input.GetAxis("Vertical") * moveSpeed);
         float yStore = moveDirection.y;
 
         moveDirection = (transform.forward * Input.GetAxis("Vertical")) + (transform.right * Input.GetAxis("Horizontal"));
@@ -60,19 +61,16 @@ public class PlayerController : MonoBehaviour
             playerModel.transform.rotation = Quaternion.Slerp(playerModel.transform.rotation, newRotation, rotateSpeed * Time.deltaTime);
         }
 
-        animator.SetFloat("speed", (Mathf.Abs(Input.GetAxis("Vertical")) + Mathf.Abs(Input.GetAxis("Horizontal"))));
-        animator.SetBool("isGrounded", character.isGrounded);
     }
 
     void HandleInput()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            SetFocus(null);
             StartCoroutine(AttackRoutine());
+            playerAnimator.OnAttack();
         }
     }
-
 
    void SetFocus(EntityInteraction newFocus)
     {
@@ -95,9 +93,8 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator AttackRoutine()
     {
-        animator.SetBool("punch", true);
-        yield return new WaitForSeconds(0.15f);
-        animator.SetBool("punch", false);
-
+       Player.instance.combat.state = CombatState.ATTACKING;
+       yield return new WaitForSeconds(1f);
+       Player.instance.combat.state = CombatState.IDLE;
     }
 }
