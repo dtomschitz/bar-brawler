@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.5748171, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -120,6 +120,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: 6ca83e2f31cb5404e8f179cba0e0fcec, type: 2}
+--- !u!1 &51916311 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7210636514038083179, guid: 42a75cc207293d4429bc8fda440bb0d4,
+    type: 3}
+  m_PrefabInstance: {fileID: 2032069851}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &87164249
 Mesh:
   m_ObjectHideFlags: 0
@@ -2566,7 +2572,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 1e-45, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -4513,6 +4519,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a09c8fa630c8bc479e87573209fa89b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!143 &1716431258 stripped
+CharacterController:
+  m_CorrespondingSourceObject: {fileID: 1958637424263231014, guid: 42a75cc207293d4429bc8fda440bb0d4,
+    type: 3}
+  m_PrefabInstance: {fileID: 2032069851}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1716431262 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1958637424263231022, guid: 42a75cc207293d4429bc8fda440bb0d4,
@@ -4526,6 +4538,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2281492211880918071, guid: 42a75cc207293d4429bc8fda440bb0d4,
+        type: 3}
+      propertyPath: character
+      value: 
+      objectReference: {fileID: 1716431258}
+    - target: {fileID: 2281492211880918071, guid: 42a75cc207293d4429bc8fda440bb0d4,
+        type: 3}
+      propertyPath: playerAnimator
+      value: 
+      objectReference: {fileID: 1716431256}
+    - target: {fileID: 2281492211880918071, guid: 42a75cc207293d4429bc8fda440bb0d4,
+        type: 3}
+      propertyPath: playerModel
+      value: 
+      objectReference: {fileID: 51916311}
+    - target: {fileID: 2281492211880918071, guid: 42a75cc207293d4429bc8fda440bb0d4,
+        type: 3}
+      propertyPath: pivot
+      value: 
+      objectReference: {fileID: 1329877445}
     - target: {fileID: 1958637424263231026, guid: 42a75cc207293d4429bc8fda440bb0d4,
         type: 3}
       propertyPath: m_Name
@@ -4535,6 +4567,11 @@ PrefabInstance:
         type: 3}
       propertyPath: damage
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -4816089952803089221, guid: 42a75cc207293d4429bc8fda440bb0d4,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1958637424263231022, guid: 42a75cc207293d4429bc8fda440bb0d4,
         type: 3}
@@ -4590,11 +4627,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -4816089952803089221, guid: 42a75cc207293d4429bc8fda440bb0d4,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1958637424263231013, guid: 42a75cc207293d4429bc8fda440bb0d4,
         type: 3}

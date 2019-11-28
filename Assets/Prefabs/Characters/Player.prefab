@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1958637424263231020}
   - component: {fileID: 1958637424263231027}
   - component: {fileID: 1958637424263231014}
-  - component: {fileID: 1958637424263231013}
+  - component: {fileID: 2281492211880918071}
   - component: {fileID: 1958637424263231017}
   - component: {fileID: 1958637424263231018}
   - component: {fileID: -4816089952803089221}
@@ -117,7 +117,7 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1958637424263231013
+--- !u!114 &2281492211880918071
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,16 +126,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1958637424263231026}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f4a9c05051a4a240be5a17c9cc63805, type: 3}
+  m_Script: {fileID: 11500000, guid: 0ba8e499eaa35af4e90131c39bfccbec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
-  jumpForce: 15
-  character: {fileID: 1958637424263231014}
+  moveSpeed: 8
+  jumpForce: 10
+  character: {fileID: 0}
   playerAnimator: {fileID: 0}
-  gravityScale: 5
-  playerModel: {fileID: 7210636514038083179}
-  pivot: {fileID: 3091706507016140858, guid: a7ea2827e49e9dd4294c2f60de5fee1b, type: 3}
+  gravityScale: 3
+  playerModel: {fileID: 0}
+  pivot: {fileID: 0}
   rotateSpeed: 20
 --- !u!114 &1958637424263231017
 MonoBehaviour:
