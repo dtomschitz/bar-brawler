@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.5748171, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3826,7 +3826,7 @@ PrefabInstance:
     - target: {fileID: 8731184132926745997, guid: ee6c2e3026dda4d4dbeb86230a5da915,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.56
+      value: 7.1
       objectReference: {fileID: 0}
     - target: {fileID: 8731184132926745997, guid: ee6c2e3026dda4d4dbeb86230a5da915,
         type: 3}
@@ -4538,26 +4538,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2281492211880918071, guid: 42a75cc207293d4429bc8fda440bb0d4,
-        type: 3}
-      propertyPath: character
-      value: 
-      objectReference: {fileID: 1716431258}
-    - target: {fileID: 2281492211880918071, guid: 42a75cc207293d4429bc8fda440bb0d4,
-        type: 3}
-      propertyPath: playerAnimator
-      value: 
-      objectReference: {fileID: 1716431256}
-    - target: {fileID: 2281492211880918071, guid: 42a75cc207293d4429bc8fda440bb0d4,
-        type: 3}
-      propertyPath: playerModel
-      value: 
-      objectReference: {fileID: 51916311}
-    - target: {fileID: 2281492211880918071, guid: 42a75cc207293d4429bc8fda440bb0d4,
-        type: 3}
-      propertyPath: pivot
-      value: 
-      objectReference: {fileID: 1329877445}
     - target: {fileID: 1958637424263231026, guid: 42a75cc207293d4429bc8fda440bb0d4,
         type: 3}
       propertyPath: m_Name
@@ -4628,6 +4608,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2281492211880918071, guid: 42a75cc207293d4429bc8fda440bb0d4,
+        type: 3}
+      propertyPath: character
+      value: 
+      objectReference: {fileID: 1716431258}
+    - target: {fileID: 2281492211880918071, guid: 42a75cc207293d4429bc8fda440bb0d4,
+        type: 3}
+      propertyPath: playerAnimator
+      value: 
+      objectReference: {fileID: 1716431256}
+    - target: {fileID: 2281492211880918071, guid: 42a75cc207293d4429bc8fda440bb0d4,
+        type: 3}
+      propertyPath: playerModel
+      value: 
+      objectReference: {fileID: 51916311}
+    - target: {fileID: 2281492211880918071, guid: 42a75cc207293d4429bc8fda440bb0d4,
+        type: 3}
+      propertyPath: pivot
+      value: 
+      objectReference: {fileID: 1329877445}
     - target: {fileID: 1958637424263231013, guid: 42a75cc207293d4429bc8fda440bb0d4,
         type: 3}
       propertyPath: pivot
