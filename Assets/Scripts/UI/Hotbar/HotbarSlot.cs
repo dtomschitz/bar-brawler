@@ -7,13 +7,11 @@ using UnityEngine.EventSystems;
 public class HotbarSlot : MonoBehaviour
 {
     public Image icon;
-    public bool selected;
-    Item item;
+    EquippableItem item;
 
-    public void Add(Item item, bool selected)
+    public void Add(EquippableItem item)
     {
         this.item = item;
-        this.selected = selected;
         icon.sprite = item.icon;
         icon.enabled = true;
     }
@@ -23,20 +21,5 @@ public class HotbarSlot : MonoBehaviour
         item = null;
         icon.sprite = null;
         icon.enabled = false;
-    }
-
-    public void UseItem()
-    {
-        if (item != null) item.Use();
-    }
-
-    public bool isEmpty()
-    {
-        return item != null;
-    }
-
-    public Item GetItem()
-    {
-        return item;
     }
 }

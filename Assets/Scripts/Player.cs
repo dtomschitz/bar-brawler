@@ -15,15 +15,15 @@ public class Player : MonoBehaviour
 
     #endregion;
 
+    public Inventory inventory;
+    public EquipmentManager equipment;
     public PlayerStats stats;
     public EntityCombat combat;
     public PlayerAnimator animator;
     public GameObject player;
 
-    public int money;
+    public int money = 0;
 
-    private EquipmentManager equipment;
-    private Inventory inventory;
     private int selectedHotbarIndex = 0;
     private KeyCode[] hotbarControls = new KeyCode[]
     {
@@ -36,18 +36,18 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        equipment = EquipmentManager.instance;
-        inventory = Inventory.instance;
         stats = player.GetComponent<PlayerStats>();
         combat = player.GetComponent<EntityCombat>();
         animator = player.GetComponent<PlayerAnimator>();
-
+        inventory = player.GetComponent<Inventory>();
+        equipment = player.GetComponent<EquipmentManager>();
+     
         stats.OnHealthIsZero += Die;
 
-        Debug.Log(equipment);
+        HUDManager.instance.UpdateMoneyText(money);
     }
 
-    void LateUpdate()
+    /*void LateUpdate()
     {
         for (int i = 0; i < hotbarControls.Length; i++)
         {
@@ -64,7 +64,7 @@ public class Player : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
 
     void Die()
     {
@@ -74,11 +74,13 @@ public class Player : MonoBehaviour
     public void AddMoney(int amount)
     {
         money += amount;
+        HUDManager.instance.UpdateMoneyText(money);
     }
 
     public void RemoveMoney(int amount)
     {
         money -= amount;
+        HUDManager.instance.UpdateMoneyText(money);
     }
 
     public int GetSelectedHotbarIndex() {

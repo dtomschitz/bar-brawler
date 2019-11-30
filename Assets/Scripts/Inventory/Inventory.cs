@@ -1,47 +1,75 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    #region Singleton
+    public List<Slot> slots = new List<Slot>();
+    public int maxSlots = 5;
 
-    public static Inventory instance;
+    public event EventHandler<InventoryEvent> ItemAdded;
+    public event EventHandler<InventoryEvent> ItemRemoved;
+    public event EventHandler<InventoryEvent> ItemUsed;
 
-    void Awake()
+    public Inventory()
     {
-        instance = this;
+        for (int i = 0; i < maxSlots; i++)
+        {
+            slots.Add(new Slot(i));
+        }
     }
 
-    #endregion
-
-    public delegate void OnItemChanged();
-    public OnItemChanged onItemChanged;
-
-    public List<Item> items;
-    public int maxItems = 5;
-
-    private void Start()
+    public void AddItem(EquippableItem item)
     {
-        items = new List<Item>(maxItems);
-    }
-
-    public bool AddItem(Item item) {
         if (item.addToInventory)
         {
-            if (items.Count >= maxItems) return false;
+            Slot freeSlot = FindStackableSlot(item);
+            if (freeSlot == null) freeSlot = FindNextEmptySlot();
 
-            items.Add(item);
-            if (onItemChanged != null) onItemChanged.Invoke();
+            if (freeSlot != null)
+            {
+                freeSlot.Add(item);
+                ItemAdded?.Invoke(this, new InventoryEvent(item));
 
-            return true;
+            }
         }
-        return false;
     }
 
-    public void RemoveItem(Item item)
+    public void RemoveItem(EquippableItem item)
     {
-        items.Remove(item);
-        if (onItemChanged != null) onItemChanged.Invoke();
+        foreach (Slot slot in slots)
+        {
+            if (slot.Remove(item))
+            {
+                ItemRemoved?.Invoke(this, new InventoryEvent(item));
+                break;
+            }
+
+        }
+    }
+
+    internal void UseItem(EquippableItem item)
+    {
+        ItemUsed?.Invoke(this, new InventoryEvent(item));
+        item.OnUse();
+    }
+
+    private Slot FindStackableSlot(EquippableItem item)
+    {
+        foreach (Slot slot in slots)
+        {
+            if (slot.IsStackable(item)) return slot;
+        }
+        return null;
+    }
+
+    private Slot FindNextEmptySlot()
+    {
+        foreach (Slot slot in slots)
+        {
+            if (slot.IsEmpty) return slot;
+        }
+        return null;
     }
 }

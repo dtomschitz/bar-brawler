@@ -30,10 +30,3 @@ public class PlayerAnimator : EntityAnimator
         base.OnAttack();
     }
 }
-
-public class WeaponAnimation
-{
-    public Weapon[] weapons;
-    public int weaponIndex;
-    public int numAnimations;
-}

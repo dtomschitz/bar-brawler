@@ -6,7 +6,7 @@ using UnityEngine;
 public class Enemy : EntityInteraction
 {
     public CharacterStats stats;
-    public Money money;
+    //public Money money;
     public GameObject DamagePopup;
 
     void Start()
@@ -33,7 +33,7 @@ public class Enemy : EntityInteraction
 
     void Death()
     {
-        Instantiate(money, transform.position, Quaternion.identity);
+        //Instantiate(money, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 }

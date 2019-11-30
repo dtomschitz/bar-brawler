@@ -4,29 +4,21 @@ using UnityEngine;
 
 public class Collectable : MonoBehaviour
 {
-    public Item item;
-
-    private void Awake()
+    private Item item;
+    void Start()
     {
-        SphereCollider collider = GetComponent<SphereCollider>();
-        if (collider)
-        {
-            collider.radius = 1f;
-        }
-    }
-
-    public virtual void OnCollection()
-    {
-
+        item = GetComponent<Item>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
-            OnCollection();
-            bool itemAdded = Inventory.instance.AddItem(item);
-            Destroy(gameObject);
+            item.OnCollection();
+            if (item is EquippableItem)
+            {
+                Player.instance.inventory.AddItem(item as EquippableItem);
+            }
         }
     }
 }

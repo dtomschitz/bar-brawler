@@ -9,8 +9,6 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     public CharacterController character;
 
-    public PlayerAnimator playerAnimator;
-
     public float gravityScale;
     private Vector3 moveDirection;
     public GameObject playerModel;
@@ -21,8 +19,26 @@ public class PlayerController : MonoBehaviour
     public OnFocusChanged onFocusChanged;
     EntityInteraction focus;
 
+    private Inventory inventory;
+    private EquipmentManager equipment;
+    private EntityCombat combat;
+    private PlayerAnimator playerAnimator;
+
+    private int selectedHotbarIndex = 0;
+    private KeyCode[] hotbarControls = new KeyCode[]
+    {
+        KeyCode.Alpha1,
+        KeyCode.Alpha2,
+        KeyCode.Alpha3,
+        KeyCode.Alpha4,
+        KeyCode.Alpha5,
+    };
+
     void Start()
     {
+        inventory = GetComponent<Inventory>();
+        equipment = GetComponent<EquipmentManager>();
+        combat = GetComponent<EntityCombat>();
         character = GetComponent<CharacterController>();
         playerAnimator = GetComponent<PlayerAnimator>();
     }
@@ -70,6 +86,23 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(AttackRoutine());
             playerAnimator.OnAttack();
         }
+
+        for (int i = 0; i < hotbarControls.Length; i++)
+        {
+            if (Input.GetKeyDown(hotbarControls[i]))
+            {
+                selectedHotbarIndex = i;
+                if (selectedHotbarIndex < inventory.slots.Count)
+                {
+                    Item item = inventory.slots[i].FirstItem;
+                    if (item is EquippableItem) equipment.Equip(item as EquippableItem);
+                }
+                else
+                {
+                    equipment.Unequip();
+                }
+            }
+        }
     }
 
    void SetFocus(EntityInteraction newFocus)
@@ -93,8 +126,8 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator AttackRoutine()
     {
-       Player.instance.combat.state = CombatState.ATTACKING;
+       combat.state = CombatState.ATTACKING;
        yield return new WaitForSeconds(1f);
-       Player.instance.combat.state = CombatState.IDLE;
+       combat.state = CombatState.IDLE;
     }
 }

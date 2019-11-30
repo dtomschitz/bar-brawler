@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Money : Item
+public class Revolver : EquippableItem
 {
-    public int amount;
-
     public override void OnCollection()
     {
         base.OnCollection();
-        Player.instance.AddMoney(amount);
+        Debug.Log("Revolver collected");
     }
 }

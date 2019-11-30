@@ -18,8 +18,8 @@ public class EntityAnimator : MonoBehaviour
         animator.SetTrigger("attack");
     }
 
-    public void SetWeapon(WeaponType type)
+   /*public void SetWeapon(WeaponType type)
     {
         animator.SetInteger("weapon", (int) type);
-    }
+    }*/
 }
