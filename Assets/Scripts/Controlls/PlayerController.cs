@@ -95,11 +95,8 @@ public class PlayerController : MonoBehaviour
                 if (selectedHotbarIndex < inventory.slots.Count)
                 {
                     Item item = inventory.slots[i].FirstItem;
-                    if (item is EquippableItem) equipment.Equip(item as EquippableItem);
-                }
-                else
-                {
-                    equipment.Unequip();
+                    if (item != null) inventory.UseItem(item as EquippableItem);
+                    // if (item is EquippableItem) equipment.Equip(item as EquippableItem);
                 }
             }
         }

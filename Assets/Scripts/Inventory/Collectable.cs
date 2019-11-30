@@ -5,19 +5,24 @@ using UnityEngine;
 public class Collectable : MonoBehaviour
 {
     private Item item;
+    private bool isCollected;
     void Start()
     {
         item = GetComponent<Item>();
+        isCollected = false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && !isCollected)
         {
-            item.OnCollection();
+            isCollected = true;
+            item.OnInteract();
             if (item is EquippableItem)
             {
-                Player.instance.inventory.AddItem(item as EquippableItem);
+                EquippableItem i = item as EquippableItem;
+                Player.instance.inventory.AddItem(i);
+                i.OnCollection();
             }
         }
     }

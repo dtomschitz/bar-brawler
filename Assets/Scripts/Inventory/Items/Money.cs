@@ -6,9 +6,10 @@ public class Money : Item
 {
     public int amount;
 
-    public override void OnCollection()
+    public override void OnInteract()
     {
-        base.OnCollection();
+        base.OnInteract();
         Player.instance.AddMoney(amount);
+        Destroy(gameObject);
     }
 }

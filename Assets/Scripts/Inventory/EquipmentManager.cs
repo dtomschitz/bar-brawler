@@ -4,60 +4,26 @@ using UnityEngine;
 
 public class EquipmentManager : MonoBehaviour
 {
-    public delegate void OnEquipmentChanged(EquippableItem newItem, EquippableItem oldItem);
-    public event OnEquipmentChanged onEquipmentChanged;
-
     public GameObject playerHand;
 
-    EquippableItem currentItem;
-    Inventory inventory;
-
+    private EquippableItem currentItem;
+    private Inventory inventory;
     void Start()
     {
-        inventory = Player.instance.inventory;
+        inventory = GetComponent<Inventory>();
+        inventory.ItemUsed += OnItemUsed;
     }
 
-    public void Equip(EquippableItem item)
+    private void OnItemUsed(object sender, InventoryEvent e)
     {
-        if (true)
-        {
-            EquippableItem oldItem = null;
-            if (currentItem != null)
-            {
-                oldItem = currentItem;
-                //inventory.AddItem(oldItem);
-            }
-
-            if (onEquipmentChanged != null) onEquipmentChanged.Invoke(item, oldItem);
-
-            currentItem = item;
-            /*if (item is Weapon)
-            {
-                Player.instance.animator.SetWeapon((item as Weapon).weaponType);
-            }*/
-
-            AttachToHand(item);
-        }
+        //if (currentItem != null) AttachToHand(e.item, false);
+        AttachToHand(e.item, true);
+        currentItem = e.item;
     }
 
-    public void Unequip()
+    private void AttachToHand(EquippableItem item, bool active)
     {
-       /* if (currentItem != null)
-        {
-            Equippable oldItem = currentItem;
-           // inventory.AddItem(oldItem);
-
-            currentItem = null;
-           // if (currentMesh != null) Destroy(currentMesh.gameObject);
-
-            if (onEquipmentChanged != null) onEquipmentChanged.Invoke(null, oldItem);
-        }*/
-    }
-
-    void AttachToHand(EquippableItem item)
-    {
-        item.gameObject.SetActive(true);
-        item.OnUse();
-        item.gameObject.transform.parent = playerHand.transform;
+        item.gameObject.SetActive(active);
+        item.gameObject.transform.parent = active ? playerHand.transform : null;
     }
 }

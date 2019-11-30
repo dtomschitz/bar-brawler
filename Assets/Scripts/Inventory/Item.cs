@@ -17,18 +17,12 @@ public class Item : MonoBehaviour
     {
         return true;
     }
-
-    public virtual void OnCollection()
-    {
-        //Destroy(gameObject);
-        if (!addToInventory) Destroy(gameObject);
-        gameObject.SetActive(false);
-    }
 }
 
 public class EquippableItem : Item
 {
     public Slot slot;
+    public GameObject prefab;
 
     public Vector3 pickPosition;
     public Vector3 pickRotation;
@@ -50,6 +44,14 @@ public class EquippableItem : Item
             gameObject.transform.position = hit.point;
             gameObject.transform.eulerAngles = dropRotation;
         }
+    }
+
+    public virtual void OnCollection()
+    {
+        // if (!addToInventory) Destroy(gameObject);
+        // gameObject.SetActive(false);
+        Destroy(gameObject.GetComponent<Rigidbody>());
+        gameObject.SetActive(false);
     }
 }
 
