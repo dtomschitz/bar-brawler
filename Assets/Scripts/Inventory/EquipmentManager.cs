@@ -19,6 +19,11 @@ public class EquipmentManager : MonoBehaviour
         //if (currentItem != null) AttachToHand(e.item, false);
         AttachToHand(e.item, true);
         currentItem = e.item;
+
+        if (e.item.type == ItemType.Weapon && e.item is Weapon)
+        {
+            Player.instance.animator.SetWeapon((e.item as Weapon).weaponType);
+        }
     }
 
     private void AttachToHand(EquippableItem item, bool active)

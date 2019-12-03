@@ -6,7 +6,7 @@ public class Item : MonoBehaviour
 {
     new public string name;
     public Sprite icon;
-    public ItemType itemType;
+    public ItemType type;
     public bool addToInventory = true;
 
     public virtual void OnInteract()
@@ -55,8 +55,20 @@ public class EquippableItem : Item
     }
 }
 
+public class Weapon : EquippableItem
+{
+    public WeaponType weaponType;
+}
+
 public enum ItemType
 {
     Consumable,
     Weapon
+}
+
+public enum WeaponType
+{
+    Fist,
+    Revolver,
+    Bottle
 }
