@@ -8,6 +8,7 @@ public class EquipmentManager : MonoBehaviour
 
     private EquippableItem currentItem;
     private Inventory inventory;
+
     void Start()
     {
         inventory = GetComponent<Inventory>();
@@ -16,8 +17,9 @@ public class EquipmentManager : MonoBehaviour
 
     private void OnItemUsed(object sender, InventoryEvent e)
     {
-        //if (currentItem != null) AttachToHand(e.item, false);
+        if (currentItem != null) AttachToHand(currentItem, false);
         AttachToHand(e.item, true);
+       
         currentItem = e.item;
 
         if (e.item.type == ItemType.Weapon && e.item is Weapon)

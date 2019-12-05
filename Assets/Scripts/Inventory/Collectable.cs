@@ -17,12 +17,10 @@ public class Collectable : MonoBehaviour
         if (other.tag == "Player" && !isCollected)
         {
             isCollected = true;
-            item.OnInteract();
+            item.OnCollision();
             if (item is EquippableItem)
             {
-                EquippableItem i = item as EquippableItem;
-                Player.instance.inventory.AddItem(i);
-                i.OnCollection();
+                (item as EquippableItem).OnCollection();
             }
         }
     }

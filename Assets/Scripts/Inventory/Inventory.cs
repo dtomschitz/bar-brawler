@@ -6,17 +6,23 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     public List<Slot> slots = new List<Slot>();
+    public List<EquippableItem> defaultItems = new List<EquippableItem>();
     public int maxSlots = 5;
 
     public event EventHandler<InventoryEvent> ItemAdded;
     public event EventHandler<InventoryEvent> ItemRemoved;
     public event EventHandler<InventoryEvent> ItemUsed;
 
-    public Inventory()
+    void Start()
     {
         for (int i = 0; i < maxSlots; i++)
         {
             slots.Add(new Slot(i));
+        }
+
+        foreach(EquippableItem item in defaultItems)
+        {
+            AddItem(item);
         }
     }
 
