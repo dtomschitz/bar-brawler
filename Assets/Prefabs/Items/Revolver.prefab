@@ -159,6 +159,7 @@ MonoBehaviour:
   pickRotation: {x: -128.344, y: -11.77197, z: 9.720993}
   dropRotation: {x: 0, y: 0, z: 0}
   weaponType: 1
+  damageModifier: 3
   bullet: {fileID: 126788699177342265, guid: 59a3ab67120ce894da4dd0cd47c7d09e, type: 3}
   muzzle: {fileID: 5980294922217801762}
   isFiring: 0
