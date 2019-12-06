@@ -6,11 +6,19 @@ public class HitColider : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        Player player = Player.instance;
-        Enemy enemy = other.gameObject.GetComponent<Enemy>();
-        if (enemy != null && enemy != player && player.combat.IsAttacking())
+        if (other.gameObject.tag == "Enemy")
         {
-            enemy.Interact();
+            Player player = Player.instance;
+            Enemy enemy = other.gameObject.GetComponent<Enemy>();
+            if (enemy != null && enemy != player)
+            {
+                enemy.Interact();
+            }
+        }
+
+        if (other.gameObject.tag == "Player")
+        {
+            
         }
     }
 }

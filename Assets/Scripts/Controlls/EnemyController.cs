@@ -27,7 +27,7 @@ public class EnemyController : MonoBehaviour
             agent.SetDestination(target.position);
             if (distance <= agent.stoppingDistance)
             {
-                CharacterStats playerStats = target.GetComponent<CharacterStats>();
+                EntityStats playerStats = target.GetComponent<EntityStats>();
                 if (playerStats != null)
                 {
                     combat.Attack(playerStats);

@@ -104,7 +104,7 @@ public class PlayerController : MonoBehaviour
                 selectedHotbarIndex = i;
                 if (selectedHotbarIndex < inventory.slots.Count)
                 {
-                    SelectItem(0);
+                    SelectItem(selectedHotbarIndex);
                 }
             }
         }
