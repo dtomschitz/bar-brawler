@@ -1083,6 +1083,7 @@ GameObject:
   - component: {fileID: -1516700603249870861}
   - component: {fileID: -2360518356823158160}
   - component: {fileID: -2624335117381446908}
+  - component: {fileID: -7658271958765587386}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Player
@@ -1230,7 +1231,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 3
   stats: {fileID: 0}
-  money: {fileID: -513198384451847322, guid: ee6c2e3026dda4d4dbeb86230a5da915, type: 3}
   DamagePopup: {fileID: 4610692876775489689, guid: e2262ee3243caa148b85979b0d9e05cd,
     type: 3}
 --- !u!114 &-2360518356823158160
@@ -1261,3 +1261,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 3035099456618560152}
   combat: {fileID: 0}
+--- !u!114 &-7658271958765587386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6134464579745833664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 190acec39c47a5743bf6ce592a9cfd32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackRate: 1
+  state: 0
