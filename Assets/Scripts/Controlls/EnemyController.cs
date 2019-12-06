@@ -8,9 +8,9 @@ public class EnemyController : MonoBehaviour
 
     public float lookRadius = 10f;
 
-    Transform target;
-    NavMeshAgent agent;
-    EntityCombat combat;
+    private Transform target;
+    private NavMeshAgent agent;
+    private EntityCombat combat;
 
     void Start()
     {
@@ -25,14 +25,14 @@ public class EnemyController : MonoBehaviour
         if (distance <= lookRadius)
         {
             agent.SetDestination(target.position);
-             if (distance <= agent.stoppingDistance)
-             {
-                 CharacterStats playerStats = target.GetComponent<CharacterStats>();
-                 if (playerStats != null)
-                 {
-                     //combat.Attack(playerStats);
-                 }
-             }
+            if (distance <= agent.stoppingDistance)
+            {
+                CharacterStats playerStats = target.GetComponent<CharacterStats>();
+                if (playerStats != null)
+                {
+                    combat.Attack(playerStats);
+                }
+            }
 
             FaceTarget();
         }
