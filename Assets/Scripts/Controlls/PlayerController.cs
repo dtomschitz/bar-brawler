@@ -15,7 +15,6 @@ public class PlayerController : MonoBehaviour
     public float gravityScale;
 
     private Vector3 moveDirection;
-    private Vector3 lookPosition;
 
     public delegate void OnFocusChanged(Interactable newFocus);
     public OnFocusChanged onFocusChanged;
@@ -23,8 +22,6 @@ public class PlayerController : MonoBehaviour
 
     private Inventory inventory;
     private EquipmentManager equipment;
-    private EntityCombat combat;
-    private PlayerAnimator playerAnimator;
 
     private int selectedHotbarIndex = 0;
     private KeyCode[] hotbarControls = new KeyCode[]
@@ -40,9 +37,7 @@ public class PlayerController : MonoBehaviour
     {
         inventory = GetComponent<Inventory>();
         equipment = GetComponent<EquipmentManager>();
-        combat = GetComponent<EntityCombat>();
         character = GetComponent<CharacterController>();
-        playerAnimator = GetComponent<PlayerAnimator>();
 
         SelectItem(0);
     }

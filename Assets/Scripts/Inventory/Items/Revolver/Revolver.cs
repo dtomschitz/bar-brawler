@@ -4,35 +4,35 @@ public class Revolver : Weapon
 {
     public Bullet bullet;
     public Transform muzzle;
-    public bool isFiring;
     public float bulletSpeed;
+    public float fireRate = 1f;
+
+    private float cooldown = 0f;
 
     private Camera cam;
     private Inventory inventory;
 
-    private void Start()
+    void Start()
     {
         cam = Camera.main;
         inventory = Player.instance.inventory;
+    }
+
+    void Update()
+    {
+        cooldown -= Time.deltaTime;
     }
 
     public override void OnInteract()
     {
         base.OnInteract();
 
-        /* Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-         RaycastHit hit;
-         if (Physics.Raycast(ray, out hit, 100))
-         {
+        if (cooldown <= 0f)
+        {
+            cooldown = 1f / fireRate;
 
-         }*/
-
-        Shoot();
-    }
-
-    private void Shoot()
-    {
-        Bullet newBullet = Instantiate(bullet, muzzle.position, muzzle.rotation) as Bullet;
-        newBullet.speed = bulletSpeed;
+            Bullet newBullet = Instantiate(bullet, muzzle.position, muzzle.rotation) as Bullet;
+            newBullet.speed = bulletSpeed;
+        }
     }
 }

@@ -15,10 +15,5 @@ public class HitColider : MonoBehaviour
                 enemy.Interact();
             }
         }
-
-        if (other.gameObject.tag == "Player")
-        {
-            
-        }
     }
 }

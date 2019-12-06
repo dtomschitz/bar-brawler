@@ -8,7 +8,7 @@ public class EntityInteraction : Interactable
     bool hasInteracted = false;
     Transform player;
 
-    public void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
         if (isFocused)
         {
