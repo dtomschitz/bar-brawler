@@ -1,10 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 public class EquipmentManager : MonoBehaviour
 {
     public GameObject playerHand;
+
+    public event EventHandler<EquipmentEvent> OnItemEquipped;
 
     private EquippableItem currentItem;
     private Inventory inventory;
@@ -19,7 +20,8 @@ public class EquipmentManager : MonoBehaviour
     {
         if (currentItem != null) AttachToHand(currentItem, false);
         AttachToHand(e.item, true);
-       
+
+        OnItemEquipped?.Invoke(this, new EquipmentEvent(e.item, currentItem));
         currentItem = e.item;
 
         if (e.item.type == ItemType.Weapon && e.item is Weapon)

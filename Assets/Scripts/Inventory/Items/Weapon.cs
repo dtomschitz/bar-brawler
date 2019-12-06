@@ -5,4 +5,5 @@ using UnityEngine;
 public class Weapon : EquippableItem
 {
     public WeaponType weaponType;
+    public int damageModifier;
 }

@@ -2,22 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(CharacterStats))]
+[RequireComponent(typeof(EntityStats))]
 public class Enemy : EntityInteraction
 {
-    public CharacterStats stats;
+    public EntityStats stats;
     //public Money money;
     public GameObject DamagePopup;
 
     void Start()
     {
-        stats = GetComponent<CharacterStats>();
+        stats = GetComponent<EntityStats>();
         stats.OnHealthIsZero += Death;
     }
 
     public override void Interact()
     {
-        if (stats.isDead()) return;
+        if (stats.IsDead) return;
 
         EntityCombat combat = Player.instance.combat;
         combat.Attack(stats);
@@ -28,7 +28,7 @@ public class Enemy : EntityInteraction
     void ShowDamagePopup()
     {
         var popup = Instantiate(DamagePopup, transform.position, Quaternion.identity, transform);
-        popup.GetComponent<TextMesh>().text = stats.currentHealth.ToString();
+        popup.GetComponent<TextMesh>().text = stats.CurrentHealth.ToString();
     }
 
     void Death()
