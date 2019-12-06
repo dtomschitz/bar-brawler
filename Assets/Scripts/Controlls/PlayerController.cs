@@ -43,6 +43,8 @@ public class PlayerController : MonoBehaviour
         combat = GetComponent<EntityCombat>();
         character = GetComponent<CharacterController>();
         playerAnimator = GetComponent<PlayerAnimator>();
+
+        SelectItem(0);
     }
 
     void Update()
@@ -85,24 +87,14 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    void HandleInput()
+    private void HandleInput()
     {
-        /*Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 100))
-        {
-            lookPosition = hit.point;
-        }
-
         if (Input.GetMouseButtonDown(0))
         {
-            StartCoroutine(AttackRoutine());
-            playerAnimator.OnAttack();
-        }*/
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            equipment.CurrentItem.OnInteract();
+            if (equipment.CurrentItem != null)
+            {
+                equipment.CurrentItem.OnInteract();
+            }
         }
 
         for (int i = 0; i < hotbarControls.Length; i++)
@@ -112,15 +104,19 @@ public class PlayerController : MonoBehaviour
                 selectedHotbarIndex = i;
                 if (selectedHotbarIndex < inventory.slots.Count)
                 {
-                    Item item = inventory.slots[i].FirstItem;
-                    if (item != null) inventory.UseItem(item as EquippableItem);
-                    // if (item is EquippableItem) equipment.Equip(item as EquippableItem);
+                    SelectItem(0);
                 }
             }
         }
     }
 
-    void SetFocus(EntityInteraction newFocus)
+    private void SelectItem(int i)
+    {
+        Item item = inventory.slots[i].FirstItem;
+        if (item != null) inventory.UseItem(item as EquippableItem);
+    }
+
+    private void SetFocus(EntityInteraction newFocus)
     {
         if (onFocusChanged != null)
         {
