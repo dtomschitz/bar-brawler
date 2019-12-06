@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class HitColider : MonoBehaviour
 {
-    public string punchName;
-   
-
     private void OnTriggerEnter(Collider other)
     {
         Player player = Player.instance;

@@ -33,7 +33,6 @@ public class EntityCombat : MonoBehaviour
 
     IEnumerator DoDamge(CharacterStats stats, float delay)
     {
-        Debug.Log(transform.name + " damage: " + playerStats.damage);
         enemyStats.TakeDamage(playerStats.damage);
         yield return new WaitForSeconds(delay);
     }
