@@ -9,11 +9,13 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     public CharacterController character;
 
-    public float gravityScale;
-    private Vector3 moveDirection;
     public GameObject playerModel;
     public Transform pivot;
     public float rotateSpeed;
+    public float gravityScale;
+
+    private Vector3 moveDirection;
+    private Vector3 lookPosition;
 
     public delegate void OnFocusChanged(Interactable newFocus);
     public OnFocusChanged onFocusChanged;
@@ -45,11 +47,15 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        Movement();
         HandleInput();
     }
 
-    void Movement()
+    void FixedUpdate()
+    {
+        Movement();
+    }
+
+    private void Movement()
     {
         float yStore = moveDirection.y;
 
@@ -81,10 +87,22 @@ public class PlayerController : MonoBehaviour
 
     void HandleInput()
     {
+        /*Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, 100))
+        {
+            lookPosition = hit.point;
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             StartCoroutine(AttackRoutine());
             playerAnimator.OnAttack();
+        }*/
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            equipment.CurrentItem.OnInteract();
         }
 
         for (int i = 0; i < hotbarControls.Length; i++)
@@ -102,7 +120,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-   void SetFocus(EntityInteraction newFocus)
+    void SetFocus(EntityInteraction newFocus)
     {
         if (onFocusChanged != null)
         {
@@ -119,12 +137,5 @@ public class PlayerController : MonoBehaviour
         {
             focus.OnFocused(transform);
         }
-    }
-
-    IEnumerator AttackRoutine()
-    {
-       combat.state = CombatState.ATTACKING;
-       yield return new WaitForSeconds(1f);
-       combat.state = CombatState.IDLE;
     }
 }

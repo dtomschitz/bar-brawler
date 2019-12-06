@@ -33,4 +33,9 @@ public class EquipmentManager : MonoBehaviour
         item.gameObject.SetActive(active);
         item.gameObject.transform.parent = active ? playerHand.transform : null;
     }
+
+    public EquippableItem CurrentItem
+    {
+        get { return currentItem; }
+    }
 }
