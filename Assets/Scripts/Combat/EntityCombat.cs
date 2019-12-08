@@ -10,12 +10,12 @@ public class EntityCombat : MonoBehaviour
 
     public CombatState state;
 
-    EntityStats playerStats;
-    EntityStats enemyStats;
+    private EntityStats entityStats;
+    private EntityStats enemyStats;
 
     void Start()
     {
-        playerStats = GetComponent<EntityStats>();
+        entityStats = GetComponent<EntityStats>();
         state = CombatState.IDLE;
     }
 
@@ -26,14 +26,14 @@ public class EntityCombat : MonoBehaviour
 
     public void Attack(EntityStats stats)
     {
-        this.enemyStats = stats;
+        enemyStats = stats;
         StartCoroutine(DoDamge(stats, .15f));
         OnAttack?.Invoke();
     }
 
     IEnumerator DoDamge(EntityStats stats, float delay)
     {
-        enemyStats.TakeDamage(playerStats.damage.GetValue);
+        enemyStats.TakeDamage(entityStats.damage.GetValue);
         yield return new WaitForSeconds(delay);
     }
 

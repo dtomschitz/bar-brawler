@@ -9,6 +9,7 @@ public class Money : Item
     public override void OnCollision()
     {
         base.OnCollision();
+        Debug.Log("money collected");
         Player.instance.AddMoney(amount);
         Destroy(gameObject);
     }

@@ -1344,7 +1344,7 @@ GameObject:
   - component: {fileID: 6356219383110875253}
   - component: {fileID: 1592573314076958519}
   m_Layer: 0
-  m_Name: Enemy Variant
+  m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1507,7 +1507,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 30
   damage:
-    baseValue: 0
+    baseValue: 2
     modifiers: 
   healthBar: {fileID: 1743001444}
 --- !u!114 &6356219383110875253

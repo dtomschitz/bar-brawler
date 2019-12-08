@@ -14,8 +14,9 @@ public class Collectable : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player" && !isCollected)
+        if (other.CompareTag("Player") && !isCollected)
         {
+
             isCollected = true;
             item.OnCollision();
             if (item is EquippableItem)
