@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class Revolver : Weapon
 {
@@ -11,11 +13,13 @@ public class Revolver : Weapon
 
     private Camera cam;
     private Inventory inventory;
+    private PlayerAnimator animator;
 
     void Start()
     {
         cam = Camera.main;
         inventory = Player.instance.inventory;
+        animator = Player.instance.animator;
     }
 
     void Update()
@@ -33,6 +37,16 @@ public class Revolver : Weapon
 
             Bullet newBullet = Instantiate(bullet, muzzle.position, muzzle.rotation) as Bullet;
             newBullet.speed = bulletSpeed;
+
+            animator.OnAttack();
+            StartCoroutine(AttackRoutine());
         }
+    }
+
+    private IEnumerator AttackRoutine()
+    {
+        //combat.state = CombatState.ATTACKING;
+        yield return new WaitForSeconds(.15f);
+        //combat.state = CombatState.IDLE;
     }
 }

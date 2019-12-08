@@ -24,9 +24,6 @@ public class PlayerAnimator : EntityAnimator
 
     public override void OnAttack()
     {
-       /* if (currentWeaponAnimation != null)
-        {
-        }*/
         base.OnAttack();
     }
 }
