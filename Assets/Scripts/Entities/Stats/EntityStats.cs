@@ -1,15 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EntityStats : MonoBehaviour
 {
 
-    public int maxHealth;
+    public float maxHealth;
     public Stat damage;
 
-    public int CurrentHealth { get; protected set; }
+    public float CurrentHealth { get; protected set; }
     public event System.Action OnHealthIsZero;
+
+    [Header("Unity Stuff")]
+    public Image healthBar;
+
 
     public virtual void Awake()
     {
@@ -20,17 +25,18 @@ public class EntityStats : MonoBehaviour
     {  
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
-        damage = Mathf.Clamp(damage, 0, int.MaxValue);
+        damage = Mathf.Clamp(damage, 0, float.MaxValue);
         CurrentHealth -= damage;
+        healthBar.fillAmount = CurrentHealth / maxHealth;
         if (IsDead)
         {
             OnHealthIsZero?.Invoke();
         }
     }
 
-    public void Heal(int amount)
+    public void Heal(float amount)
     {
         CurrentHealth += amount;
         CurrentHealth = Mathf.Clamp(CurrentHealth, 0, maxHealth);
