@@ -10,7 +10,7 @@ public class HitColider : MonoBehaviour
         {
             Player player = Player.instance;
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
-            if (enemy != null && enemy != player)
+            if (enemy != null && enemy != player && player.combat.IsAttacking)
             {
                 enemy.Interact();
             }

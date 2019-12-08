@@ -37,9 +37,9 @@ public class EntityCombat : MonoBehaviour
         yield return new WaitForSeconds(delay);
     }
 
-    public bool IsAttacking()
+    public bool IsAttacking
     {
-        return state == CombatState.ATTACKING;
+        get { return state == CombatState.ATTACKING; }
     }
 }
 
