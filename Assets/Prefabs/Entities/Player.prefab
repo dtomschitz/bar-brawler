@@ -97,7 +97,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 469523624323017991}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
@@ -210,7 +210,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 8771671594190828895}
-  combat: {fileID: 0}
 --- !u!1 &2137643446331319761
 GameObject:
   m_ObjectHideFlags: 0

@@ -67,8 +67,10 @@ public class Enemy : EntityInteraction
 
     void Death()
     {
-        Instantiate(money, transform.position, Quaternion.identity);
+        agent.enabled = false;
         animator.OnDeath();
+
+        Instantiate(money, transform.position, Quaternion.identity);
         Destroy(gameObject, 2f);
     }
 
