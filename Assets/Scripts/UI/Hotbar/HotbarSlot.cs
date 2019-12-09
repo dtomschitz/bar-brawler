@@ -7,9 +7,9 @@ using UnityEngine.EventSystems;
 public class HotbarSlot : MonoBehaviour
 {
     public Image icon;
-    EquippableItem item;
+    Equippable item;
 
-    public void Add(EquippableItem item)
+    public void Add(Equippable item)
     {
         this.item = item;
         icon.sprite = item.icon;

@@ -1,12 +1,27 @@
 ﻿using UnityEngine;
 
-public class EquippableItem : Item
+public class Equippable : Collectable
 {
     public Slot slot;
 
     public Vector3 pickPosition;
     public Vector3 pickRotation;
     public Vector3 dropRotation;
+
+    public override void OnCollision()
+    {
+        base.OnCollision();
+        OnCollection();
+    }
+
+    public virtual void OnInteract()
+    {
+    }
+
+    public virtual void OnCollection()
+    {
+        Player.instance.inventory.AddItem(this);
+    }
 
     public virtual void OnUse()
     {
@@ -24,10 +39,5 @@ public class EquippableItem : Item
             gameObject.transform.position = hit.point;
             gameObject.transform.eulerAngles = dropRotation;
         }
-    }
-
-    public virtual void OnCollection()
-    {
-        Player.instance.inventory.AddItem(this);
     }
 }

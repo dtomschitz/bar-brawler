@@ -104,7 +104,7 @@ public class PlayerController : MonoBehaviour
     private void SelectItem(int i)
     {
         Item item = inventory.slots[i].FirstItem;
-        if (item != null) inventory.UseItem(item as EquippableItem);
+        if (item != null) inventory.UseItem(item as Equippable);
     }
 
     private void SetFocus(EntityInteraction newFocus)

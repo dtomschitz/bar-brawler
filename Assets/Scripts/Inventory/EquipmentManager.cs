@@ -7,7 +7,7 @@ public class EquipmentManager : MonoBehaviour
 
     public event EventHandler<EquipmentEvent> OnItemEquipped;
 
-    private EquippableItem currentItem;
+    private Equippable currentItem;
     private Inventory inventory;
 
     void Start()
@@ -30,13 +30,13 @@ public class EquipmentManager : MonoBehaviour
         }
     }
 
-    private void AttachToHand(EquippableItem item, bool active)
+    private void AttachToHand(Equippable item, bool active)
     {
         item.gameObject.SetActive(active);
         item.gameObject.transform.parent = active ? playerHand.transform : null;
     }
 
-    public EquippableItem CurrentItem
+    public Equippable CurrentItem
     {
         get { return currentItem; }
     }

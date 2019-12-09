@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Collectable : MonoBehaviour
+public class Collectable : Item
 {
-    private Item item;
+    //private Item item;
     private bool isCollected;
     void Start()
     {
-        item = GetComponent<Item>();
+        //item = GetComponent<Item>();
         isCollected = false;
     }
 
@@ -18,11 +18,16 @@ public class Collectable : MonoBehaviour
         {
 
             isCollected = true;
-            item.OnCollision();
-            if (item is EquippableItem)
+            OnCollision();
+            /*if (this is EquippableItem)
             {
                 (item as EquippableItem).OnCollection();
-            }
+            }*/
         }
+    }
+
+    public virtual void OnCollision()
+    {
+        gameObject.SetActive(false);
     }
 }

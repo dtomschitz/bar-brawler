@@ -3,10 +3,10 @@
 
 public class EquipmentEvent : EventArgs
 {
-    public EquippableItem newItem;
-    public EquippableItem oldItem;
+    public Equippable newItem;
+    public Equippable oldItem;
 
-    public EquipmentEvent(EquippableItem newItem, EquippableItem oldItem)
+    public EquipmentEvent(Equippable newItem, Equippable oldItem)
     {
         this.newItem = newItem;
         this.oldItem = oldItem;

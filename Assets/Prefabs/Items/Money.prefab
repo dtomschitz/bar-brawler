@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 8771599372214085866}
   - component: {fileID: 4355391201611927042}
   - component: {fileID: 8771599372214085869}
-  - component: {fileID: 8771599372214085868}
   - component: {fileID: 8771599372214085871}
   m_Layer: 0
   m_Name: Money
@@ -111,18 +110,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8771599372214085868
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8771599372214085870}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f53b48032c613a4fb895d048a9cf165, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8771599372214085871
 MonoBehaviour:
   m_ObjectHideFlags: 0

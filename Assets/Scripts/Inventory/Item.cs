@@ -8,21 +8,6 @@ public class Item : MonoBehaviour
     public Sprite icon;
     public ItemType type;
     public bool addToInventory = true;
-
-    public virtual void OnCollision()
-    {
-        gameObject.SetActive(false);
-    }
-
-    public virtual void OnInteract()
-    {
-
-    }
-
-    public virtual bool CanInteract(Collider other)
-    {
-        return true;
-    }
 }
 
 public enum ItemType

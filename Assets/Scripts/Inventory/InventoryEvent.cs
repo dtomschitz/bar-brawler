@@ -2,9 +2,9 @@
 
 public class InventoryEvent : EventArgs
 {
-    public EquippableItem item;
+    public Equippable item;
 
-    public InventoryEvent(EquippableItem item)
+    public InventoryEvent(Equippable item)
     {
         this.item = item;
     }
