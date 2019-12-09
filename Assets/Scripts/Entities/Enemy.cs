@@ -32,23 +32,26 @@ public class Enemy : EntityInteraction
 
     void Update()
     {
-        attackCooldown -= Time.deltaTime;
-
-        float distance = Vector3.Distance(target.position, transform.position);
-        if (distance <= lookRadius)
+        if (!stats.IsDead)
         {
-            agent.SetDestination(target.position);
-            if (distance <= agent.stoppingDistance && attackCooldown <= 0f)
+            attackCooldown -= Time.deltaTime;
+
+            float distance = Vector3.Distance(target.position, transform.position);
+            if (distance <= lookRadius)
             {
-                EntityStats playerStats = target.GetComponent<EntityStats>();
-                if (playerStats != null)
+                agent.SetDestination(target.position);
+                if (distance <= agent.stoppingDistance && attackCooldown <= 0f)
                 {
-                    attackCooldown = 1f / attackRate;
-                    combat.Attack(playerStats);
-                    animator.OnAttack();
+                    EntityStats playerStats = target.GetComponent<EntityStats>();
+                    if (playerStats != null)
+                    {
+                        attackCooldown = 1f / attackRate;
+                        combat.Attack(playerStats);
+                        animator.OnAttack();
+                    }
                 }
+                FaceTarget();
             }
-            FaceTarget();
         }
     }
 
@@ -66,7 +69,7 @@ public class Enemy : EntityInteraction
     {
         //Instantiate(money, transform.position, Quaternion.identity);
         animator.OnDeath();
-        //Destroy(gameObject);
+        Destroy(gameObject, 2f);
     }
 
 
