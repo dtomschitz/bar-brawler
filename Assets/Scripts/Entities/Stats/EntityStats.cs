@@ -12,7 +12,7 @@ public class EntityStats : MonoBehaviour
     public float CurrentHealth { get; protected set; }
     public event System.Action OnHealthIsZero;
 
-    [Header("Unity Stuff")]
+    [Header("HealthBar")]
     public Image healthBar;
 
 
