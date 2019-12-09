@@ -17,16 +17,10 @@ public class HUDManager : MonoBehaviour
     #endregion;
 
     public Text moneyText;
-    public Text waveCountText;
 
 
     public void UpdateMoneyText(int amount)
     {
         moneyText.text = "$" + amount;
-    }
-
-    public void UpdateWaveCountText(int amount)
-    {
-        waveCountText.text = "Wave " + amount;
     }
 }
