@@ -3,7 +3,6 @@
 public class EquippableItem : Item
 {
     public Slot slot;
-    public GameObject prefab;
 
     public Vector3 pickPosition;
     public Vector3 pickRotation;

@@ -106,11 +106,8 @@ GameObject:
   - component: {fileID: 5298615094421190204}
   - component: {fileID: 5298615094421190199}
   - component: {fileID: 5298615094421190203}
-  - component: {fileID: 5298615094421190206}
-  - component: {fileID: 5298615094421190207}
-  - component: {fileID: 5298615094421190205}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Barkeeper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -229,47 +226,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &5298615094421190206
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5298615094421190198}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd64b1dfe323ad8449c9fcf7a2600982, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lookRadius: 10
---- !u!114 &5298615094421190207
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5298615094421190198}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 932127210fa4921489682ad25f6a8c3b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  radius: 3
-  stats: {fileID: 0}
-  money: {fileID: -513198384451847322, guid: ee6c2e3026dda4d4dbeb86230a5da915, type: 3}
-  DamagePopup: {fileID: 4610692876775489689, guid: e2262ee3243caa148b85979b0d9e05cd,
-    type: 3}
---- !u!114 &5298615094421190205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5298615094421190198}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f128285fac5cc884997e5e9a0d2754d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  damage: 2

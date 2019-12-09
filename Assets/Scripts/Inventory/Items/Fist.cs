@@ -27,6 +27,7 @@ public class Fist : Weapon
         {
             attackCooldown = 1f / attackRate;
             StartCoroutine(AttackRoutine());
+           
             animator.OnAttack();
         }
     }
