@@ -2376,6 +2376,11 @@ PrefabInstance:
       propertyPath: pivot
       value: 
       objectReference: {fileID: 1329877445}
+    - target: {fileID: 2137643448211959607, guid: 2c77cddebf528e1499be76a67d7f0676,
+        type: 3}
+      propertyPath: attackRate
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c77cddebf528e1499be76a67d7f0676, type: 3}
 --- !u!114 &4407282082859382880 stripped

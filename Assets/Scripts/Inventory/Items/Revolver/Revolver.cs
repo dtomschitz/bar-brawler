@@ -39,14 +39,6 @@ public class Revolver : Weapon
             newBullet.speed = bulletSpeed;
 
             animator.OnAttack();
-            StartCoroutine(AttackRoutine());
         }
-    }
-
-    private IEnumerator AttackRoutine()
-    {
-        //combat.state = CombatState.ATTACKING;
-        yield return new WaitForSeconds(.15f);
-        //combat.state = CombatState.IDLE;
     }
 }

@@ -196,7 +196,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 190acec39c47a5743bf6ce592a9cfd32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRate: 1
   state: 0
 --- !u!114 &2342893080221028238
 MonoBehaviour:
@@ -543,6 +542,7 @@ MonoBehaviour:
   dropRotation: {x: 0, y: 0, z: 0}
   weaponType: 0
   damageModifier: 0
+  attackRate: 20
 --- !u!1 &8771671593410760358
 GameObject:
   m_ObjectHideFlags: 0

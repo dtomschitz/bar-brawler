@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Fist : Weapon
 {
+    public float attackRate = 20f;
+    private float attackCooldown = 0f;
+
     private EntityCombat combat;
     private PlayerAnimator animator;
 
@@ -13,10 +16,19 @@ public class Fist : Weapon
         animator = Player.instance.animator;
     }
 
+    void Update()
+    {
+        attackCooldown -= Time.deltaTime;
+    }
+
     public override void OnInteract()
     {
-        StartCoroutine(AttackRoutine());
-        animator.OnAttack();
+        if (attackCooldown <= 0f)
+        {
+            attackCooldown = 1f / attackRate;
+            StartCoroutine(AttackRoutine());
+            animator.OnAttack();
+        }
     }
 
     private IEnumerator AttackRoutine()

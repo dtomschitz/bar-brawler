@@ -45,10 +45,6 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         HandleInput();
-    }
-
-    void FixedUpdate()
-    {
         Movement();
     }
 

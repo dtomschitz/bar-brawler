@@ -1,12 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(EntityStats))]
 public class EntityCombat : MonoBehaviour
 {
-    public float attackRate = 1f;
-    public event System.Action OnAttack;
+    //private float attackCooldown = 0f;
+    public event Action OnAttack;
 
     public CombatState state;
 
@@ -19,19 +19,14 @@ public class EntityCombat : MonoBehaviour
         state = CombatState.IDLE;
     }
 
-    void Update()
-    {
-        // attackCooldown -= Time.deltaTime;
-    }
-
     public void Attack(EntityStats stats)
     {
         enemyStats = stats;
-        StartCoroutine(DoDamge(stats, .15f));
+        StartCoroutine(DoDamge(.15f));
         OnAttack?.Invoke();
     }
 
-    IEnumerator DoDamge(EntityStats stats, float delay)
+    IEnumerator DoDamge(float delay)
     {
         enemyStats.TakeDamage(entityStats.damage.GetValue);
         yield return new WaitForSeconds(delay);

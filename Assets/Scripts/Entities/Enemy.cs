@@ -7,7 +7,7 @@ public class Enemy : EntityInteraction
 {
     public EntityStats stats;
     //public Money money;
-    public GameObject DamagePopup;
+    //public GameObject DamagePopup;
 
     void Start()
     {
@@ -22,14 +22,14 @@ public class Enemy : EntityInteraction
         EntityCombat combat = Player.instance.combat;
         combat.Attack(stats);
 
-        if (DamagePopup) ShowDamagePopup();
+        //if (DamagePopup) ShowDamagePopup();
     }
 
-    void ShowDamagePopup()
+   /* void ShowDamagePopup()
     {
         var popup = Instantiate(DamagePopup, transform.position, Quaternion.identity, transform);
         popup.GetComponent<TextMesh>().text = stats.CurrentHealth.ToString();
-    }
+    }*/
 
     void Death()
     {
