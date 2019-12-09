@@ -6,7 +6,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(EntityStats))]
 public class Enemy : EntityInteraction
 {
-    //public Money money;
+    public Money money;
     //public GameObject DamagePopup;
 
     public float lookRadius = 10f;
@@ -67,7 +67,7 @@ public class Enemy : EntityInteraction
 
     void Death()
     {
-        //Instantiate(money, transform.position, Quaternion.identity);
+        Instantiate(money, transform.position, Quaternion.identity);
         animator.OnDeath();
         Destroy(gameObject, 2f);
     }

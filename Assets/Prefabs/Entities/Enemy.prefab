@@ -1477,6 +1477,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 3
+  money: {fileID: 8771599372214085871, guid: ee6c2e3026dda4d4dbeb86230a5da915, type: 3}
   lookRadius: 10
   attackRate: 1
 --- !u!114 &6673331655994226945
