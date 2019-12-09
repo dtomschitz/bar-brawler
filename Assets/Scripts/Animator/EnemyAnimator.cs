@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class EnemyAnimator : EntityAnimator
 {
-    NavMeshAgent navMeshAgent;
+    private NavMeshAgent navMeshAgent;
 
     protected override void Start()
     {

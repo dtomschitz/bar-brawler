@@ -1343,6 +1343,7 @@ GameObject:
   - component: {fileID: 6673331655994226945}
   - component: {fileID: 6356219383110875253}
   - component: {fileID: 1592573314076958519}
+  - component: {fileID: 2528973514752264677}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -1456,7 +1457,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 2
+  m_StoppingDistance: 1.6
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -1477,6 +1478,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lookRadius: 10
+  attackRate: 1
 --- !u!114 &7589187768858205314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1491,8 +1493,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 3
   stats: {fileID: 0}
-  DamagePopup: {fileID: 4610692876775489689, guid: e2262ee3243caa148b85979b0d9e05cd,
-    type: 3}
 --- !u!114 &6673331655994226945
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1523,7 +1523,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 3008255186374824425}
-  combat: {fileID: 0}
 --- !u!114 &1592573314076958519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1536,5 +1535,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 190acec39c47a5743bf6ce592a9cfd32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRate: 1
   state: 0
+--- !u!114 &2528973514752264677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6233071837183773105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b8c94523c600184abd9114345737684, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 3008255186374824425}
