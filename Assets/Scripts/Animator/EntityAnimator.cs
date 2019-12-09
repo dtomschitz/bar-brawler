@@ -14,6 +14,11 @@ public class EntityAnimator : MonoBehaviour
     {
         animator.SetTrigger("attack");
     }
+
+    public virtual void OnDeath()
+    {
+        animator.SetTrigger("death");
+    }
     
     public void SetWeapon(WeaponType type)
     {
