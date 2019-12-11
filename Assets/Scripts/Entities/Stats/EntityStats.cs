@@ -45,4 +45,5 @@ public class EntityStats : MonoBehaviour
     {
         get { return CurrentHealth <= 0; }
     }
+
 }
