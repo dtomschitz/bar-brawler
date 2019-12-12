@@ -8,6 +8,8 @@ public class HitColider : MonoBehaviour
     {
         if (other.gameObject.tag == "Enemy")
         {
+            Debug.Log("daw");
+
             Player player = Player.instance;
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
             if (enemy != null && enemy != player && player.combat.IsAttacking)
