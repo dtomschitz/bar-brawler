@@ -5,8 +5,9 @@ using UnityEngine.UI;
 public class WaveSpawner : MonoBehaviour
 {
     public Transform enemyPrefab;
-
     public Transform spawnPoint;
+
+    public bool enableSpawing;
 
     public float timeBetweenWaves = 5f;
     private float countdown = 2f;
@@ -17,16 +18,18 @@ public class WaveSpawner : MonoBehaviour
 
     void Update()
     {
-        if (countdown <= 0f)
+        if (enableSpawing)
         {
-            StartCoroutine(SpawnWave());
-            countdown = timeBetweenWaves;
+            if (countdown <= 0f)
+            {
+                StartCoroutine(SpawnWave());
+                countdown = timeBetweenWaves;
+            }
+
+            countdown -= Time.deltaTime;
         }
 
-        countdown -= Time.deltaTime;
-
-
-        stateOfGameText.text = Mathf.Floor(countdown).ToString();
+        //stateOfGameText.text = Mathf.Floor(countdown).ToString();
     }
 
     IEnumerator SpawnWave()
