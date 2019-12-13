@@ -12,8 +12,10 @@ GameObject:
   - component: {fileID: 469523624323018008}
   - component: {fileID: 469523624323018009}
   - component: {fileID: 469523624323017990}
+  - component: {fileID: 3327590001763264914}
   - component: {fileID: 469523624323018003}
   - component: {fileID: 144979918192174850}
+  - component: {fileID: 8827621505348750703}
   - component: {fileID: 469523624323017989}
   - component: {fileID: 469523624323017988}
   - component: {fileID: 469523624323018012}
@@ -102,6 +104,22 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &3327590001763264914
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 469523624323017991}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!143 &469523624323018003
 CharacterController:
   m_ObjectHideFlags: 0
@@ -117,7 +135,7 @@ CharacterController:
   m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
-  m_SkinWidth: 0.08
+  m_SkinWidth: 0.01
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &144979918192174850
@@ -132,13 +150,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ba8e499eaa35af4e90131c39bfccbec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 8
+--- !u!114 &8827621505348750703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 469523624323017991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 633e4df70ec0f9441b34e7b0c1facebb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 8
   jumpForce: 10
-  character: {fileID: 469523624323018003}
+  gravityScale: 3
+  rotateSpeed: 10
   playerModel: {fileID: 8771671594190828894}
   pivot: {fileID: 0}
-  rotateSpeed: 20
-  gravityScale: 3
 --- !u!114 &469523624323017989
 MonoBehaviour:
   m_ObjectHideFlags: 0
