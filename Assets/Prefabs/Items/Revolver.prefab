@@ -148,7 +148,7 @@ MonoBehaviour:
   damageModifier: 10
   bullet: {fileID: 126788699177342265, guid: 59a3ab67120ce894da4dd0cd47c7d09e, type: 3}
   muzzle: {fileID: 5980294922217801762}
-  bulletSpeed: 50
+  bulletSpeed: 100
   fireRate: 2
 --- !u!1 &5714682365174051810
 GameObject:
