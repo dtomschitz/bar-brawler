@@ -22,6 +22,14 @@ public class Shop : MonoBehaviour
         OnPageChange(0);
     }
 
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.E))
+        {
+            gameObject.SetActive(true);
+        }    
+    }
+
     private void OnPageChange(int id)
     {
         if (currentPage != null)

@@ -5,9 +5,9 @@ using UnityEngine.UI;
 public class HotbarSlot : MonoBehaviour
 {
     public Image icon;
-    private Equippable item;
+    private Item item;
 
-    public void Add(Equippable item)
+    public void Add(Item item)
     {
         this.item = item;
         icon.sprite = item.icon;

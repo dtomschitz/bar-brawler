@@ -286,6 +286,8 @@ MonoBehaviour:
   icon: {fileID: 5543204332208511399}
   title: {fileID: 5543204332366479196}
   price: {fileID: 5543204333833269455}
+  button: {fileID: 5543204332783629944}
+  item: {fileID: 0}
 --- !u!1 &5543204333833269425
 GameObject:
   m_ObjectHideFlags: 0
