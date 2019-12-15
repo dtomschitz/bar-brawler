@@ -1,13 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
 
 
 public class HotbarSlot : MonoBehaviour
 {
     public Image icon;
-    Equippable item;
+    private Equippable item;
 
     public void Add(Equippable item)
     {

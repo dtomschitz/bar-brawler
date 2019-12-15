@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class HotbarUI : MonoBehaviour
+public class Hotbar : MonoBehaviour
 {
     /*Inventory inventory;
     HotbarSlot[] slots;
