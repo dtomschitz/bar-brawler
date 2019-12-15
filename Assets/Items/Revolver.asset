@@ -17,8 +17,8 @@ MonoBehaviour:
   type: 1
   addToInventory: 1
   prefab: {fileID: 1995762785128984484, guid: a2974865053846d4f95bfe2cb682aca7, type: 3}
-  pickPosition: {x: 0, y: 0, z: 0}
-  pickRotation: {x: 0, y: 0, z: 0}
+  pickPosition: {x: 2.49, y: 1.61, z: -0.44}
+  pickRotation: {x: -128.344, y: -11.77197, z: 9.720993}
   dropRotation: {x: 0, y: 0, z: 0}
   weaponType: 1
   damageModifier: 10

@@ -16,14 +16,15 @@ public class EquipmentManager : MonoBehaviour
         Equippable equippable = prefabCopy.GetComponent<Equippable>();
         if (equippable != null)
         {
-            if (currentItem != null) AttachToHand(prefab, false);
+            Debug.Log(equippable.item.name);
+
+            if (currentItem != null) Unequip();
+
+            OnItemEquipped?.Invoke(this, new EquipmentEvent(item, currentEquipment));
+            equippable.OnEquip();
+            Equip(prefabCopy, item);
 
             prefab = prefabCopy;
-
-            equippable.OnEquip();
-            AttachToHand(prefab, true);
-            OnItemEquipped?.Invoke(this, new EquipmentEvent(item, currentEquipment));
-
             currentItem = equippable;
             currentEquipment = item;
 
@@ -35,11 +36,17 @@ public class EquipmentManager : MonoBehaviour
 
     }
 
-    private void AttachToHand(GameObject prefab, bool active)
+    private void Equip(GameObject prefab, Equipment equipment)
     {
-        prefab.SetActive(active);
-        prefab.transform.parent = active ? playerHand.transform : null;
-        if (!active) Destroy(prefab);
+        prefab.SetActive(true);
+        prefab.transform.parent = playerHand.transform;
+        prefab.transform.localPosition = equipment.pickPosition;
+        prefab.transform.localEulerAngles = equipment.pickRotation;
+    }
+
+    private void Unequip()
+    {
+        Destroy(prefab);
     }
 
     public Equippable CurrentItem

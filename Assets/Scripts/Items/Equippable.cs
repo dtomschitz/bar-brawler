@@ -17,8 +17,6 @@ public class Equippable : Collectable
     public void OnEquip()
     {
         isCollected = true;
-        gameObject.transform.localPosition = (item as Equipment).pickPosition;
-        gameObject.transform.localEulerAngles = (item as Equipment).pickRotation;
     }
 
     public virtual void OnDrop()
