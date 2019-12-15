@@ -15,6 +15,7 @@ public class PlayerStats : EntityStats
 
     private void OnItemEquipped(object sender, EquipmentEvent e)
     {
+
         if (e.newItem != null && e.newItem is Weapon)
         {
             damage.AddModifier((e.newItem as Weapon).damageModifier);
@@ -24,5 +25,7 @@ public class PlayerStats : EntityStats
         {
             damage.RemoveModifier((e.oldItem as Weapon).damageModifier);
         }
+
+        //TODO: Update damage modifier
     }
 }

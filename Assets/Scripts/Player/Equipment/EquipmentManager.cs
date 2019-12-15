@@ -4,36 +4,42 @@ using UnityEngine;
 public class EquipmentManager : MonoBehaviour
 {
     public GameObject playerHand;
-
     public event EventHandler<EquipmentEvent> OnItemEquipped;
 
+    private GameObject prefab;
     private Equippable currentItem;
-    private Inventory inventory;
+    private Equipment currentEquipment;
 
-    void Start()
+    public void EquipItem(Equipment item)
     {
-        inventory = GetComponent<Inventory>();
-        inventory.ItemUsed += OnItemUsed;
-    }
-
-    private void OnItemUsed(object sender, InventoryEvent e)
-    {
-        if (currentItem != null) AttachToHand(currentItem, false);
-        AttachToHand(e.item, true);
-
-        OnItemEquipped?.Invoke(this, new EquipmentEvent(e.item, currentItem));
-        currentItem = e.item;
-
-        if (e.item.type == ItemType.Weapon && e.item is Weapon)
+        GameObject prefabCopy = Instantiate(item.prefab);
+        Equippable equippable = prefabCopy.GetComponent<Equippable>();
+        if (equippable != null)
         {
-            Player.instance.animator.SetWeapon((e.item as Weapon).weaponType);
+            if (currentItem != null) AttachToHand(prefab, false);
+
+            prefab = prefabCopy;
+
+            equippable.OnEquip();
+            AttachToHand(prefab, true);
+            OnItemEquipped?.Invoke(this, new EquipmentEvent(item, currentEquipment));
+
+            currentItem = equippable;
+            currentEquipment = item;
+
+            if (item.type == ItemType.Weapon && item is Weapon)
+            {
+                Player.instance.animator.SetWeapon((item as Weapon).weaponType);
+            }
         }
+
     }
 
-    private void AttachToHand(Equippable item, bool active)
+    private void AttachToHand(GameObject prefab, bool active)
     {
-        item.gameObject.SetActive(active);
-        item.gameObject.transform.parent = active ? playerHand.transform : null;
+        prefab.SetActive(active);
+        prefab.transform.parent = active ? playerHand.transform : null;
+        if (!active) Destroy(prefab);
     }
 
     public Equippable CurrentItem

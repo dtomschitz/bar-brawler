@@ -39,7 +39,7 @@ public class PlayerControls : MonoBehaviour
         equipment = GetComponent<EquipmentManager>();
         //character = GetComponent<CharacterController>();
 
-        SelectItem(0);
+        //SelectItem(0);
     }
 
     void Update()
@@ -104,7 +104,8 @@ public class PlayerControls : MonoBehaviour
     private void SelectItem(int i)
     {
         Item item = inventory.slots[i].FirstItem;
-        if (item != null) inventory.UseItem(item as Equippable);
+        //if (item != null) inventory.UseItem(item as Equippable);
+        if (item != null && item is Equipment) equipment.EquipItem(item as Equipment);
     }
 
     private void SetFocus(EntityInteraction newFocus)

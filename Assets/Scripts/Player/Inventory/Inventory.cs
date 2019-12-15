@@ -6,12 +6,12 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     public List<Slot> slots = new List<Slot>();
-    public List<Equippable> defaultItems = new List<Equippable>();
+    public List<Item> defaultItems = new List<Item>();
     public int maxSlots = 5;
 
     public event EventHandler<InventoryEvent> ItemAdded;
     public event EventHandler<InventoryEvent> ItemRemoved;
-    public event EventHandler<InventoryEvent> ItemUsed;
+    //public event EventHandler<InventoryEvent> ItemUsed;
 
     void Start()
     {
@@ -20,13 +20,13 @@ public class Inventory : MonoBehaviour
             slots.Add(new Slot(i));
         }
 
-        foreach(Equippable item in defaultItems)
+        foreach(Item item in defaultItems)
         {
             AddItem(item);
         }
     }
 
-    public void AddItem(Equippable item)
+    public void AddItem(Item item)
     {
         if (item.addToInventory)
         {
@@ -42,7 +42,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void RemoveItem(Equippable item)
+    public void RemoveItem(Item item)
     {
         foreach (Slot slot in slots)
         {
@@ -55,13 +55,13 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    internal void UseItem(Equippable item)
+    internal void UseItem(Item item)
     {
-        ItemUsed?.Invoke(this, new InventoryEvent(item));
-        item.OnUse();
+        //ItemUsed?.Invoke(this, new InventoryEvent(item));
+        //item.OnUse();
     }
 
-    private Slot FindStackableSlot(Equippable item)
+    private Slot FindStackableSlot(Item item)
     {
         foreach (Slot slot in slots)
         {

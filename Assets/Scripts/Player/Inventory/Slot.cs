@@ -6,25 +6,24 @@ using UnityEngine;
 public class Slot
 {
     private int id = 0;
-    private Stack<Equippable> stack = new Stack<Equippable>();
+    private Stack<Item> stack = new Stack<Item>();
 
     public Slot(int id)
     {
         this.id = id;
     }
 
-    public void Add(Equippable item)
+    public void Add(Item item)
     {
         item.slot = this;
         stack.Push(item);
     }
 
-    public bool Remove(Equippable item)
+    public bool Remove(Item item)
     {
-        if (IsEmpty)
-            return false;
+        if (IsEmpty) return false;
 
-        Equippable first = stack.Peek();
+        Item first = stack.Peek();
         if (first.name == item.name)
         {
             stack.Pop();
@@ -33,17 +32,17 @@ public class Slot
         return false;
     }
 
-    public bool IsStackable(Equippable item)
+    public bool IsStackable(Item item)
     {
         if (IsEmpty) return false;
 
-        Equippable first = stack.Peek();
+        Item first = stack.Peek();
         if (first.name == item.name) return true;
 
         return false;
     }
 
-    public Equippable FirstItem
+    public Item FirstItem
     {
         get
         {

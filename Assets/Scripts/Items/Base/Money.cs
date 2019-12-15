@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Money : Collectable
+[CreateAssetMenu(fileName = "New Money Item", menuName = "Items/Money")]
+public class Money : Item
 {
     public int amount;
 
-    public override void OnCollision()
+    public override void OnInteract()
     {
-        base.OnCollision();
+        base.OnInteract();
         Player.instance.AddMoney(amount);
-        Destroy(gameObject);
     }
 }

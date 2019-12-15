@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Revolver : Weapon
+public class Revolver : Equippable
 {
     public Bullet bullet;
     public Transform muzzle;
@@ -29,8 +29,6 @@ public class Revolver : Weapon
 
     public override void OnInteract()
     {
-        base.OnInteract();
-
         if (cooldown <= 0f)
         {
             cooldown = 1f / fireRate;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Fist : Weapon
+public class Fist : Equippable
 {
     public float attackRate = 20f;
     private float attackCooldown = 0f;
@@ -27,7 +27,6 @@ public class Fist : Weapon
         {
             attackCooldown = 1f / attackRate;
             StartCoroutine(AttackRoutine());
-           
             animator.OnAttack();
         }
     }

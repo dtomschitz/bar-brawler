@@ -2,32 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Collectable : Item
+public class Collectable : MonoBehaviour
 {
-    //private Item item;
-    private bool isCollected;
-    void Start()
-    {
-        //item = GetComponent<Item>();
-        isCollected = false;
-    }
+    public Item item;
+    public bool isCollected = false;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && !isCollected)
         {
-
             isCollected = true;
-            OnCollision();
-            /*if (this is EquippableItem)
-            {
-                (item as EquippableItem).OnCollection();
-            }*/
+            item.OnInteract();
+            Player.instance.inventory.AddItem(item);
+            OnCollection();
         }
     }
 
-    public virtual void OnCollision()
+    public virtual void OnCollection()
     {
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 }
