@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(EntityStats))]
-public class Enemy : EntityInteraction
+public class Enemy : Interactable
 {
     public Money money;
     //public GameObject DamagePopup;

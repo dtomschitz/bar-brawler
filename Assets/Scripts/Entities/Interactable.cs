@@ -4,18 +4,17 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
+    private bool isInInteraction = false;
 
-    public float radius = 3f;
-
-    // Should be overwritten whenever the Class is used somewhere else
     public virtual void Interact()
     {
-
+        isInInteraction = true;
     }
 
-    private void OnDrawGizmosSelected()
+    public virtual void InteractCanceled()
     {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(gameObject.transform.position, radius);
+        isInInteraction = false;
     }
+
+    public bool IsInInteraction => isInInteraction;
 }

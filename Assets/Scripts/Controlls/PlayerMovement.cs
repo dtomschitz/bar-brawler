@@ -41,14 +41,14 @@ public class PlayerMovement : MonoBehaviour
         moveDirection = moveDirection.normalized * speed;
         moveDirection.y = yStore;
 
-        /*if (character.isGrounded)
+        if (character.isGrounded)
         {
             moveDirection.y = 0f;
             if (Input.GetButtonDown("Jump"))
             {
                 moveDirection.y = jumpForce;
             }
-        }*/
+        }
 
 
         moveDirection.y = moveDirection.y + (Physics.gravity.y * gravityScale * Time.deltaTime);

@@ -14,20 +14,16 @@ public class Shop : MonoBehaviour
     private List<ShopPage> pages;
     private ShopPage currentPage;
 
+    private bool isOpen = false;
+
     void Start()
     {
         pages = new List<ShopPage>(categories.Count);
 
+        SetOpen(false);
+
         InstantiateCategories();
         OnPageChange(0);
-    }
-
-    void Update()
-    {
-        if (Input.GetKey(KeyCode.E))
-        {
-            gameObject.SetActive(true);
-        }    
     }
 
     private void OnPageChange(int id)
@@ -74,4 +70,12 @@ public class Shop : MonoBehaviour
 
         pages.Add(page);
     }
+
+    public void SetOpen(bool open)
+    {
+        isOpen = open;
+        gameObject.SetActive(open);
+    }
+
+    public bool IsOpen => isOpen;
 }

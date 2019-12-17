@@ -4,21 +4,8 @@ using UnityEngine.EventSystems;
 
 public class PlayerControls : MonoBehaviour
 {
-
-    //public float moveSpeed;
-    //public float jumpForce;
-    //public CharacterController character;
-
-   // public GameObject playerModel;
-    //public Transform pivot;
-    //public float rotateSpeed;
-    //public float gravityScale;
-
-    //private Vector3 moveDirection;
-
-    public delegate void OnFocusChanged(Interactable newFocus);
-    public OnFocusChanged onFocusChanged;
-    EntityInteraction focus;
+    public float interactionRange;
+    public LayerMask interactionLayer;
 
     private Inventory inventory;
     private EquipmentManager equipment;
@@ -37,7 +24,6 @@ public class PlayerControls : MonoBehaviour
     {
         inventory = GetComponent<Inventory>();
         equipment = GetComponent<EquipmentManager>();
-        //character = GetComponent<CharacterController>();
 
         //SelectItem(0);
     }
@@ -45,49 +31,10 @@ public class PlayerControls : MonoBehaviour
     void Update()
     {
         HandleInput();
-        //Movement();
     }
-
-   /*private void Movement()
-    {
-        float yStore = moveDirection.y;
-
-        moveDirection = (transform.forward * Input.GetAxis("Vertical")) + (transform.right * Input.GetAxis("Horizontal"));
-        moveDirection = moveDirection.normalized * moveSpeed;
-        moveDirection.y = yStore;
-
-        if (character.isGrounded)
-        {
-            moveDirection.y = 0f;
-            if (Input.GetButtonDown("Jump"))
-            {
-                moveDirection.y = jumpForce;
-            }
-        }
-
-
-        moveDirection.y = moveDirection.y + (Physics.gravity.y * gravityScale * Time.deltaTime);
-        character.Move(moveDirection * Time.deltaTime);
-
-        /*if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
-        {
-           // transform.rotation = Quaternion.Euler(0f, pivot.rotation.eulerAngles.y, 0f);
-           // Quaternion newRotation = Quaternion.LookRotation(new Vector3(moveDirection.x, 0f, moveDirection.z));
-            //playerModel.transform.rotation = Quaternion.Slerp(playerModel.transform.rotation, newRotation, rotateSpeed * Time.deltaTime);
-        }
-
-    }*/
 
     private void HandleInput()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (equipment.CurrentItem != null)
-            {
-                equipment.CurrentItem.OnInteract();
-            }
-        }
-
         for (int i = 0; i < hotbarControls.Length; i++)
         {
             if (Input.GetKeyDown(hotbarControls[i]))
@@ -99,6 +46,24 @@ public class PlayerControls : MonoBehaviour
                 }
             }
         }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (equipment.CurrentItem != null)
+            {
+                equipment.CurrentItem.OnInteract();
+            }
+        }
+
+        /*if (Input.GetKeyDown(KeyCode.E))
+        {
+            Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRange, interactionLayer);
+            foreach(Collider collider in colliders)
+            {
+                Interactable interactable = collider.GetComponent<Interactable>();
+                if (interactable != null) interactable.Interact();
+            }
+        }*/
     }
 
     private void SelectItem(int i)
@@ -108,22 +73,9 @@ public class PlayerControls : MonoBehaviour
         if (item != null && item is Equipment) equipment.EquipItem(item as Equipment);
     }
 
-    private void SetFocus(EntityInteraction newFocus)
+    private void OnDrawGizmosSelected()
     {
-        if (onFocusChanged != null)
-        {
-            onFocusChanged.Invoke(newFocus);
-        }
-
-        if (focus != newFocus && focus != null)
-        {
-            focus.OnUnfocused();
-        }
-
-        focus = newFocus;
-        if (focus != null)
-        {
-            focus.OnFocused(transform);
-        }
+        if (interactionRange == 0f) return;
+        Gizmos.DrawWireSphere(transform.position, interactionRange);
     }
 }
