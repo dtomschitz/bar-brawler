@@ -4,10 +4,24 @@ using UnityEngine.EventSystems;
 
 public class PlayerControls : MonoBehaviour
 {
+    [Header("Movement")]
+    public float speed;
+    public float jumpForce;
+    public float gravityScale;
+    public float rotateSpeed;
+    private Vector3 moveDirection;
+
+    [Header("Interaction")]
     public float interactionRange;
-    public LayerMask interactionLayer;
+    public LayerMask enemyLayer;
     public LayerMask barkeeperLayer;
 
+    [Header("Model")]
+    public GameObject playerModel;
+    public Transform pivot;
+
+    private Rigidbody playerRigidbody;
+    private CharacterController character;
     private Inventory inventory;
     private EquipmentManager equipment;
 
@@ -23,15 +37,51 @@ public class PlayerControls : MonoBehaviour
 
     void Start()
     {
+        playerRigidbody = GetComponent<Rigidbody>();
+        character = GetComponent<CharacterController>();
         inventory = GetComponent<Inventory>();
         equipment = GetComponent<EquipmentManager>();
-
-        //SelectItem(0);
+        
+        SelectItem(0);
     }
 
     void Update()
     {
+        float h = Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("Vertical");
+
+        Move(h, v);
         HandleInput();
+    }
+
+    private void Move(float h, float v)
+    {
+        float yStore = moveDirection.y;
+
+        // moveDirection.Set(h, 0f, v);
+        moveDirection = (transform.forward * v) + (transform.right * h);
+        moveDirection = moveDirection.normalized * speed;
+        moveDirection.y = yStore;
+
+        if (character.isGrounded)
+        {
+            moveDirection.y = 0f;
+            if (Input.GetButtonDown("Jump"))
+            {
+                moveDirection.y = jumpForce;
+            }
+        }
+
+
+        moveDirection.y = moveDirection.y + (Physics.gravity.y * gravityScale * Time.deltaTime);
+        character.Move(moveDirection * Time.deltaTime);
+
+        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
+        {
+            transform.rotation = Quaternion.Euler(0f, pivot.rotation.eulerAngles.y, 0f);
+            Quaternion newRotation = Quaternion.LookRotation(new Vector3(moveDirection.x, 0f, moveDirection.z));
+            playerModel.transform.rotation = Quaternion.Slerp(playerModel.transform.rotation, newRotation, rotateSpeed * Time.deltaTime);
+        }
     }
 
     private void HandleInput()
@@ -50,9 +100,22 @@ public class PlayerControls : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            if (equipment.CurrentItem != null)
+            //TODO: Update item system and remove double implementation
+            if (equipment.CurrentItem != null && equipment.CurrentEquipment.type == ItemType.Weapon)
             {
                 equipment.CurrentItem.OnInteract();
+                Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit floorHit;
+
+                if (Physics.Raycast(camRay, out floorHit, enemyLayer))
+                {
+                    Debug.Log("Attacking Enemy");
+                    Vector3 playerToMouse = floorHit.point - transform.position;
+                    playerToMouse.y = 0f;
+
+                    Quaternion newRotation = Quaternion.LookRotation(playerToMouse);
+                    playerModel.transform.rotation = Quaternion.Slerp(playerModel.transform.rotation, newRotation, 1000f * Time.deltaTime);
+                }
             }
         }
 
@@ -76,6 +139,7 @@ public class PlayerControls : MonoBehaviour
 
     private void SelectItem(int i)
     {
+        Debug.Log(inventory.slots.Count);
         Item item = inventory.slots[i].FirstItem;
         //if (item != null) inventory.UseItem(item as Equippable);
         if (item != null && item is Equipment) equipment.EquipItem(item as Equipment);

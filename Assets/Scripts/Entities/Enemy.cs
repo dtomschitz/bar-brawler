@@ -6,6 +6,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(EntityStats))]
 public class Enemy : Interactable
 {
+    public bool movementEnabled = true;
     public Money money;
     //public GameObject DamagePopup;
 
@@ -39,7 +40,7 @@ public class Enemy : Interactable
             float distance = Vector3.Distance(target.position, transform.position);
             if (distance <= lookRadius)
             {
-                agent.SetDestination(target.position);
+                if (movementEnabled) agent.SetDestination(target.position);
                 if (distance <= agent.stoppingDistance && attackCooldown <= 0f)
                 {
                     EntityStats playerStats = target.GetComponent<EntityStats>();
