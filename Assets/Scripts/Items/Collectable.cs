@@ -12,7 +12,7 @@ public class Collectable : MonoBehaviour
         if (other.CompareTag("Player") && !isCollected)
         {
             isCollected = true;
-            item.OnInteract();
+            item.OnUse();
             Player.instance.inventory.AddItem(item);
             OnCollection();
         }

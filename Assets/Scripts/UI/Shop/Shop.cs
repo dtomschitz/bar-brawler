@@ -20,8 +20,6 @@ public class Shop : MonoBehaviour
     {
         pages = new List<ShopPage>(categories.Count);
 
-        SetOpen(false);
-
         InstantiateCategories();
         OnPageChange(0);
     }

@@ -70,7 +70,8 @@ public class Enemy : Interactable
         agent.enabled = false;
         animator.OnDeath();
 
-        Instantiate(money, transform.position, Quaternion.identity);
+        //Instantiate(money, transform.position);
+        GetComponent<CapsuleCollider>().enabled = false;
         Destroy(gameObject, 2f);
     }
 

@@ -11,7 +11,7 @@ public class Inventory : MonoBehaviour
 
     public event EventHandler<InventoryEvent> ItemAdded;
     public event EventHandler<InventoryEvent> ItemRemoved;
-    //public event EventHandler<InventoryEvent> ItemUsed;
+    public event EventHandler<InventoryEvent> ItemUsed;
 
     void Start()
     {
@@ -55,10 +55,11 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    internal void UseItem(Item item)
+    public void UseItem(Item item)
     {
-        //ItemUsed?.Invoke(this, new InventoryEvent(item));
-        //item.OnUse();
+        ItemUsed?.Invoke(this, new InventoryEvent(item));
+        item.OnUse();
+        RemoveItem(item);
     }
 
     private Slot FindStackableSlot(Item item)

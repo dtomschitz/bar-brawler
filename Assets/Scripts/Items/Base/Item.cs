@@ -12,10 +12,10 @@ public class Item : ScriptableObject
 
     public Slot slot;
 
-    public virtual void OnInteract()
+    public virtual void OnUse()
     {
     }
-    
+
 }
 
 public enum ItemType

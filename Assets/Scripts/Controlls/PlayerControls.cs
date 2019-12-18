@@ -6,6 +6,7 @@ public class PlayerControls : MonoBehaviour
 {
     public float interactionRange;
     public LayerMask interactionLayer;
+    public LayerMask barkeeperLayer;
 
     private Inventory inventory;
     private EquipmentManager equipment;
@@ -55,15 +56,22 @@ public class PlayerControls : MonoBehaviour
             }
         }
 
-        /*if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKey(KeyCode.E))
         {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRange, interactionLayer);
+            if (equipment.CurrentEquipment != null && equipment.CurrentEquipment.type == ItemType.Consumable)
+            {
+                Debug.Log("Use Drink");
+                inventory.UseItem(equipment.CurrentEquipment);
+            }
+
+            /*Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRange, barkeeperLayer);
             foreach(Collider collider in colliders)
             {
+                Debug.Log(collider);
                 Interactable interactable = collider.GetComponent<Interactable>();
                 if (interactable != null) interactable.Interact();
-            }
-        }*/
+            }*/
+        }
     }
 
     private void SelectItem(int i)

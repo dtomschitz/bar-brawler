@@ -43,8 +43,8 @@ public class Barkeeper : Interactable
      
         if (other.gameObject.tag == "Player" && Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log("TEst");
-            Interact();
+            Debug.Log("DAD");
+          //  Interact();
         }
     }
 }
