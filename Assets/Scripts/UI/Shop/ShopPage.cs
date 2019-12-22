@@ -40,7 +40,7 @@ public class ShopPage : MonoBehaviour
         if (Player.instance.money >= shopItem.price)
         {
             Player.instance.inventory.AddItem(shopItem.item);
-            Player.instance.money -= shopItem.price;
+            Player.instance.RemoveMoney(shopItem.price);
         }
     }
 
