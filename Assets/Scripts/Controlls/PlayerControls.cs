@@ -101,21 +101,23 @@ public class PlayerControls : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             //TODO: Update item system and remove double implementation
-            if (equipment.CurrentItem != null && equipment.CurrentEquipment.type == ItemType.Weapon)
+            if (equipment.CurrentItem != null && equipment.CurrentItem is Revolver)
             {
-                equipment.CurrentItem.OnInteract();
                 Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit floorHit;
 
                 if (Physics.Raycast(camRay, out floorHit, enemyLayer))
                 {
-                    Debug.Log("Attacking Enemy");
                     Vector3 playerToMouse = floorHit.point - transform.position;
                     playerToMouse.y = 0f;
 
                     Quaternion newRotation = Quaternion.LookRotation(playerToMouse);
                     playerModel.transform.rotation = Quaternion.Slerp(playerModel.transform.rotation, newRotation, 1000f * Time.deltaTime);
                 }
+                equipment.CurrentItem.OnInteract();
+            } else
+            {
+                equipment.CurrentItem.OnInteract();
             }
         }
 

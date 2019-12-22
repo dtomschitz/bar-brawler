@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3142510562931473847}
   - component: {fileID: 8692222013822632270}
   - component: {fileID: -3198529737648262921}
-  - component: {fileID: -2182863354141640561}
+  - component: {fileID: 5981435556465098569}
   m_Layer: 0
   m_Name: Bottle
   m_TagString: Untagged
@@ -93,7 +93,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.42896366
   m_Center: {x: 0.0000008493662, y: 0.0000000037252899, z: 0.2098241}
---- !u!114 &-2182863354141640561
+--- !u!114 &5981435556465098569
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -102,7 +102,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6961491707144222098}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7ec119c43752d942875383a4b505cd1, type: 3}
+  m_Script: {fileID: 11500000, guid: 9da03d6b8c310a24384353cfeaf82d87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 0f548d04c6c79c54991a5c30a78323a2, type: 2}
