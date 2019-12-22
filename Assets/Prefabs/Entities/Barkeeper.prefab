@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5298615094346383240}
   - component: {fileID: 5298615094346383239}
   - component: {fileID: 5298615094346383238}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 190161690207229809}
   - component: {fileID: 5298615094421190203}
   - component: {fileID: 2664072015901314386}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Barkeeper
   m_TagString: Untagged
   m_Icon: {fileID: 0}

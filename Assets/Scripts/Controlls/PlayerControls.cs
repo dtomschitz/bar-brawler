@@ -121,7 +121,7 @@ public class PlayerControls : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             if (equipment.CurrentEquipment != null && equipment.CurrentEquipment.type == ItemType.Consumable)
             {
@@ -129,13 +129,13 @@ public class PlayerControls : MonoBehaviour
                 inventory.UseItem(equipment.CurrentEquipment);
             }
 
-            /*Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRange, barkeeperLayer);
+            Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRange, barkeeperLayer);
             foreach(Collider collider in colliders)
             {
                 Debug.Log(collider);
                 Interactable interactable = collider.GetComponent<Interactable>();
                 if (interactable != null) interactable.Interact();
-            }*/
+            }
         }
     }
 

@@ -19,13 +19,20 @@ public class Barkeeper : Interactable
 
     public override void Interact()
     {
+        base.Interact();
         if (shop.IsOpen)
         {
-            CloseShop();
+            InteractCanceled();
         } else
         {
             OpenShop();
         }
+    }
+
+    public override void InteractCanceled()
+    {
+        base.InteractCanceled();
+        CloseShop();
     }
 
     public void OpenShop()
@@ -38,13 +45,8 @@ public class Barkeeper : Interactable
         shop.SetOpen(false);
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerExit(Collider other)
     {
-     
-        if (other.gameObject.tag == "Player" && Input.GetKeyDown(KeyCode.E))
-        {
-            Debug.Log("DAD");
-          //  Interact();
-        }
+        if (other.gameObject.tag == "Player") InteractCanceled();
     }
 }
