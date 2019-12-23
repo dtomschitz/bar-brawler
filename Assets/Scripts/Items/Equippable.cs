@@ -10,7 +10,11 @@ public class Equippable : Collectable
         }
     }
 
-    public virtual void OnInteract()
+    public virtual void OnInteractPrimary()
+    {
+    }
+
+    public virtual void OnInteractSecondary()
     {
     }
 

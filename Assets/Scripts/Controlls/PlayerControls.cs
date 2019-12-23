@@ -114,10 +114,18 @@ public class PlayerControls : MonoBehaviour
                     Quaternion newRotation = Quaternion.LookRotation(playerToMouse);
                     playerModel.transform.rotation = Quaternion.Slerp(playerModel.transform.rotation, newRotation, 1000f * Time.deltaTime);
                 }
-                equipment.CurrentItem.OnInteract();
+                equipment.CurrentItem.OnInteractPrimary();
             } else
             {
-                equipment.CurrentItem.OnInteract();
+                equipment.CurrentItem.OnInteractPrimary();
+            }
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (equipment.CurrentItem != null)
+            {
+                equipment.CurrentItem.OnInteractSecondary();
             }
         }
 
@@ -132,7 +140,6 @@ public class PlayerControls : MonoBehaviour
             Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRange, barkeeperLayer);
             foreach(Collider collider in colliders)
             {
-                Debug.Log(collider);
                 Interactable interactable = collider.GetComponent<Interactable>();
                 if (interactable != null) interactable.Interact();
             }

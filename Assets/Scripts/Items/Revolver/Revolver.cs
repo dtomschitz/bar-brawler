@@ -27,7 +27,7 @@ public class Revolver : Equippable
         cooldown -= Time.deltaTime;
     }
 
-    public override void OnInteract()
+    public override void OnInteractPrimary()
     {
         if (cooldown <= 0f)
         {
