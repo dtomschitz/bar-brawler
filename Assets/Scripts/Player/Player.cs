@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     public Inventory inventory;
     public EquipmentManager equipment;
     public PlayerStats stats;
-    public EntityCombat combat;
+    public PlayerCombat combat;
     public PlayerAnimator animator;
     public GameObject player;
 
@@ -36,11 +36,11 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        stats = player.GetComponent<PlayerStats>();
-        combat = player.GetComponent<EntityCombat>();
+        /*stats = player.GetComponent<PlayerStats>();
+        combat = player.GetComponent<PlayerCombat>();
         animator = player.GetComponent<PlayerAnimator>();
         inventory = player.GetComponent<Inventory>();
-        equipment = player.GetComponent<EquipmentManager>();
+        equipment = player.GetComponent<EquipmentManager>();*/
      
         stats.OnHealthIsZero += Die;
 
