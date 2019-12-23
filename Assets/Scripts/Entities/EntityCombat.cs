@@ -5,7 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(EntityStats))]
 public class EntityCombat : MonoBehaviour
 {
-    //private float attackCooldown = 0f;
     public event Action OnAttack;
 
     public CombatState state;
@@ -13,7 +12,7 @@ public class EntityCombat : MonoBehaviour
     private EntityStats entityStats;
     private EntityStats enemyStats;
 
-    void Start()
+    protected virtual void Start()
     {
         entityStats = GetComponent<EntityStats>();
         state = CombatState.IDLE;
@@ -41,5 +40,6 @@ public class EntityCombat : MonoBehaviour
 public enum CombatState
 {
     IDLE,
+    BLOCKING,
     ATTACKING
 }
