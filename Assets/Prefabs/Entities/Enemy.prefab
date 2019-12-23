@@ -1495,7 +1495,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 20
   damage:
-    baseValue: 0
+    baseValue: 5
     modifiers: 
   healthBar: {fileID: 1743001444}
 --- !u!114 &6356219383110875253

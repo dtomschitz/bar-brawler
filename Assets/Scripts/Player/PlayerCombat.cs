@@ -12,7 +12,7 @@ public class PlayerCombat : EntityCombat
     protected override void Start()
     {
         base.Start();
-        currentMana = MAX_MANA;
+        currentMana = 0;
     }
 
     void Update()

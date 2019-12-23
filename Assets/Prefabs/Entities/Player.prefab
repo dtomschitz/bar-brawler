@@ -225,6 +225,7 @@ MonoBehaviour:
     baseValue: 20
     modifiers: 
   healthBar: {fileID: 0}
+  manaRegenerationSpeed: 10
 --- !u!114 &-4832910977479796684
 MonoBehaviour:
   m_ObjectHideFlags: 0

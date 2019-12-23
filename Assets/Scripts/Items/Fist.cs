@@ -52,7 +52,7 @@ public class Fist : Equippable
     private IEnumerator BlockingRoutine()
     {
         combat.state = CombatState.BLOCKING;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         combat.state = CombatState.IDLE;
     }
 }

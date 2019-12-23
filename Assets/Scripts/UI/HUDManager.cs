@@ -17,7 +17,12 @@ public class HUDManager : MonoBehaviour
     #endregion;
 
     public Text moneyText;
+    public Image healthBar;
 
+    public void UpdateHealthBar(float currentHealth, float maxHealth)
+    {
+        healthBar.fillAmount = currentHealth / maxHealth;
+    }
 
     public void UpdateMoneyText(int amount)
     {

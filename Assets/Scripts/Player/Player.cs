@@ -24,51 +24,22 @@ public class Player : MonoBehaviour
 
     public int money = 0;
 
-    private int selectedHotbarIndex = 0;
-    private KeyCode[] hotbarControls = new KeyCode[]
-    {
-        KeyCode.Alpha1, //Key 1
-        KeyCode.Alpha2, //Key 2
-        KeyCode.Alpha3, //Key 3
-        KeyCode.Alpha4, //Key 4
-        KeyCode.Alpha5, //Key 5
-    };
-
     void Start()
     {
-        /*stats = player.GetComponent<PlayerStats>();
-        combat = player.GetComponent<PlayerCombat>();
-        animator = player.GetComponent<PlayerAnimator>();
-        inventory = player.GetComponent<Inventory>();
-        equipment = player.GetComponent<EquipmentManager>();*/
-     
         stats.OnHealthIsZero += Die;
-
+        stats.OnTakeDamage += OnTakeDamage;
         HUDManager.instance.UpdateMoneyText(money);
     }
 
-    /*void LateUpdate()
-    {
-        for (int i = 0; i < hotbarControls.Length; i++)
-        {
-            if (Input.GetKeyDown(hotbarControls[i]))
-            {
-                selectedHotbarIndex = i;
-                if (selectedHotbarIndex < inventory.items.Count)
-                {
-                    Item item = inventory.items[i];
-                    if (item is Equippable) equipment.Equip(item as Equippable);
-                } else
-                {
-                    equipment.Unequip();
-                }
-            }
-        }
-    }*/
-
-    void Die()
+    private void Die()
     {
         //TODO: Playe Die 
+    }
+
+    private void OnTakeDamage()
+    {
+        //Debug.Log("dawd");
+        HUDManager.instance.UpdateHealthBar(stats.CurrentHealth, stats.maxHealth);
     }
 
     public void AddMoney(int amount)
@@ -81,9 +52,5 @@ public class Player : MonoBehaviour
     {
         money -= amount;
         HUDManager.instance.UpdateMoneyText(money);
-    }
-
-    public int GetSelectedHotbarIndex() {
-        return selectedHotbarIndex;
     }
 }
