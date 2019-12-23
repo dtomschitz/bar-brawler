@@ -15,7 +15,6 @@ public class ManaBar : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(playerCombat);
         manaBarImage.fillAmount = playerCombat.ManaNormalized;
     }
 }

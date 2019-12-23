@@ -38,6 +38,7 @@ public class Fist : Equippable
         if (combat.CurrentMana >= manaBlockingCost)
         {
             combat.UseMana(manaBlockingCost);
+            StartCoroutine(BlockingRoutine());
         }
     }
 
@@ -48,7 +49,7 @@ public class Fist : Equippable
         combat.state = CombatState.IDLE;
     }
 
-    private IEnumerable BlockingRoutine()
+    private IEnumerator BlockingRoutine()
     {
         combat.state = CombatState.BLOCKING;
         yield return new WaitForSeconds(1f);

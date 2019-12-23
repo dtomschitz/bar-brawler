@@ -1474,11 +1474,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6233071837183773105}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 932127210fa4921489682ad25f6a8c3b, type: 3}
+  m_Script: {fileID: 11500000, guid: 674dfd931788c5d45ac77f7296c3d43a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementEnabled: 0
-  money: {fileID: 8771599372214085871, guid: ee6c2e3026dda4d4dbeb86230a5da915, type: 3}
+  movementEnabled: 1
+  money: {fileID: 0}
   lookRadius: 10
   attackRate: 1
 --- !u!114 &6673331655994226945
@@ -1490,12 +1490,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6233071837183773105}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f128285fac5cc884997e5e9a0d2754d4, type: 3}
+  m_Script: {fileID: 11500000, guid: 1208ee69699d99741b68c1f1b4ffc4f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 30
+  maxHealth: 20
   damage:
-    baseValue: 2
+    baseValue: 0
     modifiers: 
   healthBar: {fileID: 1743001444}
 --- !u!114 &6356219383110875253

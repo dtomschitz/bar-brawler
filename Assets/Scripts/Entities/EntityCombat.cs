@@ -35,6 +35,11 @@ public class EntityCombat : MonoBehaviour
     {
         get { return state == CombatState.ATTACKING; }
     }
+
+    public bool IsBlocking
+    {
+        get { return state == CombatState.BLOCKING; }
+    }
 }
 
 public enum CombatState
