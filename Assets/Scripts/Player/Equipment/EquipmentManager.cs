@@ -16,7 +16,22 @@ public class EquipmentManager : MonoBehaviour
     {
         inventory = GetComponent<Inventory>();
         inventory.ItemUsed += OnItemUsed;
+    }
 
+    private void OnItemUsed(object sender, InventoryEvent e)
+    {
+        if (e.item == currentEquipment)
+        {
+            Unequip();
+            if (e.item.slot.Count == 0)
+            {
+                Item firstItem = inventory.slots[0].FirstItem;
+                if (firstItem is Equipment)
+                {
+                    EquipItem(firstItem as Equipment);
+                }
+            }
+        }
     }
 
     public void EquipItem(Equipment item)
@@ -25,8 +40,6 @@ public class EquipmentManager : MonoBehaviour
         Equippable equippable = prefabCopy.GetComponent<Equippable>();
         if (equippable != null)
         {
-            Debug.Log(equippable.item.name);
-
             OnItemEquipped?.Invoke(this, new EquipmentEvent(item, currentEquipment));
             equippable.OnEquip();
 
@@ -58,19 +71,6 @@ public class EquipmentManager : MonoBehaviour
         currentItem = null;
         currentEquipment = null;
         Destroy(prefab);
-    }
-
-    private void OnItemUsed(object sender, InventoryEvent e)
-    {
-        if (e.item == currentEquipment)
-        {
-            Unequip();
-            Item firstItem = inventory.slots[0].FirstItem;
-            if (firstItem is Equipment)
-            {
-                EquipItem(firstItem as Equipment);
-            }
-        }
     }
 
     public Equippable CurrentItem

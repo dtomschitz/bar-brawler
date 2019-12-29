@@ -158,7 +158,10 @@ public class PlayerControls : MonoBehaviour
         Debug.Log(inventory.slots.Count);
         Item item = inventory.slots[i].FirstItem;
         //if (item != null) inventory.UseItem(item as Equippable);
-        if (item != null && item is Equipment) equipment.EquipItem(item as Equipment);
+        if (item != null && item is Equipment)
+        {
+            equipment.EquipItem(item as Equipment);
+        }
     }
 
     private void OnDrawGizmosSelected()

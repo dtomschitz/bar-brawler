@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HitColider : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "Enemy")
         {
