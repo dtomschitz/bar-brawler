@@ -25,7 +25,7 @@ public class EntityStats : MonoBehaviour
     {  
     }
 
-    public void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage)
     {
         damage = Mathf.Clamp(damage, 0, float.MaxValue);
         CurrentHealth -= damage;

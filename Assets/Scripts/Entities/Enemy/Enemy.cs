@@ -66,7 +66,7 @@ public class Enemy : Interactable
         //if (DamagePopup) ShowDamagePopup();
     }
 
-    void Death()
+    private void Death()
     {
         agent.enabled = false;
         animator.OnDeath();

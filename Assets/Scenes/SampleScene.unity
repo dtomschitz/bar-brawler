@@ -187,6 +187,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6673331655994226945, guid: 9354e9efdde01b9438de6d33a1e12199,
+        type: 3}
+      propertyPath: maxHealth
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9354e9efdde01b9438de6d33a1e12199, type: 3}
 --- !u!1 &199084739
@@ -2553,6 +2558,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2771242930815221546, guid: 2c77cddebf528e1499be76a67d7f0676,
+        type: 3}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 2139640385}
+    - target: {fileID: 2771242930815221546, guid: 2c77cddebf528e1499be76a67d7f0676,
+        type: 3}
+      propertyPath: damage.baseValue
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 2771242930815221549, guid: 2c77cddebf528e1499be76a67d7f0676,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2618,11 +2633,6 @@ PrefabInstance:
       propertyPath: pivot
       value: 
       objectReference: {fileID: 1329877445}
-    - target: {fileID: 2771242930815221546, guid: 2c77cddebf528e1499be76a67d7f0676,
-        type: 3}
-      propertyPath: healthBar
-      value: 
-      objectReference: {fileID: 2139640385}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c77cddebf528e1499be76a67d7f0676, type: 3}
 --- !u!1001 &5105441965190917686
