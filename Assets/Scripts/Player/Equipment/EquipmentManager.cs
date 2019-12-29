@@ -62,7 +62,6 @@ public class EquipmentManager : MonoBehaviour
 
     private void OnItemUsed(object sender, InventoryEvent e)
     {
-        Debug.Log(e.item == currentEquipment);
         if (e.item == currentEquipment)
         {
             Unequip();

@@ -47,6 +47,9 @@ public class PlayerControls : MonoBehaviour
 
     void Update()
     {
+        //if (!EventSystem.current.IsPointerOverGameObject()) return;
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
@@ -98,26 +101,31 @@ public class PlayerControls : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonDown(0))
+        /*if (Input.GetMouseButtonDown(0))
         {
             //TODO: Update item system and remove double implementation
-            if (equipment.CurrentItem != null && equipment.CurrentItem is Revolver)
-            {
-                Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit floorHit;
 
-                if (Physics.Raycast(camRay, out floorHit, enemyLayer))
+            if (equipment.CurrentItem != null)
+            {
+                if (equipment.CurrentItem is Revolver)
                 {
-                    Vector3 playerToMouse = floorHit.point - transform.position;
-                    playerToMouse.y = 0f;
+                    Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    RaycastHit floorHit;
 
-                    Quaternion newRotation = Quaternion.LookRotation(playerToMouse);
-                    playerModel.transform.rotation = Quaternion.Slerp(playerModel.transform.rotation, newRotation, 1000f * Time.deltaTime);
+                    if (Physics.Raycast(camRay, out floorHit, enemyLayer))
+                    {
+                        Vector3 playerToMouse = floorHit.point - transform.position;
+                        playerToMouse.y = 0f;
+
+                        Quaternion newRotation = Quaternion.LookRotation(playerToMouse);
+                        playerModel.transform.rotation = Quaternion.Slerp(playerModel.transform.rotation, newRotation, 1000f * Time.deltaTime);
+                    }
+                    equipment.CurrentItem.OnInteractPrimary();
                 }
-                equipment.CurrentItem.OnInteractPrimary();
-            } else
-            {
-                equipment.CurrentItem.OnInteractPrimary();
+                else
+                {
+                    equipment.CurrentItem.OnInteractPrimary();
+                }
             }
         }
 
@@ -127,7 +135,7 @@ public class PlayerControls : MonoBehaviour
             {
                 equipment.CurrentItem.OnInteractSecondary();
             }
-        }
+        }*/
 
         if (Input.GetKeyDown(KeyCode.E))
         {
