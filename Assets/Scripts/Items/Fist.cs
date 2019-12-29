@@ -24,6 +24,7 @@ public class Fist : Equippable
 
     public override void OnInteractPrimary()
     {
+        base.OnInteractPrimary();
         if (attackCooldown <= 0f)
         {
             attackCooldown = 1f / attackRate;

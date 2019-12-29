@@ -26,8 +26,6 @@ public class Shop : MonoBehaviour
 
     private void OnPageChange(int id)
     {
-        Debug.Log("New Page");
-
         if (currentPage != null)
         {
             ShopPage newPage = pages[id];

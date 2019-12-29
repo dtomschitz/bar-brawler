@@ -239,6 +239,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   manaRegenerationAmount: 30
+  manaRegenerationSpeed: 5
 --- !u!114 &32329125170208184
 MonoBehaviour:
   m_ObjectHideFlags: 0

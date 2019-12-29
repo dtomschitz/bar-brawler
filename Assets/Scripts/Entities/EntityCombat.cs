@@ -18,7 +18,7 @@ public class EntityCombat : MonoBehaviour
         state = CombatState.IDLE;
     }
 
-    public void Attack(EntityStats stats)
+    public virtual void Attack(EntityStats stats)
     {
         enemyStats = stats;
         StartCoroutine(DoDamge(.15f));

@@ -60,8 +60,6 @@ public class Enemy : Interactable
     {
         if (stats.IsDead) return;
 
-        Debug.Log("Attack Enemie");
-
         EntityCombat combat = Player.instance.combat;
         combat.Attack(stats);
 

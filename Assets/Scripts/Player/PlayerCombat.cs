@@ -6,35 +6,42 @@ public class PlayerCombat : EntityCombat
 {
     public const int MAX_MANA = 100;
     public float manaRegenerationAmount;
+    public float manaRegenerationSpeed;
 
-    private float currentMana;
+    public float CurrentMana { get; protected set; }
 
     protected override void Start()
     {
         base.Start();
-        currentMana = 0;
+        CurrentMana = 0;
     }
 
     void Update()
     {
-        currentMana += manaRegenerationAmount * Time.deltaTime;
-        currentMana = Mathf.Clamp(currentMana, 0f, MAX_MANA);
+        AddMana(manaRegenerationAmount * Time.deltaTime / manaRegenerationSpeed);
     }
 
-    public void UseMana(int amount)
+    public override void Attack(EntityStats stats)
     {
-        if (currentMana >= amount) {
-            currentMana -= amount;
+        base.Attack(stats);
+        AddMana(10);
+    }
+
+    public void AddMana(float amount)
+    {
+        CurrentMana += amount;
+        CurrentMana = Mathf.Clamp(CurrentMana, 0f, MAX_MANA);
+    }
+
+    public void UseMana(float amount)
+    {
+        if (CurrentMana >= amount) {
+            CurrentMana -= amount;
         }
     }
 
     public float ManaNormalized
     {
-        get { return currentMana / MAX_MANA; }
-    }
-
-    public float CurrentMana
-    {
-        get { return currentMana; }
+        get { return CurrentMana / MAX_MANA; }
     }
 }

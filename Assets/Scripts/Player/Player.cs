@@ -38,7 +38,6 @@ public class Player : MonoBehaviour
 
     private void OnTakeDamage()
     {
-        //Debug.Log("dawd");
         HUDManager.instance.UpdateHealthBar(stats.CurrentHealth, stats.maxHealth);
     }
 

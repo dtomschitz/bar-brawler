@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Hotbar : MonoBehaviour
 {
@@ -33,7 +34,7 @@ public class Hotbar : MonoBehaviour
     }*/
 
     private Inventory inventory;
-    private HotbarSlot[] slots;
+    private List<HotbarSlot> slots;
 
     void Start()
     {
@@ -41,12 +42,12 @@ public class Hotbar : MonoBehaviour
         inventory.ItemAdded += OnItemAdded;
         inventory.ItemRemoved += OnItemRemoved;
 
-        slots = GetComponentsInChildren<HotbarSlot>();
+        slots = new List<HotbarSlot>(GetComponentsInChildren<HotbarSlot>());
         foreach (HotbarSlot slot in slots) slot.Clear();
     }
 
     private void OnItemAdded(object sender, InventoryEvent e) {
-        for (int i = 0; i < slots.Length; i++)
+        for (int i = 0; i < slots.Count; i++)
         {
             if (i == e.item.slot.Id)
             {
@@ -58,7 +59,7 @@ public class Hotbar : MonoBehaviour
 
     private void OnItemRemoved(object sender, InventoryEvent e)
     {
-        for (int i = 0; i < slots.Length; i++)
+        for (int i = 0; i < slots.Count; i++)
         {
             if (i == e.item.slot.Id)
             {

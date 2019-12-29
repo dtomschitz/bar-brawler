@@ -101,7 +101,7 @@ public class PlayerControls : MonoBehaviour
             }
         }
 
-        /*if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             //TODO: Update item system and remove double implementation
 
@@ -135,13 +135,12 @@ public class PlayerControls : MonoBehaviour
             {
                 equipment.CurrentItem.OnInteractSecondary();
             }
-        }*/
+        }
 
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (equipment.CurrentEquipment != null && equipment.CurrentEquipment.type == ItemType.Consumable)
             {
-                Debug.Log("Use Drink");
                 inventory.UseItem(equipment.CurrentEquipment);
             }
 
