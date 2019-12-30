@@ -20,7 +20,6 @@ public class PlayerControls : MonoBehaviour
     public GameObject playerModel;
     public Transform pivot;
 
-    private Rigidbody playerRigidbody;
     private CharacterController character;
     private Inventory inventory;
     private EquipmentManager equipment;
@@ -37,7 +36,6 @@ public class PlayerControls : MonoBehaviour
 
     void Start()
     {
-        playerRigidbody = GetComponent<Rigidbody>();
         character = GetComponent<CharacterController>();
         inventory = GetComponent<Inventory>();
         equipment = GetComponent<EquipmentManager>();
@@ -47,8 +45,7 @@ public class PlayerControls : MonoBehaviour
 
     void Update()
     {
-        //if (!EventSystem.current.IsPointerOverGameObject()) return;
-        if (EventSystem.current.IsPointerOverGameObject()) return;
+        //if (EventSystem.current.IsPointerOverGameObject()) return;
 
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
@@ -129,7 +126,7 @@ public class PlayerControls : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButton(1))
         {
             if (equipment.CurrentItem != null)
             {

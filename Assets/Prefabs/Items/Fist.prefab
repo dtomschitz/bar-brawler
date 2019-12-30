@@ -152,3 +152,5 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: dfef5eb85bcbea8499448b629546c92d, type: 2}
   isCollected: 0
   attackRate: 20
+  secondaryUseRate: 100
+  manaBlockingCost: 1

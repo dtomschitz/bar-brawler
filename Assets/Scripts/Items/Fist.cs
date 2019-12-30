@@ -5,8 +5,10 @@ using UnityEngine;
 public class Fist : Equippable
 {
     public float attackRate = 20f;
-    public int manaBlockingCost = 20;
+    public float secondaryUseRate = 20f;
+    public float manaBlockingCost = 20f;
     private float attackCooldown = 0f;
+    private float secondaryCooldown = 0f;
 
     private PlayerCombat combat;
     private PlayerAnimator animator;
@@ -20,6 +22,7 @@ public class Fist : Equippable
     void Update()
     {
         attackCooldown -= Time.deltaTime;
+        secondaryCooldown -= Time.deltaTime;
     }
 
     public override void OnInteractPrimary()
@@ -28,18 +31,23 @@ public class Fist : Equippable
         if (attackCooldown <= 0f)
         {
             attackCooldown = 1f / attackRate;
+            combat.state = CombatState.ATTACKING;
             StartCoroutine(AttackRoutine());
             animator.OnAttack();
+        } else
+        {
+            combat.state = CombatState.IDLE;
         }
     }
 
     public override void OnInteractSecondary()
     {
         base.OnInteractSecondary();
-        if (combat.CurrentMana >= manaBlockingCost)
+        if (secondaryCooldown <= 0f && combat.CurrentMana >= manaBlockingCost)
         {
-            combat.UseMana(manaBlockingCost);
+            secondaryCooldown = 1f / secondaryUseRate;
             StartCoroutine(BlockingRoutine());
+            combat.UseMana();
         }
     }
 
@@ -53,7 +61,7 @@ public class Fist : Equippable
     private IEnumerator BlockingRoutine()
     {
         combat.state = CombatState.BLOCKING;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         combat.state = CombatState.IDLE;
     }
 }

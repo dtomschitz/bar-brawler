@@ -13,7 +13,7 @@ public class PlayerCombat : EntityCombat
     protected override void Start()
     {
         base.Start();
-        CurrentMana = 0;
+        CurrentMana = MAX_MANA;
     }
 
     void Update()
@@ -33,14 +33,13 @@ public class PlayerCombat : EntityCombat
         CurrentMana = Mathf.Clamp(CurrentMana, 0f, MAX_MANA);
     }
 
-    public void UseMana(float amount)
+    public void UseMana(float amount = 1f)
     {
-        if (CurrentMana >= amount) {
-            CurrentMana -= amount;
-        }
+        amount = Mathf.Clamp(amount, 0, float.MaxValue);
+        CurrentMana -= amount;
     }
 
-    public float ManaNormalized
+    public float NormalizedMana
     {
         get { return CurrentMana / MAX_MANA; }
     }
