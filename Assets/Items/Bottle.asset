@@ -16,9 +16,9 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: ccec83482d316e5459b221d80dff338c, type: 3}
   type: 1
   addToInventory: 1
+  itemType: 2
   prefab: {fileID: 6961491707144222098, guid: 4a5398231e78ca9408932335d080cea2, type: 3}
   pickPosition: {x: 1.16, y: 3, z: -2.37}
   pickRotation: {x: 52.604, y: -30.608, z: -48.37}
   dropRotation: {x: 0, y: 0, z: 0}
-  weaponType: 2
   damageModifier: 2

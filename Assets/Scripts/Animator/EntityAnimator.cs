@@ -20,7 +20,7 @@ public class EntityAnimator : MonoBehaviour
         animator.SetTrigger("death");
     }
     
-    public void SetWeapon(WeaponType type)
+    public void SetItem(Items type)
     {
         int currentWeaponType = animator.GetInteger("weapon");
         int newWeaponType = (int)type;

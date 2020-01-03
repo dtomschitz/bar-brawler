@@ -24,9 +24,10 @@ public enum ItemType
     Weapon
 }
 
-public enum WeaponType
+public enum Items
 {
     Fist,
     Revolver,
-    Bottle
+    Bottle,
+    Drink
 }

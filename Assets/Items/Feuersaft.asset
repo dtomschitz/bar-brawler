@@ -16,6 +16,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: ccec83482d316e5459b221d80dff338c, type: 3}
   type: 0
   addToInventory: 1
+  itemType: 3
   prefab: {fileID: 505762499375796852, guid: 81c0912fe5d08c9448f68c93c8ac2b75, type: 3}
   pickPosition: {x: -1.24, y: -0.57, z: -3.09}
   pickRotation: {x: -173.608, y: 199.104, z: -128.969}

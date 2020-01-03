@@ -50,9 +50,9 @@ public class EquipmentManager : MonoBehaviour
             currentItem = equippable;
             currentEquipment = item;
 
-            if (item.type == ItemType.Weapon && item is Weapon)
+            if (item is Equipment)
             {
-                Player.instance.animator.SetWeapon((item as Weapon).weaponType);
+                Player.instance.animator.SetItem(item.itemType);
             }
         }
 

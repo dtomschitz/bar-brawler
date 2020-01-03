@@ -5,6 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Weapon", menuName = "Items/Weapon")]
 public class Weapon : Equipment
 {
-    public WeaponType weaponType;
+    //public Items weaponType;
     public int damageModifier;
 }
