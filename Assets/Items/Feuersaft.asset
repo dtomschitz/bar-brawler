@@ -17,7 +17,7 @@ MonoBehaviour:
   type: 0
   addToInventory: 1
   prefab: {fileID: 505762499375796852, guid: 81c0912fe5d08c9448f68c93c8ac2b75, type: 3}
-  pickPosition: {x: -2.77, y: -2.13, z: -3.07}
-  pickRotation: {x: -30.737, y: 42.214, z: -3.268}
+  pickPosition: {x: -1.24, y: -0.57, z: -3.09}
+  pickRotation: {x: -173.608, y: 199.104, z: -128.969}
   dropRotation: {x: 0, y: 0, z: 0}
   healingAmount: 50
