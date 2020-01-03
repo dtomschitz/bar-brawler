@@ -28,7 +28,7 @@ public class Enemy : Interactable
         animator = GetComponent<EnemyAnimator>();
 
         stats = GetComponent<EntityStats>();
-        stats.OnHealthIsZero += Death;
+        stats.OnDeath += Death;
     }
 
     void Update()
@@ -44,7 +44,7 @@ public class Enemy : Interactable
                 if (distance <= agent.stoppingDistance && attackCooldown <= 0f)
                 {
                     EntityStats playerStats = target.GetComponent<EntityStats>();
-                    if (playerStats != null)
+                    if (playerStats != null && !playerStats.IsDead)
                     {
                         attackCooldown = 1f / attackRate;
                         combat.Attack(playerStats);

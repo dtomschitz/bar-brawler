@@ -15,25 +15,30 @@ public class Player : MonoBehaviour
 
     #endregion;
 
-    public Inventory inventory;
-    public EquipmentManager equipment;
+    public PlayerControls controls;
     public PlayerStats stats;
     public PlayerCombat combat;
     public PlayerAnimator animator;
+
+    public Inventory inventory;
+    public EquipmentManager equipment;
+
     public GameObject player;
 
     public int money = 0;
 
     void Start()
     {
-        stats.OnHealthIsZero += Die;
+        stats.OnDeath += OnDeath;
         stats.OnTakeDamage += OnTakeDamage;
         HUDManager.instance.UpdateMoneyText(money);
     }
 
-    private void Die()
+    private void OnDeath()
     {
-        //TODO: Playe Die 
+        controls.enableMovement = false;
+        animator.OnDeath();
+        Debug.Log("Player death");
     }
 
     private void OnTakeDamage()

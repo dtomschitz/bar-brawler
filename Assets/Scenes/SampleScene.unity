@@ -247,11 +247,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebd3a80d19d54064d9cad1321cd1b193, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 1958637424949074667}
-  equipment: {fileID: 1958637424949074666}
+  controls: {fileID: 1958637424949074670}
   stats: {fileID: 1958637424949074674}
   combat: {fileID: 1958637424949074668}
   animator: {fileID: 4407282082859382880}
+  inventory: {fileID: 1958637424949074667}
+  equipment: {fileID: 1958637424949074666}
   player: {fileID: 1958637424949074665}
   money: 0
 --- !u!4 &247322026
@@ -2553,6 +2554,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 07bb7d99eb694094cab1c075fbeea5c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1958637424949074670 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2518191188709225780, guid: 2c77cddebf528e1499be76a67d7f0676,
+    type: 3}
+  m_PrefabInstance: {fileID: 4421150132736468440}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1958637424949074665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ba8e499eaa35af4e90131c39bfccbec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1958637424949074674 stripped

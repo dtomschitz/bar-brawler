@@ -22,11 +22,11 @@ public class EntityAnimator : MonoBehaviour
     
     public void SetItem(Items type)
     {
-        int currentWeaponType = animator.GetInteger("weapon");
+        int currentWeaponType = animator.GetInteger("item");
         int newWeaponType = (int)type;
 
         if (currentWeaponType == newWeaponType) return;
 
-        animator.SetInteger("weapon", newWeaponType);
+        animator.SetInteger("item", newWeaponType);
     }
 }

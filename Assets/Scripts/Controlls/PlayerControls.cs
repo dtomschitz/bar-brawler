@@ -9,6 +9,7 @@ public class PlayerControls : MonoBehaviour
     public float jumpForce;
     public float gravityScale;
     public float rotateSpeed;
+    public bool enableMovement = true;
     private Vector3 moveDirection;
 
     [Header("Interaction")]
@@ -45,13 +46,14 @@ public class PlayerControls : MonoBehaviour
 
     void Update()
     {
-        //if (EventSystem.current.IsPointerOverGameObject()) return;
+        if (enableMovement)
+        {
+            float h = Input.GetAxis("Horizontal");
+            float v = Input.GetAxis("Vertical");
 
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
-
-        Move(h, v);
-        HandleInput();
+            Move(h, v);
+            HandleInput();
+        }
     }
 
     private void Move(float h, float v)

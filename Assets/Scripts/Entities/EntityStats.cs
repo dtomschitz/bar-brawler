@@ -9,7 +9,7 @@ public class EntityStats : MonoBehaviour
     public Stat damage;
 
     public float CurrentHealth { get; protected set; }
-    public event Action OnHealthIsZero;
+    public event Action OnDeath;
     public event Action OnTakeDamage;
 
     /*[Header("HealthBar")]
@@ -33,7 +33,7 @@ public class EntityStats : MonoBehaviour
         OnTakeDamage?.Invoke();
         if (IsDead)
         {
-            OnHealthIsZero?.Invoke();
+            OnDeath?.Invoke();
         }
     }
 
