@@ -8,7 +8,7 @@ public class WaveSpawner : MonoBehaviour
 
 
     public Transform enemyPrefab;
-    public Transform spawnPoint;
+    public Transform[] spawnPoints;
 
     public bool enableSpawing;
 
@@ -80,7 +80,6 @@ public class WaveSpawner : MonoBehaviour
         {
             waveIndex++;
             stateOfGameText.text = waveIndex.ToString();
-            Debug.Log(waveIndex.ToString());
             state = spawnState.SPAWNING;
 
             for (int i = 0; i < waveIndex * 2; i++)
@@ -96,7 +95,8 @@ public class WaveSpawner : MonoBehaviour
 
         void SpawnEnemy()
         {
-            Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+            Transform randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+            Instantiate(enemyPrefab, randomSpawnPoint.position, randomSpawnPoint.rotation);
         }
 
     }
