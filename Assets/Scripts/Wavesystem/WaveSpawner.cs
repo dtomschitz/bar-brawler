@@ -83,7 +83,7 @@ public class WaveSpawner : MonoBehaviour
             Debug.Log(waveIndex.ToString());
             state = spawnState.SPAWNING;
 
-            for (int i = 0; i < waveIndex; i++)
+            for (int i = 0; i < waveIndex * 2; i++)
             {
                 SpawnEnemy();
                 yield return new WaitForSeconds(1f);
