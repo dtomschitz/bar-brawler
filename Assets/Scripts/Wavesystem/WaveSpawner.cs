@@ -45,8 +45,9 @@ public class WaveSpawner : MonoBehaviour
 
         if (enableSpawing)
         {
-            if (waveCountdown <= 0f)
+            if (waveCountdown <= 0f || Input.GetKeyDown(KeyCode.LeftShift))
             {
+                waveCountdown = 0f;
                 if (state != spawnState.SPAWNING)
                 {
                     StartCoroutine(SpawnWave());
