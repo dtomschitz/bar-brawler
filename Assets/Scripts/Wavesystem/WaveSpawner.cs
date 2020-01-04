@@ -12,7 +12,7 @@ public class WaveSpawner : MonoBehaviour
 
     public bool enableSpawing;
 
-    public float timeBetweenWaves = 5.75f;
+    public float timeBetweenWaves = 31f;
     private float waveCountdown;
 
     public Text stateOfGameText;
@@ -101,5 +101,4 @@ public class WaveSpawner : MonoBehaviour
         }
 
     }
-
 }
