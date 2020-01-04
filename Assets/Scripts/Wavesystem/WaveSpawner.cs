@@ -12,7 +12,7 @@ public class WaveSpawner : MonoBehaviour
 
     public bool enableSpawing;
 
-    public float timeBetweenWaves = 5.5f;
+    public float timeBetweenWaves = 5.75f;
     private float waveCountdown;
 
     public Text stateOfGameText;
@@ -55,47 +55,50 @@ public class WaveSpawner : MonoBehaviour
             else
             {
                 waveCountdown -= Time.deltaTime;
+                if (waveCountdown > 0f)
+                {
+                    stateOfGameText.text = Mathf.Floor(waveCountdown).ToString();
+                }
             }
         }
 
-        stateOfGameText.text = Mathf.Floor(waveCountdown).ToString();
-    }
-
-    bool enemyIsAlive()
-    {
-        searchCountdown -= Time.deltaTime;
-        if (searchCountdown <= 0f)
+        bool enemyIsAlive()
         {
-            searchCountdown = 1f;
-            if (GameObject.FindGameObjectWithTag("Enemy") == null)
+            searchCountdown -= Time.deltaTime;
+            if (searchCountdown <= 0f)
             {
-                return false;
+                searchCountdown = 1f;
+                if (GameObject.FindGameObjectWithTag("Enemy") == null)
+                {
+                    return false;
+                }
             }
+            return true;
         }
-        return true;
-    }
 
-    IEnumerator SpawnWave()
-    {
-        waveIndex++;
-        stateOfGameText.text = waveIndex.ToString();
-        Debug.Log(waveIndex.ToString());
-        state = spawnState.SPAWNING;
-
-        for (int i = 0; i < waveIndex; i++)
+        IEnumerator SpawnWave()
         {
-            SpawnEnemy();
-            yield return new WaitForSeconds(1f);
+            waveIndex++;
+            stateOfGameText.text = waveIndex.ToString();
+            Debug.Log(waveIndex.ToString());
+            state = spawnState.SPAWNING;
 
+            for (int i = 0; i < waveIndex; i++)
+            {
+                SpawnEnemy();
+                yield return new WaitForSeconds(1f);
+
+            }
+
+            state = spawnState.WAITING;
+            yield break;
         }
 
-        state = spawnState.WAITING;
-        yield break;
-    }
+        void SpawnEnemy()
+        {
+            Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+        }
 
-    void SpawnEnemy()
-    {
-        Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
     }
 
 }
