@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0e6bda28c50a834588de6c5026f81d8, type: 3}
-  m_Name: Weapons
+  m_Script: {fileID: 11500000, guid: a8c283d6bc48df746a0a4b0fbda25744, type: 3}
+  m_Name: Knife
   m_EditorClassIdentifier: 
-  name: Waffen
-  items:
-  - {fileID: 11400000, guid: d123e651e720b6043b5e6bd830c60bdc, type: 2}
-  - {fileID: 11400000, guid: bea418ffaf722294a88cc530a8ed4c88, type: 2}
+  item: {fileID: 11400000, guid: 3382fc6221849ac498632dab982e6baf, type: 2}
+  price: 50

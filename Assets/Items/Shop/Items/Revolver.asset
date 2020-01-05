@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Revolver
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 7a7f82a596053554a9708f359d62dc02, type: 2}
-  price: 10
+  price: 120

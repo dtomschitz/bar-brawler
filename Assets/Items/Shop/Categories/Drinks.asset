@@ -13,3 +13,7 @@ MonoBehaviour:
   m_Name: Drinks
   m_EditorClassIdentifier: 
   name: Drinks
+  items:
+  - {fileID: 11400000, guid: 4ed6ebb9c07d9244592a720c27a633ed, type: 2}
+  - {fileID: 11400000, guid: c59c03e6410f3724fa95a8912ae52a65, type: 2}
+  - {fileID: 11400000, guid: b4a98ce8c60b4694aa5a9eb273bd0dda, type: 2}
