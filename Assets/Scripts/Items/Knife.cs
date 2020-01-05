@@ -24,11 +24,13 @@ public class Knife : WeaponItem
     private IEnumerator KnifeBleedOut(Enemy enemy)
     {
         var pastTime = 0f;
-        while (0 < bleedOutTime)
+        while (pastTime < bleedOutTime)
         {
+            Debug.Log("Knife");
+
             enemy.Stats.TakeDamage(bleedOutDamage);
             pastTime++;
-            yield return new WaitForSeconds(bleedOutTime);
+            yield return new WaitForSeconds(1f);
         }
     }
 }

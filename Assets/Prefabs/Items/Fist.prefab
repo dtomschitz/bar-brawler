@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 475282169417098915}
   - component: {fileID: 7184526142820555251}
-  - component: {fileID: 475282169417098914}
   - component: {fileID: 6534384913664818136}
+  - component: {fileID: 475282169417098914}
   m_Layer: 0
   m_Name: Fist
   m_TagString: Untagged
@@ -46,6 +46,18 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.3
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6534384913664818136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 475282169417098924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06df011b7b45bc74ab4e2eab13f11c80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &475282169417098914
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,15 +76,3 @@ MonoBehaviour:
   secondaryAttackRate: 20
   primaryManaRequired: 0
   secondaryManaRequired: 20
---- !u!114 &6534384913664818136
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 475282169417098924}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06df011b7b45bc74ab4e2eab13f11c80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

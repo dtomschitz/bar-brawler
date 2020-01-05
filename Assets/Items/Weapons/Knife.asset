@@ -17,7 +17,7 @@ MonoBehaviour:
   type: 0
   addToInventory: 1
   itemType: 0
-  prefab: {fileID: 0}
+  prefab: {fileID: 8089128617610082352, guid: c3e39dcb3966885448c77854c11f91e2, type: 3}
   pickPosition: {x: 0, y: 0, z: 0}
   pickRotation: {x: 0, y: 0, z: 0}
   dropRotation: {x: 0, y: 0, z: 0}
