@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class Knife : WeaponItem
 {
+
+    [Header("Knife Attributes")]
     public float bleedOutDamage = 2f;
     public float bleedOutTime = 10f;
+    public float timeBetweenDamage = 1f;
 
     public override void OnPrimaryAccomplished()
     {
@@ -26,11 +29,9 @@ public class Knife : WeaponItem
         var pastTime = 0f;
         while (pastTime < bleedOutTime)
         {
-            Debug.Log("Knife");
-
             enemy.Stats.TakeDamage(bleedOutDamage);
             pastTime++;
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(timeBetweenDamage);
         }
     }
 }
