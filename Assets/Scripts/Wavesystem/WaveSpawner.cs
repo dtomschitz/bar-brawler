@@ -14,7 +14,7 @@ public class WaveSpawner : MonoBehaviour
     public float timeBetweenWaves = 31f;
 
     public Text stateOfGameText;
-    public Text skipCountdownInformation;
+    public Text skipCountdownText;
 
     public SpawnState state = SpawnState.COUNTING;
 
@@ -46,7 +46,7 @@ public class WaveSpawner : MonoBehaviour
             if (waveCountdown <= 0f || Input.GetKeyDown(KeyCode.LeftShift))
             {
                 waveCountdown = 0f;
-                skipCountdownInformation.gameObject.SetActive(false);
+                skipCountdownText.gameObject.SetActive(false);
                 if (state != SpawnState.SPAWNING)
                 {
                     StartCoroutine(SpawnWave());
@@ -54,7 +54,7 @@ public class WaveSpawner : MonoBehaviour
             }
             else
             {
-                skipCountdownInformation.gameObject.SetActive(true);
+                skipCountdownText.gameObject.SetActive(true);
                 waveCountdown -= Time.deltaTime;
                 if (waveCountdown > 0f)
                 {

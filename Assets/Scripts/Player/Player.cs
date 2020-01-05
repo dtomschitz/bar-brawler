@@ -30,7 +30,6 @@ public class Player : MonoBehaviour
     void Start()
     {
         stats.OnDeath += OnDeath;
-        stats.OnTakeDamage += OnTakeDamage;
         HUDManager.instance.UpdateMoneyText(money);
     }
 
@@ -38,11 +37,6 @@ public class Player : MonoBehaviour
     {
         controls.enableMovement = false;
         animator.OnDeath();
-    }
-
-    private void OnTakeDamage()
-    {
-        //HUDManager.instance.UpdateHealthBar(stats.CurrentHealth, stats.maxHealth);
     }
 
     public void AddMoney(int amount)
