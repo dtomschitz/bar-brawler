@@ -288,10 +288,10 @@ MonoBehaviour:
   - {fileID: 2043621389}
   - {fileID: 1907455231}
   - {fileID: 2131024439}
-  enableWaves: 0
+  enableWaves: 1
   timeBetweenWaves: 31
   stateOfGameText: {fileID: 896722174}
-  skipCountdownText: {fileID: 0}
+  skipCountdownText: {fileID: 415428771}
   state: 2
 --- !u!1 &330198266
 GameObject:

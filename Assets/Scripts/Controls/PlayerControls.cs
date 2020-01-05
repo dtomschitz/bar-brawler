@@ -136,7 +136,7 @@ public class PlayerControls : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (WaveSpawner.instance.IsWaveRunning)
+            if (!WaveSpawner.instance.IsWaveRunning)
             {
                 Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRange, barkeeperLayer);
                 foreach (Collider collider in colliders)
