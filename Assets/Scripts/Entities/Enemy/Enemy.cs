@@ -48,7 +48,7 @@ public class Enemy : Interactable
                     {
                         attackCooldown = 1f / attackRate;
                         combat.Attack(playerStats);
-                        animator.OnAttack();
+                        animator.OnPrimary();
                     }
                 }
                 FaceTarget();

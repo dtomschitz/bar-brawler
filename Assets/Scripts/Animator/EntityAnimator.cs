@@ -10,9 +10,14 @@ public class EntityAnimator : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
     }
 
-    public virtual void OnAttack()
+    public virtual void OnPrimary()
     {
         animator.SetTrigger("attack");
+    }
+
+    public virtual void OnSecondary()
+    {
+        animator.SetTrigger("secondaryAttack");
     }
 
     public virtual void OnDeath()

@@ -2,9 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Fist : Equippable
+public class Fist : WeaponItem
 {
-    public float attackRate = 20f;
+    public override void OnPrimaryAccomplished()
+    {
+        combat.state = CombatState.ATTACKING;
+        StartPrimaryRoutine(AttackRoutine());
+        animator.OnPrimary();
+    }
+
+    public override void OnSecondaryAccomplished()
+    {
+        combat.state = CombatState.BLOCKING;
+        StartSecondaryRoutine(BlockingRoutine());
+        animator.OnSecondary();
+        combat.UseMana();
+    }
+
+    private IEnumerator AttackRoutine()
+    {
+        combat.state = CombatState.ATTACKING;
+        yield return new WaitForSeconds(1f);
+        combat.state = CombatState.IDLE;
+    }
+
+    private IEnumerator BlockingRoutine()
+    {
+        combat.state = CombatState.BLOCKING;
+        yield return new WaitForSeconds(1f);
+        combat.state = CombatState.IDLE;
+    }
+
+    /*public float attackRate = 20f;
     public float secondaryUseRate = 20f;
     public float manaBlockingCost = 20f;
     private float attackCooldown = 0f;
@@ -63,5 +92,5 @@ public class Fist : Equippable
         combat.state = CombatState.BLOCKING;
         yield return new WaitForSeconds(1f);
         combat.state = CombatState.IDLE;
-    }
+    }*/
 }

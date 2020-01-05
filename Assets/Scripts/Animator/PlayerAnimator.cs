@@ -22,8 +22,8 @@ public class PlayerAnimator : EntityAnimator
         animator.SetFloat("speed", (Mathf.Abs(Input.GetAxis("Vertical")) + Mathf.Abs(Input.GetAxis("Horizontal"))));
     }
 
-    public override void OnAttack()
+    public override void OnPrimary()
     {
-        base.OnAttack();
+        base.OnPrimary();
     }
 }

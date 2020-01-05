@@ -36,7 +36,7 @@ public class Revolver : Equippable
             Bullet newBullet = Instantiate(bullet, muzzle.position, muzzle.rotation) as Bullet;
             newBullet.speed = bulletSpeed;
 
-            animator.OnAttack();
+            animator.OnPrimary();
         }
     }
 }

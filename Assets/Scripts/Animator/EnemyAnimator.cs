@@ -18,8 +18,8 @@ public class EnemyAnimator : EntityAnimator
         animator.SetFloat("speed", navMeshAgent.velocity.magnitude / navMeshAgent.speed, .1f, Time.deltaTime);
     }
 
-    public override void OnAttack()
+    public override void OnPrimary()
     {
-        base.OnAttack();
+        base.OnPrimary();
     }
 }
