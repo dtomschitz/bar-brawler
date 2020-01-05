@@ -17,10 +17,21 @@ public class Barkeeper : Interactable
 
     public Shop shop;
     private HUDManager hud;
+    private WaveSpawner waveSpawner;
 
     public void Start()
     {
         hud = HUDManager.instance;
+        waveSpawner = WaveSpawner.instance;
+        waveSpawner.OnWaveUpdate += OnWaveUpdate;
+    }
+
+    public void OnWaveUpdate(SpawnState state) 
+    {
+        if (state == SpawnState.SPAWNING || state == SpawnState.WAITING)
+        {
+            InteractCanceled();
+        }
     }
 
     public override void Interact()

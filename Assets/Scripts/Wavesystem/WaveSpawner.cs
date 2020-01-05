@@ -2,6 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;
 
+public enum SpawnState { SPAWNING, WAITING, COUNTING }
+
 public class WaveSpawner : MonoBehaviour
 {
     #region Singelton
@@ -15,7 +17,8 @@ public class WaveSpawner : MonoBehaviour
 
     #endregion;
 
-    public enum SpawnState { SPAWNING, WAITING, COUNTING }
+    public delegate void WaveUpdate(SpawnState state);
+    public event WaveUpdate OnWaveUpdate;
 
     public Transform enemyPrefab;
     public Transform[] spawnPoints;
@@ -36,6 +39,7 @@ public class WaveSpawner : MonoBehaviour
     {
         waveCountdown = timeBetweenWaves;
         state = SpawnState.COUNTING;
+        OnWaveUpdate?.Invoke(state);
     }
 
     void Update()
@@ -79,6 +83,7 @@ public class WaveSpawner : MonoBehaviour
         waveIndex++;
         stateOfGameText.text = waveIndex.ToString();
         state = SpawnState.SPAWNING;
+        OnWaveUpdate?.Invoke(state);
 
         for (int i = 0; i < waveIndex * 2; i++)
         {
@@ -88,6 +93,7 @@ public class WaveSpawner : MonoBehaviour
         }
 
         state = SpawnState.WAITING;
+        OnWaveUpdate?.Invoke(state);
         yield break;
     }
 
