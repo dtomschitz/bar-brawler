@@ -38,12 +38,11 @@ public class Player : MonoBehaviour
     {
         controls.enableMovement = false;
         animator.OnDeath();
-        Debug.Log("Player death");
     }
 
     private void OnTakeDamage()
     {
-        HUDManager.instance.UpdateHealthBar(stats.CurrentHealth, stats.maxHealth);
+        //HUDManager.instance.UpdateHealthBar(stats.CurrentHealth, stats.maxHealth);
     }
 
     public void AddMoney(int amount)

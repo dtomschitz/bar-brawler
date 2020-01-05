@@ -43,9 +43,13 @@ public class EntityStats : MonoBehaviour
         CurrentHealth = Mathf.Clamp(CurrentHealth, 0, maxHealth);
     }
 
+    public float NormalizedHealth
+    {
+        get { return CurrentHealth / maxHealth; }
+    }
+
     public bool IsDead
     {
         get { return CurrentHealth <= 0; }
     }
-
 }

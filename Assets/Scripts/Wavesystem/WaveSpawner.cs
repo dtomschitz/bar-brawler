@@ -10,7 +10,7 @@ public class WaveSpawner : MonoBehaviour
     public Transform enemyPrefab;
     public Transform[] spawnPoints;
 
-    public bool enableWaves;
+    public bool enableWaves = true;
     public float timeBetweenWaves = 31f;
 
     public Text stateOfGameText;
@@ -25,25 +25,24 @@ public class WaveSpawner : MonoBehaviour
     void Start()
     {
         waveCountdown = timeBetweenWaves;
-        //state = SpawnState.COUNTING;
+        state = SpawnState.COUNTING;
     }
 
     void Update()
     {
+        if (state == SpawnState.WAITING)
+        {
+            if (!IsEnemyAlive)
+            {
+                Start();
+            } else
+            {
+                return;
+            }
+        }
+
         if (enableWaves)
         {
-            if (state == SpawnState.WAITING)
-            {
-                if (!IsEnemyAlive)
-                {
-                    Start();
-                }
-                else
-                {
-                    return;
-                }
-            }
-
             if (waveCountdown <= 0f || Input.GetKeyDown(KeyCode.LeftShift))
             {
                 waveCountdown = 0f;

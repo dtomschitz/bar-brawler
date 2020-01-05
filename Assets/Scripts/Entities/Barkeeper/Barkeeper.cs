@@ -16,6 +16,12 @@ public class Barkeeper : Interactable
     #endregion;
 
     public Shop shop;
+    private HUDManager hud;
+
+    public void Start()
+    {
+        hud = HUDManager.instance;
+    }
 
     public override void Interact()
     {
@@ -38,11 +44,17 @@ public class Barkeeper : Interactable
     public void OpenShop()
     {
         shop.SetOpen(true);
+        hud.DisplayHealthBar(false);
+        hud.DisplayManaBar(false);
+        hud.DisplayHotbar(false);
     }
 
     public void CloseShop()
     {
         shop.SetOpen(false);
+        hud.DisplayHealthBar(true);
+        hud.DisplayManaBar(true);
+        hud.DisplayHotbar(true);
     }
 
     private void OnTriggerExit(Collider other)

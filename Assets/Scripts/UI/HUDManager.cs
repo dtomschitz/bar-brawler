@@ -17,15 +17,34 @@ public class HUDManager : MonoBehaviour
     #endregion;
 
     public Text moneyText;
-    public Image healthBar;
+    //public Image healthBar;
 
-    public void UpdateHealthBar(float currentHealth, float maxHealth)
+    public Hotbar hotbar;
+    public HealthBar healthBar;
+    public ManaBar manaBar;
+
+    /*public void UpdateHealthBar(float currentHealth, float maxHealth)
     {
         healthBar.fillAmount = currentHealth / maxHealth;
-    }
+    }*/
 
     public void UpdateMoneyText(int amount)
     {
         moneyText.text = "$" + amount;
+    }
+
+    public void DisplayHotbar(bool state)
+    {
+        hotbar.gameObject.SetActive(state);
+    }
+
+    public void DisplayHealthBar(bool state)
+    {
+        healthBar.gameObject.SetActive(state);
+    }
+
+    public void DisplayManaBar(bool state)
+    {
+        manaBar.gameObject.SetActive(state);
     }
 }
