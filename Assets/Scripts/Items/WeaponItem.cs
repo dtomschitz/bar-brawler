@@ -23,6 +23,8 @@ public class WeaponItem : Equippable
     {
         combat = Player.instance.combat;
         animator = Player.instance.animator;
+
+        GetComponent<HitColider>().OnHit += OnHit;
     }
 
     void Update()
@@ -42,27 +44,11 @@ public class WeaponItem : Equippable
             },
             () => combat.state = CombatState.IDLE
         );
-        
-
-        /*if (primaryCooldown <= 0f)
-        {
-            primaryCooldown = 1f / primaryAttackRate;
-            OnPrimaryAccomplished();
-        }
-        else
-        {
-            combat.state = CombatState.IDLE;
-        }*/
     }
 
     public override void OnInteractSecondary()
     {
         base.OnInteractSecondary();
-        /*if (secondaryCooldown <= 0f)
-        {
-            secondaryCooldown = 1f / secondaryAttackRate;
-            OnSecondaryAccomplished();
-        }*/
         Cooldown(secondaryCooldown, secondaryManaRequired, combat.CurrentMana,
             () =>
             {
@@ -79,6 +65,11 @@ public class WeaponItem : Equippable
 
     public virtual void OnSecondaryAccomplished()
     {
+    }
+
+    public virtual void OnHit(Enemy enemy)
+    {
+        enemy.Interact();
     }
 
     public virtual void StartPrimaryRoutine(IEnumerator routine)
@@ -101,6 +92,13 @@ public class WeaponItem : Equippable
         }
 
         secondaryRoutine = StartCoroutine(routine);
+    }
+
+    public virtual IEnumerator PrimaryRoutine(float seconds = 1f)
+    {
+        combat.state = CombatState.ATTACKING;
+        yield return new WaitForSeconds(seconds);
+        combat.state = CombatState.IDLE;
     }
 
     private void Cooldown(float cooldown, float requiredMana, float currentMana, Action trueCallback, Action falseCallback)

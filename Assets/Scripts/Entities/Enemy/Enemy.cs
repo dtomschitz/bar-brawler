@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(EntityStats))]
 public class Enemy : Interactable
 {
     public bool movementEnabled = true;
@@ -14,26 +11,27 @@ public class Enemy : Interactable
     public float attackRate = 1f;
     private float attackCooldown = 0f;
 
+    public EntityStats Stats { get; protected set; }
+    public EntityCombat Combat { get; protected set; }
+    public EnemyAnimator Animator { get; protected set; }
+
     private Transform target;
     private NavMeshAgent agent;
-    private EntityStats stats;
-    private EntityCombat combat;
-    private EnemyAnimator animator;
 
     void Start()
     {
         target = Player.instance.player.transform;
         agent = GetComponent<NavMeshAgent>();
-        combat = GetComponent<EntityCombat>();
-        animator = GetComponent<EnemyAnimator>();
+        Combat = GetComponent<EntityCombat>();
+        Animator = GetComponent<EnemyAnimator>();
 
-        stats = GetComponent<EntityStats>();
-        stats.OnDeath += Death;
+        Stats = GetComponent<EntityStats>();
+        Stats.OnDeath += Death;
     }
 
     void Update()
     {
-        if (!stats.IsDead)
+        if (!Stats.IsDead)
         {
             attackCooldown -= Time.deltaTime;
 
@@ -47,8 +45,8 @@ public class Enemy : Interactable
                     if (playerStats != null && !playerStats.IsDead)
                     {
                         attackCooldown = 1f / attackRate;
-                        combat.Attack(playerStats);
-                        animator.OnPrimary();
+                        Combat.Attack(playerStats);
+                        Animator.OnPrimary();
                     }
                 }
                 FaceTarget();
@@ -58,10 +56,10 @@ public class Enemy : Interactable
 
     public override void Interact()
     {
-        if (stats.IsDead) return;
+        if (Stats.IsDead) return;
 
         EntityCombat combat = Player.instance.combat;
-        combat.Attack(stats);
+        combat.Attack(Stats);
 
         //if (DamagePopup) ShowDamagePopup();
     }
@@ -69,7 +67,7 @@ public class Enemy : Interactable
     private void Death()
     {
         agent.enabled = false;
-        animator.OnDeath();
+        Animator.OnDeath();
 
         //Instantiate(money, transform.position);
         GetComponent<CapsuleCollider>().enabled = false;

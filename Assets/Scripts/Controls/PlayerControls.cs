@@ -24,7 +24,6 @@ public class PlayerControls : MonoBehaviour
     private CharacterController character;
     private Inventory inventory;
     private EquipmentManager equipment;
-    private PlayerCombat combat;
 
 
     private int selectedHotbarIndex = 0;
@@ -42,7 +41,6 @@ public class PlayerControls : MonoBehaviour
         character = GetComponent<CharacterController>();
         inventory = GetComponent<Inventory>();
         equipment = GetComponent<EquipmentManager>();
-        combat = GetComponent<PlayerCombat>();
         
         SelectItem(0);
     }

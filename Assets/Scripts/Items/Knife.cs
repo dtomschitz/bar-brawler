@@ -2,13 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Knife : Equippable
+public class Knife : WeaponItem
 {
-    public virtual void OnInteractPrimary()
+    public float bleedOutDamage = 2f;
+    public float bleedOutTime = 10f;
+
+    public override void OnPrimaryAccomplished()
     {
+        combat.state = CombatState.ATTACKING;
+        StartPrimaryRoutine(PrimaryRoutine());
+        animator.OnPrimary();
     }
 
-    public virtual void OnInteractSecondary()
+    public override void OnHit(Enemy enemy)
     {
+        base.OnHit(enemy);
+        StartCoroutine(KnifeBleedOut(enemy));
+       
+    }
+
+    private IEnumerator KnifeBleedOut(Enemy enemy)
+    {
+        var pastTime = 0f;
+        while (0 < bleedOutTime)
+        {
+            enemy.Stats.TakeDamage(bleedOutDamage);
+            pastTime++;
+            yield return new WaitForSeconds(bleedOutTime);
+        }
     }
 }
