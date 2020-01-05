@@ -4,53 +4,51 @@ using UnityEngine.UI;
 
 public class WaveSpawner : MonoBehaviour
 {
-    public enum spawnState { SPAWNING, WAITING, COUNTING }
+    public enum SpawnState { SPAWNING, WAITING, COUNTING }
 
 
     public Transform enemyPrefab;
     public Transform[] spawnPoints;
 
-    public bool enableSpawing;
-
+    public bool enableWaves;
     public float timeBetweenWaves = 31f;
-    private float waveCountdown;
 
     public Text stateOfGameText;
     public Text skipCountdownInformation;
 
+    public SpawnState state = SpawnState.COUNTING;
+
     private int waveIndex = 0;
-
+    private float waveCountdown;
     private float searchCountdown = 1f;
-
-    public spawnState state = spawnState.COUNTING;
 
     void Start()
     {
         waveCountdown = timeBetweenWaves;
-        state = spawnState.COUNTING;
+        //state = SpawnState.COUNTING;
     }
 
     void Update()
     {
-        if (state == spawnState.WAITING)
+        if (enableWaves)
         {
-            if (!enemyIsAlive())
+            if (state == SpawnState.WAITING)
             {
-                Start();
+                if (!IsEnemyAlive)
+                {
+                    Start();
+                }
+                else
+                {
+                    return;
+                }
             }
-            else
-            {
-                return;
-            }
-        }
 
-        if (enableSpawing)
-        {
             if (waveCountdown <= 0f || Input.GetKeyDown(KeyCode.LeftShift))
             {
                 waveCountdown = 0f;
                 skipCountdownInformation.gameObject.SetActive(false);
-                if (state != spawnState.SPAWNING)
+                if (state != SpawnState.SPAWNING)
                 {
                     StartCoroutine(SpawnWave());
                 }
@@ -65,8 +63,34 @@ public class WaveSpawner : MonoBehaviour
                 }
             }
         }
+    }
 
-        bool enemyIsAlive()
+    private IEnumerator SpawnWave()
+    {
+        waveIndex++;
+        stateOfGameText.text = waveIndex.ToString();
+        state = SpawnState.SPAWNING;
+
+        for (int i = 0; i < waveIndex * 2; i++)
+        {
+            SpawnEnemy();
+            yield return new WaitForSeconds(1f);
+
+        }
+
+        state = SpawnState.WAITING;
+        yield break;
+    }
+
+    private void SpawnEnemy()
+    {
+        Transform randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+        Instantiate(enemyPrefab, randomSpawnPoint.position, randomSpawnPoint.rotation);
+    }
+
+    private bool IsEnemyAlive
+    {
+        get
         {
             searchCountdown -= Time.deltaTime;
             if (searchCountdown <= 0f)
@@ -79,29 +103,5 @@ public class WaveSpawner : MonoBehaviour
             }
             return true;
         }
-
-        IEnumerator SpawnWave()
-        {
-            waveIndex++;
-            stateOfGameText.text = waveIndex.ToString();
-            state = spawnState.SPAWNING;
-
-            for (int i = 0; i < waveIndex * 2; i++)
-            {
-                SpawnEnemy();
-                yield return new WaitForSeconds(1f);
-
-            }
-
-            state = spawnState.WAITING;
-            yield break;
-        }
-
-        void SpawnEnemy()
-        {
-            Transform randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-            Instantiate(enemyPrefab, randomSpawnPoint.position, randomSpawnPoint.rotation);
-        }
-
     }
 }
