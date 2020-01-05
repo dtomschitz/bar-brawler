@@ -291,7 +291,7 @@ MonoBehaviour:
   enableWaves: 0
   timeBetweenWaves: 31
   stateOfGameText: {fileID: 896722174}
-  skipCountdownInformation: {fileID: 415428771}
+  skipCountdownText: {fileID: 0}
   state: 2
 --- !u!1 &330198266
 GameObject:

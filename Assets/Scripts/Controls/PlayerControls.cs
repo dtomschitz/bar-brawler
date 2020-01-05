@@ -102,8 +102,6 @@ public class PlayerControls : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            //TODO: Update item system and remove double implementation
-
             if (equipment.CurrentItem != null)
             {
                 if (equipment.CurrentItem is Revolver)
@@ -138,25 +136,28 @@ public class PlayerControls : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
+            if (WaveSpawner.instance.IsWaveRunning)
+            {
+                Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRange, barkeeperLayer);
+                foreach (Collider collider in colliders)
+                {
+                    Interactable interactable = collider.GetComponent<Interactable>();
+                    if (interactable != null) interactable.Interact();
+                }
+                return;
+            }
+
             if (equipment.CurrentEquipment != null && equipment.CurrentEquipment.type == ItemType.Consumable)
             {
                 inventory.UseItem(equipment.CurrentEquipment);
-            }
-
-            Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRange, barkeeperLayer);
-            foreach(Collider collider in colliders)
-            {
-                Interactable interactable = collider.GetComponent<Interactable>();
-                if (interactable != null) interactable.Interact();
+                return;
             }
         }
     }
 
     private void SelectItem(int i)
     {
-        Debug.Log(inventory.slots.Count);
         Item item = inventory.slots[i].FirstItem;
-        //if (item != null) inventory.UseItem(item as Equippable);
         if (item != null && item is Equipment)
         {
             equipment.EquipItem(item as Equipment);

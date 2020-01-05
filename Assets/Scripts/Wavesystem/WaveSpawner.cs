@@ -4,8 +4,18 @@ using UnityEngine.UI;
 
 public class WaveSpawner : MonoBehaviour
 {
-    public enum SpawnState { SPAWNING, WAITING, COUNTING }
+    #region Singelton
 
+    public static WaveSpawner instance;
+
+    void Awake()
+    {
+        instance = this;
+    }
+
+    #endregion;
+
+    public enum SpawnState { SPAWNING, WAITING, COUNTING }
 
     public Transform enemyPrefab;
     public Transform[] spawnPoints;
@@ -102,5 +112,10 @@ public class WaveSpawner : MonoBehaviour
             }
             return true;
         }
+    }
+
+    public bool IsWaveRunning
+    {
+        get { return state == SpawnState.WAITING || state == SpawnState.SPAWNING; }
     }
 }
