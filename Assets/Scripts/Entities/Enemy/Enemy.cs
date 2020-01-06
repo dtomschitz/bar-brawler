@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.AI;
 
 public class Enemy : Interactable
@@ -18,6 +19,8 @@ public class Enemy : Interactable
     private Transform target;
     private NavMeshAgent agent;
 
+    private Coroutine attackRoutine;
+
     void Start()
     {
         target = Player.instance.player.transform;
@@ -35,6 +38,7 @@ public class Enemy : Interactable
         if (!Stats.IsDead)
         {
             attackCooldown -= Time.deltaTime;
+    
 
             float distance = Vector3.Distance(target.position, transform.position);
             if (distance <= lookRadius)
@@ -42,13 +46,18 @@ public class Enemy : Interactable
                 if (movementEnabled) agent.SetDestination(target.position);
                 if (distance <= agent.stoppingDistance && attackCooldown <= 0f)
                 {
-                    EntityStats playerStats = target.GetComponent<EntityStats>();
-                    if (playerStats != null && !playerStats.IsDead)
+                    double velocity = agent.velocity.magnitude / agent.speed; 
+                    if (velocity == 0f)
                     {
-                        attackCooldown = 1f / attackRate;
-                        Combat.Attack(playerStats);
-                        Animator.OnPrimary();
+                        EntityStats playerStats = target.GetComponent<EntityStats>();
+                        if (playerStats != null && !playerStats.IsDead)
+                        {
+                            attackCooldown = 1f / attackRate;
+                            Combat.Attack(playerStats);
+                            Animator.OnPrimary();
+                        }
                     }
+                   
                 }
                 FaceTarget();
             }
