@@ -77,6 +77,7 @@ public class Enemy : Interactable
 
     private void OnTakeDamage(double damage)
     {
+        if (Stats.IsDead) return;
         if (damagePopup) ShowDamagePopup(damage);
     }
 

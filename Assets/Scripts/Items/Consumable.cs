@@ -8,7 +8,6 @@ public class Consumable : Equippable
 
     void Start()
     {
-
         if (!(item is Drink))
         {
             throw new UnityException("Item is not of the type Drink");
@@ -19,7 +18,13 @@ public class Consumable : Equippable
 
     public override void OnInteractPrimary()
     {
-        Player.instance.stats.Heal(drink.healingAmount);
-        Player.instance.inventory.UseItem(item);
+        PlayerStats stats = Player.instance.stats;
+        if (stats != null)
+        {
+            if (stats.HasFullLife) return;
+
+            Player.instance.inventory.UseItem(item);
+            stats.Heal(drink.healingAmount);
+        }
     }
 }

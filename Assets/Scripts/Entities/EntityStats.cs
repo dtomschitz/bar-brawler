@@ -45,6 +45,11 @@ public class EntityStats : MonoBehaviour
         get { return CurrentHealth / maxHealth; }
     }
 
+    public bool HasFullLife
+    {
+        get { return CurrentHealth == maxHealth; }
+    }
+
     public bool IsDead
     {
         get { return CurrentHealth <= 0; }
