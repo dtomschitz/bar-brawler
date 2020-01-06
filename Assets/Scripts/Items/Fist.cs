@@ -6,6 +6,8 @@ public class Fist : WeaponItem
 {
     public override void OnPrimaryAccomplished()
     {
+        if (combat.IsBlocking) return;
+
         combat.state = CombatState.ATTACKING;
         StartPrimaryRoutine(PrimaryRoutine());
         animator.OnPrimary();
@@ -22,7 +24,7 @@ public class Fist : WeaponItem
     private IEnumerator BlockingRoutine()
     {
         combat.state = CombatState.BLOCKING;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.1f);
         combat.state = CombatState.IDLE;
     }
 }

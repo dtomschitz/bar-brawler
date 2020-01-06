@@ -36,7 +36,6 @@ public class WeaponItem : Equippable
 
     public override void OnInteractPrimary()
     {
-        //base.OnInteractPrimary();
         Cooldown(primaryCooldown, primaryManaRequired, combat.CurrentMana,
             () =>
             {
@@ -49,7 +48,6 @@ public class WeaponItem : Equippable
 
     public override void OnInteractSecondary()
     {
-       // base.OnInteractSecondary();
         Cooldown(secondaryCooldown, secondaryManaRequired, combat.CurrentMana,
             () =>
             {
@@ -91,7 +89,6 @@ public class WeaponItem : Equippable
             StopCoroutine(secondaryRoutine);
             secondaryRoutine = null;
         }
-
         secondaryRoutine = StartCoroutine(routine);
     }
 

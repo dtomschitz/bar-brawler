@@ -25,7 +25,6 @@ public class PlayerControls : MonoBehaviour
     private Inventory inventory;
     private EquipmentManager equipment;
 
-
     private int selectedHotbarIndex = 0;
     private KeyCode[] hotbarControls = new KeyCode[]
     {
@@ -61,7 +60,6 @@ public class PlayerControls : MonoBehaviour
     {
         float yStore = moveDirection.y;
 
-        // moveDirection.Set(h, 0f, v);
         moveDirection = (transform.forward * v) + (transform.right * h);
         moveDirection = moveDirection.normalized * speed;
         moveDirection.y = yStore;
