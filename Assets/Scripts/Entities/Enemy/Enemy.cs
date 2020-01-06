@@ -5,7 +5,7 @@ public class Enemy : Interactable
 {
     public bool movementEnabled = true;
     public Money money;
-    //public GameObject DamagePopup;
+    public GameObject damagePopup;
 
     public float lookRadius = 10f;
     public float attackRate = 1f;
@@ -26,6 +26,7 @@ public class Enemy : Interactable
         Animator = GetComponent<EnemyAnimator>();
 
         Stats = GetComponent<EntityStats>();
+        Stats.OnTakeDamage += OnTakeDamage;
         Stats.OnDeath += Death;
     }
 
@@ -60,8 +61,11 @@ public class Enemy : Interactable
 
         EntityCombat combat = Player.instance.combat;
         combat.Attack(Stats);
+    }
 
-        //if (DamagePopup) ShowDamagePopup();
+    private void OnTakeDamage(double damage)
+    {
+        if (damagePopup) ShowDamagePopup(damage);
     }
 
     private void Death()
@@ -69,9 +73,14 @@ public class Enemy : Interactable
         agent.enabled = false;
         Animator.OnDeath();
 
-        //Instantiate(money, transform.position);
         GetComponent<CapsuleCollider>().enabled = false;
         Destroy(gameObject, 2f);
+    }
+
+    private void ShowDamagePopup(double damage)
+    {
+        GameObject popup = Instantiate(damagePopup, transform.position, Quaternion.identity, transform);
+        popup.GetComponent<TextMesh>().text = damage.ToString();
     }
 
 

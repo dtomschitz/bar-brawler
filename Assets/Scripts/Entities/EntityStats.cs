@@ -10,11 +10,9 @@ public class EntityStats : MonoBehaviour
 
     public float CurrentHealth { get; protected set; }
     public event Action OnDeath;
-    public event Action OnTakeDamage;
 
-    /*[Header("HealthBar")]
-    public Image healthBar;*/
-
+    public delegate void TakeDamage(double damage);
+    public event TakeDamage OnTakeDamage;
 
     public virtual void Awake()
     {
@@ -25,12 +23,11 @@ public class EntityStats : MonoBehaviour
     {  
     }
 
-    public virtual void TakeDamage(float damage)
+    public virtual void Damage(float damage)
     {
         damage = Mathf.Clamp(damage, 0, float.MaxValue);
         CurrentHealth -= damage;
-        //healthBar.fillAmount = CurrentHealth / maxHealth;
-        OnTakeDamage?.Invoke();
+        OnTakeDamage?.Invoke(damage);
         if (IsDead)
         {
             OnDeath?.Invoke();

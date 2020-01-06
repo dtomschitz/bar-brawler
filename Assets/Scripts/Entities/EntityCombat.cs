@@ -6,11 +6,9 @@ using UnityEngine;
 public class EntityCombat : MonoBehaviour
 {
     public event Action OnAttack;
-
     public CombatState state;
 
     private EntityStats entityStats;
-    private EntityStats enemyStats;
 
     protected virtual void Start()
     {
@@ -20,14 +18,13 @@ public class EntityCombat : MonoBehaviour
 
     public virtual void Attack(EntityStats stats)
     {
-        enemyStats = stats;
-        StartCoroutine(DoDamge(.15f));
+        StartCoroutine(DoDamge(stats, .15f));
         OnAttack?.Invoke();
     }
 
-    IEnumerator DoDamge(float delay)
+    IEnumerator DoDamge(EntityStats stats, float delay)
     {
-        enemyStats.TakeDamage(entityStats.damage.GetValue);
+        stats.Damage(entityStats.damage.Value);
         yield return new WaitForSeconds(delay);
     }
 

@@ -7,9 +7,9 @@ public class EnemyStats : EntityStats
 {
     public Image healthBar;
 
-    public override void TakeDamage(float damage) 
+    public override void Damage(float damage) 
     {
-        base.TakeDamage(damage);
+        base.Damage(damage);
         healthBar.fillAmount = CurrentHealth / maxHealth;
     }
 }

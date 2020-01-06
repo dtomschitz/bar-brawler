@@ -29,7 +29,7 @@ public class Knife : WeaponItem
         var pastTime = 0f;
         while (pastTime < bleedOutTime)
         {
-            enemy.Stats.TakeDamage(bleedOutDamage);
+            enemy.Stats.Damage(bleedOutDamage);
             pastTime++;
             yield return new WaitForSeconds(timeBetweenDamage);
         }
