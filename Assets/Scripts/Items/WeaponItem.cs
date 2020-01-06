@@ -24,7 +24,8 @@ public class WeaponItem : Equippable
         combat = Player.instance.combat;
         animator = Player.instance.animator;
 
-        GetComponent<HitColider>().OnHit += OnHit;
+        HitColider hitColider = GetComponent<HitColider>();
+        if (hitColider) hitColider.OnHit += OnHit;
     }
 
     void Update()
@@ -35,7 +36,7 @@ public class WeaponItem : Equippable
 
     public override void OnInteractPrimary()
     {
-        base.OnInteractPrimary();
+        //base.OnInteractPrimary();
         Cooldown(primaryCooldown, primaryManaRequired, combat.CurrentMana,
             () =>
             {
@@ -48,7 +49,7 @@ public class WeaponItem : Equippable
 
     public override void OnInteractSecondary()
     {
-        base.OnInteractSecondary();
+       // base.OnInteractSecondary();
         Cooldown(secondaryCooldown, secondaryManaRequired, combat.CurrentMana,
             () =>
             {
