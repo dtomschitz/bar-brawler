@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8c283d6bc48df746a0a4b0fbda25744, type: 3}
   m_Name: Wisky
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
+  item: {fileID: 11400000, guid: 967e9cfadfc249e4592f94369dcabf28, type: 2}
   price: 20

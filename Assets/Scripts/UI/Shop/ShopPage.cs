@@ -25,6 +25,8 @@ public class ShopPage : MonoBehaviour
 
     public void AddItems(List<ShopItem> items)
     {
+        if (items.Count == 0) return;
+
         foreach(ShopItem item in items)
         {
             ItemSlot slot = Instantiate(itemSlotPrefab, transform) as ItemSlot;

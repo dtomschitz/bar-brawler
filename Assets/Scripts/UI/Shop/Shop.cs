@@ -47,8 +47,6 @@ public class Shop : MonoBehaviour
             InstantiateCategoryButton(i, category);
             InstantiateShopPage(i, category);
         }
-
-        foreach (ShopPage page in pages) page.SetActive(false);
     }
 
     private void InstantiateCategoryButton(int id, Category category)
@@ -65,6 +63,7 @@ public class Shop : MonoBehaviour
         ShopPage page = Instantiate(shopPagePrefab, transform) as ShopPage;
         page.id = id;
         page.AddItems(category.items);
+        page.SetActive(false);
 
         pages.Add(page);
     }
