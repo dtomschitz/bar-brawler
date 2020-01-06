@@ -12,8 +12,9 @@ public class Item : ScriptableObject
 
     public Slot slot;
 
-    public virtual void OnUse()
+    public virtual void OnCollection()
     {
+        Player.instance.inventory.AddItem(this);
     }
 
 }

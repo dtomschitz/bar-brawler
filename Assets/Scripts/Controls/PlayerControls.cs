@@ -103,7 +103,7 @@ public class PlayerControls : MonoBehaviour
         {
             if (equipment.CurrentItem != null)
             {
-                if (equipment.CurrentItem is Revolver)
+                /*if (equipment.CurrentItem is Revolver)
                 {
                     Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
                     RaycastHit floorHit;
@@ -121,7 +121,9 @@ public class PlayerControls : MonoBehaviour
                 else
                 {
                     equipment.CurrentItem.OnInteractPrimary();
-                }
+                }*/
+
+                equipment.CurrentItem.OnInteractPrimary();
             }
         }
 
@@ -146,11 +148,11 @@ public class PlayerControls : MonoBehaviour
                 return;
             }
 
-            if (equipment.CurrentEquipment != null && equipment.CurrentEquipment.type == ItemType.Consumable)
+            /*if (equipment.CurrentEquipment != null && equipment.CurrentEquipment.type == ItemType.Consumable)
             {
                 inventory.UseItem(equipment.CurrentEquipment);
                 return;
-            }
+            }*/
         }
     }
 

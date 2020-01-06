@@ -9,6 +9,11 @@ public class Inventory : MonoBehaviour
     public List<Item> defaultItems = new List<Item>();
     public int maxSlots = 5;
 
+    [Header("Ammunition")]
+    public int currentAmmunition = 0;
+    public int maxAmmuntion = 30;
+
+
     public event EventHandler<InventoryEvent> ItemAdded;
     public event EventHandler<InventoryEvent> ItemRemoved;
     public event EventHandler<InventoryEvent> ItemUsed;
@@ -30,6 +35,12 @@ public class Inventory : MonoBehaviour
     {
         if (item.addToInventory)
         {
+            if (item is Ammunition)
+            {
+                AddAmmunition((item as Ammunition).amount);
+                return;
+            }
+
             Slot freeSlot = FindStackableSlot(item);
             if (freeSlot == null) freeSlot = FindNextEmptySlot();
 
@@ -41,6 +52,12 @@ public class Inventory : MonoBehaviour
             }
         }
     }
+
+    public void AddAmmunition(int ammount)
+    {
+        currentAmmunition += ammount;
+    }
+
 
     public void RemoveItem(Item item)
     {
@@ -58,8 +75,13 @@ public class Inventory : MonoBehaviour
     public void UseItem(Item item)
     {
         ItemUsed?.Invoke(this, new InventoryEvent(item));
-        item.OnUse();
+        item.OnCollection();
         RemoveItem(item);
+    }
+
+    public void UseAmmunition()
+    {
+        currentAmmunition--;
     }
 
     private Slot FindStackableSlot(Item item)
@@ -78,5 +100,10 @@ public class Inventory : MonoBehaviour
             if (slot.IsEmpty) return slot;
         }
         return null;
+    }
+
+    public bool HasAmmunition
+    {
+        get { return currentAmmunition >= 0; }
     }
 }

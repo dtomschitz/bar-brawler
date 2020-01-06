@@ -7,9 +7,9 @@ public class Money : Item
 {
     public int amount;
 
-    public override void OnUse()
+    public override void OnCollection()
     {
-        base.OnUse();
+        base.OnCollection();
         Player.instance.AddMoney(amount);
     }
 }
