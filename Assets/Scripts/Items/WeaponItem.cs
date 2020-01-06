@@ -10,6 +10,8 @@ public class WeaponItem : Equippable
     public float primaryManaRequired = 0f;
     public float secondaryManaRequired = 0f;
 
+    public float knockbackForce = 10f;
+
     private float primaryCooldown = 0f;
     private float secondaryCooldown = 0f;
 
@@ -69,6 +71,8 @@ public class WeaponItem : Equippable
     public virtual void OnHit(Enemy enemy)
     {
         enemy.Interact();
+
+        //TODO: add knockback
     }
 
     public virtual void StartPrimaryRoutine(IEnumerator routine)

@@ -21,12 +21,6 @@ public class PlayerCombat : EntityCombat
         AddMana(manaRegenerationAmount * Time.deltaTime / manaRegenerationSpeed);
     }
 
-    public override void Attack(EntityStats stats)
-    {
-        base.Attack(stats);
-        AddMana(10);
-    }
-
     public void AddMana(float amount)
     {
         CurrentMana += amount;

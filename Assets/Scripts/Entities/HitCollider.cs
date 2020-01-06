@@ -14,7 +14,6 @@ public class HitColider : MonoBehaviour
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
             if (enemy != null && enemy != player && player.combat.IsAttacking)
             {
-                //enemy.Interact();
                 OnHit?.Invoke(enemy);
             }
         }

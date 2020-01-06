@@ -20,7 +20,6 @@ public class Enemy : Interactable
     private Transform target;
     private NavMeshAgent agent;
 
-
     void Start()
     {
         player = Player.instance;
@@ -85,6 +84,9 @@ public class Enemy : Interactable
     {
         agent.enabled = false;
         Animator.OnDeath();
+
+        Player.instance.AddMoney(10);
+        Player.instance.combat.AddMana(10f);
 
         GetComponent<CapsuleCollider>().enabled = false;
         Destroy(gameObject, 2f);
