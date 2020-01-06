@@ -546,7 +546,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 4e-45}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1909,7 +1909,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh26588
+  m_Name: pb_Mesh27184
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2825,6 +2825,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: pivot
+      value: 
+      objectReference: {fileID: 1329877445}
     - target: {fileID: 2771242930815221553, guid: 2c77cddebf528e1499be76a67d7f0676,
         type: 3}
       propertyPath: m_Name
@@ -2905,11 +2909,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6517686134712672089, guid: 2c77cddebf528e1499be76a67d7f0676,
-        type: 3}
-      propertyPath: pivot
-      value: 
-      objectReference: {fileID: 1329877445}
     - target: {fileID: 6434033270173929957, guid: 2c77cddebf528e1499be76a67d7f0676,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -3199,6 +3198,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 199084740}
     m_Modifications:
+    - target: {fileID: 5105441965080216389, guid: 2528990fc2420d949a4ee103552a9b34,
+        type: 3}
+      propertyPath: orthographic
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5105441965080216391, guid: 2528990fc2420d949a4ee103552a9b34,
         type: 3}
       propertyPath: m_Name
@@ -3257,11 +3261,6 @@ PrefabInstance:
     - target: {fileID: 5105441965080216386, guid: 2528990fc2420d949a4ee103552a9b34,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5105441965080216389, guid: 2528990fc2420d949a4ee103552a9b34,
-        type: 3}
-      propertyPath: orthographic
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5105441965080216387, guid: 2528990fc2420d949a4ee103552a9b34,

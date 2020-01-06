@@ -16,14 +16,15 @@ public class Enemy : Interactable
     public EntityCombat Combat { get; protected set; }
     public EnemyAnimator Animator { get; protected set; }
 
+    private Player player;
     private Transform target;
     private NavMeshAgent agent;
 
-    private Coroutine attackRoutine;
 
     void Start()
     {
-        target = Player.instance.player.transform;
+        player = Player.instance;
+        target = player.player.transform;
         agent = GetComponent<NavMeshAgent>();
         Combat = GetComponent<EntityCombat>();
         Animator = GetComponent<EnemyAnimator>();
@@ -49,16 +50,18 @@ public class Enemy : Interactable
                     double velocity = agent.velocity.magnitude / agent.speed; 
                     if (velocity == 0f)
                     {
-                        EntityStats playerStats = target.GetComponent<EntityStats>();
-                        if (playerStats != null && !playerStats.IsDead)
+                        PlayerStats playerStats = player.stats;
+                        PlayerCombat playerCombat = player.combat;
+                        if (playerStats != null && playerCombat != null && !playerStats.IsDead)
                         {
                             attackCooldown = 1f / attackRate;
-                            Combat.Attack(playerStats);
                             Animator.OnPrimary();
+
+                            if (!playerCombat.IsBlocking) Combat.Attack(playerStats);
                         }
                     }
-                   
-                }
+                } 
+
                 FaceTarget();
             }
         }

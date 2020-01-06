@@ -2,7 +2,6 @@
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(EntityStats))]
 public class EntityCombat : MonoBehaviour
 {
     public event Action OnAttack;
