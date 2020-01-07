@@ -151,6 +151,8 @@ MonoBehaviour:
   defaultItems:
   - {fileID: 11400000, guid: dfef5eb85bcbea8499448b629546c92d, type: 2}
   maxSlots: 5
+  currentAmmunition: 0
+  maxAmmuntion: 30
 --- !u!114 &2771242930815221554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -478,7 +480,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6434033270145895185}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: 2.31, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6434033271264257898}

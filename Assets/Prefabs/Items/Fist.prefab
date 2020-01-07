@@ -76,3 +76,4 @@ MonoBehaviour:
   secondaryAttackRate: 20
   primaryManaRequired: 0
   secondaryManaRequired: 20
+  knockbackForce: 10
