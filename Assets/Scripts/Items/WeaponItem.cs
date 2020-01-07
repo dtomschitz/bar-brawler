@@ -26,7 +26,7 @@ public class WeaponItem : Equippable
         combat = Player.instance.combat;
         animator = Player.instance.animator;
 
-        HitColider hitColider = GetComponent<HitColider>();
+        HitCollider hitColider = GetComponent<HitCollider>();
         if (hitColider) hitColider.OnHit += OnHit;
     }
 

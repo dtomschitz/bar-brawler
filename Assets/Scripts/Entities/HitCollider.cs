@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class HitColider : MonoBehaviour
+public class HitCollider : MonoBehaviour
 {
     public delegate void Hit(Enemy enemy);
     public event Hit OnHit;
