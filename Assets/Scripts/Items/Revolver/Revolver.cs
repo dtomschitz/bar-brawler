@@ -29,7 +29,7 @@ public class Revolver : Equippable
     {
         if (cooldown <= 0f)
         {
-            if (inventory.HasAmmunition)
+            /*if (inventory.HasAmmunition)
             {
                 cooldown = 1f / fireRate;
 
@@ -38,7 +38,15 @@ public class Revolver : Equippable
 
                 inventory.UseAmmunition();
                 animator.OnPrimary();
-            }
+            }*/
+
+            cooldown = 1f / fireRate;
+
+            Bullet newBullet = Instantiate(bullet, muzzle.position, muzzle.rotation) as Bullet;
+            newBullet.speed = bulletSpeed;
+
+            inventory.UseAmmunition();
+            animator.OnPrimary();
         }
     }
 }

@@ -21,4 +21,4 @@ MonoBehaviour:
   pickPosition: {x: 2.49, y: 1.61, z: -0.44}
   pickRotation: {x: -128.344, y: -11.77197, z: 9.720993}
   dropRotation: {x: 0, y: 0, z: 0}
-  damageModifier: 10
+  damageModifier: 100
