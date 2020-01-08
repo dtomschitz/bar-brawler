@@ -1,72 +1,301 @@
 # Bar Brawler
 1898 - Amerika
-
 Kehre in die vergangene Zeit der Gesetzlosen zurück und überlebe eine Schlägerei im Saloon.
-In einem wellenbasierten Brawler übernimmst du die Rolle des gesetzlosen Bill Morgan, der in der Lage ist verschiedene Waffen geschickt einzusetzen, um sich zu verteidigen.
+In einem wellenbasierten Brawler übernimmst du die Rolle des gesetzlosen Bill Morgan, 
+der in der Lage ist verschiedene Waffen geschickt einzusetzen, um sich zu verteidigen.
 Raufe dich mit den anderen Gästen - Kaufe dir neue Waffen - Trinke deinen Feuersaft.
 
-## Zusammenfassung
-Der Spieler kämpft in mehreren Runden gegen Gegner, welche zunehmend stärker werden und den Spieler mit verschiedenen Gegenständen und Attacken angreifen.
+## Story
+Die Hintergrundgeschichte zu Bar Brawler dient einzig und allein dem Zweck das
+Szenario und die Motivation des Spiels zu erklären:
+
+Amerika – 1898. Das Zeitalter der Gesetzlosen neigt sich langsam dem Ende hinzu. Nur
+noch wenige Banden streifen durch die aufkommende moderne Zivilisation und selbst
+diese sind seit jeher nicht gerade gut aufeinander eingestimmt. Zu guter Letzt werden
+diese auch noch von den Gesetzeshütern gejagt, weshalb die Zahl der „Outlaws“ rapide
+abnimmt.
+
+Im Spiel steckt der Spieler im Avatar des 30 jährigen Bill Morgans, der schon in jungen
+Jahren zum Outlaw wurde. Nachdem seine Bande ausgelöscht wurde, prägt der
+Aufenthalt im Saloon seinen Alltag. Allerdings bleibt es dort nie bei einem gemütlichen
+Glas Feuersaft, da Bill als letztes lebendes Mitglied der Bande ein Dorn im Auge vieler
+Bürger ist. Bill ist zahlenmäßig unterlegen, seine Tage sind gezählt. Nur wie viele kann er
+mit in sein Grab nehmen?
+
+## Charaktere
+Da das ganze Spiel in einem Comic-Art Stil sein soll, sind die Charaktere
+dementsprechend nicht realistisch groß, sondern eher kleiner. Trotzdem haben sie alle
+einen bulligen beziehungsweise muskulösen Oberkörper. Allgemein sind die
+Körperproportionen übertrieben dargestellt.
+
+Der Protagonist und die Antagonisten werden vom selben Charaktermodel dargestellt, mit
+dem Unterschied, dass die Farben beim Protagonisten symbolisch als „freundlicher“ zu
+erkennen sind. Während die Farben der Antagonisten dementsprechend als „bedrohlich“
+aufzunehmen sind.
+
+### Bill Morgan
+Der spielbare Charakter trägt schwarze Cowboy Stiefel, eine dunkelbraune Hose, ein
+blaues Hemd mit hellbrauner Jacke überzogen und einen Cowboy Hut. Bill hat eine sehr
+helle Hautfarbe und blaue Augen und braunes Haar.
+
+### Die gegnerischen Bandenmitglieder
+Diese tragen wie Bill Morgan schwarze Cowboy Stiefel und einen Cowboy Hut. Um sie
+von Bill zu unterscheiden, tragen sie eine schwarze Hose, ein rotes Hemd mit schwarzer
+Jacke überzogen und eine etwas dunklere Hautfarbe mit dunkelbraunen Augen.
+
+### Der Barkeeper
+Der Barkeeper ist ein pummeliger Mensch mit heller Hautfarbe, wie die von Bill, und
+schwarzen Haaren. Er trägt ein schwarzes Hemd, schwarze Hose, schwarze Schuhe und
+über seinen ganzen Körper eine weiße Kochschürze.
+
+### Der Pianist
+Dieser ist klassisch in schwarzen Schuhen und Hemd gekleidet, trägt jedoch im
+Gegensatz zum Barkeeper ein weißes Hemd. Weitere Charakteristika sind ein runder
+Zylinder und seine bräunliche Hautfarbe. 
+
+## Level Design 
+### Die Bar
+Das Level ist einem Saloon aus den früheren Wilden Westen nachgeahmt. Neben dem
+45° Eingang mit Schwingtüren besteht der ganze Boden aus Holzplanken. In der Mitte der
+Bar sind drei Tische wie in einem Dreieck aufgestellt. Das Dreieck zeigt von der
+Kameraperspektive in Richtung Bar. Die Bartresen befindet sich gegenüber von der
+Eingangstür im anderen Eck. Da die Bar in eine Ecke gebaut ist, hat die Theke in der Mitte
+eine 45° Neigung und ist an beiden Seiten gleich lang. Hinter der Theke ist ein kleiner
+Gang, in dem sich der Barkeeper frei bewegen kann. Hinter diesem Freiraum sind an der
+Wand mehrere Regale aufgebaut auf den Flaschen stehen. Zur rechten Seite der Theke ist 
+eine Türe die in einen privaten Bereich führt, der für den Spieler nicht zugänglich ist. Die
+Tür dient als Entstehungspunkt für Gegner, die dann aus der Tür treten und Bill
+attackieren
+
+### Die Empore
+Zur jeweils linken und rechten Seite des Saloon befinden sich Treppen, die zu einem
+Obergeschoss führt. Dieses ist ein Balkon mit Geländer davor. Am im Western Stil
+gehaltenen Geländer befindet sich ein fehlendes Stück das bei einem vergangenen
+Bandenkonflikten entstanden ist. Das Loch kann Bill nun taktisch klug nutzen, falls er von
+Gegnern umzingelt ist. Im Obergeschoss befindet sich ein weiterer Entstehungspunkt für
+Gegner. Diesmal handelt es sich um ein zerbrochenes Fenster durch das die Gegner in
+die Bar gelangen.
+
+### Die Wände
+Die Wände sind sowohl unten als auch oben mit stützenden Balken in regelmäßigen
+Abständen versehen. An den Wänden sind Wandleisten, die dem Saloon ein gewissen
+Charm verleihen und als Ablagefläche für Drinks der Gäste dient.
+
+### Details
+Um eine passende Atmosphäre zu erschaffen sind mehrere Details im Saloon platziert.
+Das Klavier wird vom oben beschriebenen Pianist bespielt und bereichert das Spiel mit
+klassischer Western Musik. An einem Pokertisch versuchen Bürger und Gesetzlose sich
+gegenseitig das Geld aus der Tasche zu ziehen. An den Wänden befinden sich kleine
+Extras aus der damaligen Zeit. Beispielsweise kann der Saloon durch aufgehängte Seile,
+Rinderschädel und Kutschenrädern seine rustikale Seite zum Vorschein bringen.
 
 ## Gameplay
-Ziel des Spieles ist es, so viele Runden wie möglich zu überstehen, ohne KO geschlagen zu werden. Dies kann durch geschicktes Kämpfen und durch erworbene Gegenstände erreicht werden. Hier zu zählen beispielsweise neue Waffen, aber auch Medipacks in Form eines Shots(oder auch Feuerwasser) mit dem der Spieler seine Lebenspunkte bis zu einem vordefinierten Punkt wieder auffüllen kann. Diese Items können in einer kurzen Pause zwischen den Levels beim Barkeeper erworben werden. Sollte sich der Spieler dafür entscheiden keine Items zu erwerben kann die Pause übersprungen werden. Wird der Spieler in einer Runde KO geschlagen, verliert er all seine Items und die Runden Anzahl wird zurückgesetzt. 
-Das Level sollte die Möglichkeiten bieten die KI in die Irre zu führen, aber auch genug Platz bieten, um sich frei zu bewegen.  
-Die Bewegungen der KI sollten deshalb in einem gewissen Maß voraussehbar sein, damit der Spieler seine eigenen Strategien entwickeln kann.
+Der Spieler befindet sich zum Beginn des Spiels in der Mitte des Saloons, den er während
+dem Spiel nicht verlassen kann. Durch das Attackieren der Gegner im Level startet der
+Spieler das Spiel und wird von nun an in Runden kämpfen. Nach jeder Runde hat der
+Spieler die Möglichkeit neue Gegenstände zu erwerben, die ihm im Kampf gegen die 
+Gegner nützlich sein können. Wird der Spieler außer Gefecht gesetzt, wird der gesamte
+Fortschritt zurückgesetzt und das Spiel beginnt erneut.
 
-### Economy
-Für jeden erledigten Gegner erhält der Spieler einen Geldbetrag, dessen Höhe variieren kann. 
-Durch das erworbene Geld kann der Spieler beim Barkeeper neue Items kaufen, die ihm im Kampf gegen neue und härtere Gegner helfen. Die gesammte Summe kann der Spieler jederzeit im HUD sehen.
+### Spielmechaniken
+#### Ausdauer
+Der Spieler besitzt während dem Kämpfen eine Ausdauer, diese wird hauptsächliche
+genutzt, um die Schläge der Gegner abzuwehren.
 
-### Gegnertypen
-Im Spiel gibt es nur einen speziellen Typ von Gegner, wobei Anzahl und Stärke ansteigen, um die Schwierigkeit zu erhöhen. Die Gegner werden nach einer gewissen Anzahl an Runden deshalb mit Flaschen oder auch Pistolen ausgestatt, mit der sie dem Spieler erheblichen Schaden zufügen können. Um dem Spieler trotzdem die Chance zu geben die Runde zu überleben, werden maximal 1-2 Gegner mit diesen Waffen ausgestattet. Je nach Ausstattung der Gegner ist es auch Möglich, das diese ihre Flasche oder wenn sie eine Pistole hatte, die Munition fallen lassen.
+#### Barkeeper
+Beim Barkeeper können alle freigeschalteten Items und Power-Ups erworben werden. Die
+Interaktion mit ihm ist ausschließlich in den Pausen nach jeder erfolgreichen Wave
+(Angriffswelle) möglich. Alle erworbenen Items werden dem Spieler in einer Hotbar
+angezeigt. Die gekauften Power-Ups hingegen werden separat aufgelistet. Tötet der
+Spieler den Barkeeper, ist das Spiel sofort verloren.
 
-### Barkeeper
-Der Barkeeper bietet im Verlauf des Spieles folgende Gegenstände zum Verkauf an:
-- verschieden große Getränke, die Lebenspunkte des Spielers wieder füllen
-- Flaschen, die erhöhten Schaden verursachen
-- eine Revolver, der die meisten Gegner mit einem Schuss ausschaltet
-- Munition für den Revolver
+#### Power-Ups 
+Gekaufte Power-Ups gelten nur für die bevorstehende Runde und werden nach dem
+erfolgreichen Beenden der Wave aus dem Inventar des Spielers entfernt. 
 
-### Items
-Die Items kann der Spieler zu jeder Zeit im HUD sehen und durch definierte Tasten auswählen.
-- *Feuerwasser:* Gibt dem Spieler eine gewisse Anzahl an Lebenspunkten wieder (gibt es in verschiedenen Varianten)
-- *Flasche:* Fügt Gegner erhöten Schaden zu, kann aber nach einer Gewissen Zeit zerstört werden
-- *Revolver:* Kann Gegner mit einem Schuss töten, Munition ist jedoch rar. Einmal gekauft, kann der Spieler seine Waffe nicht mehr verlieren.
-- *Munition:* Wird für den Revolver benötigt
+#### Der Kampf
+Gekämpft werden kann mit den Fäusten, einer Flasche, dem Messer und einem Revolver.
+Alle Items werden mit fortlaufender Zeit freigeschaltet und können im Verlauf des Spiels
+mit dem gesammelten Geld erworben werden. Während des Kampfes mit einem Gegner
+können ebenfalls außenstehende Gegner den Spieler zusätzlich angreifen und Schaden
+verursachen, jedoch nur wenn sie im 45° Winkel vor ihm stehen. Es ist also ratsam, zu
+versuchen die Gegner durch geschicktes Manövrieren durch das Level aufzuteilen. 
+Angriffe der Gegner können durch das Blocken mit den Fäusten abgewehrt werden. 
+Dabei verbraucht der Spieler pro gegnerischen Treffer seine Ausdauer. Ist diese 
+aufgebraucht, können Schläge nicht mehr abgewehrt werden. 
 
-## Level
-Das Level soll einen Saloon aus dem wilden Westen repräsentieren und besteht aus großen Bartheke und mehreren Tischen mit Stühlen. 
-Diese sind so angeordnet, dass der Spieler sich frei und ohne große Mühe bewegen kann. Der Spieler kann darüber hinaus die Anordnung strategisch nutzen, um seinen Gegnern auszuweichen.
+#### Gegner
+Gegner besitzen unterschiedliche Waffen, wie z.B. ein Messer oder eine Flasche. Mit
+fortschreitendem Spielstand werden die Gegner mit immer gefährlicheren Waffen
+ausgerüstet. Befindet sich der Spieler innerhalb eines gewissen Radius eines Gegners,
+wird er solange von diesem verfolgt bis er ihn außer Gefecht setzt oder den Radius
+wieder verlässt. Wie groß dieser Sichtradius und die Bewegungsschnelligkeit eines
+Gegners ist kann variieren. Dadurch wird ein Verfolgungsspiel ausgeschlossen und ein
+Kampf gewährleistet, da der Spieler nicht jedem Gegner schnell genug entkommen kann.
+Manche Gegner können somit nur durch das K.O. Schlagen beseitigt werden. 
 
-## Assets
-### Models + Texturen
-- Flaschen
-- Theke
-- Stühle
-- Barhocker
-- Tische (rund, eckig)
-- Revolver
-- Munition
-- Geld / Münzen
-- Öllampe
-- Bilder mit Rahmen
+#### Wellen
+Eine einzelne Wave (Angriffsrunde) besteht aus einer gewissen Anzahl an Gegnern, die an
+verschiedenen Punkten im Level entstehen beziehungsweise spawnen. Die drei
+Entstehungspunkte der Gegner sind im Spiellayout dreiecksförmig angeordnet, um die
+Gegner gleichmäßig auf der Spielfläche zu verteilen. Die Anzahl der Gegner steigert sich
+im Verlauf des Spiels, wobei mehrere Gegner in Gruppen spawnen können. Zur
+Orientierung dient ein Countdown, der dem Spieler zeigt, wann die nächste Gruppe an
+Gegner in der aktuellen Wave erscheinen wird. Erst wenn alle Gegner der Wave außer
+Gefecht gesetzt wurden, beginnt die Pause.
 
-### Charaktere (inkl. Animationen und Texturen)
-- Spieler
-- Gegner
-- Barkeeper
+### Fortschritt
+Umso mehr Runden erfolgreich absolviert werden, desto mehr Items werden im Shop
+freigeschaltet. Jedoch steigert sich im Verlauf des Spiels auch die Anzahl der Gegner und
+die Länge der Runden. So soll der Spieler zu einer taktisch geschickten Umgangsweise
+mit seinen finanziellen Mitteln angespornt werden. Misslingt dies dem Spieler wird die
+nächste Runde, aufgrund unpassender Ausrüstung, deutlich schwerer. 
 
-## Interface
+### Items & Power-Ups
+Items und Power-Ups können vom Spieler in der Pause zwischen den einzelnen Waves
+durch gesammeltes Geld gekauft werden. Diese sind ausschließlich beim Barkeeper
+erhältlich. 
+
+#### Geld
+Geld kann durch das Erledigen von Gegnern verdient werden. Die Höhe des Betrags kann
+je nach Fortschritt im Spiel und Stärke des Gegners variieren. 
+
+#### Drinks
+Drinks können dem Spieler, je nach Art und Größe, eine gewisse Anzahl oder sogar die
+komplette Anzahl an Lebenspunkten regenerieren. Dieses Item kann ebenfalls nur
+während der Pause einer Wave beim Barkeeper gegen Geld gekauft werden. Die Anzahl
+der Drinks, die ein Spieler mit sich führen kann, variiert je nach Art und Effekt. Kleine
+Drinks, welche nur wenige Lebenspunkte regenerieren, können beispielsweise in größeren
+Mengen gekauft werden als starke Drinks mit größerem Effekt. Auch die Dauer, die der
+Spieler benötigt um den Drink zu trinken, kann sich unterscheiden. Große Drinks
+brauchen gewöhnlich länger, verlangsamen den Spieler und machen ihn so zu einem
+leichteren Ziel. Kleine Drinks hingegen können schnell und in voller Bewegung
+beziehungsweise als “Shot” getrunken werden. 
+
+#### Fäuste
+Die Fäuste des Spielers stellen die primäre und schwächste Waffe des Spielers dar und
+können zu jeder Zeit "ausgerüstet" werden. Im Gegensatz zu anderen Items können die
+Fäuste nicht aus dem Inventar entfernt werden und werden niemals kaputt gehen. Die
+Fäuste können außerdem genutzt werden, um Schläge von Gegner abzuwehren. Den
+Schaden und die Schnelligkeit, in der die Schläge ausgeführt werden, können durch
+erworbene Power-Ups verbessert werden. 
+
+#### Flasche
+Die Flasche ist die nächst stärkere Waffe, die der Spieler für wenig Geld erwerben kann.
+Sie hat einen leicht erhöhten Schaden und nutzt sich durch häufige Benutzung schnell ab. 
+
+#### Messer
+Das Messer macht im Vergleich zur Glasflasche zwar identischen Schaden, lässt den
+Gegner aber zusätzlich nach einem erfolgreichen Treffen, für einen kurzen Zeitraum bluten 
+und dadurch weiteren Schaden erleiden. Das Messer geht genauso wie die Flasche nach
+mehrmaliger Benutzung kaputt und muss vom Spieler neu erworben werden.
+
+#### Revolver
+Der Revolver ist die stärkste Waffe Spiel und kann manche Gegner sogar mit nur einem
+Schuss erledigen. Der Revolver ist im Vergleich zu anderen Waffen sehr teuer, wird aber
+trotz Benutzung nicht kaputt gehen. Um den Revolver benutzen zu können, muss der
+Spieler Munition im Inventar haben. Durch das Power-Up für den Revolver kann die
+Feuerrate erhöht werden. 
+
+#### Munition
+Munition kann ausschließlich beim Barkeeper erworben werden und wird benötigt, um
+den Revolver zu nutzen.
+
+## Stil
+### Der Saloon
+Das Spiel wird in einem Comic-Art Stil texturiert. Dabei sollen Farben und Texturen sehr
+kräftig sein. Charaktere und Modelle werden nicht durch realistische Details
+unterschieden werden, sondern durch einfache und übertriebene Farben.
+Das ganze Ambiente soll durch ein sehr warmes und druckvolles Licht ausgefüllt werden,
+wodurch eine abendliche Stimmung zum Vorschein kommt. Es soll kein Tageslicht hinein
+scheinen. 
+
+Außerhalb der eigentlichen Karte bzw. dem Saloon ist alles schwarz. 
+
+### Sound und Musik
+Das Spiel soll folgende Sounds haben:
+- Laufen
+- Schlagen
+- Schuss der Pistole
+- Angreifen mit einer Flasche
+- Zerbrechen einer Flasche
+- Angriff mit einem Messer
+- Zerbrechen eines Messers
+- Trinken
+- K.O. Schlag (Wenn ein der Gegner oder man selbst stirbt)
+
+### Musik
+Die Musik soll eine Melodie sein, die auf einem Klavier gespielt wird. Diese läuft repetitiv.
+Alle Sounds, sowie die Musik, werden vom Asset Store oder von Drittanbietern
+übernommen. 
+
+## User Interface und Steuerung 
+### Hauptmenü
+Das Hauptmenü besteht aus den folgenden Elementen:
+- Spiel starten
+- Spiel pausieren (nur während dem Spiel)
+- Spiel beenden 
+
 ### HUD
-Das HUD besteht aus:
-- einer Lebensanzeige (untere Mitte des Bildschirms)
-- einer Anzeige für das gesammelte Geld (obere rechte Ecke)
-- einer Anzeige für die gesammelten Items (unterhalb der Anzeige für das gesammelte Geld)
-- einer Anzeige für die Anzahl der absolvierten Runden (oben links)
+Das HUD besteht während des Spiels aus folgenden Elementen:
+- Lebensanzeige
+- Ausdaueranzeige
+- Anzeige für die Anzahl der überlebten Runden
+- Anzeige für den Countdown zwischen den Wellen
+- Eine Hotbar die dem Spieler jene Items anzeigen, die er auch Benutzen kann
+- Eine Anzeige für die Munition 
 
-### Controls
-Der Spieler kann sich mittels der Tasten A, S, D, W frei im Level bewegen und durch Mausbewegungen nach links, recht, oben und unten die Blickrichtungen wechseln. 
-Durch das klicken der linke Maustaste können einzelne Schläge ausgeführt werden. Die rechte Taste dient hingegen dazu Schläge der Gegner zu blocken.
+### Shop
+Der Shop, den der Spieler beim Barkeeper öffnen kann, ist wie folgt aufgebaut:
+- Auf der linken Seite befinden sich alle Kategorien (Waffen, Drinks und Power-Ups)
+- Auf der rechten Seite werden die Items der jeweiligen Kategorie angezeigt. Die Items
+zeigen dem Spieler den jeweiligen Namen, den Preis und ein kleines Vorschaubild an. 
+
+### Steuerung
+Der Spieler kann sich mittels der Pfeil- und WASD-Tasten im Level frei bewegen und mit
+der Maus umherstehende Gegner anvisieren. Die linke Maustaste dient dazu den
+anvisierten Gegner zu attackieren. Hat der Spieler zum Zeitpunkt der Attacke nur seine
+Fäuste, eine Flasche oder ein Messer ausgewählt ist der Angriffsradius beschränk. Hat
+der Spieler seine Fäuste ausgewählt hat er außerdem die Möglichkeit mit der rechten
+Maustaste, die Schläge der Gegner abzuwehren. Die Tasten 1, 2, 3, 4 und 5 dienen dazu
+die Items und Waffen in der Hotbar auszuwählen. Hält der Spieler ein Item in der Hand,
+welches konsumierbar ist, kann er dieses mit der Taste E benutzen. Die E Taste dient
+gleichzeitig auch dazu den Shop zu öffnen, wenn sich der Spieler in der Nähe der Bar
+befindet. 
+
+## Models
+Alle Models werden als dreidimensionalen Objekte in Blender 2.8 modelliert. Die Models
+werden mit einer einfach gehaltenen Textur überzogen, die aus wenigen Basisfarben
+besteht. Die Größe der Models sind aufeinander abgestimmt, sodass es im späteren
+Gesamtbild zu sinnvollen Größenverhältnissen kommt. Im Folgendem werden alle Models
+kurz aufgelistet.
+
+- klassischer Western Revolver
+- runder Tisch für das Erdgeschoss des Saloon
+- erhöhter Sitzhocker
+- einem zum Tisch passenden Stuhl
+- an der Wand angebrachte Öllampe
+- Tischlampe, die zwei Griffe besitzt, mit dem die Lampe variable an verschiedenen Orten
+in der Bar platziert werden kann
+- Hängelampe, die an Ketten von der Decke hängt
+- Patrone für den Revolver
+- 3 Bar Regale auf denen Flaschen und Spirituosen abgestellt werden
+- Schwingtüre mit Scharnieren für den Eingang der Bar
+- Verschiedene Wände für das Erdgeschoss und die Empore.
+- Rechte und linke Treppe
+- Tür mit Scharnier, die in einen privaten Bereich führt
+- Leiter
+- Seil
+- Fass
+- diverse Gläser und Flaschen
+- verschiedene Charakter (Spieler, Pianist und Barkeeper)
+- Klavier mit Hocker
+- Schädel
+- Pokertisch
+- Karten und Chips für den Pokertisch
+- Barblock
+- Regale Schränke für die Bar
+- Bilderrahmen
 
 ## Milestones
 **1. Prototyp**
