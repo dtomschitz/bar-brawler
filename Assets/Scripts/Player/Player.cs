@@ -28,8 +28,8 @@ public class Player : MonoBehaviour
     public int money = 0;
 
     //private float waitForSeconds = 1;
-    private bool gameIsOver = false;
-    public GameObject gameOverUI;
+    //private bool gameIsOver = false;
+   // public GameObject gameOverUI;
 
     void Start()
     {
@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (gameIsOver)
+        /*if (gameIsOver)
         {
             return;
         }
@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown("y"))
         {
             EndGame();
-        }
+        }*/
     }
 
     private void OnDeath()
@@ -71,7 +71,7 @@ public class Player : MonoBehaviour
 
     void EndGame()
     {
-        gameIsOver = true;
-        gameOverUI.SetActive(true);
+        //gameIsOver = true;
+        //gameOverUI.SetActive(true);
     }
 }
