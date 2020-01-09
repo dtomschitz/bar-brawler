@@ -11,22 +11,30 @@ public class PlayerControls : MonoBehaviour
     public float rotateSpeed;
     public bool enableMovement = true;
     private Vector3 moveDirection;
+    private Vector3 moveVelocity;
+
 
     [Header("Interaction")]
     public float interactionRange;
     public LayerMask enemyLayer;
     public LayerMask barkeeperLayer;
+    public LayerMask groundLayer;
 
     [Header("Model")]
     public GameObject playerModel;
     public Transform pivot;
 
+    //private float camRayLength = 100f;
+
+    private Camera camera;
     private CharacterController character;
+    private Rigidbody rigidbody;
+
     private Inventory inventory;
     private EquipmentManager equipment;
 
     private int selectedHotbarIndex = 0;
-    private KeyCode[] hotbarControls = new KeyCode[]
+    private readonly KeyCode[] hotbarControls = new KeyCode[]
     {
         KeyCode.Alpha1,
         KeyCode.Alpha2,
@@ -37,7 +45,9 @@ public class PlayerControls : MonoBehaviour
 
     void Start()
     {
+        camera = FindObjectOfType<Camera>();
         character = GetComponent<CharacterController>();
+        rigidbody = GetComponent<Rigidbody>();
         inventory = GetComponent<Inventory>();
         equipment = GetComponent<EquipmentManager>();
         
@@ -60,29 +70,46 @@ public class PlayerControls : MonoBehaviour
     {
         float yStore = moveDirection.y;
 
-        moveDirection = (transform.forward * v) + (transform.right * h);
+        moveDirection = (transform.forward * v);
         moveDirection = moveDirection.normalized * speed;
         moveDirection.y = yStore;
 
-        if (character.isGrounded)
+        /*if (character.isGrounded)
         {
             moveDirection.y = 0f;
             if (Input.GetButtonDown("Jump"))
             {
                 moveDirection.y = jumpForce;
             }
+        }*/
+
+
+        character.Move(moveDirection * Time.deltaTime);
+        moveDirection.y += (Physics.gravity.y * gravityScale * Time.deltaTime);
+
+
+        //moveDirection = new Vector3(h, 0f, v);
+        //moveVelocity = moveDirection * speed;
+
+        Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(camRay, out RaycastHit floorHit, groundLayer))
+        {
+            Vector3 playerToMouse = floorHit.point - transform.position;
+            playerToMouse.y = 0f;
+            Quaternion newRotation = Quaternion.LookRotation(playerToMouse);
+
+            rigidbody.MoveRotation(newRotation);
+            //rigidbody.MoveRotation(Quaternion.Slerp(playerModel.transform.rotation, newRotation, rotateSpeed * Time.deltaTime));
+            //rigidbody.MovePosition(floorHit.point);
         }
 
-
-        moveDirection.y = moveDirection.y + (Physics.gravity.y * gravityScale * Time.deltaTime);
-        character.Move(moveDirection * Time.deltaTime);
-
-        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
+        /*if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
         {
             transform.rotation = Quaternion.Euler(0f, pivot.rotation.eulerAngles.y, 0f);
             Quaternion newRotation = Quaternion.LookRotation(new Vector3(moveDirection.x, 0f, moveDirection.z));
             playerModel.transform.rotation = Quaternion.Slerp(playerModel.transform.rotation, newRotation, rotateSpeed * Time.deltaTime);
-        }
+        }*/
     }
 
     private void HandleInput()

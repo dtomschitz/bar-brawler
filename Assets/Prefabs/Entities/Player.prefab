@@ -181,13 +181,16 @@ MonoBehaviour:
   speed: 8
   jumpForce: 10
   gravityScale: 3
-  rotateSpeed: 10
+  rotateSpeed: 20
   enableMovement: 1
   interactionRange: 2
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
   barkeeperLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  groundLayer:
     serializedVersion: 2
     m_Bits: 1024
   playerModel: {fileID: 6434033271264257896}
