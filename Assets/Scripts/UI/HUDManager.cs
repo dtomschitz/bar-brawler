@@ -16,16 +16,15 @@ public class HUDManager : MonoBehaviour
 
     #endregion;
 
-    public Text moneyText;
-
     public Hotbar hotbar;
     public HealthBar healthBar;
     public ManaBar manaBar;
+    public MoneyInfo moneyInfo;
 
-    public void UpdateMoneyText(int amount)
+   /* public void UpdateMoneyText(int amount)
     {
         moneyText.text = "$" + amount;
-    }
+    }*/
 
     public void DisplayHotbar(bool state)
     {

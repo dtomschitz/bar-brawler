@@ -16,4 +16,4 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: ccec83482d316e5459b221d80dff338c, type: 3}
   type: 0
   addToInventory: 0
-  amount: 10
+  amount: 100

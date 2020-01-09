@@ -16,7 +16,7 @@ public class ShopPage : MonoBehaviour
 
     private void ValidatePlayerCash()
     {
-        int currentMoneyAmount = Player.instance.money;
+        int currentMoneyAmount = Player.instance.currentBalance;
         foreach(ItemSlot slot in slots)
         {
             slot.button.interactable = currentMoneyAmount >= slot.shopItem.price;
@@ -39,7 +39,7 @@ public class ShopPage : MonoBehaviour
 
     public void OnItemBought(ShopItem shopItem)
     {
-        if (Player.instance.money >= shopItem.price)
+        if (Player.instance.currentBalance >= shopItem.price)
         {
             Player.instance.inventory.AddItem(shopItem.item);
             Player.instance.RemoveMoney(shopItem.price);

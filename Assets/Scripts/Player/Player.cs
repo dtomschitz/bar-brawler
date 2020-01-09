@@ -15,26 +15,37 @@ public class Player : MonoBehaviour
 
     #endregion;
 
-    public PlayerControls controls;
-    public PlayerStats stats;
-    public PlayerCombat combat;
-    public PlayerAnimator animator;
-
-    public Inventory inventory;
-    public EquipmentManager equipment;
-
     public GameObject player;
 
-    public int money = 0;
+    public int currentBalance = 0;
+
+    public delegate void MoneyRecived(int currentBalance);
+    public delegate void MoneySpend(int currentBalance);
+    public event MoneyRecived OnMoneyReceived;
+    public event MoneySpend OnMoneySpend;
+
+    public PlayerControls controls { get; protected set; }
+    public PlayerStats stats { get; protected set; }
+    public PlayerCombat combat { get; protected set; }
+    public PlayerAnimator animator { get; protected set; }
+    public Inventory inventory { get; protected set; }
+    public EquipmentManager equipment { get; protected set; }
 
     //private float waitForSeconds = 1;
     //private bool gameIsOver = false;
-   // public GameObject gameOverUI;
+    // public GameObject gameOverUI;
 
     void Start()
     {
+        controls = player.GetComponent<PlayerControls>();
+        stats = player.GetComponent<PlayerStats>();
+        combat = player.GetComponent<PlayerCombat>();
+        animator = player.GetComponent<PlayerAnimator>();
+        inventory = player.GetComponent<Inventory>();
+        equipment = player.GetComponent<EquipmentManager>();
+
         stats.OnDeath += OnDeath;
-        HUDManager.instance.UpdateMoneyText(money);
+       // HUDManager.instance.UpdateMoneyText(money);
     }
 
     void Update()
@@ -59,14 +70,14 @@ public class Player : MonoBehaviour
 
     public void AddMoney(int amount)
     {
-        money += amount;
-        HUDManager.instance.UpdateMoneyText(money);
+        currentBalance += amount;
+        OnMoneyReceived?.Invoke(currentBalance);
     }
 
     public void RemoveMoney(int amount)
     {
-        money -= amount;
-        HUDManager.instance.UpdateMoneyText(money);
+        currentBalance -= amount;
+        OnMoneySpend?.Invoke(currentBalance);
     }
 
     void EndGame()
