@@ -8,11 +8,13 @@ public class EntityStats : MonoBehaviour
     public float maxHealth;
     public Stat damage;
 
-    public float CurrentHealth { get; protected set; }
+    public static float CurrentHealth { get; protected set; }
     public event Action OnDeath;
 
     public delegate void TakeDamage(double damage);
     public event TakeDamage OnTakeDamage;
+
+    public static int Rounds;
 
     public virtual void Awake()
     {
@@ -20,7 +22,8 @@ public class EntityStats : MonoBehaviour
     }
 
     public virtual void Start()
-    {  
+    {
+
     }
 
     public virtual void Damage(float damage)

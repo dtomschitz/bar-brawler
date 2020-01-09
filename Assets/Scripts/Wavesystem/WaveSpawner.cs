@@ -32,6 +32,7 @@ public class WaveSpawner : MonoBehaviour
     public SpawnState state = SpawnState.COUNTING;
 
     private int waveIndex = 0;
+    public static int rounds = 0;
     private float waveCountdown;
     private float searchCountdown = 1f;
 
@@ -81,6 +82,7 @@ public class WaveSpawner : MonoBehaviour
     private IEnumerator SpawnWave()
     {
         waveIndex++;
+        EntityStats.Rounds++;
         stateOfGameText.text = waveIndex.ToString();
         state = SpawnState.SPAWNING;
         OnWaveUpdate?.Invoke(state);
