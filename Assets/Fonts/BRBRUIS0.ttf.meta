@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: f33d3d6aed900d047ae8085b60d63d58
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Brussels
+  fontNames:
+  - Brussels
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 793181e2747f6aa40b083786aa687b64, type: 3}
+  - {fileID: 12800000, guid: 6bda45fb1f29f0043b5c1e2574647005, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
