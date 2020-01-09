@@ -27,16 +27,34 @@ public class Player : MonoBehaviour
 
     public int money = 0;
 
+    //private float waitForSeconds = 1;
+    private bool gameIsOver = false;
+    public GameObject gameOverUI;
+
     void Start()
     {
         stats.OnDeath += OnDeath;
         HUDManager.instance.UpdateMoneyText(money);
     }
 
+    void Update()
+    {
+        if (gameIsOver)
+        {
+            return;
+        }
+
+        if (Input.GetKeyDown("y"))
+        {
+            EndGame();
+        }
+    }
+
     private void OnDeath()
     {
         controls.enableMovement = false;
         animator.OnDeath();
+        EndGame();
     }
 
     public void AddMoney(int amount)
@@ -49,5 +67,11 @@ public class Player : MonoBehaviour
     {
         money -= amount;
         HUDManager.instance.UpdateMoneyText(money);
+    }
+
+    void EndGame()
+    {
+        gameIsOver = true;
+        gameOverUI.SetActive(true);
     }
 }
