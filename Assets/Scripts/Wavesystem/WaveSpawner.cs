@@ -82,7 +82,7 @@ public class WaveSpawner : MonoBehaviour
     private IEnumerator SpawnWave()
     {
         waveIndex++;
-        EntityStats.Rounds++;
+        rounds++;
         stateOfGameText.text = waveIndex.ToString();
         state = SpawnState.SPAWNING;
         OnWaveUpdate?.Invoke(state);

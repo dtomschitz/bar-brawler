@@ -9,7 +9,7 @@ public class GameOver : MonoBehaviour
 
     void OnEnable()
     {
-        roundsText.text = EntityStats.Rounds.ToString();
+        roundsText.text = WaveSpawner.rounds.ToString();
     }
 }
 
