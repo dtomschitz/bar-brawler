@@ -1,11 +1,12 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DamageOverlay : MonoBehaviour
 {
     public PlayerStats stats;
     private Animator animator;
+
+    private Coroutine damageOverlayRoutine;
 
     void Start()
     {
@@ -15,6 +16,19 @@ public class DamageOverlay : MonoBehaviour
 
     public void OnTakeDamage(double damage)
     {
-        animator.SetTrigger("damage");
+        if (damageOverlayRoutine != null)
+        {
+            StopCoroutine(damageOverlayRoutine);
+            damageOverlayRoutine = null;
+        }
+
+        damageOverlayRoutine = StartCoroutine(ShowDamgeOverlay());
+    }
+
+    private IEnumerator ShowDamgeOverlay()
+    {
+        animator.SetBool("damage", true);
+        yield return new WaitForSeconds(1f);
+        animator.SetBool("damage", false);
     }
 }
