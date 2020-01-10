@@ -21,23 +21,18 @@ public class HUDManager : MonoBehaviour
     public ManaBar manaBar;
     public MoneyInfo moneyInfo;
 
-   /* public void UpdateMoneyText(int amount)
+    public void DisplayHotbar(bool visible)
     {
-        moneyText.text = "$" + amount;
-    }*/
-
-    public void DisplayHotbar(bool state)
-    {
-        hotbar.gameObject.SetActive(state);
+        hotbar.gameObject.SetActive(visible);
     }
 
-    public void DisplayHealthBar(bool state)
+    public void DisplayHealthBar(bool visible)
     {
-        healthBar.gameObject.SetActive(state);
+        healthBar.gameObject.SetActive(visible);
     }
 
-    public void DisplayManaBar(bool state)
+    public void DisplayManaBar(bool visible)
     {
-        manaBar.gameObject.SetActive(state);
+        manaBar.gameObject.SetActive(visible);
     }
 }

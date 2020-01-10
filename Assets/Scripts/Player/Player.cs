@@ -50,15 +50,6 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        /*if (gameIsOver)
-        {
-            return;
-        }
-
-        if (Input.GetKeyDown("y"))
-        {
-            EndGame();
-        }*/
     }
 
     private void OnDeath()
