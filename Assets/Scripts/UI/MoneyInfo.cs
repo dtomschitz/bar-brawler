@@ -39,7 +39,7 @@ public class MoneyInfo : MonoBehaviour
 
     private void InstantiateMoneyText(GameObject gameObject)
     {
-        GameObject popup = Instantiate(gameObject, transform.parent);
+        GameObject popup = Instantiate(gameObject, transform);
         Destroy(popup, destroyText);
     }
 
