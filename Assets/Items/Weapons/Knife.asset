@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Knife
   m_EditorClassIdentifier: 
   name: Messer
-  icon: {fileID: 21300000, guid: ccec83482d316e5459b221d80dff338c, type: 3}
-  type: 0
+  icon: {fileID: 21300000, guid: 8b4f1ae3819187144bf990072f899a69, type: 3}
+  type: 1
   addToInventory: 1
-  itemType: 0
-  prefab: {fileID: 8089128617610082352, guid: c3e39dcb3966885448c77854c11f91e2, type: 3}
+  itemType: 2
+  prefab: {fileID: 460222663522612011, guid: c3e39dcb3966885448c77854c11f91e2, type: 3}
   pickPosition: {x: 0, y: 0, z: 0}
   pickRotation: {x: 0, y: 0, z: 0}
   dropRotation: {x: 0, y: 0, z: 0}

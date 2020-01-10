@@ -30,5 +30,6 @@ public enum Items
     Fist,
     Revolver,
     Bottle,
-    Drink
+    Drink,
+    Knife,
 }
