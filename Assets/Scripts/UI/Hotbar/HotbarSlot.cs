@@ -5,18 +5,40 @@ using UnityEngine.UI;
 public class HotbarSlot : MonoBehaviour
 {
     public Image icon;
-    private Item item;
+    public Text slotNumber;
+
+    private Color color = Color.white;
+
+    public int SlotNumber
+    {
+        set { slotNumber.text = value.ToString(); }
+    }
+
+    public bool Selected
+    {
+        set {
+            if (value)
+            {
+                //icon.color = Color.white.a;
+                color.a = 1.0f;
+            } else
+            {
+                color.a = .6f;
+
+            }
+        }
+    }
+
 
     public void Add(Item item)
     {
-        this.item = item;
         icon.sprite = item.icon;
+        icon.color = color;
         icon.enabled = true;
     }
 
     public void Clear()
     {
-        item = null;
         icon.sprite = null;
         icon.enabled = false;
     }

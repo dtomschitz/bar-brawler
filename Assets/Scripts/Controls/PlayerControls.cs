@@ -26,32 +26,18 @@ public class PlayerControls : MonoBehaviour
 
     //private float camRayLength = 100f;
 
-    private Camera camera;
     private CharacterController character;
     private Rigidbody rigidbody;
 
     private Inventory inventory;
     private EquipmentManager equipment;
 
-    private int selectedHotbarIndex = 0;
-    private readonly KeyCode[] hotbarControls = new KeyCode[]
-    {
-        KeyCode.Alpha1,
-        KeyCode.Alpha2,
-        KeyCode.Alpha3,
-        KeyCode.Alpha4,
-        KeyCode.Alpha5,
-    };
-
     void Start()
     {
-        camera = FindObjectOfType<Camera>();
         character = GetComponent<CharacterController>();
         rigidbody = GetComponent<Rigidbody>();
         inventory = GetComponent<Inventory>();
         equipment = GetComponent<EquipmentManager>();
-        
-        SelectItem(0);
     }
 
     void Update()
@@ -114,42 +100,12 @@ public class PlayerControls : MonoBehaviour
 
     private void HandleInput()
     {
-        for (int i = 0; i < hotbarControls.Length; i++)
-        {
-            if (Input.GetKeyDown(hotbarControls[i]))
-            {
-                selectedHotbarIndex = i;
-                if (selectedHotbarIndex < inventory.slots.Count)
-                {
-                    SelectItem(selectedHotbarIndex);
-                }
-            }
-        }
+
 
         if (Input.GetMouseButtonDown(0))
         {
             if (equipment.CurrentItem != null)
             {
-                /*if (equipment.CurrentItem is Revolver)
-                {
-                    Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-                    RaycastHit floorHit;
-
-                    if (Physics.Raycast(camRay, out floorHit, enemyLayer))
-                    {
-                        Vector3 playerToMouse = floorHit.point - transform.position;
-                        playerToMouse.y = 0f;
-
-                        Quaternion newRotation = Quaternion.LookRotation(playerToMouse);
-                        playerModel.transform.rotation = Quaternion.Slerp(playerModel.transform.rotation, newRotation, 1000f * Time.deltaTime);
-                    }
-                    equipment.CurrentItem.OnInteractPrimary();
-                }
-                else
-                {
-                    equipment.CurrentItem.OnInteractPrimary();
-                }*/
-
                 equipment.CurrentItem.OnInteractPrimary();
             }
         }
@@ -174,21 +130,6 @@ public class PlayerControls : MonoBehaviour
                 }
                 return;
             }
-
-            /*if (equipment.CurrentEquipment != null && equipment.CurrentEquipment.type == ItemType.Consumable)
-            {
-                inventory.UseItem(equipment.CurrentEquipment);
-                return;
-            }*/
-        }
-    }
-
-    private void SelectItem(int i)
-    {
-        Item item = inventory.slots[i].FirstItem;
-        if (item != null && item is Equipment)
-        {
-            equipment.EquipItem(item as Equipment);
         }
     }
 

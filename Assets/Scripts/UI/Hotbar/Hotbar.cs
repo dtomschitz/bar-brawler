@@ -1,9 +1,23 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class Hotbar : MonoBehaviour
 {
+    public delegate void ItemSelected(Equipment item);
+    public event ItemSelected OnItemSelected;
+
     private Inventory inventory;
     private HotbarSlot[] slots;
+
+    private int selectedHotbarIndex = 0;
+    private readonly KeyCode[] hotbarControls = new KeyCode[]
+    {
+        KeyCode.Alpha1,
+        KeyCode.Alpha2,
+        KeyCode.Alpha3,
+        KeyCode.Alpha4,
+        KeyCode.Alpha5,
+    };
 
     void Start()
     {
@@ -12,7 +26,31 @@ public class Hotbar : MonoBehaviour
         inventory.ItemRemoved += OnItemRemoved;
 
         slots = GetComponentsInChildren<HotbarSlot>();
-        foreach (HotbarSlot slot in slots) slot.Clear();
+        for (int i = 0; i < slots.Length; i++)
+        {
+            HotbarSlot slot = slots[i];
+            slot.Clear();
+            slot.SlotNumber = i + 1;
+        }
+    }
+
+    void Update()
+    {
+        for (int i = 0; i < hotbarControls.Length; i++)
+        {
+            if (Input.GetKeyDown(hotbarControls[i]))
+            {
+                selectedHotbarIndex = i;
+                if (selectedHotbarIndex < inventory.slots.Count)
+                {
+                    Item item = inventory.slots[i].FirstItem;
+                    if (item != null && item is Equipment)
+                    {
+                        OnItemSelected?.Invoke(item as Equipment);
+                    }
+                }
+            }
+        }
     }
 
     private void OnItemAdded(object sender, InventoryEvent e) 

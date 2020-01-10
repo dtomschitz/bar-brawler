@@ -11,11 +11,15 @@ public class EquipmentManager : MonoBehaviour
     private Equipment currentEquipment;
 
     private Inventory inventory;
+    private Hotbar hotbar;
 
     void Start()
     {
         inventory = GetComponent<Inventory>();
         inventory.ItemUsed += OnItemUsed;
+
+        hotbar = FindObjectOfType<Hotbar>();
+        hotbar.OnItemSelected += EquipItem;
     }
 
     private void OnItemUsed(object sender, InventoryEvent e)
