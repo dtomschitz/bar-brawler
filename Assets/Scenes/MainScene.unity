@@ -1925,8 +1925,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.8867924, g: 0.8867924, b: 0.8867924, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.7735849, g: 0.7735849, b: 0.7735849, a: 1}
+    m_PressedColor: {r: 0.7169812, g: 0.7169812, b: 0.7169812, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -2479,8 +2479,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.8867924, g: 0.8867924, b: 0.8867924, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.7735849, g: 0.7735849, b: 0.7735849, a: 1}
+    m_PressedColor: {r: 0.7169812, g: 0.7169812, b: 0.7169812, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -3440,22 +3440,22 @@ PrefabInstance:
     - target: {fileID: 822694969838858792, guid: e9a788d8483e57547b542489c1a5390c,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.024992
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 822694969838858792, guid: e9a788d8483e57547b542489c1a5390c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.00033951
+      value: -0.00000077689765
       objectReference: {fileID: 0}
     - target: {fileID: 822694969838858792, guid: e9a788d8483e57547b542489c1a5390c,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1600.1
+      value: 1600
       objectReference: {fileID: 0}
     - target: {fileID: 822694969838858792, guid: e9a788d8483e57547b542489c1a5390c,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 809.88
+      value: 900
       objectReference: {fileID: 0}
     - target: {fileID: 822694969838858792, guid: e9a788d8483e57547b542489c1a5390c,
         type: 3}
