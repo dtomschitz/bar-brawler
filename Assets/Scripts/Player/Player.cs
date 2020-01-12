@@ -31,9 +31,8 @@ public class Player : MonoBehaviour
     public Inventory inventory { get; protected set; }
     public EquipmentManager equipment { get; protected set; }
 
-    //private float waitForSeconds = 1;
-    //private bool gameIsOver = false;
-    // public GameObject gameOverUI;
+    private bool gameIsOver = false;
+    public GameObject gameOverUI;
 
     void Start()
     {
@@ -73,7 +72,7 @@ public class Player : MonoBehaviour
 
     void EndGame()
     {
-        //gameIsOver = true;
-        //gameOverUI.SetActive(true);
+        gameIsOver = true;
+        gameOverUI.SetActive(true);
     }
 }
