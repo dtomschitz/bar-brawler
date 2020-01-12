@@ -15,6 +15,7 @@ public class GameOver : MonoBehaviour
 
     public void Retry()
     {
+        WaveSpawner.rounds = 0;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
