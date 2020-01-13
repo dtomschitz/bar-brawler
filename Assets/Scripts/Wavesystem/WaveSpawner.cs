@@ -1,5 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 public enum SpawnState { SPAWNING, WAITING, COUNTING }
@@ -21,7 +22,7 @@ public class WaveSpawner : MonoBehaviour
     public event WaveUpdate OnWaveUpdate;
 
     public Transform enemyPrefab;
-    public Transform[] spawnPoints;
+    public List<SpawnPoint> SpawnPoints { get; protected set; }
 
     public bool enableWaves = true;
     public float timeBetweenWaves = 31f;
@@ -38,22 +39,16 @@ public class WaveSpawner : MonoBehaviour
 
     void Start()
     {
-        waveCountdown = timeBetweenWaves;
-        state = SpawnState.COUNTING;
-        OnWaveUpdate?.Invoke(state);
+        SpawnPoints = new List<SpawnPoint>(FindObjectsOfType<SpawnPoint>());
+        Reset();
     }
 
     void Update()
     {
         if (state == SpawnState.WAITING)
         {
-            if (!IsEnemyAlive)
-            {
-                Start();
-            } else
-            {
-                return;
-            }
+            if (IsEnemyAlive) return;
+            Reset();
         }
 
         if (enableWaves)
@@ -77,6 +72,20 @@ public class WaveSpawner : MonoBehaviour
                 }
             }
         }
+
+    }
+
+    private void Reset()
+    {
+        waveCountdown = timeBetweenWaves;
+        state = SpawnState.COUNTING;
+
+        SpawnPoints.ForEach(delegate (SpawnPoint spawnPoint)
+        {
+            spawnPoint.CloseDoor();
+        });
+
+        OnWaveUpdate?.Invoke(state);
     }
 
     private IEnumerator SpawnWave()
@@ -101,8 +110,9 @@ public class WaveSpawner : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        Transform randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-        Instantiate(enemyPrefab, randomSpawnPoint.position, randomSpawnPoint.rotation);
+        SpawnPoint spawnPoint = SpawnPoints[Random.Range(0, SpawnPoints.Count)];
+        spawnPoint.OpenDoor();
+        Instantiate(enemyPrefab, spawnPoint.transform.position, spawnPoint.transform.rotation);
     }
 
     private bool IsEnemyAlive
