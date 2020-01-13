@@ -23,16 +23,12 @@ public class MoneyInfo : MonoBehaviour
 
     public void OnMoneyReceived(int currentBalance)
     {
-        // GameObject popup = Instantiate(moneyRecived, transform.parent);
-        // Destroy(popup, destroyText);
         InstantiateMoneyText(moneyRecived);
         StartCoroutine(MoneyUpdateRoutine(currentBalance, .7f));
     }
 
     public void OnMoneySpend(int currentBalance)
     {
-        //GameObject popup = Instantiate(moneySpend, transform.parent);
-        //Destroy(popup, destroyText);
         InstantiateMoneyText(moneySpend);
         StartCoroutine(MoneyUpdateRoutine(currentBalance, .1f));
     }

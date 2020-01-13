@@ -23,12 +23,12 @@ public class Barkeeper : Interactable
     {
         hud = HUDManager.instance;
         waveSpawner = WaveSpawner.instance;
-        waveSpawner.OnWaveUpdate += OnWaveUpdate;
+        waveSpawner.OnWaveStateUpdate += OnWaveUpdate;
     }
 
-    public void OnWaveUpdate(SpawnState state) 
+    public void OnWaveUpdate(WaveSpawnerState state) 
     {
-        if (state == SpawnState.SPAWNING || state == SpawnState.WAITING)
+        if (state == WaveSpawnerState.SPAWNING || state == WaveSpawnerState.WAITING)
         {
             InteractCanceled();
         }
@@ -58,6 +58,7 @@ public class Barkeeper : Interactable
         hud.DisplayHealthBar(false);
         hud.DisplayManaBar(false);
         hud.DisplayHotbar(false);
+        hud.DisplayWaveInfo(false);
     }
 
     public void CloseShop()
@@ -66,6 +67,7 @@ public class Barkeeper : Interactable
         hud.DisplayHealthBar(true);
         hud.DisplayManaBar(true);
         hud.DisplayHotbar(true);
+        hud.DisplayWaveInfo(true);
     }
 
     private void OnTriggerExit(Collider other)

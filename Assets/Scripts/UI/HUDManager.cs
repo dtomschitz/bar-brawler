@@ -20,6 +20,7 @@ public class HUDManager : MonoBehaviour
     public HealthBar healthBar;
     public ManaBar manaBar;
     public MoneyInfo moneyInfo;
+    public WaveInfo waveInfo;
 
     public void DisplayHotbar(bool visible)
     {
@@ -34,5 +35,10 @@ public class HUDManager : MonoBehaviour
     public void DisplayManaBar(bool visible)
     {
         manaBar.gameObject.SetActive(visible);
+    }
+
+    public void DisplayWaveInfo(bool visible)
+    {
+        waveInfo.DisplaySkipText(visible);
     }
 }
