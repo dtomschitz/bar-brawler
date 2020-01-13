@@ -38,6 +38,8 @@ public class Hotbar : MonoBehaviour
             slot.Clear();
             slot.SlotNumber = i + 1;
         }
+
+        SelectItem(0);
     }
 
     void Update()
@@ -49,19 +51,7 @@ public class Hotbar : MonoBehaviour
                 selectedHotbarIndex = i;
                 if (selectedHotbarIndex < inventory.slots.Count)
                 {
-                    Item item = inventory.slots[i].FirstItem;
-                    if (item != null && item is Equipment)
-                    {
-                        if (currentItemNameCoroutine != null)
-                        {
-                            StopCoroutine(currentItemNameCoroutine);
-                            currentItemNameCoroutine = null;
-                        }
-
-                        currentItemNameCoroutine = StartCoroutine(ShowSelectedName(item.name));
-
-                        OnItemSelected?.Invoke(item as Equipment);
-                    }
+                    SelectItem(selectedHotbarIndex);
                 }
             }
         }
@@ -92,6 +82,22 @@ public class Hotbar : MonoBehaviour
                 }
                 break;
             }
+        }
+    }
+
+    private void SelectItem(int hotbarIndex)
+    {
+        Item item = inventory.slots[hotbarIndex].FirstItem;
+        if (item != null && item is Equipment)
+        {
+            if (currentItemNameCoroutine != null)
+            {
+                StopCoroutine(currentItemNameCoroutine);
+                currentItemNameCoroutine = null;
+            }
+
+            currentItemNameCoroutine = StartCoroutine(ShowSelectedName(item.name));
+            OnItemSelected?.Invoke(item as Equipment);
         }
     }
 
