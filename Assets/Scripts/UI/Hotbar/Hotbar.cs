@@ -1,13 +1,19 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Hotbar : MonoBehaviour
 {
+    public Text selectedItemName;
+
     public delegate void ItemSelected(Equipment item);
     public event ItemSelected OnItemSelected;
 
     private Inventory inventory;
     private HotbarSlot[] slots;
+
+    private Coroutine currentItemNameCoroutine;
 
     private int selectedHotbarIndex = 0;
     private readonly KeyCode[] hotbarControls = new KeyCode[]
@@ -46,6 +52,14 @@ public class Hotbar : MonoBehaviour
                     Item item = inventory.slots[i].FirstItem;
                     if (item != null && item is Equipment)
                     {
+                        if (currentItemNameCoroutine != null)
+                        {
+                            StopCoroutine(currentItemNameCoroutine);
+                            currentItemNameCoroutine = null;
+                        }
+
+                        currentItemNameCoroutine = StartCoroutine(ShowSelectedName(item.name));
+
                         OnItemSelected?.Invoke(item as Equipment);
                     }
                 }
@@ -79,5 +93,12 @@ public class Hotbar : MonoBehaviour
                 break;
             }
         }
+    }
+
+    private IEnumerator ShowSelectedName(string name)
+    {
+        selectedItemName.text = name;
+        yield return new WaitForSeconds(1f);
+        selectedItemName.text = "";
     }
 }
