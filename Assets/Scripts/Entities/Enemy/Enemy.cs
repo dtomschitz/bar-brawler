@@ -12,6 +12,9 @@ public class Enemy : Interactable
     public float attackRate = 1f;
     private float attackCooldown = 0f;
 
+    public bool IsUnderAttack { get; private set; } = false;
+    private Coroutine isUnderAttackRoutine;
+
     public EntityStats Stats { get; protected set; }
     public EntityCombat Combat { get; protected set; }
     public EnemyAnimator Animator { get; protected set; }
@@ -37,8 +40,7 @@ public class Enemy : Interactable
     {
         if (!Stats.IsDead)
         {
-            attackCooldown -= Time.deltaTime;
-    
+            attackCooldown -= Time.deltaTime; 
 
             float distance = Vector3.Distance(target.position, transform.position);
             if (distance <= lookRadius)
@@ -53,10 +55,13 @@ public class Enemy : Interactable
                         PlayerCombat playerCombat = player.combat;
                         if (playerStats != null && playerCombat != null && !playerStats.IsDead)
                         {
-                            attackCooldown = 1f / attackRate;
-                            Animator.OnPrimary();
+                            if (!IsUnderAttack)
+                            {
+                                attackCooldown = 1f / attackRate;
+                                Animator.OnPrimary();
 
-                            if (!playerCombat.IsBlocking) Combat.Attack(playerStats);
+                                if (!playerCombat.IsBlocking) Combat.Attack(playerStats);
+                            }
                         }
                     }
                 } 
@@ -77,6 +82,15 @@ public class Enemy : Interactable
     private void OnTakeDamage(double damage)
     {
         if (Stats.IsDead) return;
+
+        if (isUnderAttackRoutine != null)
+        {
+            StopCoroutine(IsUnderAttackRoutine());
+            isUnderAttackRoutine = null;
+        }
+
+        isUnderAttackRoutine = StartCoroutine(IsUnderAttackRoutine());
+
         if (damagePopup) ShowDamagePopup(damage);
     }
 
@@ -104,6 +118,13 @@ public class Enemy : Interactable
         Vector3 direction = (target.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+    }
+
+    private IEnumerator IsUnderAttackRoutine()
+    {
+        IsUnderAttack = true;
+        yield return new WaitForSeconds(.2f);
+        IsUnderAttack = false;
     }
 
     private void OnDrawGizmosSelected()
