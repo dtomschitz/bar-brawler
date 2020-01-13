@@ -22,6 +22,9 @@ public class HUDManager : MonoBehaviour
     public MoneyInfo moneyInfo;
     public WaveInfo waveInfo;
 
+    public GameObject gameOverUI;
+
+
     public void DisplayHotbar(bool visible)
     {
         hotbar.gameObject.SetActive(visible);
@@ -39,6 +42,16 @@ public class HUDManager : MonoBehaviour
 
     public void DisplayWaveInfo(bool visible)
     {
-        waveInfo.DisplaySkipText(visible);
+        //waveInfo.DisplaySkipText(visible);
+        waveInfo.gameObject.SetActive(visible);
+    }
+
+    public void DisplayGameOverUI(bool visible)
+    {
+        DisplayHealthBar(!visible);
+        DisplayManaBar(!visible);
+        DisplayHotbar(!visible);
+        DisplayWaveInfo(!visible);
+        gameOverUI.SetActive(visible);
     }
 }

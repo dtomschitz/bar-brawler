@@ -31,8 +31,6 @@ public class Player : MonoBehaviour
     public Inventory inventory { get; protected set; }
     public EquipmentManager equipment { get; protected set; }
 
-    public GameObject gameOverUI;
-
     void Start()
     {
         controls = player.GetComponent<PlayerControls>();
@@ -71,6 +69,6 @@ public class Player : MonoBehaviour
 
     void EndGame()
     {
-        gameOverUI.SetActive(true);
+        HUDManager.instance.DisplayGameOverUI(true);
     }
 }

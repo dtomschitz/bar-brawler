@@ -1328,7 +1328,6 @@ GameObject:
   - component: {fileID: 247322026}
   - component: {fileID: 247322025}
   - component: {fileID: 247322027}
-  - component: {fileID: 247322028}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1350,7 +1349,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1958637424949074665}
   currentBalance: 0
-  gameOverUI: {fileID: 1196435167}
 --- !u!4 &247322026
 Transform:
   m_ObjectHideFlags: 0
@@ -1384,19 +1382,6 @@ MonoBehaviour:
   timeBetweenWaves: 31
   stateOfGameText: {fileID: 896722174}
   state: 2
---- !u!114 &247322028
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 247322024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8ed0c319ade97340bc6b7c56d888719, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ui: {fileID: 1472296153}
 --- !u!1 &252475577
 GameObject:
   m_ObjectHideFlags: 0
@@ -2324,7 +2309,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1973658258}
+      - m_Target: {fileID: 0}
         m_MethodName: Menu
         m_Mode: 1
         m_Arguments:
@@ -4891,7 +4876,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1973658258}
+      - m_Target: {fileID: 0}
         m_MethodName: Retry
         m_Mode: 1
         m_Arguments:
@@ -8266,7 +8251,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1973658258}
+      - m_Target: {fileID: 0}
         m_MethodName: Toggle
         m_Mode: 1
         m_Arguments:
@@ -8529,6 +8514,7 @@ MonoBehaviour:
   manaBar: {fileID: 330198270}
   moneyInfo: {fileID: 716838994}
   waveInfo: {fileID: 268896580}
+  gameOverUI: {fileID: 1196435167}
 --- !u!114 &1973658258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8536,7 +8522,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1973658255}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8ed0c319ade97340bc6b7c56d888719, type: 3}
   m_Name: 
@@ -9526,7 +9512,7 @@ PrefabInstance:
     - target: {fileID: 822694969838858807, guid: e9a788d8483e57547b542489c1a5390c,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 822694969838858792, guid: e9a788d8483e57547b542489c1a5390c,
         type: 3}
@@ -9641,12 +9627,12 @@ PrefabInstance:
     - target: {fileID: 822694969838858793, guid: e9a788d8483e57547b542489c1a5390c,
         type: 3}
       propertyPath: m_Color.a
-      value: 0.25882354
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 822694969838858795, guid: e9a788d8483e57547b542489c1a5390c,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9a788d8483e57547b542489c1a5390c, type: 3}
