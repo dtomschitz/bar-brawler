@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 112000000, guid: e6d0c374a9d809e4a9e635bdd47885ea,
     type: 2}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -2074,6 +2074,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7602279748008824946}
     m_Modifications:
+    - target: {fileID: 8077857890589940017, guid: d8820f6856d48524d8702897df2967e0,
+        type: 3}
+      propertyPath: m_Name
+      value: Light
+      objectReference: {fileID: 0}
     - target: {fileID: 8077857890589940018, guid: d8820f6856d48524d8702897df2967e0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2128,11 +2133,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8077857890589940017, guid: d8820f6856d48524d8702897df2967e0,
-        type: 3}
-      propertyPath: m_Name
-      value: Light
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8820f6856d48524d8702897df2967e0, type: 3}
@@ -3121,6 +3121,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4304232021263940978}
     m_Modifications:
+    - target: {fileID: 8077857890589940017, guid: d8820f6856d48524d8702897df2967e0,
+        type: 3}
+      propertyPath: m_Name
+      value: Light
+      objectReference: {fileID: 0}
     - target: {fileID: 8077857890589940018, guid: d8820f6856d48524d8702897df2967e0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3175,11 +3180,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8077857890589940017, guid: d8820f6856d48524d8702897df2967e0,
-        type: 3}
-      propertyPath: m_Name
-      value: Light
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8820f6856d48524d8702897df2967e0, type: 3}
@@ -4031,6 +4031,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4614086901601021494}
     m_Modifications:
+    - target: {fileID: 8077857890589940017, guid: d8820f6856d48524d8702897df2967e0,
+        type: 3}
+      propertyPath: m_Name
+      value: Light
+      objectReference: {fileID: 0}
     - target: {fileID: 8077857890589940018, guid: d8820f6856d48524d8702897df2967e0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4085,11 +4090,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8077857890589940017, guid: d8820f6856d48524d8702897df2967e0,
-        type: 3}
-      propertyPath: m_Name
-      value: Light
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8820f6856d48524d8702897df2967e0, type: 3}
@@ -4972,7 +4972,7 @@ GameObject:
   - component: {fileID: 1191440706}
   - component: {fileID: 1191440705}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: HUDCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7305,6 +7305,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3028042971811256816}
     m_Modifications:
+    - target: {fileID: 8077857890589940017, guid: d8820f6856d48524d8702897df2967e0,
+        type: 3}
+      propertyPath: m_Name
+      value: Light
+      objectReference: {fileID: 0}
     - target: {fileID: 8077857890589940018, guid: d8820f6856d48524d8702897df2967e0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7359,11 +7364,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8077857890589940017, guid: d8820f6856d48524d8702897df2967e0,
-        type: 3}
-      propertyPath: m_Name
-      value: Light
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8820f6856d48524d8702897df2967e0, type: 3}
@@ -10583,21 +10583,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 2771242930815221546, guid: 2c77cddebf528e1499be76a67d7f0676,
-        type: 3}
-      propertyPath: healthBar
-      value: 
-      objectReference: {fileID: 2139640385}
-    - target: {fileID: 2771242930815221546, guid: 2c77cddebf528e1499be76a67d7f0676,
-        type: 3}
-      propertyPath: damage.baseValue
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2771242930815221546, guid: 2c77cddebf528e1499be76a67d7f0676,
-        type: 3}
-      propertyPath: manaRegenerationSpeed
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2771242930815221549, guid: 2c77cddebf528e1499be76a67d7f0676,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10652,6 +10637,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2771242930815221546, guid: 2c77cddebf528e1499be76a67d7f0676,
+        type: 3}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 2139640385}
+    - target: {fileID: 2771242930815221546, guid: 2c77cddebf528e1499be76a67d7f0676,
+        type: 3}
+      propertyPath: damage.baseValue
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2771242930815221546, guid: 2c77cddebf528e1499be76a67d7f0676,
+        type: 3}
+      propertyPath: manaRegenerationSpeed
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2518191188709225780, guid: 2c77cddebf528e1499be76a67d7f0676,
         type: 3}
@@ -11353,6 +11353,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 199084740}
     m_Modifications:
+    - target: {fileID: 5105441965080216391, guid: 2528990fc2420d949a4ee103552a9b34,
+        type: 3}
+      propertyPath: m_Name
+      value: Main Camera
+      objectReference: {fileID: 0}
     - target: {fileID: 5105441965080216389, guid: 2528990fc2420d949a4ee103552a9b34,
         type: 3}
       propertyPath: orthographic
@@ -11382,11 +11387,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OcclusionCulling
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5105441965080216391, guid: 2528990fc2420d949a4ee103552a9b34,
-        type: 3}
-      propertyPath: m_Name
-      value: Main Camera
       objectReference: {fileID: 0}
     - target: {fileID: 5105441965080216386, guid: 2528990fc2420d949a4ee103552a9b34,
         type: 3}
