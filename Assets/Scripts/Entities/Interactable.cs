@@ -4,16 +4,7 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
-    public string interactionHint;
     private bool isInInteraction = false;
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
-        {
-            HUDManager.instance.interactionHint.DisplayInteractionHint(interactionHint);
-        }
-    }
 
     public virtual void Interact()
     {

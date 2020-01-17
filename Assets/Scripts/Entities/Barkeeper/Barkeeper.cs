@@ -62,7 +62,7 @@ public class Barkeeper : Interactable
         shop.SetOpen(true);
         hud.DisplayHealthBar(false);
         hud.DisplayManaBar(false);
-        hud.DisplayHotbar(false);
+        //hud.DisplayHotbar(false);
         hud.waveInfo.DisplayOnlySkipText(true);
     }
 
@@ -71,7 +71,7 @@ public class Barkeeper : Interactable
         shop.SetOpen(false);
         hud.DisplayHealthBar(true);
         hud.DisplayManaBar(true);
-        hud.DisplayHotbar(true);
+        //hud.DisplayHotbar(true);
         hud.waveInfo.DisplayAll(true);
     }
 }

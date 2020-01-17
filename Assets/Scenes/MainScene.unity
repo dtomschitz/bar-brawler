@@ -542,7 +542,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 299739932}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &115015382
+--- !u!64 &115015385
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2353,7 +2353,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 299739932}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &801142926
+--- !u!64 &801142929
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2541,12 +2541,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 871857179}
   m_CullTransparentMesh: 0
---- !u!4 &876377659 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5059742720039698473, guid: 86bb5107f2ee79445a838cddcf8ddd4c,
-    type: 3}
-  m_PrefabInstance: {fileID: 5059742719302809106}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &896722172
 GameObject:
   m_ObjectHideFlags: 0
@@ -2723,7 +2717,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 299739932}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &912123024
+--- !u!64 &912123027
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3287,7 +3281,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 299739933}
-  - {fileID: 876377659}
+  - {fileID: 5059742719302809107}
   - {fileID: 1354270042}
   - {fileID: 5006512736789746379}
   - {fileID: 816704210}
@@ -3295,7 +3289,7 @@ Transform:
   - {fileID: 1823892636}
   - {fileID: 698947508}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1191440704
 GameObject:
@@ -3393,7 +3387,7 @@ RectTransform:
   - {fileID: 1472296154}
   - {fileID: 1196435168}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -4726,7 +4720,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 299739932}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &1695987973
+--- !u!64 &1695987976
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7306,8 +7300,34 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4132546732920395643, guid: 86bb5107f2ee79445a838cddcf8ddd4c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4248881848797732666, guid: 86bb5107f2ee79445a838cddcf8ddd4c,
+        type: 3}
+      propertyPath: key
+      value: 101
+      objectReference: {fileID: 0}
+    - target: {fileID: 4248881848797732666, guid: 86bb5107f2ee79445a838cddcf8ddd4c,
+        type: 3}
+      propertyPath: isHintVisibleDuringWaves
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4248881848797732666, guid: 86bb5107f2ee79445a838cddcf8ddd4c,
+        type: 3}
+      propertyPath: hint
+      value: Press E to open the Shop
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 86bb5107f2ee79445a838cddcf8ddd4c, type: 3}
+--- !u!4 &5059742719302809107 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5059742720039698473, guid: 86bb5107f2ee79445a838cddcf8ddd4c,
+    type: 3}
+  m_PrefabInstance: {fileID: 5059742719302809106}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5105441965190917686
 PrefabInstance:
   m_ObjectHideFlags: 0

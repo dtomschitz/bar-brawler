@@ -3,45 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InteractionHint : MonoBehaviour
+public class InteractionHint : FadeText
 {
     private Text interactionHint;
-    private Coroutine hinteractionHintRoutine;
 
     void Start()
     {
         interactionHint = GetComponent<Text>();    
     }
 
-    void Update()
+    public void DisplayHint(string text, float visibleTime = 3f, float fadeTime = 1.5f)
     {
-        if (Input.anyKey)
+        if (interactionHint.text != text)
         {
-            if (hinteractionHintRoutine != null)
-            {
-                StopCoroutine(hinteractionHintRoutine);
-                hinteractionHintRoutine = null;
-            }
-        }    
-    }
-
-    public void DisplayInteractionHint(string text)
-    {
-        if (hinteractionHintRoutine != null)
-        {
-            StopCoroutine(hinteractionHintRoutine);
-            hinteractionHintRoutine = null;
+            StopAllCoroutines();
+            interactionHint.text = "";
         }
-
-        StartCoroutine(ShowInteractionHint(text));
+        ShowHintRoutine(text, fadeTime);
     }
 
-    private IEnumerator ShowInteractionHint(string text)
+    public void HideHint(float fadeTime = 1.5f)
     {
-        //interactionHint.gameObject.SetActive(true);
+        StartCoroutine(FadeOutHint(fadeTime));
+    }
+
+    private void ShowHintRoutine(string text, float fadeTime)
+    {
         interactionHint.text = text;
-        yield return new WaitForSeconds(3f);
+        FadeIn(interactionHint, fadeTime);
+    }
+
+    private IEnumerator FadeOutHint(float fadeTime)
+    {
+        FadeOut(interactionHint, fadeTime);
+        yield return new WaitForSeconds(fadeTime);
         interactionHint.text = "";
-       // interactionHint.gameObject.SetActive(false);
     }
 }
