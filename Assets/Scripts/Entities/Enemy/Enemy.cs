@@ -66,7 +66,7 @@ public class Enemy : Interactable
                     }
                 } 
 
-                FaceTarget();
+               // FaceTarget();
             }
         }
     }
