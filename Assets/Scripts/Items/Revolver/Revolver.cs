@@ -6,6 +6,7 @@ public class Revolver : Equippable
 {
     public Bullet bullet;
     public Transform muzzle;
+    public ParticleSystem muzzleFlash;
     public float bulletSpeed;
     public float fireRate = 1f;
 
@@ -29,18 +30,9 @@ public class Revolver : Equippable
     {
         if (cooldown <= 0f)
         {
-            /*if (inventory.HasAmmunition)
-            {
-                cooldown = 1f / fireRate;
-
-                Bullet newBullet = Instantiate(bullet, muzzle.position, muzzle.rotation) as Bullet;
-                newBullet.speed = bulletSpeed;
-
-                inventory.UseAmmunition();
-                animator.OnPrimary();
-            }*/
-
             cooldown = 1f / fireRate;
+
+            muzzleFlash.Play();
 
             Bullet newBullet = Instantiate(bullet, muzzle.position, muzzle.rotation) as Bullet;
             newBullet.speed = bulletSpeed;

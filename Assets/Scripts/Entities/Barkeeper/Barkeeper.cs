@@ -19,11 +19,16 @@ public class Barkeeper : Interactable
     private HUDManager hud;
     private WaveSpawner waveSpawner;
 
-    public void Start()
+    void Start()
     {
         hud = HUDManager.instance;
         waveSpawner = WaveSpawner.instance;
         waveSpawner.OnWaveStateUpdate += OnWaveUpdate;
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Player") InteractCanceled();
     }
 
     public void OnWaveUpdate(WaveSpawnerState state) 
@@ -58,7 +63,7 @@ public class Barkeeper : Interactable
         hud.DisplayHealthBar(false);
         hud.DisplayManaBar(false);
         hud.DisplayHotbar(false);
-        hud.DisplayWaveInfo(false);
+        hud.waveInfo.DisplayOnlySkipText(true);
     }
 
     public void CloseShop()
@@ -67,11 +72,6 @@ public class Barkeeper : Interactable
         hud.DisplayHealthBar(true);
         hud.DisplayManaBar(true);
         hud.DisplayHotbar(true);
-        hud.DisplayWaveInfo(true);
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Player") InteractCanceled();
+        hud.waveInfo.DisplayAll(true);
     }
 }

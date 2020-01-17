@@ -25,8 +25,15 @@ public class WaveInfo : MonoBehaviour
     }
 
 
-    public void DisplaySkipText(bool visible)
+    public void DisplayOnlySkipText(bool visible)
     {
+        stateOfGameText.gameObject.SetActive(visible);
+        skipCountdownText.gameObject.SetActive(false);
+    }
+
+    public void DisplayAll(bool visible)
+    {
+        stateOfGameText.gameObject.SetActive(visible);
         skipCountdownText.gameObject.SetActive(visible);
     }
 }

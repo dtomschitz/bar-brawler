@@ -21,6 +21,7 @@ public class HUDManager : MonoBehaviour
     public ManaBar manaBar;
     public MoneyInfo moneyInfo;
     public WaveInfo waveInfo;
+    public InteractionHint interactionHint;
 
     public GameObject gameOverUI;
 
@@ -42,7 +43,6 @@ public class HUDManager : MonoBehaviour
 
     public void DisplayWaveInfo(bool visible)
     {
-        //waveInfo.DisplaySkipText(visible);
         waveInfo.gameObject.SetActive(visible);
     }
 
