@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class ManaBar : MonoBehaviour
@@ -9,10 +10,16 @@ public class ManaBar : MonoBehaviour
     void Start()
     {
         playerCombat = Player.instance.combat;
+
+
+        if (!manaBarImage)
+        {
+            throw new NullReferenceException("Manabar image is not set!");
+        }
     }
 
     void Update()
     {
-        manaBarImage.fillAmount = playerCombat.NormalizedMana;
+        if (playerCombat) manaBarImage.fillAmount = playerCombat.NormalizedMana;
     }
 }

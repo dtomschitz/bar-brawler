@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
@@ -9,10 +10,15 @@ public class HealthBar : MonoBehaviour
     void Start()
     {
         playerStats = Player.instance.stats;
+
+        if (!healthBarImage)
+        {
+            throw new NullReferenceException("Healthbar image is not set!");
+        }
     }
 
     void Update()
     {
-        healthBarImage.fillAmount = playerStats.NormalizedHealth;
+        if (playerStats) healthBarImage.fillAmount = playerStats.NormalizedHealth;
     }
 }
