@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Feuersaft
   m_EditorClassIdentifier: 
   name: Feuersaft
-  icon: {fileID: 21300000, guid: 4047245233a760c4fa8cc70addfa97b1, type: 3}
+  icon: {fileID: 21300000, guid: b44a039e5c0581a4eb4ca59dda249992, type: 3}
   type: 0
   addToInventory: 1
   itemType: 3

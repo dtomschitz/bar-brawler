@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bottle
   m_EditorClassIdentifier: 
   name: Flasche
-  icon: {fileID: 21300000, guid: dfc49b045082feb42b2d01b109c55e42, type: 3}
+  icon: {fileID: 21300000, guid: 794a55077e3bfb04aa13182f4fb88332, type: 3}
   type: 1
   addToInventory: 1
   itemType: 2

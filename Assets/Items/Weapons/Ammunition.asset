@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Ammunition
   m_EditorClassIdentifier: 
   name: Munnition
-  icon: {fileID: 21300000, guid: 4916252bff508dc449efc9c726f28fb4, type: 3}
+  icon: {fileID: 21300000, guid: 7947e1ad49da36a46a4a5ad7cef3700a, type: 3}
   type: 1
   addToInventory: 1
   amount: 10
