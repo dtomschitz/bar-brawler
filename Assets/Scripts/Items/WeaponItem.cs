@@ -71,8 +71,6 @@ public class WeaponItem : Equippable
     public virtual void OnHit(Enemy enemy)
     {
         enemy.Interact();
-
-        //TODO: add knockback
     }
 
     public virtual void StartPrimaryRoutine(IEnumerator routine)

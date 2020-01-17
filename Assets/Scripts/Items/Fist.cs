@@ -18,13 +18,15 @@ public class Fist : WeaponItem
         combat.state = CombatState.BLOCKING;
         StartSecondaryRoutine(BlockingRoutine());
         animator.OnSecondary();
-        combat.UseMana();
     }
 
     private IEnumerator BlockingRoutine()
     {
+        combat.IsUsingMana = true;
+        combat.UseMana();
         combat.state = CombatState.BLOCKING;
         yield return new WaitForSeconds(.1f);
         combat.state = CombatState.IDLE;
+        combat.IsUsingMana = false;
     }
 }

@@ -9777,6 +9777,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1047399683256756517, guid: 208007a5b12bb7342837085de16f37bd,
+        type: 3}
+      propertyPath: playerCombat
+      value: 
+      objectReference: {fileID: 1958637424949074667}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 208007a5b12bb7342837085de16f37bd, type: 3}
 --- !u!1 &1050849688039362816
@@ -9993,6 +9998,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 4421150132736468440}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1958637424949074667 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -4832910977479796684, guid: 2c77cddebf528e1499be76a67d7f0676,
+    type: 3}
+  m_PrefabInstance: {fileID: 4421150132736468440}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1958637424949074665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07bb7d99eb694094cab1c075fbeea5c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1958637424949074668 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2771242930815221546, guid: 2c77cddebf528e1499be76a67d7f0676,
@@ -12708,6 +12725,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7705429829075723992, guid: 98abca6ef6af5a24594dff6c448569df,
+        type: 3}
+      propertyPath: playerStats
+      value: 
+      objectReference: {fileID: 1958637424949074668}
     - target: {fileID: 7705429828412012929, guid: 98abca6ef6af5a24594dff6c448569df,
         type: 3}
       propertyPath: m_Sprite

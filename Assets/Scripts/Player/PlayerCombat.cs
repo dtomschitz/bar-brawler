@@ -9,6 +9,8 @@ public class PlayerCombat : EntityCombat
     public float manaRegenerationSpeed;
 
     public float CurrentMana { get; protected set; }
+    public bool IsUsingMana { get; set; }
+
 
     protected override void Start()
     {
@@ -18,7 +20,7 @@ public class PlayerCombat : EntityCombat
 
     void Update()
     {
-        AddMana(manaRegenerationAmount * Time.deltaTime / manaRegenerationSpeed);
+        if (!IsUsingMana) AddMana(manaRegenerationAmount * Time.deltaTime / manaRegenerationSpeed);
     }
 
     public void AddMana(float amount)
