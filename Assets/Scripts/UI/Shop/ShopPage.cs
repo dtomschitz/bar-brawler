@@ -41,8 +41,8 @@ public class ShopPage : MonoBehaviour
     {
         if (Player.instance.currentBalance >= shopItem.price)
         {
-            Player.instance.inventory.AddItem(shopItem.item);
             Player.instance.RemoveMoney(shopItem.price);
+            Player.instance.inventory.AddItem(shopItem.item);
         }
     }
 

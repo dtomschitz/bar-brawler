@@ -21,21 +21,24 @@ public class MoneyInfo : MonoBehaviour
         Player.instance.OnMoneySpend += OnMoneySpend;    
     }
 
-    public void OnMoneyReceived(int currentBalance)
+    public void OnMoneyReceived(int amount, int currentBalance)
     {
-        InstantiateMoneyText(moneyRecived);
+        InstantiateMoneyText(moneyRecived, amount, "+");
         StartCoroutine(MoneyUpdateRoutine(currentBalance, .7f));
     }
 
-    public void OnMoneySpend(int currentBalance)
+    public void OnMoneySpend(int amount, int currentBalance)
     {
-        InstantiateMoneyText(moneySpend);
+        InstantiateMoneyText(moneySpend, amount, "-");
         StartCoroutine(MoneyUpdateRoutine(currentBalance, .1f));
     }
 
-    private void InstantiateMoneyText(GameObject gameObject)
+    private void InstantiateMoneyText(GameObject gameObject, int amount, string a)
     {
         GameObject popup = Instantiate(gameObject, transform);
+        popup.GetComponent<Text>().text = a + amount + "$";
+
+        Debug.Log(popup.GetComponent<Text>().text);
         Destroy(popup, destroyText);
     }
 

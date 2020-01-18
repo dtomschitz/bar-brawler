@@ -19,8 +19,8 @@ public class Player : MonoBehaviour
 
     public int currentBalance = 0;
 
-    public delegate void MoneyRecived(int currentBalance);
-    public delegate void MoneySpend(int currentBalance);
+    public delegate void MoneyRecived(int amount, int currentBalance);
+    public delegate void MoneySpend(int amount, int currentBalance);
     public event MoneyRecived OnMoneyReceived;
     public event MoneySpend OnMoneySpend;
 
@@ -58,13 +58,13 @@ public class Player : MonoBehaviour
     public void AddMoney(int amount)
     {
         currentBalance += amount;
-        OnMoneyReceived?.Invoke(currentBalance);
+        OnMoneyReceived?.Invoke(amount, currentBalance);
     }
 
     public void RemoveMoney(int amount)
     {
         currentBalance -= amount;
-        OnMoneySpend?.Invoke(currentBalance);
+        OnMoneySpend?.Invoke(amount, currentBalance);
     }
 
     void EndGame()
