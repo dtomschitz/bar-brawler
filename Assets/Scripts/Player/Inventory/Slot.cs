@@ -37,7 +37,7 @@ public class Slot
         if (IsEmpty) return false;
 
         Item first = stack.Peek();
-        if (first.name == item.name) return true;
+        if (item.isStackable && first.name == item.name) return true;
 
         return false;
     }

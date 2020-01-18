@@ -17,6 +17,7 @@ public class EquipmentManager : MonoBehaviour
     {
         inventory = GetComponent<Inventory>();
         inventory.ItemUsed += OnItemUsed;
+        inventory.ItemRemoved += OnItemRemoved;
 
         hotbar = FindObjectOfType<Hotbar>();
         hotbar.OnItemSelected += EquipItem;
@@ -29,11 +30,19 @@ public class EquipmentManager : MonoBehaviour
             Unequip();
             if (e.item.slot.Count == 0)
             {
-                Item firstItem = inventory.slots[0].FirstItem;
-                if (firstItem is Equipment)
-                {
-                    EquipItem(firstItem as Equipment);
-                }
+                EquipFirstItemInHotbar();
+            }
+        }
+    }
+
+    private void OnItemRemoved(object sender, InventoryEvent e)
+    {
+        if (e.item == currentEquipment)
+        {
+            Unequip();
+            if (e.item.slot.Count == 0)
+            {
+                EquipFirstItemInHotbar();
             }
         }
     }
@@ -75,6 +84,15 @@ public class EquipmentManager : MonoBehaviour
         currentItem = null;
         currentEquipment = null;
         Destroy(prefab);
+    }
+
+    private void EquipFirstItemInHotbar()
+    {
+        Item firstItem = inventory.slots[0].FirstItem;
+        if (firstItem is Equipment)
+        {
+            EquipItem(firstItem as Equipment);
+        }
     }
 
     public Equippable CurrentItem

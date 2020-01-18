@@ -31,12 +31,13 @@ public class Hotbar : MonoBehaviour
         inventory.ItemAdded += OnItemAdded;
         inventory.ItemRemoved += OnItemRemoved;
 
+        WaveSpawner.instance.OnWaveStateUpdate += OnWaveStateUpdate;
+
         slots = GetComponentsInChildren<HotbarSlot>();
         for (int i = 0; i < slots.Length; i++)
         {
             HotbarSlot slot = slots[i];
             slot.Clear();
-            slot.SlotNumber = i + 1;
         }
 
         SelectItem(0);
@@ -85,6 +86,16 @@ public class Hotbar : MonoBehaviour
         }
     }
 
+    private void OnWaveStateUpdate(WaveSpawnerState state)
+    {
+        bool isEnabled = !WaveSpawner.instance.IsWaveRunning;
+
+        for (int i = 0; i < slots.Length; i++)
+        {
+            EnableDragHandler(slots[i], isEnabled);
+        }
+    }
+
     private void SelectItem(int hotbarIndex)
     {
         Item item = inventory.slots[hotbarIndex].FirstItem;
@@ -99,6 +110,11 @@ public class Hotbar : MonoBehaviour
             currentItemNameCoroutine = StartCoroutine(ShowSelectedName(item.name));
             OnItemSelected?.Invoke(item as Equipment);
         }
+    }
+
+    private void EnableDragHandler(HotbarSlot hotbarSlot, bool isEnabled)
+    {
+        hotbarSlot.GetComponentInChildren<ItemDragHandler>().isEnabled = isEnabled;
     }
 
     private IEnumerator ShowSelectedName(string name)

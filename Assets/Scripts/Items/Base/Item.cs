@@ -8,7 +8,9 @@ public class Item : ScriptableObject
     new public string name;
     public Sprite icon;
     public ItemType type;
+
     public bool addToInventory = true;
+    public bool isStackable = true;
 
     public Slot slot;
 

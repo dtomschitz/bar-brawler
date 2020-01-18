@@ -75,7 +75,6 @@ public class Inventory : MonoBehaviour
     public void UseItem(Item item)
     {
         ItemUsed?.Invoke(this, new InventoryEvent(item));
-        //item.OnCollection();
         RemoveItem(item);
     }
 
