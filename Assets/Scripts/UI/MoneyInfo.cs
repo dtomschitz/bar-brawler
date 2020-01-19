@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -45,7 +44,7 @@ public class MoneyInfo : MonoBehaviour
     private IEnumerator MoneyUpdateRoutine(int currentBalance, float seconds)
     {
         yield return new WaitForSeconds(seconds);
-        currentBalanceText.text = "$" + currentBalance;
+        currentBalanceText.text = "$ " + currentBalance;
 
     }
 }

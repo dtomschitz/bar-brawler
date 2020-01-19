@@ -39,7 +39,7 @@ namespace Items
                     Bullet newBullet = Instantiate(bullet, muzzle.position, muzzle.rotation) as Bullet;
                     newBullet.speed = bulletSpeed;
 
-                    Player.instance.inventory.UseAmmunition();
+                    Player.instance.inventory.UseMunition();
                     animator.OnPrimary();
                 }
         }

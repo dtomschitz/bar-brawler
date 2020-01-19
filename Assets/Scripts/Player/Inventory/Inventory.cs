@@ -9,10 +9,12 @@ public class Inventory : MonoBehaviour
     public List<Item> defaultItems = new List<Item>();
     public int maxSlots = 4;
 
-    [Header("Ammunition")]
-    public int currentAmmunition = 0;
-    public int maxAmmuntion = 30;
+    [Header("Munition")]
+    public int currentMunition = 0;
+    public int maxMunition = 30;
 
+    public delegate void MunitionUpdate(int currentAmount);
+    public event MunitionUpdate OnMunitionUpdate;
 
     public event EventHandler<InventoryEvent> ItemAdded;
     public event EventHandler<InventoryEvent> ItemRemoved;
@@ -48,9 +50,10 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void AddAmmunition(int ammount)
+    public void AddMunition(int ammount)
     {
-        currentAmmunition += ammount;
+        currentMunition += ammount;
+        OnMunitionUpdate?.Invoke(currentMunition);
     }
 
     public void RemoveItem(Item item)
@@ -76,9 +79,10 @@ public class Inventory : MonoBehaviour
         RemoveItem(item);
     }
 
-    public void UseAmmunition()
+    public void UseMunition()
     {
-        currentAmmunition--;
+        currentMunition--;
+        OnMunitionUpdate?.Invoke(currentMunition);
     }
 
     private Slot FindStackableSlot(Item item)
@@ -101,6 +105,6 @@ public class Inventory : MonoBehaviour
 
     public bool HasAmmunition
     {
-        get { return currentAmmunition >= 0; }
+        get { return currentMunition >= 0; }
     }
 }

@@ -1,11 +1,15 @@
-﻿namespace Shop
+﻿using UnityEngine;
+
+namespace Shop
 {
+    [CreateAssetMenu(fileName = "ShopItem", menuName = "Shop/Munition")]
     public class Munition : ShopItem
     {
         public override void OnItemBought()
         {
             base.OnItemBought();
-            //Player.instance.inventory.AddAmmunition((item as Munition))
+            Debug.Log((item as Items.Munition).amount);
+            Player.instance.inventory.AddMunition((item as Items.Munition).amount);
         }
     }
 

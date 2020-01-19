@@ -9,8 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8c283d6bc48df746a0a4b0fbda25744, type: 3}
-  m_Name: Ammunition
+  m_Script: {fileID: 11500000, guid: 97181c99645d7504c90571c7737ba3c0, type: 3}
+  m_Name: Munition
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 727f4bbf441ad8e4fa02ad783185fe70, type: 2}
-  price: 30
+  name: Munnition
+  icon: {fileID: 21300000, guid: 7947e1ad49da36a46a4a5ad7cef3700a, type: 3}
+  type: 1
+  addToInventory: 1
+  isStackable: 1
+  amount: 10
