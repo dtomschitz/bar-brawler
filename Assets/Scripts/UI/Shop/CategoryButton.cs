@@ -2,8 +2,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CategoryButton : MonoBehaviour
+namespace Shop
 {
-    public int id;
-    public Text title;
+    public class CategoryButton : MonoBehaviour
+    {
+        public int id;
+        public Text title;
+    }
 }

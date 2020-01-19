@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Items;
 
 public class Inventory : MonoBehaviour
 {
@@ -37,12 +37,6 @@ public class Inventory : MonoBehaviour
 
         if (item.addToInventory)
         {
-            if (item is Ammunition)
-            {
-                AddAmmunition((item as Ammunition).amount);
-                return;
-            }
-
             Slot freeSlot = FindStackableSlot(item);
             if (freeSlot == null) freeSlot = FindNextEmptySlot();
 
@@ -58,7 +52,6 @@ public class Inventory : MonoBehaviour
     {
         currentAmmunition += ammount;
     }
-
 
     public void RemoveItem(Item item)
     {

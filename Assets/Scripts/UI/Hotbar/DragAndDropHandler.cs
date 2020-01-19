@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using Items;
 
 public class DragAndDropHandler : MonoBehaviour, IDragHandler, IEndDragHandler, IDropHandler
 {
@@ -33,7 +34,7 @@ public class DragAndDropHandler : MonoBehaviour, IDragHandler, IEndDragHandler, 
     private bool IsFistItem
     {
        get {
-            return item != null && item.type == ItemType.Weapon && item is Equipment && (item as Equipment).itemType == Items.Fist;
+            return item != null && item.type == ItemKind.Weapon && item is Equipment && (item as Equipment).itemType == ItemType.Fist;
         }
     }
 }

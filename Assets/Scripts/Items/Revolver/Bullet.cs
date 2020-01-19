@@ -2,29 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+namespace Items
 {
-    public float speed;
-
-    void Start()
+    public class Bullet : MonoBehaviour
     {
-        Destroy(gameObject, 3f);
-    }
+        public float speed;
 
-    void Update()
-    {
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Enemy")
+        void Start()
         {
-            Enemy enemy = other.gameObject.GetComponent<Enemy>();
-            if (enemy != null)
+            Destroy(gameObject, 3f);
+        }
+
+        void Update()
+        {
+            transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.tag == "Enemy")
             {
-                enemy.Interact();
-                Destroy(gameObject);
+                Enemy enemy = other.gameObject.GetComponent<Enemy>();
+                if (enemy != null)
+                {
+                    enemy.Interact();
+                    Destroy(gameObject);
+                }
             }
         }
     }

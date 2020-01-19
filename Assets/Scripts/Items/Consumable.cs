@@ -2,29 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Consumable : Equippable
+namespace Items
 {
-    private Drink drink;
-
-    void Start()
+    public class Consumable : Equippable
     {
-        if (!(item is Drink))
+        private Drink drink;
+
+        void Start()
         {
-            throw new UnityException("Item is not of the type Drink");
+            if (!(item is Drink))
+            {
+                throw new UnityException("Item is not of the type Drink");
+            }
+
+            drink = (item as Drink);
         }
 
-        drink = (item as Drink);
-    }
-
-    public override void OnInteractPrimary()
-    {
-        PlayerStats stats = Player.instance.stats;
-        if (stats != null)
+        public override void OnInteractPrimary()
         {
-            if (stats.HasFullLife) return;
+            PlayerStats stats = Player.instance.stats;
+            if (stats != null)
+            {
+                if (stats.HasFullLife) return;
 
-            Player.instance.inventory.UseItem(item);
-            stats.Heal(drink.healingAmount);
+                Player.instance.inventory.UseItem(item);
+                stats.Heal(drink.healingAmount);
+            }
         }
     }
 }

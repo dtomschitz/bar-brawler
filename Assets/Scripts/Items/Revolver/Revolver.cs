@@ -2,43 +2,46 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Revolver : Equippable
+namespace Items
 {
-    public Bullet bullet;
-    public Transform muzzle;
-    public ParticleSystem muzzleFlash;
-    public float bulletSpeed;
-    public float fireRate = 1f;
-
-    private float cooldown = 0f;
-
-    private Inventory inventory;
-    private PlayerAnimator animator;
-
-    void Start()
+    public class Revolver : Equippable
     {
-        inventory = Player.instance.inventory;
-        animator = Player.instance.animator;
-    }
+        public Bullet bullet;
+        public Transform muzzle;
+        public ParticleSystem muzzleFlash;
+        public float bulletSpeed;
+        public float fireRate = 1f;
 
-    void Update()
-    {
-        cooldown -= Time.deltaTime;
-    }
+        private float cooldown = 0f;
 
-    public override void OnInteractPrimary()
-    {
-        if (cooldown <= 0f)
+        private PlayerAnimator animator;
+
+        void Start()
         {
-            cooldown = 1f / fireRate;
+            animator = Player.instance.animator;
+        }
 
-            muzzleFlash.Play();
+        void Update()
+        {
+            cooldown -= Time.deltaTime;
+        }
 
-            Bullet newBullet = Instantiate(bullet, muzzle.position, muzzle.rotation) as Bullet;
-            newBullet.speed = bulletSpeed;
+        public override void OnInteractPrimary()
+        {
+            if (Player.instance.inventory.HasAmmunition)
 
-            inventory.UseAmmunition();
-            animator.OnPrimary();
+                if (cooldown <= 0f)
+                {
+                    cooldown = 1f / fireRate;
+
+                    muzzleFlash.Play();
+
+                    Bullet newBullet = Instantiate(bullet, muzzle.position, muzzle.rotation) as Bullet;
+                    newBullet.speed = bulletSpeed;
+
+                    Player.instance.inventory.UseAmmunition();
+                    animator.OnPrimary();
+                }
         }
     }
 }

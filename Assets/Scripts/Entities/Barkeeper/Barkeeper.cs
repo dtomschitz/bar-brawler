@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Shop;
 
 public class Barkeeper : Interactable
 {
@@ -15,7 +16,7 @@ public class Barkeeper : Interactable
 
     #endregion;
 
-    public Shop shop;
+    public ItemShop shop;
     private HUDManager hud;
     private WaveSpawner waveSpawner;
 

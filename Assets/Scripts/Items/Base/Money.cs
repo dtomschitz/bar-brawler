@@ -1,15 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Money Item", menuName = "Items/Money")]
-public class Money : Item
+namespace Items
 {
-    public int amount;
-
-    public override void OnCollection()
+    [CreateAssetMenu(fileName = "New Money Item", menuName = "Items/Money")]
+    public class Money : Item
     {
-        base.OnCollection();
-        Player.instance.AddMoney(amount);
+        public int amount;
+
+        public override void OnCollection()
+        {
+            base.OnCollection();
+            Player.instance.AddMoney(amount);
+        }
     }
+
 }

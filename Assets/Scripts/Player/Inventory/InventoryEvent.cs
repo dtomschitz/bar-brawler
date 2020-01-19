@@ -1,4 +1,5 @@
 ﻿using System;
+using Items;
 
 public class InventoryEvent : EventArgs
 {

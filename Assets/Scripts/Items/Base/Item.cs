@@ -1,37 +1,39 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Item", menuName = "Items/Item")]
-public class Item : ScriptableObject
+namespace Items
 {
-    new public string name;
-    public Sprite icon;
-    public ItemType type;
-
-    public bool addToInventory = true;
-    public bool isStackable = true;
-
-    public Slot slot;
-
-    public virtual void OnCollection()
+    [CreateAssetMenu(fileName = "New Item", menuName = "Items/Item")]
+    public class Item : ScriptableObject
     {
-        Player.instance.inventory.AddItem(this);
+        new public string name;
+        public Sprite icon;
+        public ItemKind type;
+
+        public bool addToInventory = true;
+        public bool isStackable = true;
+
+        public Slot slot;
+
+        public virtual void OnCollection()
+        {
+            Player.instance.inventory.AddItem(this);
+        }
+
     }
 
-}
+    public enum ItemKind
+    {
+        Consumable,
+        Weapon
+    }
 
-public enum ItemType
-{
-    Consumable,
-    Weapon
-}
+    public enum ItemType
+    {
+        Fist,
+        Revolver,
+        Bottle,
+        Drink,
+        Knife,
+    }
 
-public enum Items
-{
-    Fist,
-    Revolver,
-    Bottle,
-    Drink,
-    Knife,
 }

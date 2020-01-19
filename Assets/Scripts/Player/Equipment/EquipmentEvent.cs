@@ -1,5 +1,5 @@
 ﻿using System;
-
+using Items;
 
 public class EquipmentEvent : EventArgs
 {

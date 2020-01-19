@@ -1,5 +1,5 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
+using Items;
 
 public class EntityAnimator : MonoBehaviour
 {
@@ -25,7 +25,7 @@ public class EntityAnimator : MonoBehaviour
         animator.SetTrigger("death");
     }
     
-    public void SetItem(Items type)
+    public void SetItem(Items.ItemType type)
     {
         int currentWeaponType = animator.GetInteger("item");
         int newWeaponType = (int)type;

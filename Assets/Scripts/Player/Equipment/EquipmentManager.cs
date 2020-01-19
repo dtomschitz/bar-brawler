@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using Items;
 
 public class EquipmentManager : MonoBehaviour
 {

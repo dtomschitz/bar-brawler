@@ -2,24 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Collectable : MonoBehaviour
-{
-    public Item item;
-    public bool isCollected = false;
+namespace Items {
 
-    private void OnTriggerEnter(Collider other)
+    public class Collectable : MonoBehaviour
     {
-        if (other.CompareTag("Player") && !isCollected)
+        public Item item;
+        public bool isCollected = false;
+
+        private void OnTriggerEnter(Collider other)
         {
-            isCollected = true;
-            item.OnCollection();
-            OnCollection();
-           
-        }
-    }
+            if (other.CompareTag("Player") && !isCollected)
+            {
+                isCollected = true;
+                item.OnCollection();
+                OnCollection();
 
-    public virtual void OnCollection()
-    {
-        Destroy(gameObject);
+            }
+        }
+
+        public virtual void OnCollection()
+        {
+            Destroy(gameObject);
+        }
     }
 }

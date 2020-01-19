@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-
+using Items;
 
 public class HotbarSlot : MonoBehaviour
 {

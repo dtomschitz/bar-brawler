@@ -2,35 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Fist : WeaponItem
+namespace Items
 {
-    public override void OnPrimaryAccomplished()
+    public class Fist : WeaponItem
     {
-        base.OnPrimaryAccomplished();
+        public override void OnPrimaryAccomplished()
+        {
+            base.OnPrimaryAccomplished();
 
-        if (combat.IsBlocking) return;
+            if (combat.IsBlocking) return;
 
-        combat.state = CombatState.ATTACKING;
-        StartPrimaryRoutine(PrimaryRoutine());
-        animator.OnPrimary();
+            combat.state = CombatState.ATTACKING;
+            StartPrimaryRoutine(PrimaryRoutine());
+            animator.OnPrimary();
+        }
+
+        public override void OnSecondaryAccomplished()
+        {
+            base.OnSecondaryAccomplished();
+
+            combat.state = CombatState.BLOCKING;
+            StartSecondaryRoutine(BlockingRoutine());
+            animator.OnSecondary();
+        }
+
+        private IEnumerator BlockingRoutine()
+        {
+            combat.IsUsingMana = true;
+            combat.UseMana();
+            combat.state = CombatState.BLOCKING;
+            yield return new WaitForSeconds(.1f);
+            combat.state = CombatState.IDLE;
+            combat.IsUsingMana = false;
+        }
     }
 
-    public override void OnSecondaryAccomplished()
-    {
-        base.OnSecondaryAccomplished();
-
-        combat.state = CombatState.BLOCKING;
-        StartSecondaryRoutine(BlockingRoutine());
-        animator.OnSecondary();
-    }
-
-    private IEnumerator BlockingRoutine()
-    {
-        combat.IsUsingMana = true;
-        combat.UseMana();
-        combat.state = CombatState.BLOCKING;
-        yield return new WaitForSeconds(.1f);
-        combat.state = CombatState.IDLE;
-        combat.IsUsingMana = false;
-    }
 }

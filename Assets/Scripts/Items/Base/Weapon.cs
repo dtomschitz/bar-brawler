@@ -1,10 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Weapon", menuName = "Items/Weapon")]
-public class Weapon : Equipment
+namespace Items
 {
-    //public Items weaponType;
-    public int damageModifier;
+    [CreateAssetMenu(fileName = "New Weapon", menuName = "Items/Weapon")]
+    public class Weapon : Equipment
+    {
+        //public Items weaponType;
+        public int damageModifier;
+    }
+
 }

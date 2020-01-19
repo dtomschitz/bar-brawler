@@ -2,38 +2,42 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Knife : WeaponItem
+namespace Items
 {
-
-    [Header("Knife Attributes")]
-    public float bleedOutDamage = 2f;
-    public float bleedOutTime = 10f;
-    public float timeBetweenDamage = 1f;
-
-    public override void OnPrimaryAccomplished()
+    public class Knife : WeaponItem
     {
-        base.OnPrimaryAccomplished();
 
-        combat.state = CombatState.ATTACKING;
-        StartPrimaryRoutine(PrimaryRoutine());
-        animator.OnPrimary();
-    }
+        [Header("Knife Attributes")]
+        public float bleedOutDamage = 2f;
+        public float bleedOutTime = 10f;
+        public float timeBetweenDamage = 1f;
 
-    public override void OnHit(Enemy enemy)
-    {
-        base.OnHit(enemy);
-        StartCoroutine(KnifeBleedOut(enemy));
-       
-    }
-
-    private IEnumerator KnifeBleedOut(Enemy enemy)
-    {
-        var pastTime = 0f;
-        while (pastTime < bleedOutTime)
+        public override void OnPrimaryAccomplished()
         {
-            enemy.Stats.Damage(bleedOutDamage);
-            pastTime++;
-            yield return new WaitForSeconds(timeBetweenDamage);
+            base.OnPrimaryAccomplished();
+
+            combat.state = CombatState.ATTACKING;
+            StartPrimaryRoutine(PrimaryRoutine());
+            animator.OnPrimary();
+        }
+
+        public override void OnHit(Enemy enemy)
+        {
+            base.OnHit(enemy);
+            StartCoroutine(KnifeBleedOut(enemy));
+
+        }
+
+        private IEnumerator KnifeBleedOut(Enemy enemy)
+        {
+            var pastTime = 0f;
+            while (pastTime < bleedOutTime)
+            {
+                enemy.Stats.Damage(bleedOutDamage);
+                pastTime++;
+                yield return new WaitForSeconds(timeBetweenDamage);
+            }
         }
     }
+
 }
