@@ -46,12 +46,18 @@ public class HUDManager : MonoBehaviour
         waveInfo.gameObject.SetActive(visible);
     }
 
+    public void DisplayInteractionHint(bool visible)
+    {
+        interactionHint.gameObject.SetActive(visible);
+    }
+
     public void DisplayGameOverUI(bool visible)
     {
         DisplayHealthBar(!visible);
         DisplayManaBar(!visible);
         DisplayHotbar(!visible);
         DisplayWaveInfo(!visible);
+        DisplayInteractionHint(visible);
         gameOverUI.SetActive(visible);
     }
 }
