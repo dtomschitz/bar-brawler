@@ -13,8 +13,6 @@ public class MunitionInfo : MonoBehaviour
 
     public void OnMunitionUpdate(int currentAmount)
     {
-        Debug.Log(currentAmount);
-
         currentMunition.text = currentAmount.ToString();
     }
 }

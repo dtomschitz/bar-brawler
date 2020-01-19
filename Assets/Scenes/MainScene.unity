@@ -691,7 +691,7 @@ MonoBehaviour:
   EasyEnemey: {fileID: 0}
   MediumEnemy: {fileID: 0}
   HardEnemy: {fileID: 0}
-  isWaveSpawnerEnabled: 1
+  isWaveSpawnerEnabled: 0
   timeBetweenWaves: 31
   stateOfGameText: {fileID: 896722174}
   state: 2

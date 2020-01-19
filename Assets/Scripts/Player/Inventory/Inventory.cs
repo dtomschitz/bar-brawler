@@ -103,8 +103,8 @@ public class Inventory : MonoBehaviour
         return null;
     }
 
-    public bool HasAmmunition
+    public bool HasMunition
     {
-        get { return currentMunition >= 0; }
+        get { return currentMunition > 0; }
     }
 }

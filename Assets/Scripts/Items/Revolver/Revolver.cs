@@ -8,7 +8,7 @@ namespace Items
     {
         public Bullet bullet;
         public Transform muzzle;
-        public ParticleSystem muzzleFlash;
+        public MuzzleFlash muzzleFlash;
         public float bulletSpeed;
         public float fireRate = 1f;
 
@@ -28,8 +28,8 @@ namespace Items
 
         public override void OnInteractPrimary()
         {
-            if (Player.instance.inventory.HasAmmunition)
-
+            if (Player.instance.inventory.HasMunition)
+            {
                 if (cooldown <= 0f)
                 {
                     cooldown = 1f / fireRate;
@@ -40,8 +40,9 @@ namespace Items
                     newBullet.speed = bulletSpeed;
 
                     Player.instance.inventory.UseMunition();
-                    animator.OnPrimary();
+                   // animator.OnPrimary();
                 }
+            }
         }
     }
 }
