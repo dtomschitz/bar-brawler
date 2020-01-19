@@ -15,6 +15,9 @@ public class Enemy : Interactable
     public bool IsUnderAttack { get; private set; } = false;
     private Coroutine isUnderAttackRoutine;
 
+    [Header("Drops")]
+    public int[] moneyDrop;
+
     public EntityStats Stats { get; protected set; }
     public EntityCombat Combat { get; protected set; }
     public EnemyAnimator Animator { get; protected set; }
@@ -99,7 +102,7 @@ public class Enemy : Interactable
         agent.enabled = false;
         Animator.OnDeath();
 
-        Player.instance.AddMoney(10);
+        Player.instance.AddMoney(moneyDrop[Random.Range(0, moneyDrop.Length)]);
         Player.instance.combat.AddMana(10f);
 
         GetComponent<CapsuleCollider>().enabled = false;

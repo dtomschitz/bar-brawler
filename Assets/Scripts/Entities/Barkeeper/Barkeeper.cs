@@ -31,9 +31,9 @@ public class Barkeeper : Interactable
         if (other.gameObject.tag == "Player") InteractCanceled();
     }
 
-    public void OnWaveUpdate(WaveSpawnerState state) 
+    public void OnWaveUpdate(WaveState state) 
     {
-        if (state == WaveSpawnerState.SPAWNING || state == WaveSpawnerState.WAITING)
+        if (state == WaveState.Spawning || state == WaveState.Running)
         {
             CloseShop();
         }

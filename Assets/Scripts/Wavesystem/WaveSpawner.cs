@@ -3,7 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum WaveSpawnerState { SPAWNING, WAITING, COUNTING }
+public enum WaveState { Spawning, Counting, Running }
+
+public enum Difficulty
+{
+    Easy,
+    Medium,
+    Hard,
+}
 
 public class WaveSpawner : MonoBehaviour
 {
@@ -18,21 +25,28 @@ public class WaveSpawner : MonoBehaviour
 
     #endregion;
 
-    public delegate void WaveStateUpdate(WaveSpawnerState state);
+    public delegate void WaveStateUpdate(WaveState state);
     public event WaveStateUpdate OnWaveStateUpdate;
 
     public Transform enemyPrefab;
+
+    [Header("Enemies")]
+    public GameObject EasyEnemey; 
+    public GameObject MediumEnemy; 
+    public GameObject HardEnemy;
+    private Dictionary<Difficulty, GameObject> enemies = new Dictionary<Difficulty, GameObject>(3);
+
     public List<SpawnPoint> SpawnPoints { get; protected set; }
 
-    public bool enableWaves = true;
+    public bool isWaveSpawnerEnabled = true;
     public float timeBetweenWaves = 31f;
 
     public Text stateOfGameText;
-    //public Text skipCountdownText;
 
-    public WaveSpawnerState state = WaveSpawnerState.COUNTING;
+    public WaveState state = WaveState.Counting;
+    public Difficulty difficulty = Difficulty.Easy;
 
-    private int waveIndex = 0;
+    //private int waveIndex = 0;
     public static int rounds = 0;
     private float waveCountdown;
     private float searchCountdown = 1f;
@@ -40,24 +54,29 @@ public class WaveSpawner : MonoBehaviour
     void Start()
     {
         SpawnPoints = new List<SpawnPoint>(FindObjectsOfType<SpawnPoint>());
+
+        enemies.Add(Difficulty.Easy, EasyEnemey);
+        enemies.Add(Difficulty.Medium, MediumEnemy);
+        enemies.Add(Difficulty.Hard, HardEnemy);
+
         Reset();
     }
 
     void Update()
     {
-        if (state == WaveSpawnerState.WAITING)
+        if (state == WaveState.Running)
         {
             if (IsEnemyAlive) return;
             Reset();
         }
 
-        if (enableWaves)
+        if (isWaveSpawnerEnabled)
         {
             if (waveCountdown <= 0f || Input.GetKeyDown(KeyCode.LeftShift))
             {
                 waveCountdown = 0f;
        
-                if (state != WaveSpawnerState.SPAWNING)
+                if (state != WaveState.Spawning)
                 {
                     StartCoroutine(SpawnWave());
                 }
@@ -71,13 +90,12 @@ public class WaveSpawner : MonoBehaviour
                 }
             }
         }
-
     }
 
     private void Reset()
     {
         waveCountdown = timeBetweenWaves;
-        state = WaveSpawnerState.COUNTING;
+        state = WaveState.Counting;
 
         SpawnPoints.ForEach(delegate (SpawnPoint spawnPoint)
         {
@@ -89,20 +107,22 @@ public class WaveSpawner : MonoBehaviour
 
     private IEnumerator SpawnWave()
     {
-        waveIndex++;
+        // waveIndex++;
+
+        Debug.LogFormat("Spawning Wave (num: {0}, difficulty: {1})", rounds, difficulty);
         rounds++;
-        stateOfGameText.text = waveIndex.ToString();
-        state = WaveSpawnerState.SPAWNING;
+        stateOfGameText.text = rounds.ToString();
+        state = WaveState.Spawning;
         OnWaveStateUpdate?.Invoke(state);
 
-        for (int i = 0; i < waveIndex * 2; i++)
+        for (int i = 0; i < rounds * 2; i++)
         {
             SpawnEnemy();
             yield return new WaitForSeconds(1f);
 
         }
 
-        state = WaveSpawnerState.WAITING;
+        state = WaveState.Running;
         OnWaveStateUpdate?.Invoke(state);
         yield break;
     }
@@ -133,6 +153,6 @@ public class WaveSpawner : MonoBehaviour
 
     public bool IsWaveRunning
     {
-        get { return state == WaveSpawnerState.WAITING || state == WaveSpawnerState.SPAWNING; }
+        get { return state == WaveState.Running || state == WaveState.Spawning; }
     }
 }

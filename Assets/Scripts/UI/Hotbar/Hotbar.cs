@@ -86,7 +86,7 @@ public class Hotbar : MonoBehaviour
         }
     }
 
-    private void OnWaveStateUpdate(WaveSpawnerState state)
+    private void OnWaveStateUpdate(WaveState state)
     {
         bool isEnabled = !WaveSpawner.instance.IsWaveRunning;
 

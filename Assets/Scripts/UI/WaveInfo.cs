@@ -13,7 +13,7 @@ public class WaveInfo : MonoBehaviour
         WaveSpawner.instance.OnWaveStateUpdate += OnWaveStateUpdate;
     }
 
-    public void OnWaveStateUpdate(WaveSpawnerState state)
+    public void OnWaveStateUpdate(WaveState state)
     {
         if (!WaveSpawner.instance.IsWaveRunning)
         {

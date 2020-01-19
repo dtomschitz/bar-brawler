@@ -41,7 +41,7 @@ public class Hint : MonoBehaviour
         }
     }
 
-    public void OnWaveStateUpdate(WaveSpawnerState state)
+    public void OnWaveStateUpdate(WaveState state)
     {
         if (WaveSpawner.instance.IsWaveRunning && !isHintVisibleDuringWaves)
         {
