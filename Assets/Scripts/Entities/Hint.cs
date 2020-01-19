@@ -19,7 +19,7 @@ public class Hint : MonoBehaviour
     {
         if (Input.GetKey(key))
         {
-            HUDManager.instance.interactionHint.HideHint(.3f);
+            HUDManager.instance.interactionHint.HideHint(.2f);
             isHintEnabled = false;
         }
     }

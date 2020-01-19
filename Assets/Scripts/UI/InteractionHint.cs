@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InteractionHint : FadeText
+public class InteractionHint : FadeGraphic
 {
     private Text interactionHint;
 

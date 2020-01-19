@@ -4076,6 +4076,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1381995740}
   - component: {fileID: 1381995742}
+  - component: {fileID: 1381995744}
   - component: {fileID: 1381995741}
   - component: {fileID: 1381995743}
   m_Layer: 5
@@ -4163,6 +4164,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 21b4020048ac44f43accf31d23d4eaa1, type: 2}
   - {fileID: 11400000, guid: b7c0e6d5b407bbc41adf54c5d25ed6f8, type: 2}
   - {fileID: 11400000, guid: 450c59344836b794795605fb5cb03a80, type: 2}
+--- !u!225 &1381995744
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381995739}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1428879093
 GameObject:
   m_ObjectHideFlags: 0
@@ -5423,8 +5436,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 600, y: 51.199997}
+  m_AnchoredPosition: {x: -0.000080708, y: 30}
+  m_SizeDelta: {x: 785.1, y: 143.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1859878167
 MonoBehaviour:
@@ -7657,7 +7670,7 @@ PrefabInstance:
     - target: {fileID: 4248881848797732666, guid: 86bb5107f2ee79445a838cddcf8ddd4c,
         type: 3}
       propertyPath: hint
-      value: Press E to open the Shop
+      value: Press E to open and close the Shop
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 86bb5107f2ee79445a838cddcf8ddd4c, type: 3}

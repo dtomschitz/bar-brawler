@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Shop
 {
-    public class ItemShop : MonoBehaviour
+    public class ItemShop : FadeCanvasGroup
     {
         public GameObject categoriesContainer;
         public CategoryButton categoryButtonPrefab;
@@ -69,12 +70,34 @@ namespace Shop
             pages.Add(page);
         }
 
-        public void SetOpen(bool open)
+        public bool IsOpen
         {
-            isOpen = open;
-            gameObject.SetActive(open);
+            get { return isOpen; }
+
+            set
+            {
+                if (isOpen == value) return;
+
+                isOpen = value;
+                if (isOpen)
+                {
+                    StopAllCoroutines();
+                    gameObject.SetActive(true);
+                    FadeIn(gameObject.GetComponent<CanvasGroup>(), .2f);
+                }
+                else
+                {
+                    StopAllCoroutines();
+                    StartCoroutine(FadeOutShop(.5f, isOpen));
+                    FadeOut(gameObject.GetComponent<CanvasGroup>(), .2f);
+                }
+            }
         }
 
-        public bool IsOpen => isOpen;
+        private IEnumerator FadeOutShop(float time, bool active)
+        {
+            yield return new WaitForSeconds(time);
+            gameObject.SetActive(active);
+        }
     }
 }

@@ -27,14 +27,6 @@ public class Barkeeper : Interactable
         waveSpawner.OnWaveStateUpdate += OnWaveUpdate;
     }
 
-    void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
-        {
-            CloseShop();
-        }
-    }
-
     public void OnWaveUpdate(WaveState state) 
     {
         if (state == WaveState.Spawning || state == WaveState.Running)
@@ -58,7 +50,7 @@ public class Barkeeper : Interactable
 
     public void OpenShop()
     {
-        shop.SetOpen(true);
+        shop.IsOpen = true;
         hud.DisplayHealthBar(false);
         hud.DisplayManaBar(false);
         hud.waveInfo.DisplayOnlySkipText(true);
@@ -68,7 +60,7 @@ public class Barkeeper : Interactable
 
     public void CloseShop()
     {
-        shop.SetOpen(false);
+        shop.IsOpen = false;
         hud.DisplayHealthBar(true);
         hud.DisplayManaBar(true);
         hud.waveInfo.DisplayAll(true);
