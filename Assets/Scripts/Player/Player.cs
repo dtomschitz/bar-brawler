@@ -41,18 +41,13 @@ public class Player : MonoBehaviour
         equipment = player.GetComponent<EquipmentManager>();
 
         stats.OnDeath += OnDeath;
-       // HUDManager.instance.UpdateMoneyText(money);
-    }
-
-    void Update()
-    {
     }
 
     private void OnDeath()
     {
-        controls.enableMovement = false;
+        controls.IsMovementEnabled = false;
         animator.OnDeath();
-        EndGame();
+        HUDManager.instance.DisplayGameOverUI(true);
     }
 
     public void AddMoney(int amount)
@@ -65,10 +60,5 @@ public class Player : MonoBehaviour
     {
         currentBalance -= amount;
         OnMoneySpend?.Invoke(amount, currentBalance);
-    }
-
-    void EndGame()
-    {
-        HUDManager.instance.DisplayGameOverUI(true);
     }
 }

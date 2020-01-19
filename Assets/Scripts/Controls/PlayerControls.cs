@@ -9,7 +9,7 @@ public class PlayerControls : MonoBehaviour
     public float jumpForce;
     public float gravityScale;
     public float rotateSpeed;
-    public bool enableMovement = true;
+    public bool IsMovementEnabled { get; set; } = true;
     private Vector3 moveDirection;
     private Vector3 moveVelocity;
 
@@ -42,14 +42,15 @@ public class PlayerControls : MonoBehaviour
 
     void Update()
     {
-        if (enableMovement)
+        if (IsMovementEnabled)
         {
             float h = Input.GetAxis("Horizontal");
             float v = Input.GetAxis("Vertical");
 
             Move(h, v);
-            HandleInput();
         }
+
+        HandleInput();
     }
 
     private void Move(float h, float v)

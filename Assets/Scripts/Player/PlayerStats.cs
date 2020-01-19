@@ -29,4 +29,6 @@ public class PlayerStats : EntityStats
             damage.RemoveModifier((e.oldItem as Weapon).damageModifier);
         }
     }
+
+    
 }

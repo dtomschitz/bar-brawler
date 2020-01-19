@@ -29,7 +29,10 @@ public class Barkeeper : Interactable
 
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Player") InteractCanceled();
+        if (other.gameObject.tag == "Player")
+        {
+            CloseShop();
+        }
     }
 
     public void OnWaveUpdate(WaveState state) 
@@ -53,19 +56,14 @@ public class Barkeeper : Interactable
         }
     }
 
-    public override void InteractCanceled()
-    {
-        base.InteractCanceled();
-        CloseShop();
-    }
-
     public void OpenShop()
     {
         shop.SetOpen(true);
         hud.DisplayHealthBar(false);
         hud.DisplayManaBar(false);
-        //hud.DisplayHotbar(false);
         hud.waveInfo.DisplayOnlySkipText(true);
+
+        Player.instance.controls.IsMovementEnabled = false;
     }
 
     public void CloseShop()
@@ -73,7 +71,8 @@ public class Barkeeper : Interactable
         shop.SetOpen(false);
         hud.DisplayHealthBar(true);
         hud.DisplayManaBar(true);
-        //hud.DisplayHotbar(true);
         hud.waveInfo.DisplayAll(true);
+
+        Player.instance.controls.IsMovementEnabled = true;
     }
 }
