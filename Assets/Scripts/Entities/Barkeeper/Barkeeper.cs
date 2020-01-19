@@ -35,7 +35,7 @@ public class Barkeeper : Interactable
     {
         if (state == WaveSpawnerState.SPAWNING || state == WaveSpawnerState.WAITING)
         {
-            InteractCanceled();
+            CloseShop();
         }
     }
 
@@ -44,8 +44,9 @@ public class Barkeeper : Interactable
         base.Interact();
         if (shop.IsOpen)
         {
-            InteractCanceled();
-        } else
+            CloseShop();
+        }
+        else
         {
             OpenShop();
         }

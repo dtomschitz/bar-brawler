@@ -76,6 +76,8 @@ public class Hotbar : MonoBehaviour
         {
             if (i == e.item.slot.Id)
             {
+                Debug.Log(e.item.name);
+
                 int itemCount = e.item.slot.Count;
                 if (itemCount == 0)
                 {
@@ -114,7 +116,7 @@ public class Hotbar : MonoBehaviour
 
     private void EnableDragHandler(HotbarSlot hotbarSlot, bool isEnabled)
     {
-        hotbarSlot.GetComponentInChildren<ItemDragHandler>().isEnabled = isEnabled;
+        hotbarSlot.GetComponentInChildren<DragAndDropHandler>().isEnabled = isEnabled;
     }
 
     private IEnumerator ShowSelectedName(string name)

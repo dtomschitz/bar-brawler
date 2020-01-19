@@ -7,7 +7,7 @@ public class Inventory : MonoBehaviour
 {
     public List<Slot> slots = new List<Slot>();
     public List<Item> defaultItems = new List<Item>();
-    public int maxSlots = 5;
+    public int maxSlots = 4;
 
     [Header("Ammunition")]
     public int currentAmmunition = 0;
@@ -33,6 +33,8 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(Item item)
     {
+        if (item == null) return;
+
         if (item.addToInventory)
         {
             if (item is Ammunition)
@@ -47,6 +49,9 @@ public class Inventory : MonoBehaviour
             if (freeSlot != null)
             {
                 freeSlot.Add(item);
+
+                Debug.Log("Add " + item.name + " to slot id: " + freeSlot.Id);
+
                 ItemAdded?.Invoke(this, new InventoryEvent(item));
 
             }
@@ -61,6 +66,10 @@ public class Inventory : MonoBehaviour
 
     public void RemoveItem(Item item)
     {
+        if (item == null) return;
+
+        Debug.Log("Remove item from inv: " + item.name + "(" + item.slot.Id + ")");
+
         foreach (Slot slot in slots)
         {
             if (slot.Remove(item))
