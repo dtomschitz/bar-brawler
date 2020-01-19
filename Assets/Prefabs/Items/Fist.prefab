@@ -72,6 +72,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: dfef5eb85bcbea8499448b629546c92d, type: 2}
   isCollected: 0
+  isPrimaryEnabled: 1
+  isSecondaryEnabled: 1
   primaryAttackRate: 20
   secondaryAttackRate: 20
   primaryManaRequired: 0

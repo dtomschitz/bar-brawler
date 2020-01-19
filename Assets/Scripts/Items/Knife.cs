@@ -12,6 +12,8 @@ public class Knife : WeaponItem
 
     public override void OnPrimaryAccomplished()
     {
+        base.OnPrimaryAccomplished();
+
         combat.state = CombatState.ATTACKING;
         StartPrimaryRoutine(PrimaryRoutine());
         animator.OnPrimary();

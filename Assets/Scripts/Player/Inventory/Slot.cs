@@ -34,10 +34,10 @@ public class Slot
 
     public bool IsStackable(Item item)
     {
-        if (IsEmpty) return false;
+        if (IsEmpty || !item.isStackable) return false;
 
         Item first = stack.Peek();
-        if (item.isStackable && first.name == item.name) return true;
+        if (first.name == item.name) return true;
 
         return false;
     }

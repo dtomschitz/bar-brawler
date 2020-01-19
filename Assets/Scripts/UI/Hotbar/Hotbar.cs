@@ -76,8 +76,6 @@ public class Hotbar : MonoBehaviour
         {
             if (i == e.item.slot.Id)
             {
-                Debug.Log(e.item.name);
-
                 int itemCount = e.item.slot.Count;
                 if (itemCount == 0)
                 {

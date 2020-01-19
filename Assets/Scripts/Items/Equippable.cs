@@ -2,6 +2,9 @@
 
 public class Equippable : Collectable
 {
+    public bool isPrimaryEnabled = true;
+    public bool isSecondaryEnabled = false;
+
     void Start()
     {
         if (!(item is Equipment))
@@ -12,10 +15,12 @@ public class Equippable : Collectable
 
     public virtual void OnInteractPrimary()
     {
+        if (!isPrimaryEnabled) return;
     }
 
     public virtual void OnInteractSecondary()
     {
+        if (!isSecondaryEnabled) return;
     }
 
     public void OnEquip()

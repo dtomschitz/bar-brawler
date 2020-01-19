@@ -4920,6 +4920,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 6220823756908219621, guid: f1a803a8bae0d2c45bc178c5636e8d24,
+        type: 3}
+      propertyPath: dragAndDropHandler
+      value: 
+      objectReference: {fileID: 1779742890}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1a803a8bae0d2c45bc178c5636e8d24, type: 3}
 --- !u!224 &1534844237 stripped
@@ -5287,6 +5292,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1769545331}
   m_CullTransparentMesh: 0
+--- !u!114 &1779742890 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8750874980519035600, guid: f1a803a8bae0d2c45bc178c5636e8d24,
+    type: 3}
+  m_PrefabInstance: {fileID: 1534844236}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9861b020511f3a47895d82af2c95da2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1795573832 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -5911083574563218789, guid: cf0d163292d671648a9fbd58f19a311b,

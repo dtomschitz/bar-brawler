@@ -6,6 +6,8 @@ public class Fist : WeaponItem
 {
     public override void OnPrimaryAccomplished()
     {
+        base.OnPrimaryAccomplished();
+
         if (combat.IsBlocking) return;
 
         combat.state = CombatState.ATTACKING;
@@ -15,6 +17,8 @@ public class Fist : WeaponItem
 
     public override void OnSecondaryAccomplished()
     {
+        base.OnSecondaryAccomplished();
+
         combat.state = CombatState.BLOCKING;
         StartSecondaryRoutine(BlockingRoutine());
         animator.OnSecondary();
