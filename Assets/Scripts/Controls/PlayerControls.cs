@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using UnityEngine;
 
 public class PlayerControls : MonoBehaviour
 {
@@ -9,6 +7,7 @@ public class PlayerControls : MonoBehaviour
     public float jumpForce;
     public float gravityScale;
     public float rotateSpeed;
+    public float cameraRayLength = 100f;
     public bool IsMovementEnabled { get; set; } = true;
     private Vector3 moveDirection;
     private Vector3 moveVelocity;
@@ -16,59 +15,73 @@ public class PlayerControls : MonoBehaviour
 
     [Header("Interaction")]
     public float interactionRange;
-    public LayerMask enemyLayer;
-    public LayerMask barkeeperLayer;
-    public LayerMask groundLayer;
+    public LayerMask enemyMask;
+    public LayerMask barkeeperMask;
+    public LayerMask groundMask;
 
     [Header("Model")]
     public GameObject playerModel;
     public Transform pivot;
 
-    //private float camRayLength = 100f;
 
     private CharacterController character;
-    private Rigidbody rigidbody;
-
+    private Rigidbody playerRigidbody;
     private Inventory inventory;
     private EquipmentManager equipment;
 
     void Start()
     {
         character = GetComponent<CharacterController>();
-        rigidbody = GetComponent<Rigidbody>();
+        playerRigidbody = GetComponent<Rigidbody>();
         inventory = GetComponent<Inventory>();
         equipment = GetComponent<EquipmentManager>();
     }
 
     void Update()
     {
-        if (IsMovementEnabled)
-        {
-            float h = Input.GetAxis("Horizontal");
-            float v = Input.GetAxis("Vertical");
-
-            Move(h, v);
-        }
-
         HandleInput();
     }
 
-    private void Move(float h, float v)
+    void FixedUpdate()
     {
-        float yStore = moveDirection.y;
+        if (IsMovementEnabled)
+        {
+            float h = Input.GetAxisRaw("Horizontal");
+            float v = Input.GetAxisRaw("Vertical");
+
+            Move(h, v);
+        }
+        Turning();
+    }
+
+    private void Move(float horizontal, float vertical)
+    {
+        float y = moveDirection.y;
+
+        moveDirection = new Vector3(horizontal, 0, vertical);
+        moveDirection = Quaternion.Euler(0, 45, 0) * moveDirection;
+        moveDirection.y = y;
+
+        moveDirection = moveDirection.normalized * speed * Time.deltaTime;
+        character.Move(moveDirection);
+
+        moveDirection.y += (Physics.gravity.y * gravityScale * Time.deltaTime);
+
+
+        /*float yStore = moveDirection.y;
 
         moveDirection = (transform.forward * v);
         moveDirection = moveDirection.normalized * speed;
         moveDirection.y = yStore;
 
-        /*if (character.isGrounded)
+        if (character.isGrounded)
         {
             moveDirection.y = 0f;
             if (Input.GetButtonDown("Jump"))
             {
                 moveDirection.y = jumpForce;
             }
-        }*/
+        }
 
 
         character.Move(moveDirection * Time.deltaTime);
@@ -99,6 +112,18 @@ public class PlayerControls : MonoBehaviour
         }*/
     }
 
+    private void Turning()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, cameraRayLength))
+        {
+            Vector3 playerToMouse = hit.point - transform.position;
+            playerToMouse.y = 0f;
+            Quaternion newRotation = Quaternion.LookRotation(playerToMouse);
+            playerModel.transform.rotation = Quaternion.Slerp(playerModel.transform.rotation, newRotation, rotateSpeed * Time.deltaTime);
+        }
+    }
+
     private void HandleInput()
     {
 
@@ -123,7 +148,7 @@ public class PlayerControls : MonoBehaviour
         {
             if (!WaveSpawner.instance.IsWaveRunning)
             {
-                Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRange, barkeeperLayer);
+                Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRange, barkeeperMask);
                 foreach (Collider collider in colliders)
                 {
                     Interactable interactable = collider.GetComponent<Interactable>();

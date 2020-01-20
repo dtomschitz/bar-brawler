@@ -103,8 +103,8 @@ MonoBehaviour:
   defaultItems:
   - {fileID: 11400000, guid: dfef5eb85bcbea8499448b629546c92d, type: 2}
   maxSlots: 5
-  currentAmmunition: 0
-  maxAmmuntion: 30
+  currentMunition: 0
+  maxMunition: 30
 --- !u!114 &2771242930815221554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,17 +134,17 @@ MonoBehaviour:
   jumpForce: 10
   gravityScale: 3
   rotateSpeed: 20
-  enableMovement: 1
+  cameraRayLength: 100
   interactionRange: 2
-  enemyLayer:
+  enemyMask:
     serializedVersion: 2
-    m_Bits: 512
-  barkeeperLayer:
+    m_Bits: 0
+  barkeeperMask:
     serializedVersion: 2
-    m_Bits: 1024
-  groundLayer:
+    m_Bits: 0
+  groundMask:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 0
   playerModel: {fileID: 6434033271264257896}
   pivot: {fileID: 0}
 --- !u!114 &2771242930815221546
