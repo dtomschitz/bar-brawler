@@ -3756,7 +3756,7 @@ BoxCollider:
   m_GameObject: {fileID: 1354270041}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -4438,10 +4438,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4251900538022576369, guid: a5694255a417f164c9596164663fb42b,
         type: 3}
       propertyPath: m_Name
       value: New Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4251900538022576369, guid: a5694255a417f164c9596164663fb42b,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 4251900538022576373, guid: a5694255a417f164c9596164663fb42b,
         type: 3}
@@ -4501,7 +4510,12 @@ PrefabInstance:
     - target: {fileID: 4251900538022576368, guid: a5694255a417f164c9596164663fb42b,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4251900538022576368, guid: a5694255a417f164c9596164663fb42b,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4251900538022576382, guid: a5694255a417f164c9596164663fb42b,
         type: 3}
@@ -6068,7 +6082,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 6239881831769578202, guid: cf0d163292d671648a9fbd58f19a311b, type: 3}
 --- !u!1 &2057778475 stripped
@@ -8133,13 +8147,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4355391201611927042, guid: ee6c2e3026dda4d4dbeb86230a5da915,
-        type: 3}
+    - target: {fileID: 0}
       propertyPath: m_Constraints
       value: 36
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6117236122514096827, guid: ee6c2e3026dda4d4dbeb86230a5da915, type: 3}
+    - target: {fileID: 8771599372214085866, guid: ee6c2e3026dda4d4dbeb86230a5da915,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8771599372214085869, guid: ee6c2e3026dda4d4dbeb86230a5da915,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee6c2e3026dda4d4dbeb86230a5da915, type: 3}
 --- !u!1001 &9159696193267827611
 PrefabInstance:

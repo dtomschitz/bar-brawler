@@ -12,7 +12,7 @@ public class EntityAnimator : MonoBehaviour
 
     public virtual void OnPrimary()
     {
-        animator.SetTrigger("attack");
+        animator.SetTrigger("Primary");
     }
 
     public virtual void OnSecondary()
@@ -25,13 +25,13 @@ public class EntityAnimator : MonoBehaviour
         animator.SetTrigger("Death");
     }
     
-    public void SetItem(Items.ItemType type)
+    public void SetItem(ItemType type)
     {
-        int currentWeaponType = animator.GetInteger("item");
+        int currentWeaponType = animator.GetInteger("Item");
         int newWeaponType = (int)type;
 
         if (currentWeaponType == newWeaponType) return;
 
-        animator.SetInteger("item", newWeaponType);
+        animator.SetInteger("Item", newWeaponType);
     }
 }
