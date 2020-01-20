@@ -626,7 +626,7 @@ MeshCollider:
   serializedVersion: 3
   m_Convex: 1
   m_CookingOptions: 14
-  m_Mesh: {fileID: -2865104911859505335, guid: cf0d163292d671648a9fbd58f19a311b, type: 3}
+  m_Mesh: {fileID: 6716275090354358350, guid: d704b0aaa4ae81448916fd474429a680, type: 3}
 --- !u!1 &247322024
 GameObject:
   m_ObjectHideFlags: 0
@@ -691,7 +691,7 @@ MonoBehaviour:
   EasyEnemey: {fileID: 0}
   MediumEnemy: {fileID: 0}
   HardEnemy: {fileID: 0}
-  isWaveSpawnerEnabled: 0
+  isWaveSpawnerEnabled: 1
   timeBetweenWaves: 31
   stateOfGameText: {fileID: 896722174}
   state: 2
@@ -5928,7 +5928,7 @@ GameObject:
   - component: {fileID: 1951209772}
   - component: {fileID: 1951209771}
   - component: {fileID: 1951209770}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cube.002 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6273,7 +6273,7 @@ MeshCollider:
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 6716275090354358350, guid: 0abf2e5dae6891a40b2501837a452001, type: 3}
 --- !u!1001 &2101861326
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7117,6 +7117,21 @@ PrefabInstance:
       propertyPath: pivot
       value: 
       objectReference: {fileID: 1329877445}
+    - target: {fileID: 2518191188709225780, guid: 2c77cddebf528e1499be76a67d7f0676,
+        type: 3}
+      propertyPath: enemyMask.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 2518191188709225780, guid: 2c77cddebf528e1499be76a67d7f0676,
+        type: 3}
+      propertyPath: barkeeperMask.m_Bits
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 2518191188709225780, guid: 2c77cddebf528e1499be76a67d7f0676,
+        type: 3}
+      propertyPath: groundMask.m_Bits
+      value: 2048
+      objectReference: {fileID: 0}
     - target: {fileID: 6434033270173929957, guid: 2c77cddebf528e1499be76a67d7f0676,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -7591,6 +7606,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Barkeeper
+      objectReference: {fileID: 0}
+    - target: {fileID: 5059742720183704978, guid: 86bb5107f2ee79445a838cddcf8ddd4c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 5059742720039698473, guid: 86bb5107f2ee79445a838cddcf8ddd4c,
         type: 3}

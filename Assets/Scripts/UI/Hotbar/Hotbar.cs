@@ -40,7 +40,7 @@ public class Hotbar : MonoBehaviour
             slot.Clear();
         }
 
-        SelectItem(0);
+        //SelectItem(0);
     }
 
     void Update()

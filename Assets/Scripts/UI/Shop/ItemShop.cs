@@ -78,6 +78,11 @@ namespace Shop
             {
                 if (isOpen == value) return;
 
+                Debug.Log(IsOpen);
+
+                gameObject.SetActive(value);
+
+
                 isOpen = value;
                 if (isOpen)
                 {
