@@ -19,7 +19,9 @@ public class PlayerAnimator : EntityAnimator
 
     void Update()
     {
-        animator.SetFloat("speed", (Mathf.Abs(Input.GetAxis("Vertical")) + Mathf.Abs(Input.GetAxis("Horizontal"))));
+        animator.SetFloat("VelocityX", Input.GetAxis("Horizontal"));
+        animator.SetFloat("VelocityY", Input.GetAxis("Vertical"));
+        //animator.SetFloat("speed", (Mathf.Abs(Input.GetAxis("Vertical")) + Mathf.Abs(Input.GetAxis("Horizontal"))));
     }
 
     public override void OnPrimary()

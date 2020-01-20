@@ -76,7 +76,6 @@ namespace Items
 
         public virtual void OnHit(Enemy enemy)
         {
-            print("Hit enemy");
             enemy.Interact();
         }
 
