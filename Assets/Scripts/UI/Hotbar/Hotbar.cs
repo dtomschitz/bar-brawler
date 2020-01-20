@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using Items;
 
 public class Hotbar : MonoBehaviour
@@ -64,7 +65,7 @@ public class Hotbar : MonoBehaviour
         {
             if (i == e.item.slot.Id)
             {
-                slots[i].Add(e.item);
+                slots[i].Add(i, e.item);
                 break;
             }
         }
@@ -86,7 +87,7 @@ public class Hotbar : MonoBehaviour
         }
     }
 
-    private void OnWaveStateUpdate(WaveState state)
+    private void OnWaveStateUpdate(WaveState state, int rounds)
     {
         bool isEnabled = !WaveSpawner.instance.IsWaveRunning;
 
@@ -114,7 +115,7 @@ public class Hotbar : MonoBehaviour
 
     private void EnableDragHandler(HotbarSlot hotbarSlot, bool isEnabled)
     {
-        hotbarSlot.GetComponentInChildren<DragAndDropHandler>().isEnabled = isEnabled;
+        hotbarSlot.IsDragAndDropEnabled = isEnabled;
     }
 
     private IEnumerator ShowSelectedName(string name)

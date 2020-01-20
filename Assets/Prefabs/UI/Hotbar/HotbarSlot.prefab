@@ -104,7 +104,6 @@ GameObject:
   - component: {fileID: 6220823755587767126}
   - component: {fileID: 6220823755587767120}
   - component: {fileID: 6220823755587767127}
-  - component: {fileID: 8750874980519035600}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -167,20 +166,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8750874980519035600
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6220823755587767125}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9861b020511f3a47895d82af2c95da2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  item: {fileID: 0}
-  isEnabled: 1
 --- !u!1 &6220823756908219625
 GameObject:
   m_ObjectHideFlags: 0
@@ -191,6 +176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6220823756908219626}
   - component: {fileID: 6220823756908219620}
+  - component: {fileID: 2598663308218733493}
   - component: {fileID: 6220823756908219627}
   - component: {fileID: 6220823756908219621}
   m_Layer: 5
@@ -229,6 +215,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6220823756908219625}
   m_CullTransparentMesh: 0
+--- !u!225 &2598663308218733493
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6220823756908219625}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &6220823756908219627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -269,6 +267,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6335ebb7b0af1c458d726019c2caaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
+  item: {fileID: 0}
   icon: {fileID: 6220823755587767127}
+  iconPlaceholder: {fileID: 21300000, guid: ccec83482d316e5459b221d80dff338c, type: 3}
   count: {fileID: 1048199830337963954}
-  dragAndDropHandler: {fileID: 8750874980519035600}

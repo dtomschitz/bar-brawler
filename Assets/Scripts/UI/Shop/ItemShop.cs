@@ -78,11 +78,6 @@ namespace Shop
             {
                 if (isOpen == value) return;
 
-                Debug.Log(IsOpen);
-
-                gameObject.SetActive(value);
-
-
                 isOpen = value;
                 if (isOpen)
                 {
@@ -93,8 +88,8 @@ namespace Shop
                 else
                 {
                     StopAllCoroutines();
-                    StartCoroutine(FadeOutShop(.5f, isOpen));
                     FadeOut(gameObject.GetComponent<CanvasGroup>(), .2f);
+                    StartCoroutine(FadeOutShop(.2f, isOpen));
                 }
             }
         }

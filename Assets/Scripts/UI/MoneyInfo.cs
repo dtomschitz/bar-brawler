@@ -36,8 +36,6 @@ public class MoneyInfo : MonoBehaviour
     {
         GameObject popup = Instantiate(gameObject, transform);
         popup.GetComponent<Text>().text = a + amount + "$";
-
-        Debug.Log(popup.GetComponent<Text>().text);
         Destroy(popup, destroyText);
     }
 

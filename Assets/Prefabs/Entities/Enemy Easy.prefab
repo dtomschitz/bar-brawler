@@ -1343,7 +1343,7 @@ GameObject:
   - component: {fileID: 1592573314076958519}
   - component: {fileID: 2528973514752264677}
   m_Layer: 10
-  m_Name: Enemy
+  m_Name: Enemy Easy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1433,7 +1433,7 @@ MonoBehaviour:
     type: 3}
   lookRadius: 30
   attackRate: 1
-  moneyDrop: 0a0000000f00000014000000
+  moneyDrop: 030000000500000006000000
 --- !u!114 &6673331655994226945
 MonoBehaviour:
   m_ObjectHideFlags: 0

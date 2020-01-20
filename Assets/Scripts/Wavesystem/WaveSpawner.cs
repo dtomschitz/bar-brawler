@@ -12,6 +12,19 @@ public enum Difficulty
     Hard,
 }
 
+[System.Serializable]
+public struct WaveConfig
+{
+    public int fromRoundX;
+    public Difficulty difficulty;
+
+    public int minMediumEnemies;
+    public int maxMediumEnemies;
+
+    public int minHardEnemies;
+    public int maxHardEnemies;
+}
+
 public class WaveSpawner : MonoBehaviour
 {
     #region Singelton
@@ -25,7 +38,7 @@ public class WaveSpawner : MonoBehaviour
 
     #endregion;
 
-    public delegate void WaveStateUpdate(WaveState state);
+    public delegate void WaveStateUpdate(WaveState state, int rounds);
     public event WaveStateUpdate OnWaveStateUpdate;
 
     public Transform enemyPrefab;
@@ -34,7 +47,11 @@ public class WaveSpawner : MonoBehaviour
     public GameObject EasyEnemey; 
     public GameObject MediumEnemy; 
     public GameObject HardEnemy;
-    private Dictionary<Difficulty, GameObject> enemies = new Dictionary<Difficulty, GameObject>(3);
+
+    public WaveConfig[] waveConfigs;
+    private WaveConfig currentWaveConfig;
+
+    public Dictionary<Difficulty, GameObject> enemies = new Dictionary<Difficulty, GameObject>(3);
 
     public List<SpawnPoint> SpawnPoints { get; protected set; }
 
@@ -46,7 +63,6 @@ public class WaveSpawner : MonoBehaviour
     public WaveState state = WaveState.Counting;
     public Difficulty difficulty = Difficulty.Easy;
 
-    //private int waveIndex = 0;
     public static int rounds = 0;
     private float waveCountdown;
     private float searchCountdown = 1f;
@@ -64,21 +80,20 @@ public class WaveSpawner : MonoBehaviour
 
     void Update()
     {
-        if (state == WaveState.Running)
-        {
-            if (IsEnemyAlive) return;
-            Reset();
-        }
-
         if (isWaveSpawnerEnabled)
         {
+            if (state == WaveState.Running)
+            {
+                if (IsEnemyAlive) return;
+                Reset();
+            }
+
             if (waveCountdown <= 0f || Input.GetKeyDown(KeyCode.LeftShift))
             {
                 waveCountdown = 0f;
-       
                 if (state != WaveState.Spawning)
                 {
-                    StartCoroutine(SpawnWave());
+                    StartWave();
                 }
             }
             else
@@ -86,7 +101,7 @@ public class WaveSpawner : MonoBehaviour
                 waveCountdown -= Time.deltaTime;
                 if (waveCountdown > 0f)
                 {
-                    stateOfGameText.text = Mathf.Floor(waveCountdown).ToString();
+                    stateOfGameText.text = string.Format("Next wave starts in {0}s", Mathf.Floor(waveCountdown).ToString());
                 }
             }
         }
@@ -102,36 +117,67 @@ public class WaveSpawner : MonoBehaviour
             spawnPoint.CloseDoor();
         });
 
-        OnWaveStateUpdate?.Invoke(state);
+        OnWaveStateUpdate?.Invoke(state, rounds);
     }
 
-    private IEnumerator SpawnWave()
+    private void StartWave()
     {
-        // waveIndex++;
+        rounds++;
 
         Debug.LogFormat("Spawning Wave (num: {0}, difficulty: {1})", rounds, difficulty);
-        rounds++;
-        stateOfGameText.text = rounds.ToString();
+       
+        //stateOfGameText.text = rounds.ToString();
+
+        currentWaveConfig = GetCurrentWaveConfig;
         state = WaveState.Spawning;
-        OnWaveStateUpdate?.Invoke(state);
+        OnWaveStateUpdate?.Invoke(state, rounds);
 
-        for (int i = 0; i < rounds * 2; i++)
-        {
-            SpawnEnemy();
-            yield return new WaitForSeconds(1f);
+        SpawnPoint spawnPoint = SpawnPoints[Random.Range(0, SpawnPoints.Count)];
+        spawnPoint.OpenDoor();
 
-        }
+        StartCoroutine(SpawnEasyEnemies(spawnPoint.transform));
 
         state = WaveState.Running;
-        OnWaveStateUpdate?.Invoke(state);
+        OnWaveStateUpdate?.Invoke(state, rounds);
+
+    }
+
+    private IEnumerator SpawnEasyEnemies(Transform spawnPoint)
+    {
+        for (int i = 0; i < rounds * 1.25; i++)
+        {
+            SpawnEnemy(EasyEnemey, spawnPoint);
+            yield return new WaitForSeconds(1f);
+        }
         yield break;
     }
 
-    private void SpawnEnemy()
+    private IEnumerator SpawnMediumEnemies(Transform spawnPoint)
     {
-        SpawnPoint spawnPoint = SpawnPoints[Random.Range(0, SpawnPoints.Count)];
-        spawnPoint.OpenDoor();
-        Instantiate(enemyPrefab, spawnPoint.transform.position, spawnPoint.transform.rotation);
+        yield break;
+    }
+
+    private IEnumerator SpawnHardEnemies(Transform spawnPoint)
+    {
+        yield break;
+    }
+
+    private void SpawnEnemy(GameObject enemy, Transform spawnPoint)
+    {
+        Instantiate(enemy, spawnPoint.position, spawnPoint.rotation);
+    }
+
+    private WaveConfig GetCurrentWaveConfig
+    {
+        get
+        {
+            foreach (WaveConfig waveConfig in waveConfigs)
+            {
+                if (waveConfig.difficulty == difficulty) return waveConfig;
+            }
+
+            return currentWaveConfig;
+        }
     }
 
     private bool IsEnemyAlive

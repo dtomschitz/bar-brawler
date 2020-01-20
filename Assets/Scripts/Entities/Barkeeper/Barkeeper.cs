@@ -27,11 +27,11 @@ public class Barkeeper : Interactable
         waveSpawner.OnWaveStateUpdate += OnWaveUpdate;
     }
 
-    public void OnWaveUpdate(WaveState state) 
+    public void OnWaveUpdate(WaveState state, int rounds) 
     {
-        if (state == WaveState.Spawning || state == WaveState.Running)
+        if (WaveSpawner.instance.IsWaveRunning)
         {
-            CloseShop();
+            if (shop.IsOpen) CloseShop();
         }
     }
 

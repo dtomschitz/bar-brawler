@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class WaveInfo : MonoBehaviour
@@ -13,14 +11,19 @@ public class WaveInfo : MonoBehaviour
         WaveSpawner.instance.OnWaveStateUpdate += OnWaveStateUpdate;
     }
 
-    public void OnWaveStateUpdate(WaveState state)
+    public void OnWaveStateUpdate(WaveState state, int rounds)
     {
-        if (!WaveSpawner.instance.IsWaveRunning)
+        if (state == WaveState.Counting)
         {
             skipCountdownText.gameObject.SetActive(true);
         } else
         {
             skipCountdownText.gameObject.SetActive(false);
+        }
+
+        if (WaveSpawner.instance.IsWaveRunning)
+        {
+            stateOfGameText.text = string.Format("Wave {0}", rounds.ToString());
         }
     }
 

@@ -138,13 +138,13 @@ MonoBehaviour:
   interactionRange: 2
   enemyMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   barkeeperMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   groundMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2048
   playerModel: {fileID: 6434033271264257896}
   pivot: {fileID: 0}
 --- !u!114 &2771242930815221546
