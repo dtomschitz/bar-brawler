@@ -22,7 +22,7 @@ public class EntityAnimator : MonoBehaviour
 
     public virtual void OnDeath()
     {
-        animator.SetTrigger("death");
+        animator.SetTrigger("Death");
     }
     
     public void SetItem(Items.ItemType type)
