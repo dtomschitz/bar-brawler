@@ -9,9 +9,10 @@ public class PlayerControls : MonoBehaviour
     public float rotateSpeed;
     public float cameraRayLength = 100f;
     public bool IsMovementEnabled { get; set; } = true;
-    private Vector3 moveDirection;
-    private Vector3 moveVelocity;
 
+    private Vector2 movementInput;
+    private Vector2 lookPosition;
+    private Vector3 moveDirection;
 
     [Header("Interaction")]
     public float interactionRange;
@@ -23,18 +24,33 @@ public class PlayerControls : MonoBehaviour
     public GameObject playerModel;
     public Transform pivot;
 
-
+    private Camera mainCamera;
+    private PlayerInputActions inputActions;
     private CharacterController character;
-    private Rigidbody playerRigidbody;
-    private Inventory inventory;
     private EquipmentManager equipment;
+
+    void Awake()
+    {
+        inputActions = new PlayerInputActions();
+        inputActions.PlayerControls.Move.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
+        inputActions.PlayerControls.Rotation.performed += ctx => lookPosition = ctx.ReadValue<Vector2>();
+    }
 
     void Start()
     {
+        mainCamera = Camera.main;
         character = GetComponent<CharacterController>();
-        playerRigidbody = GetComponent<Rigidbody>();
-        inventory = GetComponent<Inventory>();
         equipment = GetComponent<EquipmentManager>();
+    }
+
+    private void OnEnable()
+    {
+        inputActions.Enable();
+    }
+
+    private void OnDisable()
+    {
+        inputActions.Disable();
     }
 
     void Update()
@@ -46,8 +62,10 @@ public class PlayerControls : MonoBehaviour
     {
         if (IsMovementEnabled)
         {
-            float h = Input.GetAxisRaw("Horizontal");
-            float v = Input.GetAxisRaw("Vertical");
+            //float horizontalh = Input.GetAxisRaw("Horizontal");
+            //float vertical = Input.GetAxisRaw("Vertical");
+            float h = movementInput.x;
+            float v = movementInput.y;
 
             Turning();
             Move(h, v);
@@ -70,66 +88,25 @@ public class PlayerControls : MonoBehaviour
         moveDirection.y += (Physics.gravity.y * gravityScale * Time.deltaTime);
 
 
-        /*float yStore = moveDirection.y;
-
-        moveDirection = (transform.forward * v);
-        moveDirection = moveDirection.normalized * speed;
-        moveDirection.y = yStore;
-
-        if (character.isGrounded)
-        {
-            moveDirection.y = 0f;
-            if (Input.GetButtonDown("Jump"))
-            {
-                moveDirection.y = jumpForce;
-            }
-        }
-
-
-        character.Move(moveDirection * Time.deltaTime);
-        moveDirection.y += (Physics.gravity.y * gravityScale * Time.deltaTime);
-
-
-        //moveDirection = new Vector3(h, 0f, v);
-        //moveVelocity = moveDirection * speed;
-
-        Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(camRay, out RaycastHit floorHit))
-        {
-            Vector3 playerToMouse = floorHit.point - transform.position;
-            playerToMouse.y = 0f;
-            Quaternion newRotation = Quaternion.LookRotation(playerToMouse);
-
-            rigidbody.MoveRotation(newRotation);
-            //rigidbody.MoveRotation(Quaternion.Slerp(playerModel.transform.rotation, newRotation, rotateSpeed * Time.deltaTime));
-            //rigidbody.MovePosition(floorHit.point);
-        }
-
-        /*if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
-        {
-            transform.rotation = Quaternion.Euler(0f, pivot.rotation.eulerAngles.y, 0f);
-            Quaternion newRotation = Quaternion.LookRotation(new Vector3(moveDirection.x, 0f, moveDirection.z));
-            playerModel.transform.rotation = Quaternion.Slerp(playerModel.transform.rotation, newRotation, rotateSpeed * Time.deltaTime);
-        }*/
+    
     }
 
     private void Turning()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit, cameraRayLength))
+        Vector2 input = lookPosition;
+        Vector3 lookDirection = new Vector3(input.x, 0, input.y);
+        Vector3 lookRotation = mainCamera.transform.TransformDirection(lookDirection);
+        lookRotation = Vector3.ProjectOnPlane(lookRotation, Vector3.up);
+        
+        if (lookRotation != Vector3.zero)
         {
-            Vector3 playerToMouse = hit.point - transform.position;
-            playerToMouse.y = 0f;
-            Quaternion newRotation = Quaternion.LookRotation(playerToMouse);
-            playerModel.transform.rotation = Quaternion.Slerp(playerModel.transform.rotation, newRotation, rotateSpeed * Time.deltaTime);
+            Quaternion newRotation = Quaternion.LookRotation(lookRotation);
+            playerModel.transform.rotation = newRotation;
         }
     }
 
     private void HandleInput()
     {
-
-
         if (Input.GetMouseButtonDown(0))
         {
             if (equipment.CurrentItem != null)
