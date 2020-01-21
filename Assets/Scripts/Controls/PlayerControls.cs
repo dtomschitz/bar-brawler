@@ -61,13 +61,13 @@ public class PlayerControls : MonoBehaviour
         moveDirection = new Vector3(horizontal, 0f, vertical);
         //moveDirection = horizontal * Camera.main.transform.forward + vertical * Camera.main.transform.right;
        // moveDirection = Quaternion.AngleAxis(Camera.main.transform.rotation.eulerAngles.y, Vector3.up) * moveDirection;
-        moveDirection = playerModel.transform.rotation * moveDirection;
+        moveDirection = Quaternion.Euler(0, 45, 0) * moveDirection;
+        moveDirection = moveDirection.normalized * speed;
         moveDirection.y = y;
 
-        moveDirection = moveDirection.normalized * speed * Time.deltaTime;
-        character.Move(moveDirection);
+        character.Move(moveDirection * Time.deltaTime);
 
-        //moveDirection.y += (Physics.gravity.y * gravityScale * Time.deltaTime);
+        moveDirection.y += (Physics.gravity.y * gravityScale * Time.deltaTime);
 
 
         /*float yStore = moveDirection.y;
