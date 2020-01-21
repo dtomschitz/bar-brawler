@@ -104,13 +104,14 @@ public class PlayerControls : MonoBehaviour
     {
         Vector2 input = lookPosition;
         Vector3 lookDirection = new Vector3(input.x, 0, input.y);
+
         Vector3 lookRotation = mainCamera.transform.TransformDirection(lookDirection);
         lookRotation = Vector3.ProjectOnPlane(lookRotation, Vector3.up);
         
         if (lookRotation != Vector3.zero)
         {
             Quaternion newRotation = Quaternion.LookRotation(lookRotation);
-            playerModel.transform.rotation = newRotation;
+            playerModel.transform.rotation = Quaternion.Lerp(playerModel.transform.rotation, newRotation, Time.deltaTime * 10f);
         }
     }
 

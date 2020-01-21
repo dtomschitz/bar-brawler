@@ -22,7 +22,7 @@ public class PlayerAnimator : EntityAnimator
 
     public void SetForward(float forward)
     {
-        animator.SetFloat("VelocityX", forward);
+        animator.SetFloat("VelocityY", forward);
     }
 
 
