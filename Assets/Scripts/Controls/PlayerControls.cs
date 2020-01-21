@@ -12,7 +12,8 @@ public class PlayerControls : MonoBehaviour
 
     private Vector2 movementInput;
     private Vector2 lookPosition;
-    private Vector3 moveDirection;
+    private Vector3 inputDirection;
+    private Vector3 movement;
 
     [Header("Interaction")]
     public float interactionRange;
@@ -26,6 +27,7 @@ public class PlayerControls : MonoBehaviour
 
     private Camera mainCamera;
     private PlayerInputActions inputActions;
+    private PlayerAnimator playerAnimator;
     private CharacterController character;
     private EquipmentManager equipment;
 
@@ -40,6 +42,7 @@ public class PlayerControls : MonoBehaviour
     {
         mainCamera = Camera.main;
         character = GetComponent<CharacterController>();
+        playerAnimator = GetComponent<PlayerAnimator>();
         equipment = GetComponent<EquipmentManager>();
     }
 
@@ -67,31 +70,37 @@ public class PlayerControls : MonoBehaviour
             float h = movementInput.x;
             float v = movementInput.y;
 
-            Turning();
-            Move(h, v);
+            Vector3 input = new Vector3(h, 0f, v);
+            inputDirection = Vector3.Lerp(inputDirection, input, Time.deltaTime * 10f);
+
+   
+
+            Vector3 cameraForward = mainCamera.transform.forward;
+            Vector3 cameraRight = mainCamera.transform.right;
+
+            cameraForward.y = 0f;
+            cameraRight.y = 0f;
+
+            Vector3 desiredDirection = cameraForward * inputDirection.z + cameraRight * inputDirection.x;
+
+            MovePlayer(desiredDirection);
+            TurnPlayer();
+            AnimatePlayerMovement(desiredDirection);
         }    
     }
 
-    private void Move(float horizontal, float vertical)
+    private void MovePlayer(Vector3 desiredDirection)
     {
-        float y = moveDirection.y;
+        movement.Set(desiredDirection.x, movement.y, desiredDirection.z);
+        movement = movement * speed * Time.deltaTime;
 
-        moveDirection = new Vector3(horizontal, 0f, vertical);
-        //moveDirection = horizontal * Camera.main.transform.forward + vertical * Camera.main.transform.right;
-       // moveDirection = Quaternion.AngleAxis(Camera.main.transform.rotation.eulerAngles.y, Vector3.up) * moveDirection;
-        moveDirection = Quaternion.Euler(0, 45, 0) * moveDirection;
-        moveDirection = moveDirection.normalized * speed;
-        moveDirection.y = y;
+        character.Move(movement);
 
-        character.Move(moveDirection * Time.deltaTime);
+        movement.y += (Physics.gravity.y * gravityScale * Time.deltaTime);
 
-        moveDirection.y += (Physics.gravity.y * gravityScale * Time.deltaTime);
-
-
-    
     }
 
-    private void Turning()
+    private void TurnPlayer()
     {
         Vector2 input = lookPosition;
         Vector3 lookDirection = new Vector3(input.x, 0, input.y);
@@ -103,6 +112,18 @@ public class PlayerControls : MonoBehaviour
             Quaternion newRotation = Quaternion.LookRotation(lookRotation);
             playerModel.transform.rotation = newRotation;
         }
+    }
+
+    private void AnimatePlayerMovement(Vector3 desiredDirection)
+    {
+        if (!playerAnimator) return;
+
+        Vector3 movement = new Vector3(desiredDirection.x, 0f, desiredDirection.z);
+        float forward = Vector3.Dot(movement, playerModel.transform.forward);
+        float strafe = Vector3.Dot(movement, playerModel.transform.right);
+
+        playerAnimator.SetForward(forward);
+        playerAnimator.SetStrafe(strafe);
     }
 
     private void HandleInput()
