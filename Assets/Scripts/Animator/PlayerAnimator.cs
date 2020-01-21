@@ -22,13 +22,13 @@ public class PlayerAnimator : EntityAnimator
 
     public void SetForward(float forward)
     {
-        animator.SetFloat("VelocityY", forward);
+        animator.SetFloat("Forward", forward);
     }
 
 
     public void SetStrafe(float strafe)
     {
-        animator.SetFloat("VelocityX", strafe);
+        animator.SetFloat("Strafe", strafe);
     }
 
     public override void OnPrimary()
