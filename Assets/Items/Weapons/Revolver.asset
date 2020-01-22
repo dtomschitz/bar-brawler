@@ -19,7 +19,7 @@ MonoBehaviour:
   isStackable: 0
   itemType: 1
   prefab: {fileID: 1995762785128984484, guid: a2974865053846d4f95bfe2cb682aca7, type: 3}
-  pickPosition: {x: 2.49, y: 1.61, z: -0.44}
-  pickRotation: {x: -128.344, y: -11.77197, z: 9.720993}
+  pickPosition: {x: -0.047, y: 0.555, z: -0.166}
+  pickRotation: {x: -24.928, y: 0, z: 101.898}
   dropRotation: {x: 0, y: 0, z: 0}
   damageModifier: 100

@@ -57,7 +57,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 670224309865224971, guid: bd520429a31465e48aa49fa1278b16d6, type: 3}
+  - {fileID: 2100000, guid: b7d9f1d1b0adc4444b382de850c2c713, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -105,7 +105,7 @@ Transform:
   m_GameObject: {fileID: 1995762785128984484}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children:
   - {fileID: 1995762784007476300}
   - {fileID: 5980294922217801762}
@@ -198,22 +198,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5980294922217801762}
     m_Modifications:
-    - target: {fileID: 100006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
-      propertyPath: m_Name
-      value: MuzzleFlash
-      objectReference: {fileID: 0}
-    - target: {fileID: 100006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 19800006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
-      propertyPath: looping
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 19800006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
@@ -256,6 +240,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
+      propertyPath: m_Name
+      value: MuzzleFlash
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
+      propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 10800000, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
