@@ -15,8 +15,48 @@
                 },
                 {
                     "name": "Rotation",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "404aeb55-5fde-4474-af61-8948c8f751d3",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Primary",
+                    "type": "Button",
+                    "id": "22add047-876e-430c-90df-d47d0b1a5b29",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Tap"
+                },
+                {
+                    "name": "Secondary",
+                    "type": "Button",
+                    "id": "7aae8237-171c-427e-b1b9-9c76c1c23d69",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "fb06a938-2a03-4fc5-bf3f-ac53a434bec5",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Hotbar One Forward",
+                    "type": "Button",
+                    "id": "f5707e37-bb11-496f-8a24-5fee9e82512e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Hotbar One Back",
+                    "type": "Button",
+                    "id": "7b0b6d20-2a4d-4d09-9842-a489bb578822",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
@@ -99,6 +139,72 @@
                     "action": "Rotation",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ebca19cb-c824-4d15-a760-758dec3896dd",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Primary",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e062e8b4-2043-46a3-b150-89f9cc5d581d",
+                    "path": "<Mouse>/clickCount",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Primary",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "23256c4d-43d9-4efb-8efc-79db8bcb56a1",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Secondary",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f518f5e0-8338-4508-8610-164d7cd469c1",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "37f31c21-907a-4d55-9f44-9f430b8948bb",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Hotbar One Forward",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9dbb3b10-10eb-4bb5-bad8-6038f72ebe5d",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Hotbar One Back",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
@@ -110,6 +216,11 @@
             "devices": [
                 {
                     "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Mouse>",
                     "isOptional": false,
                     "isOR": false
                 }

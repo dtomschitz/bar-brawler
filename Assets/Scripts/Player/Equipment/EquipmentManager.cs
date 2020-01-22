@@ -17,8 +17,8 @@ public class EquipmentManager : MonoBehaviour
     void Start()
     {
         inventory = GetComponent<Inventory>();
-        inventory.ItemUsed += OnItemUsed;
-        inventory.ItemRemoved += OnItemRemoved;
+        inventory.OnItemUsed += OnItemUsed;
+        inventory.OnItemRemoved += OnItemRemoved;
 
         hotbar = FindObjectOfType<Hotbar>();
         hotbar.OnItemSelected += EquipItem;

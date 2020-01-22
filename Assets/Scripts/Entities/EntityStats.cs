@@ -21,7 +21,6 @@ public class EntityStats : MonoBehaviour
 
     public virtual void Start()
     {
-
     }
 
     public virtual void Damage(float damage)

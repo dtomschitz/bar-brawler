@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using static UnityEngine.InputSystem.InputAction;
 
 public class PlayerControls : MonoBehaviour
 {
@@ -25,6 +26,12 @@ public class PlayerControls : MonoBehaviour
     public GameObject playerModel;
     public Transform pivot;
 
+    public delegate void HotbarOneBack();
+    public event HotbarOneBack OnHotbarOneBack;
+
+    public delegate void HotbarOneForward();
+    public event HotbarOneForward OnHotbarOneForward;
+
     private Camera mainCamera;
     private PlayerInputActions inputActions;
     private PlayerAnimator playerAnimator;
@@ -36,6 +43,13 @@ public class PlayerControls : MonoBehaviour
         inputActions = new PlayerInputActions();
         inputActions.PlayerControls.Move.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
         inputActions.PlayerControls.Rotation.performed += ctx => lookPosition = ctx.ReadValue<Vector2>();
+
+        inputActions.PlayerControls.Primary.performed += UsePrimary;
+        inputActions.PlayerControls.Secondary.performed += UseSecondary;
+        inputActions.PlayerControls.Interact.performed += InteractWithInteractables;
+
+        inputActions.PlayerControls.HotbarOneForward.performed += HotbarForward;
+        inputActions.PlayerControls.HotbarOneBack.performed += HotbarBack;
     }
 
     void Start()
@@ -58,15 +72,13 @@ public class PlayerControls : MonoBehaviour
 
     void Update()
     {
-        HandleInput();
+        //HandleInput();
     }
 
     void FixedUpdate()
     {
         if (IsMovementEnabled)
         {
-            //float horizontalh = Input.GetAxisRaw("Horizontal");
-            //float vertical = Input.GetAxisRaw("Vertical");
             float h = movementInput.x;
             float v = movementInput.y;
 
@@ -127,7 +139,40 @@ public class PlayerControls : MonoBehaviour
         playerAnimator.SetStrafe(strafe);
     }
 
-    private void HandleInput()
+    public void UsePrimary(CallbackContext ctx)
+    {
+        if (equipment.CurrentItem != null)
+        {
+            equipment.CurrentItem.OnInteractPrimary();
+        }
+    }
+
+    public void UseSecondary(CallbackContext ctx)
+    {
+        if (equipment.CurrentItem != null)
+        {
+            equipment.CurrentItem.OnInteractSecondary();
+        }
+    }
+
+    public void HotbarForward(CallbackContext ctx) => OnHotbarOneForward?.Invoke();
+    public void HotbarBack(CallbackContext ctx) => OnHotbarOneBack?.Invoke();
+
+    public void InteractWithInteractables(CallbackContext ctx)
+    {
+        if (!WaveSpawner.instance.IsWaveRunning)
+        {
+            Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRange, barkeeperMask);
+            foreach (Collider collider in colliders)
+            {
+                Interactable interactable = collider.GetComponent<Interactable>();
+                if (interactable != null) interactable.Interact();
+            }
+            return;
+        }
+    }
+
+   /* private void HandleInput()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -158,7 +203,7 @@ public class PlayerControls : MonoBehaviour
                 return;
             }
         }
-    }
+    }*/
 
     private void OnDrawGizmosSelected()
     {

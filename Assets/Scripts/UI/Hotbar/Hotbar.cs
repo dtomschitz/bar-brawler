@@ -1,7 +1,7 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using Items;
 
 public class Hotbar : MonoBehaviour
@@ -15,22 +15,17 @@ public class Hotbar : MonoBehaviour
     private HotbarSlot[] slots;
 
     private Coroutine currentItemNameCoroutine;
-
-    private int selectedHotbarIndex = 0;
-    private readonly KeyCode[] hotbarControls = new KeyCode[]
-    {
-        KeyCode.Alpha1,
-        KeyCode.Alpha2,
-        KeyCode.Alpha3,
-        KeyCode.Alpha4,
-        KeyCode.Alpha5,
-    };
+    private int selectedItemIndex = 0;
 
     void Start()
     {
-        inventory = Player.instance.inventory;
-        inventory.ItemAdded += OnItemAdded;
-        inventory.ItemRemoved += OnItemRemoved;
+        Player player = Player.instance;
+        inventory = player.inventory;
+
+        player.controls.OnHotbarOneForward += SelectNextItem;
+        player.controls.OnHotbarOneBack += SelectLastItem;
+        inventory.OnItemAdded += OnItemAdded;
+        inventory.OnItemRemoved += OnItemRemoved;
 
         WaveSpawner.instance.OnWaveStateUpdate += OnWaveStateUpdate;
 
@@ -40,13 +35,11 @@ public class Hotbar : MonoBehaviour
             HotbarSlot slot = slots[i];
             slot.Clear();
         }
-
-        //SelectItem(0);
     }
 
     void Update()
     {
-        for (int i = 0; i < hotbarControls.Length; i++)
+       /* for (int i = 0; i < hotbarControls.Length; i++)
         {
             if (Input.GetKeyDown(hotbarControls[i]))
             {
@@ -56,8 +49,43 @@ public class Hotbar : MonoBehaviour
                     SelectItem(selectedHotbarIndex);
                 }
             }
-        }
+        }*/
     }
+
+    public void SelectItem(int index)
+    {
+
+    }
+
+    public void SelectNextItem()
+    {
+        selectedItemIndex++;
+        if (InBounds(selectedItemIndex, inventory.slots))
+        {
+            Item item = inventory.slots[selectedItemIndex].FirstItem;
+            if (item != null && item is Equipment)
+            {
+                SelectItem(item as Equipment);
+                return;
+            }
+        }
+        selectedItemIndex--;
+    }
+
+    public void SelectLastItem()
+    {
+        selectedItemIndex--;
+        if (InBounds(selectedItemIndex, inventory.slots)) {
+            Item item = inventory.slots[selectedItemIndex].FirstItem;
+            if (item != null && item is Equipment)
+            {
+                SelectItem(item as Equipment);
+                return;
+            }
+        }
+        selectedItemIndex++;
+    }
+
 
     private void OnItemAdded(object sender, InventoryEvent e) 
     {
@@ -97,20 +125,16 @@ public class Hotbar : MonoBehaviour
         }
     }
 
-    private void SelectItem(int hotbarIndex)
+    private void SelectItem(Equipment equipment)
     {
-        Item item = inventory.slots[hotbarIndex].FirstItem;
-        if (item != null && item is Equipment)
+        if (currentItemNameCoroutine != null)
         {
-            if (currentItemNameCoroutine != null)
-            {
-                StopCoroutine(currentItemNameCoroutine);
-                currentItemNameCoroutine = null;
-            }
-
-            currentItemNameCoroutine = StartCoroutine(ShowSelectedName(item.name));
-            OnItemSelected?.Invoke(item as Equipment);
+            StopCoroutine(currentItemNameCoroutine);
+            currentItemNameCoroutine = null;
         }
+
+        currentItemNameCoroutine = StartCoroutine(ShowSelectedName(equipment.name));
+        OnItemSelected?.Invoke(equipment);
     }
 
     private void EnableDragHandler(HotbarSlot hotbarSlot, bool isEnabled)
@@ -124,4 +148,10 @@ public class Hotbar : MonoBehaviour
         yield return new WaitForSeconds(1f);
         selectedItemName.text = "";
     }
+
+    private bool InBounds(int index, List<Slot> slots)
+    {
+        return (index >= 0) && (index < slots.Count);
+    }
+
 }
