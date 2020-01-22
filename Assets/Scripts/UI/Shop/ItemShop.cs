@@ -28,6 +28,8 @@ namespace Shop
 
         private void OnPageChange(int id)
         {
+            Debug.Log("Page Change");
+
             if (currentPage != null)
             {
                 ShopPage newPage = pages[id];
