@@ -44,8 +44,8 @@ public class PlayerControls : MonoBehaviour
         inputActions.PlayerControls.Move.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
         inputActions.PlayerControls.Rotation.performed += ctx => lookPosition = ctx.ReadValue<Vector2>();
 
-        inputActions.PlayerControls.Primary.performed += UsePrimary;
-        inputActions.PlayerControls.Secondary.performed += UseSecondary;
+        inputActions.PlayerControls.Primary.started += UsePrimary;
+        inputActions.PlayerControls.Secondary.started += UseSecondary;
         inputActions.PlayerControls.Interact.performed += InteractWithInteractables;
 
         inputActions.PlayerControls.HotbarOneForward.performed += HotbarForward;

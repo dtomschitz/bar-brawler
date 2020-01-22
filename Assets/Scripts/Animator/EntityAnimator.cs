@@ -17,7 +17,7 @@ public class EntityAnimator : MonoBehaviour
 
     public virtual void OnSecondary()
     {
-        animator.SetTrigger("secondaryAttack");
+        animator.SetTrigger("Secondary");
     }
 
     public virtual void OnDeath()

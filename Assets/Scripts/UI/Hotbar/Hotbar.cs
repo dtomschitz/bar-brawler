@@ -35,55 +35,25 @@ public class Hotbar : MonoBehaviour
             HotbarSlot slot = slots[i];
             slot.Clear();
         }
-    }
 
-    void Update()
-    {
-       /* for (int i = 0; i < hotbarControls.Length; i++)
-        {
-            if (Input.GetKeyDown(hotbarControls[i]))
-            {
-                selectedHotbarIndex = i;
-                if (selectedHotbarIndex < inventory.slots.Count)
-                {
-                    SelectItem(selectedHotbarIndex);
-                }
-            }
-        }*/
-    }
-
-    public void SelectItem(int index)
-    {
-
+        SelectItem(0);
     }
 
     public void SelectNextItem()
     {
-        selectedItemIndex++;
-        if (InBounds(selectedItemIndex, inventory.slots))
+        if (InBounds(selectedItemIndex + 1, inventory.slots))
         {
-            Item item = inventory.slots[selectedItemIndex].FirstItem;
-            if (item != null && item is Equipment)
-            {
-                SelectItem(item as Equipment);
-                return;
-            }
+            SelectItem(inventory.slots[selectedItemIndex + 1].FirstItem);
+            selectedItemIndex++;
         }
-        selectedItemIndex--;
     }
 
     public void SelectLastItem()
     {
-        selectedItemIndex--;
-        if (InBounds(selectedItemIndex, inventory.slots)) {
-            Item item = inventory.slots[selectedItemIndex].FirstItem;
-            if (item != null && item is Equipment)
-            {
-                SelectItem(item as Equipment);
-                return;
-            }
+        if (InBounds(selectedItemIndex - 1, inventory.slots)) {
+            SelectItem(inventory.slots[selectedItemIndex - 1].FirstItem);
+            selectedItemIndex--;
         }
-        selectedItemIndex++;
     }
 
 
@@ -125,16 +95,29 @@ public class Hotbar : MonoBehaviour
         }
     }
 
-    private void SelectItem(Equipment equipment)
+    public void SelectItem(int index)
     {
-        if (currentItemNameCoroutine != null)
+        if (InBounds(index, inventory.slots))
         {
-            StopCoroutine(currentItemNameCoroutine);
-            currentItemNameCoroutine = null;
+            SelectItem(inventory.slots[selectedItemIndex].FirstItem);
+            selectedItemIndex = index;
         }
+    }
 
-        currentItemNameCoroutine = StartCoroutine(ShowSelectedName(equipment.name));
-        OnItemSelected?.Invoke(equipment);
+
+    private void SelectItem(Item item)
+    {
+        if (item != null && item is Equipment)
+        {
+            if (currentItemNameCoroutine != null)
+            {
+                StopCoroutine(currentItemNameCoroutine);
+                currentItemNameCoroutine = null;
+            }
+
+            currentItemNameCoroutine = StartCoroutine(ShowSelectedName(item.name));
+            OnItemSelected?.Invoke(item as Equipment);
+        }
     }
 
     private void EnableDragHandler(HotbarSlot hotbarSlot, bool isEnabled)
