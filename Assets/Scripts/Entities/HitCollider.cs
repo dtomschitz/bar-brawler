@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class HitCollider : MonoBehaviour
 {
@@ -12,6 +11,7 @@ public class HitCollider : MonoBehaviour
         {
             Player player = Player.instance;
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
+
             if (enemy != null && enemy != player && player.combat.IsAttacking)
             {
                 OnHit?.Invoke(enemy);
