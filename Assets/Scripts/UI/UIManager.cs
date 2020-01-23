@@ -1,13 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
-public class HUDManager : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
     #region Singelton
 
-    public static HUDManager instance;
+    public static UIManager instance;
 
     void Awake()
     {
@@ -15,6 +12,11 @@ public class HUDManager : MonoBehaviour
     }
 
     #endregion;
+
+    public Canvas hudCanvas;
+    public Canvas shopCanvas;
+    public Canvas pauseMenuCanvas;
+    public Canvas gameOverCanvas;
 
     public Hotbar hotbar;
     public HealthBar healthBar;
@@ -25,10 +27,25 @@ public class HUDManager : MonoBehaviour
 
     public GameObject gameOverUI;
 
+    public void SetShopCanvasActive(bool active)
+    {
+        shopCanvas.gameObject.SetActive(active);
+    }
+
+    public void SetPauseMenuCanvasActive(bool active)
+    {
+        hudCanvas.gameObject.SetActive(!active);
+        pauseMenuCanvas.gameObject.SetActive(active);
+    }
+
+    public void SetGameOverCanvasActive(bool active)
+    {
+        gameOverCanvas.gameObject.SetActive(active);
+    }
 
     public void DisplayHotbar(bool visible)
     {
-        hotbar.gameObject.SetActive(visible);
+        hotbar.GetComponentInParent<Canvas>().gameObject.SetActive(visible);
     }
 
     public void DisplayHealthBar(bool visible)

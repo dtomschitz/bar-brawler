@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
     {
         controls.IsMovementEnabled = false;
         animator.OnDeath();
-        HUDManager.instance.DisplayGameOverUI(true);
+        UIManager.instance.DisplayGameOverUI(true);
     }
 
     public void AddMoney(int amount)

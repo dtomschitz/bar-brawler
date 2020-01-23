@@ -17,12 +17,12 @@ public class Barkeeper : Interactable
     #endregion;
 
     public ItemShop shop;
-    private HUDManager hud;
+    private UIManager hud;
     private WaveSpawner waveSpawner;
 
     void Start()
     {
-        hud = HUDManager.instance;
+        hud = UIManager.instance;
         waveSpawner = WaveSpawner.instance;
         waveSpawner.OnWaveStateUpdate += OnWaveUpdate;
     }

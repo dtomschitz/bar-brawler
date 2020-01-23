@@ -84,22 +84,22 @@ namespace Shop
                 if (isOpen)
                 {
                     StopAllCoroutines();
-                    gameObject.SetActive(true);
+                    UIManager.instance.SetShopCanvasActive(true);
                     FadeIn(gameObject.GetComponent<CanvasGroup>(), .2f);
                 }
                 else
                 {
                     StopAllCoroutines();
                     FadeOut(gameObject.GetComponent<CanvasGroup>(), .2f);
-                    StartCoroutine(FadeOutShop(.2f, isOpen));
+                    StartCoroutine(FadeOutShop(.2f));
                 }
             }
         }
 
-        private IEnumerator FadeOutShop(float time, bool active)
+        private IEnumerator FadeOutShop(float time)
         {
             yield return new WaitForSeconds(time);
-            gameObject.SetActive(active);
+            UIManager.instance.SetShopCanvasActive(false);
         }
     }
 }

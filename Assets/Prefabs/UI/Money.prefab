@@ -103,11 +103,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5641308297744131662}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97c7531762075154f98e4bc28fe18c5d, type: 3}
+  m_Script: {fileID: 11500000, guid: 22c5e22009cc22648a5ba8fadae4daea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moneyRecived: {fileID: 4549442072163943640, guid: 33612d565a2f5284baa616a0a2e14c84,
-    type: 3}
-  moneySpend: {fileID: 8764151185102391981, guid: 211a307b085f1894093b6dc340ab53ac,
-    type: 3}
-  destroyText: 0.9
+  moneyRecived: {fileID: 0}
+  moneySpend: {fileID: 0}
+  destroyText: 0

@@ -73,6 +73,14 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""89264c7c-7090-4ac9-b605-9b4b20f64ff3"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -282,6 +290,28 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""Rotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ea75ddd1-69f1-440a-988f-eb2706bcd428"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2af61dd7-b712-4fcb-9459-54d1847b5516"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -720,6 +750,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         m_PlayerControls_Interact = m_PlayerControls.FindAction("Interact", throwIfNotFound: true);
         m_PlayerControls_HotbarOneForward = m_PlayerControls.FindAction("Hotbar One Forward", throwIfNotFound: true);
         m_PlayerControls_HotbarOneBack = m_PlayerControls.FindAction("Hotbar One Back", throwIfNotFound: true);
+        m_PlayerControls_Pause = m_PlayerControls.FindAction("Pause", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -789,6 +820,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
     private readonly InputAction m_PlayerControls_Interact;
     private readonly InputAction m_PlayerControls_HotbarOneForward;
     private readonly InputAction m_PlayerControls_HotbarOneBack;
+    private readonly InputAction m_PlayerControls_Pause;
     public struct PlayerControlsActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -800,6 +832,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         public InputAction @Interact => m_Wrapper.m_PlayerControls_Interact;
         public InputAction @HotbarOneForward => m_Wrapper.m_PlayerControls_HotbarOneForward;
         public InputAction @HotbarOneBack => m_Wrapper.m_PlayerControls_HotbarOneBack;
+        public InputAction @Pause => m_Wrapper.m_PlayerControls_Pause;
         public InputActionMap Get() { return m_Wrapper.m_PlayerControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -830,6 +863,9 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                 @HotbarOneBack.started -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnHotbarOneBack;
                 @HotbarOneBack.performed -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnHotbarOneBack;
                 @HotbarOneBack.canceled -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnHotbarOneBack;
+                @Pause.started -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_PlayerControlsActionsCallbackInterface = instance;
             if (instance != null)
@@ -855,6 +891,9 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                 @HotbarOneBack.started += instance.OnHotbarOneBack;
                 @HotbarOneBack.performed += instance.OnHotbarOneBack;
                 @HotbarOneBack.canceled += instance.OnHotbarOneBack;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -999,6 +1038,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnHotbarOneForward(InputAction.CallbackContext context);
         void OnHotbarOneBack(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

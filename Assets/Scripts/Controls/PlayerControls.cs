@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
 
 public class PlayerControls : MonoBehaviour
@@ -26,11 +27,9 @@ public class PlayerControls : MonoBehaviour
     public GameObject playerModel;
     public Transform pivot;
 
-    public delegate void HotbarOneBack();
-    public event HotbarOneBack OnHotbarOneBack;
-
-    public delegate void HotbarOneForward();
-    public event HotbarOneForward OnHotbarOneForward;
+    public event Action OnHotbarOneBack;
+    public event Action OnHotbarOneForward;
+    public event Action OnPauseGame; 
 
     private Camera mainCamera;
     private PlayerInputActions inputActions;
@@ -50,6 +49,7 @@ public class PlayerControls : MonoBehaviour
 
         inputActions.PlayerControls.HotbarOneForward.performed += HotbarForward;
         inputActions.PlayerControls.HotbarOneBack.performed += HotbarBack;
+        inputActions.PlayerControls.Pause.performed += PauseGame;
     }
 
     void Start()
@@ -60,19 +60,14 @@ public class PlayerControls : MonoBehaviour
         equipment = GetComponent<EquipmentManager>();
     }
 
-    private void OnEnable()
+    void OnEnable()
     {
         inputActions.Enable();
     }
 
-    private void OnDisable()
+    void OnDisable()
     {
         inputActions.Disable();
-    }
-
-    void Update()
-    {
-        //HandleInput();
     }
 
     void FixedUpdate()
@@ -156,6 +151,7 @@ public class PlayerControls : MonoBehaviour
 
     public void HotbarForward(CallbackContext ctx) => OnHotbarOneForward?.Invoke();
     public void HotbarBack(CallbackContext ctx) => OnHotbarOneBack?.Invoke();
+    public void PauseGame(CallbackContext ctx) => OnPauseGame?.Invoke();
 
     public void InteractWithInteractables(CallbackContext ctx)
     {
@@ -170,39 +166,6 @@ public class PlayerControls : MonoBehaviour
             return;
         }
     }
-
-   /* private void HandleInput()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (equipment.CurrentItem != null)
-            {
-                equipment.CurrentItem.OnInteractPrimary();
-            }
-        }
-
-        if (Input.GetMouseButton(1))
-        {
-            if (equipment.CurrentItem != null)
-            {
-                equipment.CurrentItem.OnInteractSecondary();
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (!WaveSpawner.instance.IsWaveRunning)
-            {
-                Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRange, barkeeperMask);
-                foreach (Collider collider in colliders)
-                {
-                    Interactable interactable = collider.GetComponent<Interactable>();
-                    if (interactable != null) interactable.Interact();
-                }
-                return;
-            }
-        }
-    }*/
 
     private void OnDrawGizmosSelected()
     {

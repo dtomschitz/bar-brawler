@@ -231,7 +231,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 517663445357660557}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c28a8f4c291d4443a6137c3de3e2321, type: 3}
+  m_Script: {fileID: 11500000, guid: 34fceea9992439c43b2bd3fbfa714887, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   manaBarImage: {fileID: 517663444628674266}
+  playerCombat: {fileID: 0}

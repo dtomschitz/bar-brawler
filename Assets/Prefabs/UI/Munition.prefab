@@ -251,7 +251,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 4452220627578607602}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2e3b19166792e64ab68fc8d165ea454, type: 3}
+  m_Script: {fileID: 11500000, guid: 7c6e1166728d55949b1d05250e737f68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   currentMunition: {fileID: 4452220626680370433}
+  inventory: {fileID: 0}

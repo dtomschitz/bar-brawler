@@ -3,27 +3,24 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-
-    public GameObject ui;
-
     public string menuSceneName = "MainMenu";
-
     public SceneFader sceneFader;
 
-    void Update()
-    { 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Toggle();
-        } 
+    void Start()
+    {
+        Player.instance.controls.OnPauseGame += OnPauseGame;
     }
 
-    public void Toggle()
+    private void OnPauseGame()
     {
-        
-        ui.SetActive(!ui.activeSelf);
+        TogglePauseMenu();
+    }
 
-        if (ui.activeSelf)
+    private void TogglePauseMenu()
+    {
+        UIManager.instance.SetPauseMenuCanvasActive(true);
+
+        if (gameObject.activeSelf)
         {
             Time.timeScale = 0f;
         }
@@ -33,16 +30,21 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    public void Retry()
+    public void OnContinue()
     {
-        Toggle();
+        TogglePauseMenu();
+    }
+
+    public void OnRetry()
+    {
+        TogglePauseMenu();
         WaveSpawner.rounds = 0;
         sceneFader.FadeTo(SceneManager.GetActiveScene().name);
     }
 
-    public void Menu()
+    public void ExitToMainMenu()
     {
-        Toggle();
+        TogglePauseMenu();
         sceneFader.FadeTo(menuSceneName);
     }
 }

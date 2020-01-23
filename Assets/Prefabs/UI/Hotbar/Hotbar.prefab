@@ -128,9 +128,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5121821825237482470}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9ac344451a73934f939b98fc70c8399, type: 3}
+  m_Script: {fileID: 11500000, guid: c3f8ac42fb6f0b24abe4aebe0b1bbee5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectedItemName: {fileID: 0}
 --- !u!1001 &1243156152538885843
 PrefabInstance:
   m_ObjectHideFlags: 0

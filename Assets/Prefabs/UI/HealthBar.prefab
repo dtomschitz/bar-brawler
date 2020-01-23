@@ -231,7 +231,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 7705429829075723990}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2672ab7390674074a8d90e1ad7b7380e, type: 3}
+  m_Script: {fileID: 11500000, guid: 8a7aedbc566369d45b36830c2c75a833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarImage: {fileID: 7705429828412012929}
+  playerStats: {fileID: 0}
