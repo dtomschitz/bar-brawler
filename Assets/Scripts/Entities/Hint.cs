@@ -19,7 +19,7 @@ public class Hint : MonoBehaviour
     {
         if (Input.GetKey(key))
         {
-            UIManager.instance.interactionHint.HideHint(.2f);
+            UIManager.instance.hud.interactionHint.HideHint(.2f);
             isHintEnabled = false;
         }
     }
@@ -28,7 +28,7 @@ public class Hint : MonoBehaviour
     {
         if (isHintEnabled && other.tag == "Player")
         {
-            UIManager.instance.interactionHint.DisplayHint(hint);
+            UIManager.instance.hud.interactionHint.DisplayHint(hint);
         }
     }
 
@@ -36,7 +36,7 @@ public class Hint : MonoBehaviour
     {
         if (isHintEnabled && other.tag == "Player")
         {
-            UIManager.instance.interactionHint.HideHint();
+            UIManager.instance.hud.interactionHint.HideHint();
             isHintEnabled = true;
         }
     }

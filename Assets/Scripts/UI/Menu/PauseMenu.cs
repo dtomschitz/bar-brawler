@@ -18,12 +18,12 @@ public class PauseMenu : MonoBehaviour
 
     public void OnContinue()
     {
-        gameObject.SetActive(false);
+        GameState.instance.SetState(State.INGAME);
     }
 
     public void OnRetry()
     {
-        gameObject.SetActive(false);
+        GameState.instance.SetState(State.INGAME);
         WaveSpawner.rounds = 0;
         sceneFader.FadeTo(SceneManager.GetActiveScene().name);
     }

@@ -10,13 +10,12 @@ namespace Shop
         public GameObject categoriesContainer;
         public CategoryButton categoryButtonPrefab;
         public ShopPage shopPagePrefab;
-
         public List<Category> categories;
+
+        public bool IsOpen { get; set; } = false;
 
         private List<ShopPage> pages;
         private ShopPage currentPage;
-
-        private bool isOpen = false;
 
         void Start()
         {
@@ -28,8 +27,6 @@ namespace Shop
 
         private void OnPageChange(int id)
         {
-            Debug.Log("Page Change");
-
             if (currentPage != null)
             {
                 ShopPage newPage = pages[id];
@@ -70,36 +67,6 @@ namespace Shop
             page.SetActive(false);
 
             pages.Add(page);
-        }
-
-        public bool IsOpen
-        {
-            get { return isOpen; }
-
-            set
-            {
-                if (isOpen == value) return;
-
-                isOpen = value;
-                if (isOpen)
-                {
-                    StopAllCoroutines();
-                    UIManager.instance.SetShopCanvasActive(true);
-                    FadeIn(gameObject.GetComponent<CanvasGroup>(), .2f);
-                }
-                else
-                {
-                    StopAllCoroutines();
-                    FadeOut(gameObject.GetComponent<CanvasGroup>(), .2f);
-                    StartCoroutine(FadeOutShop(.2f));
-                }
-            }
-        }
-
-        private IEnumerator FadeOutShop(float time)
-        {
-            yield return new WaitForSeconds(time);
-            UIManager.instance.SetShopCanvasActive(false);
         }
     }
 }

@@ -21,7 +21,7 @@ public class InteractionHint : FadeGraphic
         ShowHintRoutine(text, fadeTime);
     }
 
-    public void HideHint(float fadeTime = 1.5f)
+    public void HideHint(float fadeTime = .2f)
     {
         StartCoroutine(FadeOutHint(fadeTime));
     }

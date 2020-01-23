@@ -152,7 +152,7 @@ public class PlayerControls : MonoBehaviour
     public void HotbarBack(CallbackContext ctx) => OnHotbarOneBack?.Invoke();
     public void PauseGame(CallbackContext ctx)
     {
-        UIManager.instance.TogglePauseMenuCanvas();
+        GameState.instance.SetState(State.GAME_PAUSED);
     }
 
     public void InteractWithInteractables(CallbackContext ctx)

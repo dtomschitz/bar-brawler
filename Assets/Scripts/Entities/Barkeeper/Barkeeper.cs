@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Shop;
+﻿using Shop;
 
 public class Barkeeper : Interactable
 {
@@ -17,12 +14,12 @@ public class Barkeeper : Interactable
     #endregion;
 
     public ItemShop shop;
-    private UIManager hud;
+    private UIManager uiManager;
     private WaveSpawner waveSpawner;
 
     void Start()
     {
-        hud = UIManager.instance;
+        uiManager = UIManager.instance;
         waveSpawner = WaveSpawner.instance;
         waveSpawner.OnWaveStateUpdate += OnWaveUpdate;
     }
@@ -38,6 +35,7 @@ public class Barkeeper : Interactable
     public override void Interact()
     {
         base.Interact();
+
         if (shop.IsOpen)
         {
             CloseShop();
@@ -50,21 +48,15 @@ public class Barkeeper : Interactable
 
     public void OpenShop()
     {
+        GameState.instance.SetState(State.IN_SHOP);
         shop.IsOpen = true;
-        hud.DisplayHealthBar(false);
-        hud.DisplayManaBar(false);
-        hud.waveInfo.DisplayOnlySkipText(true);
-
         Player.instance.controls.IsMovementEnabled = false;
     }
 
     public void CloseShop()
     {
         shop.IsOpen = false;
-        hud.DisplayHealthBar(true);
-        hud.DisplayManaBar(true);
-        hud.waveInfo.DisplayAll(true);
-
+        GameState.instance.SetState(State.INGAME);
         Player.instance.controls.IsMovementEnabled = true;
     }
 }
