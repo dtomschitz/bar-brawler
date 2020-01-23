@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0e6bda28c50a834588de6c5026f81d8, type: 3}
   m_Name: Drinks
   m_EditorClassIdentifier: 
-  name: Drinks
+  name: DRINKS
   items:
   - {fileID: 11400000, guid: 4ed6ebb9c07d9244592a720c27a633ed, type: 2}
   - {fileID: 11400000, guid: c59c03e6410f3724fa95a8912ae52a65, type: 2}

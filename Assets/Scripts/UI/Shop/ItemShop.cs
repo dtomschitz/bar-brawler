@@ -7,10 +7,10 @@ namespace Shop
 {
     public class ItemShop : FadeCanvasGroup
     {
-        public GameObject categoriesContainer;
-        public CategoryButton categoryButtonPrefab;
-        public ShopPage shopPagePrefab;
-        public List<Category> categories;
+        //public GameObject categoriesContainer;
+       // public CategoryButton categoryButtonPrefab;
+       // public ShopPage shopPagePrefab;
+        //public List<Category> categories;
 
         public bool IsOpen { get; set; } = false;
 
@@ -19,13 +19,13 @@ namespace Shop
 
         void Start()
         {
-            pages = new List<ShopPage>(categories.Count);
+            //pages = new List<ShopPage>(categories.Count);
 
-            InstantiateCategories();
+           // InstantiateCategories();
             OnPageChange(0);
         }
 
-        private void OnPageChange(int id)
+        public void OnPageChange(int id)
         {
             if (currentPage != null)
             {
@@ -40,7 +40,7 @@ namespace Shop
             currentPage.SetActive(true);
         }
 
-        private void InstantiateCategories()
+        /*private void InstantiateCategories()
         {
             for (int i = 0; i < categories.Count; i++)
             {
@@ -67,6 +67,6 @@ namespace Shop
             page.SetActive(false);
 
             pages.Add(page);
-        }
+        }*/
     }
 }
