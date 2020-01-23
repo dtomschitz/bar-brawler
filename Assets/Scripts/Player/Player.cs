@@ -54,6 +54,7 @@ public class Player : MonoBehaviour
     {
         currentBalance += amount;
         OnMoneyReceived?.Invoke(amount, currentBalance);
+        FindObjectOfType<AudioManager>().Play("GetMoney");
     }
 
     public void RemoveMoney(int amount)

@@ -28,6 +28,8 @@ public class EntityStats : MonoBehaviour
         damage = Mathf.Clamp(damage, 0, float.MaxValue);
         CurrentHealth -= damage;
         OnTakeDamage?.Invoke(damage);
+        FindObjectOfType<AudioManager>().Play("Punch");
+        FindObjectOfType<AudioManager>().Play("FightReaction");
         if (IsDead)
         {
             OnDeath?.Invoke();

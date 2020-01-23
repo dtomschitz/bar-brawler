@@ -109,7 +109,6 @@ public class PlayerControls : MonoBehaviour
         character.Move(movement);
 
         movement.y += (Physics.gravity.y * gravityScale * Time.deltaTime);
-
     }
 
     private void TurnPlayer()
