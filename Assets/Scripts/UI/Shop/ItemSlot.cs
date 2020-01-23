@@ -12,16 +12,18 @@ namespace Shop
 
         public ShopItem shopItem;
 
-        public void AddItem(ShopItem shopItem)
+        void Start()
         {
-            this.shopItem = shopItem;
-
             icon.sprite = shopItem.item.icon;
             icon.enabled = true;
 
             title.text = shopItem.item.name;
             price.text = "$" + shopItem.price;
         }
-    }
 
+        public void OnOpenItemInfo()
+        {
+
+        }
+    }
 }

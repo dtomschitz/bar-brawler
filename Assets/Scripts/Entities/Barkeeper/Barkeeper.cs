@@ -35,12 +35,7 @@ public class Barkeeper : Interactable
     public override void Interact()
     {
         base.Interact();
-
-        if (shop.IsOpen)
-        {
-            CloseShop();
-        }
-        else
+        if (!shop.IsOpen)
         {
             OpenShop();
         }

@@ -1,44 +1,57 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using System.Collections.Generic;
 
 namespace Shop
 {
     public class ItemShop : FadeCanvasGroup
     {
         //public GameObject categoriesContainer;
-       // public CategoryButton categoryButtonPrefab;
-       // public ShopPage shopPagePrefab;
+        // public CategoryButton categoryButtonPrefab;
+        // public ShopPage shopPagePrefab;
         //public List<Category> categories;
+
+        public CategoryButton[] categoryButtons;
+        public ShopPage[] shopPages;
 
         public bool IsOpen { get; set; } = false;
 
-        private List<ShopPage> pages;
+       // private List<ShopPage> pages;
         private ShopPage currentPage;
 
         void Start()
         {
             //pages = new List<ShopPage>(categories.Count);
+            categoryButtons = GetComponents<CategoryButton>();
 
            // InstantiateCategories();
-            OnPageChange(0);
+            OnPageSelected(0);
         }
 
-        public void OnPageChange(int id)
+        public void OnPageSelected(int id)
         {
+            UpdateCategoryHighlight(id);
+
             if (currentPage != null)
             {
-                ShopPage newPage = pages[id];
+                ShopPage newPage = shopPages[id];
                 currentPage.SetActive(false);
                 newPage.SetActive(true);
                 currentPage = newPage;
                 return;
             }
 
-            currentPage = pages[id];
+            currentPage = shopPages[id];
             currentPage.SetActive(true);
         }
+
+        private void UpdateCategoryHighlight(int id)
+        {
+            for (int i = 0; i < categoryButtons.Length; i++)
+            {
+                categoryButtons[i].SetSelected(i == id);
+            }
+        }
+
+
 
         /*private void InstantiateCategories()
         {

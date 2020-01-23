@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Shop
 {
     public class ShopPage : MonoBehaviour
     {
-        public int id;
+        /*public int id;
         public ItemSlot itemSlotPrefab;
 
         private List<ItemSlot> slots = new List<ItemSlot>();
@@ -32,20 +31,12 @@ namespace Shop
             foreach (ShopItem item in items)
             {
                 ItemSlot slot = Instantiate(itemSlotPrefab, transform) as ItemSlot;
-                slot.AddItem(item);
-                slot.button.onClick.AddListener(delegate { OnItemBought(item); });
+                //slot.AddItem(item);
+                //slot.button.onClick.AddListener(delegate { OnItemBought(item); });
 
                 slots.Add(slot);
             }
-        }
-
-        public void OnItemBought(ShopItem shopItem)
-        {
-            if (Player.instance.currentBalance >= shopItem.price)
-            {
-                shopItem.OnItemBought();
-            }
-        }
+        }*/
 
         public void SetActive(bool active)
         {

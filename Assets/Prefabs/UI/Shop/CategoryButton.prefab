@@ -111,11 +111,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 6bda45fb1f29f0043b5c1e2574647005, type: 3}
-    m_FontSize: 30
+    m_FontSize: 45
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 3
-    m_MaxSize: 40
+    m_MinSize: 0
+    m_MaxSize: 45
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -152,3 +152,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   title: {fileID: 2941812232409370161}
+  defaultColor: {r: 1, g: 1, b: 1, a: 0}
+  selectedColor: {r: 0.69803923, g: 0.043137256, b: 0.07450981, a: 0}
