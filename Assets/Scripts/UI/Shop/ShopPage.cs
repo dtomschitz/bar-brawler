@@ -5,38 +5,12 @@ namespace Shop
 {
     public class ShopPage : MonoBehaviour
     {
-        /*public int id;
-        public ItemSlot itemSlotPrefab;
+        public ItemInfo itemInfo;
 
-        private List<ItemSlot> slots = new List<ItemSlot>();
-
-        void LateUpdate()
+        public void OnItemSelected(ShopItem item)
         {
-            ValidatePlayerCash();
+            itemInfo.SetItem(item);
         }
-
-        private void ValidatePlayerCash()
-        {
-            int currentMoneyAmount = Player.instance.currentBalance;
-            foreach (ItemSlot slot in slots)
-            {
-                slot.button.interactable = currentMoneyAmount >= slot.shopItem.price;
-            }
-        }
-
-        public void AddItems(List<ShopItem> items)
-        {
-            if (items.Count == 0) return;
-
-            foreach (ShopItem item in items)
-            {
-                ItemSlot slot = Instantiate(itemSlotPrefab, transform) as ItemSlot;
-                //slot.AddItem(item);
-                //slot.button.onClick.AddListener(delegate { OnItemBought(item); });
-
-                slots.Add(slot);
-            }
-        }*/
 
         public void SetActive(bool active)
         {
