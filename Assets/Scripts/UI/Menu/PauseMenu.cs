@@ -6,45 +6,31 @@ public class PauseMenu : MonoBehaviour
     public string menuSceneName = "MainMenu";
     public SceneFader sceneFader;
 
-    void Start()
+    public void OnEnable()
     {
-        Player.instance.controls.OnPauseGame += OnPauseGame;
+        Time.timeScale = 0f;
     }
 
-    private void OnPauseGame()
+    public void OnDisable()
     {
-        TogglePauseMenu();
-    }
-
-    private void TogglePauseMenu()
-    {
-        UIManager.instance.SetPauseMenuCanvasActive(true);
-
-        if (gameObject.activeSelf)
-        {
-            Time.timeScale = 0f;
-        }
-        else
-        {
-            Time.timeScale = 1f;
-        }
+        Time.timeScale = 1f;
     }
 
     public void OnContinue()
     {
-        TogglePauseMenu();
+        gameObject.SetActive(false);
     }
 
     public void OnRetry()
     {
-        TogglePauseMenu();
+        gameObject.SetActive(false);
         WaveSpawner.rounds = 0;
         sceneFader.FadeTo(SceneManager.GetActiveScene().name);
     }
 
     public void ExitToMainMenu()
     {
-        TogglePauseMenu();
+        gameObject.SetActive(false);
         sceneFader.FadeTo(menuSceneName);
     }
 }

@@ -659,8 +659,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hudCanvas: {fileID: 1191440707}
   shopCanvas: {fileID: 140689663}
-  pauseMenuCanvas: {fileID: 1937628922}
   gameOverCanvas: {fileID: 1123749036}
+  pauseMenu: {fileID: 1937628923}
   hotbar: {fileID: 1222811566}
   healthBar: {fileID: 1350290712}
   manaBar: {fileID: 1831812555}
@@ -1093,7 +1093,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1472296157}
+      - m_Target: {fileID: 1937628923}
         m_MethodName: ExitToMainMenu
         m_Mode: 1
         m_Arguments:
@@ -2501,7 +2501,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1472296157}
+      - m_Target: {fileID: 1937628923}
         m_MethodName: OnRetry
         m_Mode: 1
         m_Arguments:
@@ -3226,6 +3226,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71bbce42c42878f4d90296e9a6153dbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1357599922 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4251900538022576383, guid: a5694255a417f164c9596164663fb42b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1544535199}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1357599916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd3b23cecc3df5b4ead7a4cbdf24a6e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1357599927 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4251900538022576373, guid: a5694255a417f164c9596164663fb42b,
@@ -3521,9 +3533,8 @@ GameObject:
   - component: {fileID: 1472296154}
   - component: {fileID: 1472296156}
   - component: {fileID: 1472296155}
-  - component: {fileID: 1472296157}
   m_Layer: 5
-  m_Name: PauseMenu
+  m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3588,20 +3599,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1472296153}
   m_CullTransparentMesh: 0
---- !u!114 &1472296157
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1472296153}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8ed0c319ade97340bc6b7c56d888719, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menuSceneName: MainMenu
-  sceneFader: {fileID: 1508618963}
 --- !u!114 &1508618963 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6772243945958017529, guid: b568605f49db743449fe46895770f875,
@@ -4408,7 +4405,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1472296157}
+      - m_Target: {fileID: 1937628923}
         m_MethodName: OnContinue
         m_Mode: 1
         m_Arguments:
@@ -4486,8 +4483,9 @@ GameObject:
   - component: {fileID: 1937628922}
   - component: {fileID: 1937628921}
   - component: {fileID: 1937628920}
+  - component: {fileID: 1937628923}
   m_Layer: 0
-  m_Name: PauseGameCanvas
+  m_Name: PauseMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4573,6 +4571,20 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1937628923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1937628918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8ed0c319ade97340bc6b7c56d888719, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuSceneName: MainMenu
+  sceneFader: {fileID: 1508618963}
 --- !u!1 &1973658255
 GameObject:
   m_ObjectHideFlags: 0
@@ -5288,7 +5300,7 @@ PrefabInstance:
         type: 3}
       propertyPath: inventory
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1357599922}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1905ea660fd814842bb8463606ba4c38, type: 3}
 --- !u!4 &5006512735052365830 stripped

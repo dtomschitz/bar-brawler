@@ -15,8 +15,9 @@ public class UIManager : MonoBehaviour
 
     public Canvas hudCanvas;
     public Canvas shopCanvas;
-    public Canvas pauseMenuCanvas;
     public Canvas gameOverCanvas;
+
+    public PauseMenu pauseMenu;
 
     public Hotbar hotbar;
     public HealthBar healthBar;
@@ -32,10 +33,17 @@ public class UIManager : MonoBehaviour
         shopCanvas.gameObject.SetActive(active);
     }
 
+    public void TogglePauseMenuCanvas()
+    {
+        hudCanvas.gameObject.SetActive(!hudCanvas.gameObject.activeSelf);
+        pauseMenu.gameObject.SetActive(!pauseMenu.gameObject.activeSelf);
+
+    }
+
     public void SetPauseMenuCanvasActive(bool active)
     {
         hudCanvas.gameObject.SetActive(!active);
-        pauseMenuCanvas.gameObject.SetActive(active);
+        pauseMenu.gameObject.SetActive(active);
     }
 
     public void SetGameOverCanvasActive(bool active)

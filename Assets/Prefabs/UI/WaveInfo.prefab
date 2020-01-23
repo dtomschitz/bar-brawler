@@ -236,5 +236,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1601fed28fed56844883682f5cee551d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateOfGameText: {fileID: 0}
-  skipCountdownText: {fileID: 0}
+  stateOfGameText: {fileID: 7691573777340014032}
+  skipCountdownText: {fileID: 7691573777838082445}

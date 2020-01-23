@@ -29,7 +29,6 @@ public class PlayerControls : MonoBehaviour
 
     public event Action OnHotbarOneBack;
     public event Action OnHotbarOneForward;
-    public event Action OnPauseGame; 
 
     private Camera mainCamera;
     private PlayerInputActions inputActions;
@@ -151,7 +150,10 @@ public class PlayerControls : MonoBehaviour
 
     public void HotbarForward(CallbackContext ctx) => OnHotbarOneForward?.Invoke();
     public void HotbarBack(CallbackContext ctx) => OnHotbarOneBack?.Invoke();
-    public void PauseGame(CallbackContext ctx) => OnPauseGame?.Invoke();
+    public void PauseGame(CallbackContext ctx)
+    {
+        UIManager.instance.TogglePauseMenuCanvas();
+    }
 
     public void InteractWithInteractables(CallbackContext ctx)
     {
