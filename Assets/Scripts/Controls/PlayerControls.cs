@@ -10,7 +10,7 @@ public class PlayerControls : MonoBehaviour
     public float gravityScale;
     public float rotateSpeed;
     public float cameraRayLength = 100f;
-    public bool IsMovementEnabled { get; set; } = true;
+    private bool isMovementEnebaled = true;
 
     private Vector2 movementInput;
     private Vector2 lookPosition;
@@ -79,8 +79,6 @@ public class PlayerControls : MonoBehaviour
             Vector3 input = new Vector3(h, 0f, v);
             inputDirection = Vector3.Lerp(inputDirection, input, Time.deltaTime * 10f);
 
-   
-
             Vector3 cameraForward = mainCamera.transform.forward;
             Vector3 cameraRight = mainCamera.transform.right;
 
@@ -91,45 +89,7 @@ public class PlayerControls : MonoBehaviour
 
             MovePlayer(desiredDirection);
             TurnPlayer();
-            AnimatePlayerMovement(desiredDirection);
         }    
-    }
-
-    private void MovePlayer(Vector3 desiredDirection)
-    {
-        movement.Set(desiredDirection.x, movement.y, desiredDirection.z);
-        movement = movement * speed * Time.deltaTime;
-
-        character.Move(movement);
-
-        movement.y += (Physics.gravity.y * gravityScale * Time.deltaTime);
-    }
-
-    private void TurnPlayer()
-    {
-        Vector2 input = lookPosition;
-        Vector3 lookDirection = new Vector3(input.x, 0, input.y);
-
-        Vector3 lookRotation = mainCamera.transform.TransformDirection(lookDirection);
-        lookRotation = Vector3.ProjectOnPlane(lookRotation, Vector3.up);
-        
-        if (lookRotation != Vector3.zero)
-        {
-            Quaternion newRotation = Quaternion.LookRotation(lookRotation);
-            playerModel.transform.rotation = Quaternion.Lerp(playerModel.transform.rotation, newRotation, Time.deltaTime * 10f);
-        }
-    }
-
-    private void AnimatePlayerMovement(Vector3 desiredDirection)
-    {
-        if (!playerAnimator) return;
-
-        Vector3 movement = new Vector3(desiredDirection.x, 0f, desiredDirection.z);
-        float forward = Vector3.Dot(movement, playerModel.transform.forward);
-        float strafe = Vector3.Dot(movement, playerModel.transform.right);
-
-        playerAnimator.SetForward(forward);
-        playerAnimator.SetStrafe(strafe);
     }
 
     public void UsePrimary(CallbackContext ctx)
@@ -169,9 +129,59 @@ public class PlayerControls : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmosSelected()
+    private void StopPlayerMovement()
     {
-        if (interactionRange == 0f) return;
-        Gizmos.DrawWireSphere(transform.position, interactionRange);
+        MovePlayer(Vector3.zero);
     }
+
+    private void MovePlayer(Vector3 desiredDirection)
+    {
+        movement.Set(desiredDirection.x, movement.y, desiredDirection.z);
+        movement = movement * speed * Time.deltaTime;
+
+        character.Move(movement);
+
+        movement.y += (Physics.gravity.y * gravityScale * Time.deltaTime);
+
+        AnimatePlayerMovement(desiredDirection);
+    }
+
+    private void TurnPlayer()
+    {
+        Vector2 input = lookPosition;
+        Vector3 lookDirection = new Vector3(input.x, 0, input.y);
+
+        Vector3 lookRotation = mainCamera.transform.TransformDirection(lookDirection);
+        lookRotation = Vector3.ProjectOnPlane(lookRotation, Vector3.up);
+
+        if (lookRotation != Vector3.zero)
+        {
+            Quaternion newRotation = Quaternion.LookRotation(lookRotation);
+            playerModel.transform.rotation = Quaternion.Lerp(playerModel.transform.rotation, newRotation, Time.deltaTime * 10f);
+        }
+    }
+
+    private void AnimatePlayerMovement(Vector3 desiredDirection)
+    {
+        if (!playerAnimator) return;
+
+        Vector3 movement = new Vector3(desiredDirection.x, 0f, desiredDirection.z);
+        float forward = Vector3.Dot(movement, playerModel.transform.forward);
+        float strafe = Vector3.Dot(movement, playerModel.transform.right);
+
+        playerAnimator.SetForward(forward);
+        playerAnimator.SetStrafe(strafe);
+    }
+
+    public bool IsMovementEnabled
+    {
+        get { return isMovementEnebaled; }
+        set 
+        {
+            if (isMovementEnebaled == value) return;
+            isMovementEnebaled = value;
+            if (!value) StopPlayerMovement();
+        }
+    }
+
 }
