@@ -26,7 +26,7 @@ namespace Items
             cooldown -= Time.deltaTime;
         }
 
-        public override void OnInteractPrimary()
+        public override void OnPrimary()
         {
             if (Player.instance.inventory.HasMunition)
             {

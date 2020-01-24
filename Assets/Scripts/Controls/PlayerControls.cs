@@ -44,7 +44,8 @@ public class PlayerControls : MonoBehaviour
 
         inputActions.PlayerControls.Primary.started += UsePrimary;
         inputActions.PlayerControls.Secondary.started += UseSecondary;
-        inputActions.PlayerControls.Interact.performed += InteractWithInteractables;
+        inputActions.PlayerControls.UseItem.started += UseItem;
+        inputActions.PlayerControls.Interact.performed += InteractWithBarkeeper;
 
         inputActions.PlayerControls.HotbarOneForward.performed += HotbarForward;
         inputActions.PlayerControls.HotbarOneBack.performed += HotbarBack;
@@ -92,21 +93,9 @@ public class PlayerControls : MonoBehaviour
         }    
     }
 
-    public void UsePrimary(CallbackContext ctx)
-    {
-        if (equipment.CurrentItem != null)
-        {
-            equipment.CurrentItem.OnInteractPrimary();
-        }
-    }
-
-    public void UseSecondary(CallbackContext ctx)
-    {
-        if (equipment.CurrentItem != null)
-        {
-            equipment.CurrentItem.OnInteractSecondary();
-        }
-    }
+    public void UsePrimary(CallbackContext ctx) => equipment.UsePrimary();
+    public void UseSecondary(CallbackContext ctx) => equipment.UseSecondary();
+    public void UseItem(CallbackContext ctx) => equipment.UseConsumable();
 
     public void HotbarForward(CallbackContext ctx) => OnHotbarOneForward?.Invoke();
     public void HotbarBack(CallbackContext ctx) => OnHotbarOneBack?.Invoke();
@@ -115,17 +104,11 @@ public class PlayerControls : MonoBehaviour
         GameState.instance.SetState(State.GAME_PAUSED);
     }
 
-    public void InteractWithInteractables(CallbackContext ctx)
+    public void InteractWithBarkeeper(CallbackContext ctx)
     {
         if (!WaveSpawner.instance.IsWaveRunning && GameState.instance.state != State.GAME_PAUSED || GameState.instance.state != State.GAME_OVER)
         {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRange, barkeeperMask);
-            foreach (Collider collider in colliders)
-            {
-                Interactable interactable = collider.GetComponent<Interactable>();
-                if (interactable != null) interactable.Interact();
-            }
-            return;
+
         }
     }
 

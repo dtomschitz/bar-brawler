@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Items
@@ -18,7 +17,7 @@ namespace Items
             drink = (item as Drink);
         }
 
-        public override void OnInteractPrimary()
+        public override void OnPrimary()
         {
             PlayerStats stats = Player.instance.stats;
             if (stats != null)

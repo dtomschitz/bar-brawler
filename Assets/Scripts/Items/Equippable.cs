@@ -15,12 +15,12 @@ namespace Items
             }
         }
 
-        public virtual void OnInteractPrimary()
+        public virtual void OnPrimary()
         {
             if (!isPrimaryEnabled) return;
         }
 
-        public virtual void OnInteractSecondary()
+        public virtual void OnSecondary()
         {
             if (!isSecondaryEnabled) return;
         }

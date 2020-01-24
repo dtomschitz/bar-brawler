@@ -38,9 +38,9 @@ namespace Items
             secondaryCooldown -= Time.deltaTime;
         }
 
-        public override void OnInteractPrimary()
+        public override void OnPrimary()
         {
-            base.OnInteractPrimary();
+            base.OnPrimary();
 
             Cooldown(primaryCooldown, primaryManaRequired, combat.CurrentMana,
                 () =>
@@ -52,9 +52,9 @@ namespace Items
             );
         }
 
-        public override void OnInteractSecondary()
+        public override void OnSecondary()
         {
-            base.OnInteractSecondary();
+            base.OnSecondary();
 
             Cooldown(secondaryCooldown, secondaryManaRequired, combat.CurrentMana,
                 () =>

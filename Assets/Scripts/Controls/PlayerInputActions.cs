@@ -51,9 +51,17 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Interact"",
+                    ""name"": ""Use Item"",
                     ""type"": ""Button"",
                     ""id"": ""fb06a938-2a03-4fc5-bf3f-ac53a434bec5"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""f5707e37-bb11-496f-8a24-5fee9e82512e"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -61,7 +69,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                 {
                     ""name"": ""Hotbar One Forward"",
                     ""type"": ""Button"",
-                    ""id"": ""f5707e37-bb11-496f-8a24-5fee9e82512e"",
+                    ""id"": ""7b0b6d20-2a4d-4d09-9842-a489bb578822"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
@@ -69,7 +77,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                 {
                     ""name"": ""Hotbar One Back"",
                     ""type"": ""Button"",
-                    ""id"": ""7b0b6d20-2a4d-4d09-9842-a489bb578822"",
+                    ""id"": ""89264c7c-7090-4ac9-b605-9b4b20f64ff3"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
@@ -77,7 +85,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                 {
                     ""name"": ""Pause"",
                     ""type"": ""Button"",
-                    ""id"": ""89264c7c-7090-4ac9-b605-9b4b20f64ff3"",
+                    ""id"": ""f80e7d1a-fa64-4af2-b664-524586b7b8d6"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
@@ -312,6 +320,17 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7915025b-f50b-4b44-9d4c-b7f3a72083d1"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Use Item"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -747,6 +766,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         m_PlayerControls_Rotation = m_PlayerControls.FindAction("Rotation", throwIfNotFound: true);
         m_PlayerControls_Primary = m_PlayerControls.FindAction("Primary", throwIfNotFound: true);
         m_PlayerControls_Secondary = m_PlayerControls.FindAction("Secondary", throwIfNotFound: true);
+        m_PlayerControls_UseItem = m_PlayerControls.FindAction("Use Item", throwIfNotFound: true);
         m_PlayerControls_Interact = m_PlayerControls.FindAction("Interact", throwIfNotFound: true);
         m_PlayerControls_HotbarOneForward = m_PlayerControls.FindAction("Hotbar One Forward", throwIfNotFound: true);
         m_PlayerControls_HotbarOneBack = m_PlayerControls.FindAction("Hotbar One Back", throwIfNotFound: true);
@@ -817,6 +837,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
     private readonly InputAction m_PlayerControls_Rotation;
     private readonly InputAction m_PlayerControls_Primary;
     private readonly InputAction m_PlayerControls_Secondary;
+    private readonly InputAction m_PlayerControls_UseItem;
     private readonly InputAction m_PlayerControls_Interact;
     private readonly InputAction m_PlayerControls_HotbarOneForward;
     private readonly InputAction m_PlayerControls_HotbarOneBack;
@@ -829,6 +850,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         public InputAction @Rotation => m_Wrapper.m_PlayerControls_Rotation;
         public InputAction @Primary => m_Wrapper.m_PlayerControls_Primary;
         public InputAction @Secondary => m_Wrapper.m_PlayerControls_Secondary;
+        public InputAction @UseItem => m_Wrapper.m_PlayerControls_UseItem;
         public InputAction @Interact => m_Wrapper.m_PlayerControls_Interact;
         public InputAction @HotbarOneForward => m_Wrapper.m_PlayerControls_HotbarOneForward;
         public InputAction @HotbarOneBack => m_Wrapper.m_PlayerControls_HotbarOneBack;
@@ -854,6 +876,9 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                 @Secondary.started -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnSecondary;
                 @Secondary.performed -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnSecondary;
                 @Secondary.canceled -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnSecondary;
+                @UseItem.started -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnUseItem;
+                @UseItem.performed -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnUseItem;
+                @UseItem.canceled -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnUseItem;
                 @Interact.started -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnInteract;
                 @Interact.performed -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnInteract;
                 @Interact.canceled -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnInteract;
@@ -882,6 +907,9 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                 @Secondary.started += instance.OnSecondary;
                 @Secondary.performed += instance.OnSecondary;
                 @Secondary.canceled += instance.OnSecondary;
+                @UseItem.started += instance.OnUseItem;
+                @UseItem.performed += instance.OnUseItem;
+                @UseItem.canceled += instance.OnUseItem;
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
@@ -1035,6 +1063,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         void OnRotation(InputAction.CallbackContext context);
         void OnPrimary(InputAction.CallbackContext context);
         void OnSecondary(InputAction.CallbackContext context);
+        void OnUseItem(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnHotbarOneForward(InputAction.CallbackContext context);
         void OnHotbarOneBack(InputAction.CallbackContext context);

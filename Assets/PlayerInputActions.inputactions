@@ -38,9 +38,17 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Interact",
+                    "name": "Use Item",
                     "type": "Button",
                     "id": "fb06a938-2a03-4fc5-bf3f-ac53a434bec5",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "f5707e37-bb11-496f-8a24-5fee9e82512e",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -48,7 +56,7 @@
                 {
                     "name": "Hotbar One Forward",
                     "type": "Button",
-                    "id": "f5707e37-bb11-496f-8a24-5fee9e82512e",
+                    "id": "7b0b6d20-2a4d-4d09-9842-a489bb578822",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
@@ -56,7 +64,7 @@
                 {
                     "name": "Hotbar One Back",
                     "type": "Button",
-                    "id": "7b0b6d20-2a4d-4d09-9842-a489bb578822",
+                    "id": "89264c7c-7090-4ac9-b605-9b4b20f64ff3",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
@@ -64,7 +72,7 @@
                 {
                     "name": "Pause",
                     "type": "Button",
-                    "id": "89264c7c-7090-4ac9-b605-9b4b20f64ff3",
+                    "id": "f80e7d1a-fa64-4af2-b664-524586b7b8d6",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
@@ -299,6 +307,17 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7915025b-f50b-4b44-9d4c-b7f3a72083d1",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Use Item",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

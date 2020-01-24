@@ -24,6 +24,31 @@ public class EquipmentManager : MonoBehaviour
         hotbar.OnItemSelected += EquipItem;
     }
 
+    public void UsePrimary()
+    {
+        if (currentItem != null && currentItem is Equippable && currentEquipment != null && currentEquipment is Weapon)
+        {
+            currentItem.OnPrimary();
+        }
+    }
+
+    public void UseSecondary()
+    {
+        if (currentItem != null && currentItem is Equippable && currentEquipment != null && currentEquipment is Weapon)
+        {
+            currentItem.OnSecondary();
+        }
+    }
+
+    public void UseConsumable()
+    {
+        if (currentItem != null && currentItem is Consumable && currentEquipment != null && currentEquipment is Drink)
+        {
+            currentItem.OnPrimary();
+        }
+    }
+
+
     private void OnItemUsed(object sender, InventoryEvent e)
     {
         if (e.item == currentEquipment)
