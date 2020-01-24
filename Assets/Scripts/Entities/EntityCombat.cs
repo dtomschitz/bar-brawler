@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using Items;
 
 public class EntityCombat : MonoBehaviour
 {
     public event Action OnAttack;
-    public CombatState state;
+    public CombatState state { get; protected set; }
 
     private EntityStats entityStats;
 
@@ -19,6 +20,27 @@ public class EntityCombat : MonoBehaviour
     {
         StartCoroutine(DoDamge(stats, .15f));
         OnAttack?.Invoke();
+    }
+
+    public void SetState(CombatState newState)
+    {
+        if (newState == state || !GameState.instance.IsInGame) return;
+        state = newState; 
+
+        switch(newState)
+        {
+            case CombatState.ATTACKING:
+                Player.instance.controls.IsMovementEnabled = !(Player.instance.equipment.CurrentItem is Fist);
+                break;
+
+            case CombatState.BLOCKING:
+                Player.instance.controls.IsMovementEnabled = !(Player.instance.equipment.CurrentItem is Fist);
+                break;
+
+            case CombatState.IDLE:
+                Player.instance.controls.IsMovementEnabled = true;
+                break;
+        }
     }
 
     IEnumerator DoDamge(EntityStats stats, float delay)

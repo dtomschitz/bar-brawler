@@ -16,7 +16,7 @@ namespace Items
         {
             base.OnPrimaryAccomplished();
 
-            combat.state = CombatState.ATTACKING;
+            //combat.state = CombatState.ATTACKING;
             StartPrimaryRoutine(PrimaryRoutine());
             animator.OnPrimary();
         }

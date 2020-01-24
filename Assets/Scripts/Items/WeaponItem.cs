@@ -46,9 +46,9 @@ namespace Items
                 () =>
                 {
                     primaryCooldown = 1f / primaryAttackRate;
-                    OnPrimaryAccomplished();
+                    animator.OnPrimary();
                 },
-                () => combat.state = CombatState.IDLE
+                () => { } 
             );
         }
 
@@ -60,7 +60,7 @@ namespace Items
                 () =>
                 {
                     secondaryCooldown = 1f / secondaryAttackRate;
-                    OnSecondaryAccomplished();
+                    animator.OnSecondary();
                 },
                 () => { }
             );
@@ -102,9 +102,9 @@ namespace Items
 
         public virtual IEnumerator PrimaryRoutine(float seconds = 1f)
         {
-            combat.state = CombatState.ATTACKING;
+           // combat.state = CombatState.ATTACKING;
             yield return new WaitForSeconds(seconds);
-            combat.state = CombatState.IDLE;
+           // combat.state = CombatState.IDLE;
         }
 
         private void Cooldown(float cooldown, float requiredMana, float currentMana, Action trueCallback, Action falseCallback)

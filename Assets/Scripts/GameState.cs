@@ -89,4 +89,9 @@ public class GameState : MonoBehaviour
         UIManager.instance.SetGameOverMenuActive(false);
         UIManager.instance.SetHUDActive(true, true);
     }
+
+    public bool IsInGame
+    {
+        get { return state == State.INGAME; }
+    }
 }

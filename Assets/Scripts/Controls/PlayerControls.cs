@@ -101,18 +101,7 @@ public class PlayerControls : MonoBehaviour
 
     public void HotbarForward(CallbackContext ctx) => OnHotbarOneForward?.Invoke();
     public void HotbarBack(CallbackContext ctx) => OnHotbarOneBack?.Invoke();
-    public void PauseGame(CallbackContext ctx)
-    {
-        GameState.instance.SetState(State.GAME_PAUSED);
-    }
-
-    /*public void InteractWithBarkeeper(CallbackContext ctx)
-    {
-        if (!WaveSpawner.instance.IsWaveRunning && GameState.instance.state != State.GAME_PAUSED || GameState.instance.state != State.GAME_OVER)
-        {
-
-        }
-    }*/
+    public void PauseGame(CallbackContext ctx) => GameState.instance.SetState(State.GAME_PAUSED);
 
     private void StopPlayerMovement()
     {
