@@ -92,7 +92,8 @@ public class PlayerControls : MonoBehaviour
 
             MovePlayer(desiredDirection);
             TurnPlayer();
-        }    
+            AnimatePlayerMovement(desiredDirection);
+        }
     }
 
     public void UsePrimary(CallbackContext ctx) => equipment.UsePrimary();
@@ -106,6 +107,8 @@ public class PlayerControls : MonoBehaviour
     private void StopPlayerMovement()
     {
         MovePlayer(Vector3.zero);
+        playerAnimator.SetForward(0f);
+        playerAnimator.SetStrafe(0f);
     }
 
     private void MovePlayer(Vector3 desiredDirection)
@@ -116,8 +119,6 @@ public class PlayerControls : MonoBehaviour
         character.Move(movement);
 
         movement.y += (Physics.gravity.y * gravityScale * Time.deltaTime);
-
-        AnimatePlayerMovement(desiredDirection);
     }
 
     private void TurnPlayer()
@@ -142,6 +143,9 @@ public class PlayerControls : MonoBehaviour
         Vector3 movement = new Vector3(desiredDirection.x, 0f, desiredDirection.z);
         float forward = Vector3.Dot(movement, playerModel.transform.forward);
         float strafe = Vector3.Dot(movement, playerModel.transform.right);
+
+       // if ((strafe < .1f && strafe > -.1f) || (strafe < -.1f && strafe > .1f)) strafe = 0;
+        //if (forward < 0.1f) forward = 0;
 
         playerAnimator.SetForward(forward);
         playerAnimator.SetStrafe(strafe);

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
-using Items;
 
 public class EntityCombat : MonoBehaviour
 {
@@ -16,31 +15,24 @@ public class EntityCombat : MonoBehaviour
         state = CombatState.IDLE;
     }
 
-    public virtual void Attack(EntityStats stats)
+    /*public virtual bool OnAttack()
+    {
+        //StartCoroutine(DoDamge(stats, .15f));
+        //OnAttack?.Invoke();
+        return false;
+    }
+    */
+
+    public void Attack(EntityStats stats)
     {
         StartCoroutine(DoDamge(stats, .15f));
         OnAttack?.Invoke();
     }
 
-    public void SetState(CombatState newState)
+    public virtual void SetState(CombatState newState)
     {
         if (newState == state || !GameState.instance.IsInGame) return;
         state = newState; 
-
-        switch(newState)
-        {
-            case CombatState.ATTACKING:
-                Player.instance.controls.IsMovementEnabled = !(Player.instance.equipment.CurrentItem is Fist);
-                break;
-
-            case CombatState.BLOCKING:
-                Player.instance.controls.IsMovementEnabled = !(Player.instance.equipment.CurrentItem is Fist);
-                break;
-
-            case CombatState.IDLE:
-                Player.instance.controls.IsMovementEnabled = true;
-                break;
-        }
     }
 
     IEnumerator DoDamge(EntityStats stats, float delay)
@@ -58,11 +50,18 @@ public class EntityCombat : MonoBehaviour
     {
         get { return state == CombatState.BLOCKING; }
     }
+
+    public bool IsStunned
+    {
+        get { return state == CombatState.ATTACKING; }
+    }
+
 }
 
 public enum CombatState
 {
     IDLE,
     BLOCKING,
-    ATTACKING
+    ATTACKING,
+    STUNNED
 }

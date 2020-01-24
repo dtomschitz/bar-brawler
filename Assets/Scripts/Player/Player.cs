@@ -15,8 +15,6 @@ public class Player : MonoBehaviour
 
     #endregion;
 
-    public GameObject player;
-
     public int currentBalance = 0;
 
     public delegate void MoneyRecived(int amount, int currentBalance);
@@ -24,21 +22,21 @@ public class Player : MonoBehaviour
     public event MoneyRecived OnMoneyReceived;
     public event MoneySpend OnMoneySpend;
 
-    public PlayerControls controls { get; protected set; }
-    public PlayerStats stats { get; protected set; }
-    public PlayerCombat combat { get; protected set; }
-    public PlayerAnimator animator { get; protected set; }
-    public Inventory inventory { get; protected set; }
-    public EquipmentManager equipment { get; protected set; }
+    public PlayerControls controls;
+    public PlayerStats stats;
+    public PlayerCombat combat;
+    public PlayerAnimator animator;
+    public Inventory inventory;
+    public EquipmentManager equipment;
 
     void Start()
     {
-        controls = player.GetComponent<PlayerControls>();
-        stats = player.GetComponent<PlayerStats>();
-        combat = player.GetComponent<PlayerCombat>();
-        animator = player.GetComponent<PlayerAnimator>();
-        inventory = player.GetComponent<Inventory>();
-        equipment = player.GetComponent<EquipmentManager>();
+        controls = gameObject.GetComponent<PlayerControls>();
+        stats = gameObject.GetComponent<PlayerStats>();
+        combat = gameObject.GetComponent<PlayerCombat>();
+        animator = gameObject.GetComponent<PlayerAnimator>();
+        inventory = gameObject.GetComponent<Inventory>();
+        equipment = gameObject.GetComponent<EquipmentManager>();
 
         stats.OnDeath += OnDeath;
     }
