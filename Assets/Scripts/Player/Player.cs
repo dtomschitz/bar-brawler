@@ -45,9 +45,8 @@ public class Player : MonoBehaviour
 
     private void OnDeath()
     {
-        controls.IsMovementEnabled = false;
         animator.OnDeath();
-        UIManager.instance.DisplayGameOverUI(true);
+        GameState.instance.SetState(State.GAME_OVER);
     }
 
     public void AddMoney(int amount)

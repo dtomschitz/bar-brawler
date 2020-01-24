@@ -80,7 +80,7 @@ public class WaveSpawner : MonoBehaviour
 
     void Update()
     {
-        if (isWaveSpawnerEnabled)
+        if (isWaveSpawnerEnabled && (GameState.instance.state != State.GAME_OVER || GameState.instance.state != State.GAME_PAUSED))
         {
             if (state == WaveState.Running)
             {
