@@ -157,7 +157,7 @@ public class PlayerControls : MonoBehaviour
 
     public void InteractWithInteractables(CallbackContext ctx)
     {
-        if (!WaveSpawner.instance.IsWaveRunning)
+        if (!WaveSpawner.instance.IsWaveRunning && GameState.instance.state != State.GAME_PAUSED || GameState.instance.state != State.GAME_OVER)
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRange, barkeeperMask);
             foreach (Collider collider in colliders)

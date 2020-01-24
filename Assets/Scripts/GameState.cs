@@ -51,6 +51,8 @@ public class GameState : MonoBehaviour
 
     private void TogglePauseMenu()
     {
+        Player.instance.controls.IsMovementEnabled = false;
+
         UIManager.instance.SetHUDActive(false);
         UIManager.instance.SetShopActive(false);
         UIManager.instance.SetGameOverMenuActive(false);
@@ -59,6 +61,8 @@ public class GameState : MonoBehaviour
 
     private void ToggleGameOver()
     {
+        Player.instance.controls.IsMovementEnabled = false;
+
         UIManager.instance.SetHUDActive(false);
         UIManager.instance.SetShopActive(false);
         UIManager.instance.SetPauseMenuActive(false);
@@ -67,6 +71,9 @@ public class GameState : MonoBehaviour
 
     private void ToggleShop()
     {
+        Player.instance.controls.IsMovementEnabled = false;
+
+
         UIManager.instance.SetPauseMenuActive(false);
         UIManager.instance.SetGameOverMenuActive(false);
         UIManager.instance.SetHUDActive(true);
@@ -75,6 +82,8 @@ public class GameState : MonoBehaviour
 
     private void ToggleIngame()
     {
+        Player.instance.controls.IsMovementEnabled = true;
+
         UIManager.instance.SetShopActive(false);
         UIManager.instance.SetPauseMenuActive(false);
         UIManager.instance.SetGameOverMenuActive(false);
