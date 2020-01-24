@@ -42,23 +42,6 @@ public class Hotbar : MonoBehaviour
         SelectItem(0);
     }
 
-    public void SelectNextItem()
-    {
-        if (InBounds(selectedItemIndex + 1, inventory.slots))
-        {
-            SelectItem(inventory.slots[selectedItemIndex + 1].FirstItem);
-            selectedItemIndex++;
-        }
-    }
-
-    public void SelectLastItem()
-    {
-        if (InBounds(selectedItemIndex - 1, inventory.slots)) {
-            SelectItem(inventory.slots[selectedItemIndex - 1].FirstItem);
-            selectedItemIndex--;
-        }
-    }
-
     public void SetLeftBumperActive(bool active) => leftBumper.SetActive(active);
     public void SetRightBumperActive(bool active) => rightBumper.SetActive(active);
   
@@ -101,17 +84,26 @@ public class Hotbar : MonoBehaviour
         }
     }
 
+    public void SelectNextItem()
+    {
+        SelectItem(selectedItemIndex + 1);
+    }
+
+    public void SelectLastItem()
+    {
+        SelectItem(selectedItemIndex - 1);
+    }
+
     public void SelectItem(int index)
     {
-        if (InBounds(index, inventory.slots))
+        if (InBounds(index, slots))
         {
-            SelectItem(inventory.slots[selectedItemIndex].FirstItem);
-            selectedItemIndex = index;
+            SelectItem(slots[index].item, index);
         }
     }
 
 
-    private void SelectItem(Item item)
+    private void SelectItem(Item item, int index)
     {
         if (item != null && item is Equipment)
         {
@@ -123,6 +115,12 @@ public class Hotbar : MonoBehaviour
 
             currentItemNameCoroutine = StartCoroutine(ShowSelectedName(item.name));
             OnItemSelected?.Invoke(item as Equipment);
+
+            selectedItemIndex = index;
+            for (int i = 0; i < slots.Length; i++)
+            {
+                slots[i].SetSelected(i == index);
+            }
         }
     }
 
@@ -138,9 +136,9 @@ public class Hotbar : MonoBehaviour
         selectedItemName.text = "";
     }
 
-    private bool InBounds(int index, List<Slot> slots)
+    private bool InBounds(int index, HotbarSlot[] slots)
     {
-        return (index >= 0) && (index < slots.Count);
+        return (index >= 0) && (index < slots.Length);
     }
 
 }

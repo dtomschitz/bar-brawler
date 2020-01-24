@@ -1356,7 +1356,7 @@ MonoBehaviour:
     maxMediumEnemies: 6
     minHardEnemies: 2
     maxHardEnemies: 6
-  isWaveSpawnerEnabled: 1
+  isWaveSpawnerEnabled: 0
   timeBetweenWaves: 31
   stateOfGameText: {fileID: 896722174}
   state: 2

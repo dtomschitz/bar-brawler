@@ -268,6 +268,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
+  background: {fileID: 6220823756908219627}
+  selectedSprite: {fileID: 21300000, guid: 5abf40bb4b376ee48836dd1b4a9541ac, type: 3}
+  defaultSprite: {fileID: 21300000, guid: de67deeb84a117141879d9685ed92d57, type: 3}
   item: {fileID: 0}
   icon: {fileID: 6220823755587767127}
   iconPlaceholder: {fileID: 21300000, guid: ccec83482d316e5459b221d80dff338c, type: 3}
