@@ -11,6 +11,9 @@ public class Hotbar : MonoBehaviour
     public delegate void ItemSelected(Equipment item);
     public event ItemSelected OnItemSelected;
 
+    public GameObject leftBumper;
+    public GameObject rightBumper;
+
     private Inventory inventory;
     private HotbarSlot[] slots;
 
@@ -56,6 +59,9 @@ public class Hotbar : MonoBehaviour
         }
     }
 
+    public void SetLeftBumperActive(bool active) => leftBumper.SetActive(active);
+    public void SetRightBumperActive(bool active) => rightBumper.SetActive(active);
+  
 
     private void OnItemAdded(object sender, InventoryEvent e) 
     {

@@ -53,7 +53,7 @@ public class GameState : MonoBehaviour
     {
         Player.instance.controls.IsMovementEnabled = false;
 
-        UIManager.instance.SetHUDActive(false);
+        UIManager.instance.SetHUDActive(false, false);
         UIManager.instance.SetShopActive(false);
         UIManager.instance.SetGameOverMenuActive(false);
         UIManager.instance.SetPauseMenuActive(true);
@@ -63,7 +63,7 @@ public class GameState : MonoBehaviour
     {
         Player.instance.controls.IsMovementEnabled = false;
 
-        UIManager.instance.SetHUDActive(false);
+        UIManager.instance.SetHUDActive(false, false);
         UIManager.instance.SetShopActive(false);
         UIManager.instance.SetPauseMenuActive(false);
         UIManager.instance.SetGameOverMenuActive(true);
@@ -76,7 +76,7 @@ public class GameState : MonoBehaviour
 
         UIManager.instance.SetPauseMenuActive(false);
         UIManager.instance.SetGameOverMenuActive(false);
-        UIManager.instance.SetHUDActive(true);
+        UIManager.instance.SetHUDActive(true, false);
         UIManager.instance.SetShopActive(true);
     }
 
@@ -87,6 +87,6 @@ public class GameState : MonoBehaviour
         UIManager.instance.SetShopActive(false);
         UIManager.instance.SetPauseMenuActive(false);
         UIManager.instance.SetGameOverMenuActive(false);
-        UIManager.instance.SetHUDActive(true);
+        UIManager.instance.SetHUDActive(true, true);
     }
 }

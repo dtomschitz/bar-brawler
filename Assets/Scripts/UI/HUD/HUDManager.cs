@@ -11,7 +11,7 @@ public class HUDManager : MonoBehaviour
 
     public void DisplayHotbar(bool visible)
     {
-        hotbar.GetComponentInParent<Canvas>().gameObject.SetActive(visible);
+        hotbar.gameObject.SetActive(visible);
     }
 
     public void DisplayHealthBar(bool visible)

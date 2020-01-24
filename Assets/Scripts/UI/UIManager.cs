@@ -21,8 +21,11 @@ public class UIManager : MonoBehaviour
 
     public GameObject gameOverUI;
 
-    public void SetHUDActive(bool active) {
+    public void SetHUDActive(bool active, bool showHelp) {
         hud.gameObject.SetActive(active);
+
+        hud.hotbar.SetLeftBumperActive(showHelp);
+        hud.hotbar.SetRightBumperActive(showHelp);
     }
 
     public void SetShopActive(bool active) => shopCanvas.gameObject.SetActive(active);
