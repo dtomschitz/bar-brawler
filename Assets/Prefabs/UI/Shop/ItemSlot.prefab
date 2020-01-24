@@ -104,10 +104,10 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: f07aa7f91179dcf4599cccd0744e5db9,
+    m_HighlightedSprite: {fileID: 21300000, guid: 20853ec3e9b6ea04c91ac02101aadd5f,
       type: 3}
-    m_PressedSprite: {fileID: 21300000, guid: f07aa7f91179dcf4599cccd0744e5db9, type: 3}
-    m_SelectedSprite: {fileID: 21300000, guid: f07aa7f91179dcf4599cccd0744e5db9, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 20853ec3e9b6ea04c91ac02101aadd5f, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: 20853ec3e9b6ea04c91ac02101aadd5f, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -207,7 +207,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 40
-    m_Alignment: 3
+    m_Alignment: 4
     m_AlignByGeometry: 1
     m_RichText: 1
     m_HorizontalOverflow: 0

@@ -1,29 +1,24 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Shop
 {
-    public class ItemSlot : MonoBehaviour
+    public class ItemSlot : MonoBehaviour, ISelectHandler
     {
-        public Image icon;
         public Text title;
-        public Text price;
         public Button button;
 
         public ShopItem shopItem;
 
         void Start()
         {
-            icon.sprite = shopItem.item.icon;
-            icon.enabled = true;
-
-            title.text = shopItem.item.name;
-            price.text = "$" + shopItem.price;
+            title.text = shopItem.item.name.ToUpper();
         }
 
-        public void OnOpenItemInfo()
+        public void OnSelect(BaseEventData eventData)
         {
-
+            GetComponentInParent<ShopPage>().OnItemSelected(shopItem);
         }
     }
 }
