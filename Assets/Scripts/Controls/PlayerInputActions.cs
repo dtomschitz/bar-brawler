@@ -427,6 +427,22 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Select"",
+                    ""type"": ""Button"",
+                    ""id"": ""832a13f1-4677-4497-844c-321a6e49584d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Close"",
+                    ""type"": ""Button"",
+                    ""id"": ""4d6a8fa0-3037-403d-a079-a716b9e32a7f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -726,6 +742,28 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                     ""action"": ""RightClick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0fdf1243-3813-430e-a36b-b02142887f9a"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Select"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a826a226-6907-4e5d-84a3-655643c4dc09"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Close"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -784,6 +822,8 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
         m_UI_TrackedDeviceSelect = m_UI.FindAction("TrackedDeviceSelect", throwIfNotFound: true);
+        m_UI_Select = m_UI.FindAction("Select", throwIfNotFound: true);
+        m_UI_Close = m_UI.FindAction("Close", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -941,6 +981,8 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
     private readonly InputAction m_UI_TrackedDevicePosition;
     private readonly InputAction m_UI_TrackedDeviceOrientation;
     private readonly InputAction m_UI_TrackedDeviceSelect;
+    private readonly InputAction m_UI_Select;
+    private readonly InputAction m_UI_Close;
     public struct UIActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -956,6 +998,8 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         public InputAction @TrackedDevicePosition => m_Wrapper.m_UI_TrackedDevicePosition;
         public InputAction @TrackedDeviceOrientation => m_Wrapper.m_UI_TrackedDeviceOrientation;
         public InputAction @TrackedDeviceSelect => m_Wrapper.m_UI_TrackedDeviceSelect;
+        public InputAction @Select => m_Wrapper.m_UI_Select;
+        public InputAction @Close => m_Wrapper.m_UI_Close;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -998,6 +1042,12 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                 @TrackedDeviceSelect.started -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceSelect;
                 @TrackedDeviceSelect.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceSelect;
                 @TrackedDeviceSelect.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceSelect;
+                @Select.started -= m_Wrapper.m_UIActionsCallbackInterface.OnSelect;
+                @Select.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnSelect;
+                @Select.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnSelect;
+                @Close.started -= m_Wrapper.m_UIActionsCallbackInterface.OnClose;
+                @Close.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnClose;
+                @Close.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnClose;
             }
             m_Wrapper.m_UIActionsCallbackInterface = instance;
             if (instance != null)
@@ -1035,6 +1085,12 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                 @TrackedDeviceSelect.started += instance.OnTrackedDeviceSelect;
                 @TrackedDeviceSelect.performed += instance.OnTrackedDeviceSelect;
                 @TrackedDeviceSelect.canceled += instance.OnTrackedDeviceSelect;
+                @Select.started += instance.OnSelect;
+                @Select.performed += instance.OnSelect;
+                @Select.canceled += instance.OnSelect;
+                @Close.started += instance.OnClose;
+                @Close.performed += instance.OnClose;
+                @Close.canceled += instance.OnClose;
             }
         }
     }
@@ -1082,5 +1138,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
         void OnTrackedDeviceSelect(InputAction.CallbackContext context);
+        void OnSelect(InputAction.CallbackContext context);
+        void OnClose(InputAction.CallbackContext context);
     }
 }

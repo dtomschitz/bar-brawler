@@ -30,26 +30,28 @@ public class PlayerControls : MonoBehaviour
     public event Action OnHotbarOneBack;
     public event Action OnHotbarOneForward;
 
+    public PlayerInputActions InputActions { get; protected set; }
+
+
     private Camera mainCamera;
-    private PlayerInputActions inputActions;
     private PlayerAnimator playerAnimator;
     private CharacterController character;
     private EquipmentManager equipment;
 
     void Awake()
     {
-        inputActions = new PlayerInputActions();
-        inputActions.PlayerControls.Move.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
-        inputActions.PlayerControls.Rotation.performed += ctx => lookPosition = ctx.ReadValue<Vector2>();
+        InputActions = new PlayerInputActions();
+        InputActions.PlayerControls.Move.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
+        InputActions.PlayerControls.Rotation.performed += ctx => lookPosition = ctx.ReadValue<Vector2>();
 
-        inputActions.PlayerControls.Primary.started += UsePrimary;
-        inputActions.PlayerControls.Secondary.started += UseSecondary;
-        inputActions.PlayerControls.UseItem.started += UseItem;
-        inputActions.PlayerControls.Interact.performed += InteractWithBarkeeper;
+        InputActions.PlayerControls.Primary.started += UsePrimary;
+        InputActions.PlayerControls.Secondary.started += UseSecondary;
+        InputActions.PlayerControls.UseItem.started += UseItem;
+        //inputActions.PlayerControls.Interact.performed += InteractWithBarkeeper;
 
-        inputActions.PlayerControls.HotbarOneForward.performed += HotbarForward;
-        inputActions.PlayerControls.HotbarOneBack.performed += HotbarBack;
-        inputActions.PlayerControls.Pause.performed += PauseGame;
+        InputActions.PlayerControls.HotbarOneForward.performed += HotbarForward;
+        InputActions.PlayerControls.HotbarOneBack.performed += HotbarBack;
+        InputActions.PlayerControls.Pause.performed += PauseGame;
     }
 
     void Start()
@@ -62,12 +64,12 @@ public class PlayerControls : MonoBehaviour
 
     void OnEnable()
     {
-        inputActions.Enable();
+        InputActions.Enable();
     }
 
     void OnDisable()
     {
-        inputActions.Disable();
+        InputActions.Disable();
     }
 
     void FixedUpdate()
@@ -104,13 +106,13 @@ public class PlayerControls : MonoBehaviour
         GameState.instance.SetState(State.GAME_PAUSED);
     }
 
-    public void InteractWithBarkeeper(CallbackContext ctx)
+    /*public void InteractWithBarkeeper(CallbackContext ctx)
     {
         if (!WaveSpawner.instance.IsWaveRunning && GameState.instance.state != State.GAME_PAUSED || GameState.instance.state != State.GAME_OVER)
         {
 
         }
-    }
+    }*/
 
     private void StopPlayerMovement()
     {
@@ -163,7 +165,14 @@ public class PlayerControls : MonoBehaviour
         {
             if (isMovementEnebaled == value) return;
             isMovementEnebaled = value;
-            if (!value) StopPlayerMovement();
+            if (!value)
+            {
+                InputActions.Disable();
+                StopPlayerMovement();
+            } else
+            {
+                InputActions.Enable();
+            }
         }
     }
 
