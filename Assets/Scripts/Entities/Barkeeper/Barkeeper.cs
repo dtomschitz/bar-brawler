@@ -23,6 +23,8 @@ public class Barkeeper : MonoBehaviour
     public ItemShop shop;
     private WaveSpawner waveSpawner;
 
+    public bool isPlayerInReach = false;
+
     void Start()
     {
         waveSpawner = WaveSpawner.instance;
@@ -37,6 +39,20 @@ public class Barkeeper : MonoBehaviour
     void OnDisable()
     {
         inputActions.Disable();
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player") isPlayerInReach = true;
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            isPlayerInReach = false;
+            CloseShop();
+        }
     }
 
     public void OnWaveUpdate(WaveState state, int rounds) 
@@ -54,7 +70,7 @@ public class Barkeeper : MonoBehaviour
 
     public void Select(CallbackContext ctx)
     {
-        OpenShop();
+        if (isPlayerInReach) OpenShop();
     }
 
     public void Close(CallbackContext ctx)
