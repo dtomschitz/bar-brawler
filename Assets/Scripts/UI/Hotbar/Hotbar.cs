@@ -103,8 +103,6 @@ public class Hotbar : MonoBehaviour
 
     private void SelectItem(Item item, int index)
     {
-        Debug.Log(item);
-
         if (item != null && item is Equipment)
         {
            

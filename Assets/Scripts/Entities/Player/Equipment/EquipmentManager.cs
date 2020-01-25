@@ -4,10 +4,15 @@ using Items;
 
 public class EquipmentManager : MonoBehaviour
 {
-    public GameObject playerHand;
-    public event EventHandler<EquipmentEvent> OnItemEquipped;
+    public delegate void ItemEquipped(Equipment newItem, Equipment oldItem);
+    public event ItemEquipped OnItemEquipped;
 
     private GameObject prefab;
+
+    private GameObject rightHand;
+    private GameObject leftHand;
+    private GameObject currentHand;
+
     private Equippable currentItem;
     private Equipment currentEquipment;
 
@@ -16,6 +21,11 @@ public class EquipmentManager : MonoBehaviour
 
     void Start()
     {
+        leftHand = GameObject.Find("mixamorig1:LeftHand");
+        rightHand = GameObject.Find("mixamorig1:RightHand");
+
+        currentHand = rightHand;
+
         inventory = GetComponent<Inventory>();
         inventory.OnItemUsed += OnItemUsed;
         inventory.OnItemRemoved += OnItemRemoved;
@@ -79,7 +89,7 @@ public class EquipmentManager : MonoBehaviour
         Equippable equippable = prefabCopy.GetComponent<Equippable>();
         if (equippable != null)
         {
-            OnItemEquipped?.Invoke(this, new EquipmentEvent(item, currentEquipment));
+            OnItemEquipped?.Invoke(item, currentEquipment);
             equippable.OnEquip();
 
             if (currentItem != null) Unequip();
@@ -88,28 +98,41 @@ public class EquipmentManager : MonoBehaviour
             prefab = prefabCopy;
             currentItem = equippable;
             currentEquipment = item;
-
-            if (item is Equipment)
-            {
-                Player.instance.animator.SetItem(item.itemType);
-            }
         }
+    }
 
+    public void UpdateItemPosition(Hand hand, Vector3 position, Vector3 rotation)
+    {
+        currentHand = GetHandGameObject(hand);
+        SetItemPosition(prefab, currentHand, position, rotation);
     }
 
     private void Equip(GameObject prefab, Equipment equipment)
     {
-        prefab.SetActive(true);
-        prefab.transform.parent = playerHand.transform;
-        prefab.transform.localPosition = equipment.pickPosition;
-        prefab.transform.localEulerAngles = equipment.pickRotation;
+        currentHand = GetHandGameObject(equipment.defaultHand);
+        SetItemPosition(prefab, currentHand, equipment.defaultPosition, equipment.defaultRotation);
+    }
+
+    private void SetItemPosition(GameObject prefab, GameObject hand, Vector3 position, Vector3 rotation)
+    {
+       // prefab.SetActive(true);
+        prefab.transform.parent = hand.transform;
+        prefab.transform.localPosition = position;
+        prefab.transform.localEulerAngles = rotation;
     }
 
     private void Unequip()
     {
         currentItem = null;
         currentEquipment = null;
+        currentHand = null;
         Destroy(prefab);
+    }
+
+    private GameObject GetHandGameObject(Hand hand)
+    {
+        if (hand == Hand.Left) return leftHand;
+        else return rightHand;
     }
 
     private void EquipFirstItemInHotbar()
@@ -120,6 +143,7 @@ public class EquipmentManager : MonoBehaviour
             EquipItem(firstItem as Equipment);
         }
     }
+
 
     public Equippable CurrentItem
     {

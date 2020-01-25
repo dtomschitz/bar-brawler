@@ -14,12 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Revolver
   icon: {fileID: 21300000, guid: d15d7c8f3130e91469fcc0cbf26f07f1, type: 3}
-  type: 1
+  kind: 1
   addToInventory: 1
   isStackable: 0
-  itemType: 1
+  type: 1
   prefab: {fileID: 1995762785128984484, guid: a2974865053846d4f95bfe2cb682aca7, type: 3}
-  pickPosition: {x: -0.047, y: 0.555, z: -0.166}
-  pickRotation: {x: -24.928, y: 0, z: 101.898}
-  dropRotation: {x: 0, y: 0, z: 0}
+  defaultPosition: {x: 0, y: 0, z: 0}
+  defaultRotation: {x: 0, y: 0, z: 0}
+  defaultDropRotation: {x: 0, y: 0, z: 0}
+  equipmentAnimations: []
   damageModifier: 100

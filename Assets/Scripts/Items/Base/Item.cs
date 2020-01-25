@@ -7,7 +7,7 @@ namespace Items
     {
         new public string name;
         public Sprite icon;
-        public ItemKind type;
+        public ItemKind kind;
 
         public bool addToInventory = true;
         public bool isStackable = true;
@@ -35,5 +35,4 @@ namespace Items
         Drink,
         Knife,
     }
-
 }
