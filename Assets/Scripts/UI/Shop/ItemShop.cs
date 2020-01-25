@@ -1,4 +1,6 @@
-﻿namespace Shop
+﻿using UnityEngine;
+
+namespace Shop
 {
     public class ItemShop : FadeCanvasGroup
     {
@@ -10,7 +12,6 @@
 
         void Start()
         {
-            categoryButtons = GetComponents<CategoryButton>();
             OnPageSelected(0);
         }
 

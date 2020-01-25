@@ -10,11 +10,6 @@ public class ItemInfo : MonoBehaviour
 
     private ShopItem item;
 
-    void Update()
-    {
-        if (item) EnabledButton();
-    }
-
     public void SetItem(ShopItem item)
     {
         this.item = item;
@@ -28,11 +23,9 @@ public class ItemInfo : MonoBehaviour
 
     public void OnItemBought()
     {
-        item.OnItemBought();
-    }
-
-    private void EnabledButton()
-    {
-        buyButton.interactable = Player.instance.currentBalance >= item.price;
+        if (Player.instance.currentBalance >= item.price)
+        {
+            item.OnItemBought();
+        }
     }
 }

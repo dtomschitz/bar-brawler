@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Shop
 {
-    public class CategoryButton : MonoBehaviour, ISelectHandler
+    public class CategoryButton : MonoBehaviour
     {
         public int id;
         public Text title;
@@ -12,13 +11,10 @@ namespace Shop
         public Color defaultColor;
         public Color selectedColor;
 
-        public void OnSelect(BaseEventData eventData)
-        {
-            GetComponentInParent<ItemShop>().OnPageSelected(id);
-        }
-
         public void SetSelected(bool selected)
         {
+            Debug.Log(id + " selected: " + selected);
+
             title.color = selected ? selectedColor : defaultColor;
         }
     }
