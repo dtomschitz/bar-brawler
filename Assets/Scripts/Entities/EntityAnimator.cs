@@ -5,26 +5,6 @@ public class EntityAnimator : MonoBehaviour
 {
     public Animator animator;
 
-    private int currentItem = 0;
-    private bool smoothMeleeIdleTransition = false;
-    private float currentMeleeIdle;
-    private float newMeleeIdle;
-
-    public void LateUpdate()
-    {
-        if (smoothMeleeIdleTransition)
-        {
-            currentMeleeIdle = Mathf.Lerp(currentMeleeIdle, newMeleeIdle, Time.deltaTime * 10f);
-            animator.SetFloat("MeleeIdle", currentMeleeIdle);
-
-            Debug.Log(currentMeleeIdle);
-            if (currentMeleeIdle == newMeleeIdle)
-            {
-                smoothMeleeIdleTransition = false;
-            }
-        }
-    }
-
     protected virtual void Start()
     {
         animator = GetComponentInChildren<Animator>();
@@ -52,16 +32,16 @@ public class EntityAnimator : MonoBehaviour
     
     public void SetEquipment(Equipment item)
     {
+        int currentType = animator.GetInteger("Item");
         int type = (int)item.type;
-        if (currentItem == type) return;
+
+        if (currentType == type) return;
         if (item.IsMeleeWeapon) 
         {
-            smoothMeleeIdleTransition = true;
-            newMeleeIdle = type;
+            animator.SetFloat("MeleeIdle", type);
         }
 
         animator.SetInteger("Item", type);
-        currentItem = type;
     }
 
     public void SetEquipmentAnimation(EquipmentAnimation animation)

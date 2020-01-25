@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 7680e1d9fe9e52f489c11ae52119a463
+guid: 1edd51c144fd2c947b4641145bbd4b91
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: Stabbing
+    second: Stabbing 1
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -35,7 +35,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Stabbing
+      name: Stabbing 1
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
