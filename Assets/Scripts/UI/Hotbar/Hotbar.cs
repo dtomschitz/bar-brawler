@@ -18,7 +18,7 @@ public class Hotbar : MonoBehaviour
     private HotbarSlot[] slots;
 
     private Coroutine currentItemNameCoroutine;
-    private int selectedItemIndex = 0;
+    private int selectedItemIndex = -1;
 
     void Start()
     {
@@ -33,13 +33,6 @@ public class Hotbar : MonoBehaviour
         WaveSpawner.instance.OnWaveStateUpdate += OnWaveStateUpdate;
 
         slots = GetComponentsInChildren<HotbarSlot>();
-        for (int i = 0; i < slots.Length; i++)
-        {
-            HotbarSlot slot = slots[i];
-            slot.Clear();
-        }
-
-        SelectItem(0);
     }
 
     public void SetLeftBumperActive(bool active) => leftBumper.SetActive(active);
@@ -56,7 +49,12 @@ public class Hotbar : MonoBehaviour
                 break;
             }
         }
-    }
+
+        if (selectedItemIndex == -1)
+        {
+            SelectItem(0);
+        }
+    } 
 
     private void OnItemRemoved(object sender, InventoryEvent e)
     {
@@ -105,8 +103,12 @@ public class Hotbar : MonoBehaviour
 
     private void SelectItem(Item item, int index)
     {
+        Debug.Log(item);
+
         if (item != null && item is Equipment)
         {
+           
+
             if (currentItemNameCoroutine != null)
             {
                 StopCoroutine(currentItemNameCoroutine);

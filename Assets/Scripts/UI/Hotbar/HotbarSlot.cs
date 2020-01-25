@@ -40,6 +40,7 @@ public class HotbarSlot : MonoBehaviour
         id = -1;
         item = null;
 
+        icon.color = Color.clear;
         icon.sprite = iconPlaceholder;
         
         count.gameObject.SetActive(true);

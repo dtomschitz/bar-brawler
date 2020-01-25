@@ -90,8 +90,10 @@ public class Enemy : Interactable
     {
         if (Stats.IsDead) return;
 
-        EntityCombat combat = Player.instance.combat;
+        PlayerCombat combat = Player.instance.combat;
         combat.Attack(Stats);
+
+        Debug.Log("attack enemie");
     }
 
     private void OnTakeDamage(double damage)

@@ -5,7 +5,6 @@ namespace Items
 {
     public class Knife : WeaponItem
     {
-
         [Header("Knife Attributes")]
         public float bleedOutDamage = 2f;
         public float bleedOutTime = 10f;
