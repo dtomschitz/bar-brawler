@@ -76,7 +76,7 @@ public class PlayerControls : MonoBehaviour
             float v = movementInput.y;
 
             Vector3 input = new Vector3(h, 0f, v);
-            inputDirection = Vector3.Lerp(inputDirection, input, Time.deltaTime * 100f);
+            inputDirection = Vector3.Lerp(inputDirection, input, Time.deltaTime * 10f);
 
             Vector3 cameraForward = mainCamera.transform.forward;
             Vector3 cameraRight = mainCamera.transform.right;
