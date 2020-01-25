@@ -30,7 +30,7 @@ public class PlayerControls : MonoBehaviour
     public event Action OnHotbarOneBack;
     public event Action OnHotbarOneForward;
 
-    public PlayerInputActions InputActions { get; protected set; }
+    public PlayerInputActions inputActions;
 
 
     private Camera mainCamera;
@@ -40,18 +40,14 @@ public class PlayerControls : MonoBehaviour
 
     void Awake()
     {
-        InputActions = new PlayerInputActions();
-        InputActions.PlayerControls.Move.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
-        InputActions.PlayerControls.Rotation.performed += ctx => lookPosition = ctx.ReadValue<Vector2>();
+        inputActions = new PlayerInputActions();
+        inputActions.PlayerControls.Move.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
+        inputActions.PlayerControls.Rotation.performed += ctx => lookPosition = ctx.ReadValue<Vector2>();
 
-        InputActions.PlayerControls.Primary.started += UsePrimary;
-        InputActions.PlayerControls.Secondary.started += UseSecondary;
-        InputActions.PlayerControls.UseItem.started += UseItem;
-        //inputActions.PlayerControls.Interact.performed += InteractWithBarkeeper;
-
-        InputActions.PlayerControls.HotbarOneForward.performed += HotbarForward;
-        InputActions.PlayerControls.HotbarOneBack.performed += HotbarBack;
-        InputActions.PlayerControls.Pause.performed += PauseGame;
+        inputActions.PlayerControls.Primary.started += UsePrimary;
+        inputActions.PlayerControls.Secondary.started += UseSecondary;
+        inputActions.PlayerControls.UseItem.started += UseItem;
+        inputActions.PlayerControls.Pause.performed += PauseGame;
     }
 
     void Start()
@@ -64,12 +60,12 @@ public class PlayerControls : MonoBehaviour
 
     void OnEnable()
     {
-        InputActions.Enable();
+        inputActions.Enable();
     }
 
     void OnDisable()
     {
-        InputActions.Disable();
+        inputActions.Disable();
     }
 
     void FixedUpdate()
@@ -100,8 +96,8 @@ public class PlayerControls : MonoBehaviour
     public void UseSecondary(CallbackContext ctx) => equipment.UseSecondary();
     public void UseItem(CallbackContext ctx) => equipment.UseConsumable();
 
-    public void HotbarForward(CallbackContext ctx) => OnHotbarOneForward?.Invoke();
-    public void HotbarBack(CallbackContext ctx) => OnHotbarOneBack?.Invoke();
+   // public void HotbarForward(CallbackContext ctx) => OnHotbarOneForward?.Invoke();
+   // public void HotbarBack(CallbackContext ctx) => OnHotbarOneBack?.Invoke();
     public void PauseGame(CallbackContext ctx) => GameState.instance.SetState(State.GAME_PAUSED);
 
     private void StopPlayerMovement()
@@ -160,11 +156,11 @@ public class PlayerControls : MonoBehaviour
             isMovementEnebaled = value;
             if (!value)
             {
-                InputActions.Disable();
+                inputActions.Disable();
                 StopPlayerMovement();
             } else
             {
-                InputActions.Enable();
+                inputActions.Enable();
             }
         }
     }

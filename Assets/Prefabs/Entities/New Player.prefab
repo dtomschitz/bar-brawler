@@ -13,14 +13,13 @@ GameObject:
   - component: {fileID: 4251900538022576368}
   - component: {fileID: 5855500066403048761}
   - component: {fileID: 4251900538022576382}
+  - component: {fileID: 5635219115318464584}
   - component: {fileID: 4251900538022576383}
   - component: {fileID: 4251900538022576376}
   - component: {fileID: 4251900538022576377}
   - component: {fileID: 4251900538022576378}
   - component: {fileID: 4251900538022576379}
   - component: {fileID: 4251900538022576372}
-  - component: {fileID: 5635219115318464584}
-  - component: {fileID: 3021710020892351348}
   m_Layer: 0
   m_Name: New Player
   m_TagString: Untagged
@@ -99,6 +98,25 @@ CharacterController:
   m_SkinWidth: 0.01
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5635219115318464584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4251900538022576369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebd3a80d19d54064d9cad1321cd1b193, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentBalance: 0
+  controls: {fileID: 0}
+  stats: {fileID: 0}
+  combat: {fileID: 0}
+  animator: {fileID: 0}
+  inventory: {fileID: 0}
+  equipment: {fileID: 0}
 --- !u!114 &4251900538022576383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,7 +146,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84303e9acef2fdd4dbce08fd8bc46022, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHand: {fileID: 0}
 --- !u!114 &4251900538022576377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,6 +204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07bb7d99eb694094cab1c075fbeea5c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  simultaneousAttackers: 1
   manaRegenerationAmount: 30
   manaRegenerationSpeed: 5
 --- !u!114 &4251900538022576372
@@ -202,53 +220,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
---- !u!114 &5635219115318464584
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4251900538022576369}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebd3a80d19d54064d9cad1321cd1b193, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentBalance: 0
-  controls: {fileID: 0}
-  stats: {fileID: 0}
-  combat: {fileID: 0}
-  animator: {fileID: 0}
-  inventory: {fileID: 0}
-  equipment: {fileID: 0}
---- !u!114 &3021710020892351348
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4251900538022576369}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 51f478002aa2cf7459739b2caa86ac3d,
-    type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: Gamepad
-  m_DefaultActionMap: PlayerControls
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!1001 &4251900538900370821
 PrefabInstance:
   m_ObjectHideFlags: 0

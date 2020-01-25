@@ -1,8 +1,8 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Items;
+using static UnityEngine.InputSystem.InputAction;
 
 public class Hotbar : MonoBehaviour
 {
@@ -13,20 +13,33 @@ public class Hotbar : MonoBehaviour
 
     public GameObject leftBumper;
     public GameObject rightBumper;
+    public Inventory inventory;
 
-    private Inventory inventory;
+    private PlayerInputActions inputActions;
     private HotbarSlot[] slots;
-
     private Coroutine currentItemNameCoroutine;
     private int selectedItemIndex = -1;
 
+    void Awake()
+    {
+        inputActions = new PlayerInputActions();
+
+        inputActions.PlayerControls.HotbarOneForward.performed += SelectNextItem;
+        inputActions.PlayerControls.HotbarOneBack.performed += SelectLastItem;
+    }
+
+    void OnEnable()
+    {
+        inputActions.Enable();
+    }
+
+    void OnDisable()
+    {
+        inputActions.Disable();
+    }
+
     void Start()
     {
-        Player player = Player.instance;
-        inventory = player.inventory;
-
-        player.controls.OnHotbarOneForward += SelectNextItem;
-        player.controls.OnHotbarOneBack += SelectLastItem;
         inventory.OnItemAdded += OnItemAdded;
         inventory.OnItemRemoved += OnItemRemoved;
 
@@ -82,12 +95,12 @@ public class Hotbar : MonoBehaviour
         }
     }
 
-    public void SelectNextItem()
+    public void SelectNextItem(CallbackContext ctx)
     {
         SelectItem(selectedItemIndex + 1);
     }
 
-    public void SelectLastItem()
+    public void SelectLastItem(CallbackContext ctx)
     {
         SelectItem(selectedItemIndex - 1);
     }

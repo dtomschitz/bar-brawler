@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Player : MonoBehaviour
 {
@@ -31,12 +29,12 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        controls = gameObject.GetComponent<PlayerControls>();
-        stats = gameObject.GetComponent<PlayerStats>();
-        combat = gameObject.GetComponent<PlayerCombat>();
-        animator = gameObject.GetComponent<PlayerAnimator>();
-        inventory = gameObject.GetComponent<Inventory>();
-        equipment = gameObject.GetComponent<EquipmentManager>();
+        controls = GetComponent<PlayerControls>();
+        stats = GetComponent<PlayerStats>();
+        combat = GetComponent<PlayerCombat>();
+        animator = GetComponent<PlayerAnimator>();
+        inventory = GetComponent<Inventory>();
+        equipment = GetComponent<EquipmentManager>();
 
         stats.OnDeath += OnDeath;
     }
