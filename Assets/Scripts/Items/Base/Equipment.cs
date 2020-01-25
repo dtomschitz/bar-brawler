@@ -7,6 +7,7 @@ namespace Items
     {
         public ItemType type; 
         public GameObject prefab;
+        public GameObject itemHelp;
 
         [Header("Default item position")]
         public Hand defaultHand;

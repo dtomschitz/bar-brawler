@@ -19,6 +19,8 @@ MonoBehaviour:
   isStackable: 0
   type: 0
   prefab: {fileID: 475282169417098924, guid: b1561fb5e8e54e34cbc32de82b4bd34d, type: 3}
+  itemHelp: {fileID: 2584518127212622085, guid: b6df0f44e69c2f046978ae91c1735bad,
+    type: 3}
   defaultHand: 0
   defaultPosition: {x: 0, y: 0, z: 0}
   defaultRotation: {x: 0, y: 0, z: 0}

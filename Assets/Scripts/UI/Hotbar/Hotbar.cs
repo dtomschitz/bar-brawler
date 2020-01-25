@@ -97,12 +97,18 @@ public class Hotbar : MonoBehaviour
 
     public void SelectNextItem(CallbackContext ctx)
     {
-        SelectItem(selectedItemIndex + 1);
+        if (GameState.instance.IsInGame)
+        {
+            SelectItem(selectedItemIndex + 1);
+        }
     }
 
     public void SelectLastItem(CallbackContext ctx)
     {
-        SelectItem(selectedItemIndex - 1);
+        if (GameState.instance.IsInGame)
+        {
+            SelectItem(selectedItemIndex - 1);
+        }
     }
 
     public void SelectItem(int index)

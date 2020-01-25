@@ -27,7 +27,6 @@ public class GameState : MonoBehaviour
     public void SetState(State newState)
     {
         if (state == newState) return;
-
         state = newState;
 
         switch(newState)
@@ -39,6 +38,7 @@ public class GameState : MonoBehaviour
             case State.GAME_OVER:
                 ToggleGameOver();
                 break;
+
             case State.INGAME:
                 ToggleIngame();
                 break;

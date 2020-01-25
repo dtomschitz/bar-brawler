@@ -26,8 +26,8 @@ namespace Items
 
         public override void OnPrimary()
         {
-           /* if (Player.instance.inventory.HasMunition)
-            {*/
+            if (Player.instance.inventory.HasMunition)
+            {
                 if (cooldown <= 0f)
                 {
                     cooldown = 1f / fireRate;
@@ -40,7 +40,7 @@ namespace Items
                     Player.instance.inventory.UseMunition();
                    // animator.OnPrimary();
                 }
-          //  }
+            }
         }
     }
 }

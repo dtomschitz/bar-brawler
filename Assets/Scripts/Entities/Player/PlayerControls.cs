@@ -95,9 +95,6 @@ public class PlayerControls : MonoBehaviour
     public void UsePrimary(CallbackContext ctx) => equipment.UsePrimary();
     public void UseSecondary(CallbackContext ctx) => equipment.UseSecondary();
     public void UseItem(CallbackContext ctx) => equipment.UseConsumable();
-
-   // public void HotbarForward(CallbackContext ctx) => OnHotbarOneForward?.Invoke();
-   // public void HotbarBack(CallbackContext ctx) => OnHotbarOneBack?.Invoke();
     public void PauseGame(CallbackContext ctx) => GameState.instance.SetState(State.GAME_PAUSED);
 
     private void StopPlayerMovement()
@@ -140,9 +137,6 @@ public class PlayerControls : MonoBehaviour
         float forward = Vector3.Dot(movement, playerModel.transform.forward);
         float strafe = Vector3.Dot(movement, playerModel.transform.right);
 
-       // if ((strafe < .1f && strafe > -.1f) || (strafe < -.1f && strafe > .1f)) strafe = 0;
-        //if (forward < 0.1f) forward = 0;
-
         playerAnimator.SetForward(forward);
         playerAnimator.SetStrafe(strafe);
     }
@@ -164,5 +158,4 @@ public class PlayerControls : MonoBehaviour
             }
         }
     }
-
 }

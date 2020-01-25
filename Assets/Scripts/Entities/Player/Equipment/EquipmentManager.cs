@@ -7,6 +7,7 @@ public class EquipmentManager : MonoBehaviour
     public event ItemEquipped OnItemEquipped;
 
     private GameObject prefab;
+    private GameObject itemHelp;
 
     private GameObject rightHand;
     private GameObject leftHand;
@@ -92,6 +93,7 @@ public class EquipmentManager : MonoBehaviour
     public void EquipItem(Equipment item)
     {
         GameObject prefabCopy = Instantiate(item.prefab);
+        GameObject itemHelpCopy = Instantiate(item.itemHelp);
         Equippable equippable = prefabCopy.GetComponent<Equippable>();
         if (equippable != null)
         {
@@ -99,9 +101,10 @@ public class EquipmentManager : MonoBehaviour
             equippable.OnEquip();
 
             if (currentItem != null) Unequip();
-            Equip(prefabCopy, item);
+            Equip(prefabCopy, itemHelpCopy, item);
 
             prefab = prefabCopy;
+            itemHelp = itemHelpCopy;
             currentItem = equippable;
             currentEquipment = item;
         }
@@ -118,10 +121,18 @@ public class EquipmentManager : MonoBehaviour
         SetItemPosition(prefab, currentHand, position, rotation);
     }
 
-    private void Equip(GameObject prefab, Equipment equipment)
+    private void Equip(GameObject prefab, GameObject itemHelp, Equipment equipment)
     {
         currentHand = GetHandGameObject(equipment.defaultHand);
         SetItemPosition(prefab, currentHand, equipment.defaultPosition, equipment.defaultRotation);
+        SetItemHelp(itemHelp);
+    }
+
+    private void SetItemHelp(GameObject itemHelp)
+    {
+        itemHelp.SetActive(true);
+        //itemHelp.transform.parent = UIManager.instance.hud.gameObject.transform;
+        itemHelp.transform.SetParent(UIManager.instance.hud.gameObject.transform, false);
     }
 
     private void SetItemPosition(GameObject prefab, GameObject hand, Vector3 position, Vector3 rotation)
@@ -138,6 +149,7 @@ public class EquipmentManager : MonoBehaviour
         currentEquipment = null;
         currentHand = null;
         Destroy(prefab);
+        Destroy(itemHelp);
     }
 
     private GameObject GetHandGameObject(Hand hand)
