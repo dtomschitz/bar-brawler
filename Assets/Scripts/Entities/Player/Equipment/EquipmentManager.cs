@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Items;
 
 public class EquipmentManager : MonoBehaviour
@@ -38,6 +37,13 @@ public class EquipmentManager : MonoBehaviour
     {
         if (currentItem != null && currentItem is Equippable && currentEquipment != null && currentEquipment is Weapon)
         {
+            EquipmentAnimation[] animations = currentEquipment.equipmentAnimations;
+            if (animations.Length != 0)
+            {
+                EquipmentAnimation animation = currentEquipment.equipmentAnimations[Random.Range(0, animations.Length)];
+                UpdateItemPosition(animation);
+                GetComponent<PlayerAnimator>().SetEquipmentAnimation(animation);
+            }
             currentItem.OnPrimary();
         }
     }
@@ -101,6 +107,11 @@ public class EquipmentManager : MonoBehaviour
         }
     }
 
+    public void UpdateItemPosition(EquipmentAnimation animation)
+    {
+        UpdateItemPosition(animation.hand, animation.specificPosition, animation.specificRotation);
+    }
+
     public void UpdateItemPosition(Hand hand, Vector3 position, Vector3 rotation)
     {
         currentHand = GetHandGameObject(hand);
@@ -115,7 +126,7 @@ public class EquipmentManager : MonoBehaviour
 
     private void SetItemPosition(GameObject prefab, GameObject hand, Vector3 position, Vector3 rotation)
     {
-       // prefab.SetActive(true);
+        prefab.SetActive(true);
         prefab.transform.parent = hand.transform;
         prefab.transform.localPosition = position;
         prefab.transform.localEulerAngles = rotation;

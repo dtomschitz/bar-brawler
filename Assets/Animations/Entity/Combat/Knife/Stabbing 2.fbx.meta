@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: ed41a785461ff0d448de7b2d5d9f8dc6
+guid: a3adf18c75823e24f88e65bde312027e
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: Stabbing 0
+    second: Stabbing 2
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -35,19 +35,19 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Stabbing 0
+      name: Stabbing 2
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 81
+      lastFrame: 71
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
+      loopTime: 1
+      loopBlend: 1
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0

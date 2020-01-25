@@ -28,7 +28,21 @@ MonoBehaviour:
     hand: 1
     useSpecifcPosition: 1
     useSpecificRotation: 1
-    specificPosition: {x: 0, y: 0, z: 0}
-    specificRotation: {x: 0, y: 0, z: 0}
+    specificPosition: {x: -0.026, y: 0.048, z: 0.014}
+    specificRotation: {x: 3.512, y: 148.691, z: -95.148}
+    specificDropRotation: {x: 0, y: 0, z: 0}
+  - index: 1
+    hand: 0
+    useSpecifcPosition: 1
+    useSpecificRotation: 1
+    specificPosition: {x: -0.767, y: 0.0787, z: 0}
+    specificRotation: {x: -43.547, y: 59.705, z: -68.995}
+    specificDropRotation: {x: 0, y: 0, z: 0}
+  - index: 2
+    hand: 0
+    useSpecifcPosition: 1
+    useSpecificRotation: 1
+    specificPosition: {x: 0.01, y: 0.026, z: 0.032}
+    specificRotation: {x: 8.04, y: 18.507, z: -77.769}
     specificDropRotation: {x: 0, y: 0, z: 0}
   damageModifier: 0
