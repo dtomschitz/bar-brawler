@@ -62,7 +62,7 @@ MonoBehaviour:
   isCollected: 0
   isPrimaryEnabled: 1
   isSecondaryEnabled: 1
-  primaryAttackRate: 20
+  primaryAttackRate: 15
   secondaryAttackRate: 20
   primaryManaRequired: 0
   secondaryManaRequired: 0

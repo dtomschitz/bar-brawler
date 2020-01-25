@@ -19,8 +19,30 @@ MonoBehaviour:
   isStackable: 0
   type: 0
   prefab: {fileID: 475282169417098924, guid: b1561fb5e8e54e34cbc32de82b4bd34d, type: 3}
+  defaultHand: 0
   defaultPosition: {x: 0, y: 0, z: 0}
   defaultRotation: {x: 0, y: 0, z: 0}
   defaultDropRotation: {x: 0, y: 0, z: 0}
-  equipmentAnimations: []
+  equipmentAnimations:
+  - index: 0
+    hand: 0
+    useSpecifcPosition: 1
+    useSpecificRotation: 1
+    specificPosition: {x: 0, y: 0, z: 0}
+    specificRotation: {x: 0, y: 0, z: 0}
+    specificDropRotation: {x: 0, y: 0, z: 0}
+  - index: 1
+    hand: 0
+    useSpecifcPosition: 1
+    useSpecificRotation: 1
+    specificPosition: {x: 0, y: 0, z: 0}
+    specificRotation: {x: 0, y: 0, z: 0}
+    specificDropRotation: {x: 0, y: 0, z: 0}
+  - index: 2
+    hand: 1
+    useSpecifcPosition: 1
+    useSpecificRotation: 1
+    specificPosition: {x: 0, y: 0, z: 0}
+    specificRotation: {x: 0, y: 0, z: 0}
+    specificDropRotation: {x: 0, y: 0, z: 0}
   damageModifier: 0
