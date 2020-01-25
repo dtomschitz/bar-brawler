@@ -19,8 +19,9 @@ MonoBehaviour:
   isStackable: 0
   type: 1
   prefab: {fileID: 1995762785128984484, guid: a2974865053846d4f95bfe2cb682aca7, type: 3}
-  defaultPosition: {x: 0, y: 0, z: 0}
-  defaultRotation: {x: 0, y: 0, z: 0}
+  defaultHand: 0
+  defaultPosition: {x: 0.19, y: 0.216, z: 0.048}
+  defaultRotation: {x: 23.036, y: 179.333, z: 102.262}
   defaultDropRotation: {x: 0, y: 0, z: 0}
   equipmentAnimations: []
-  damageModifier: 100
+  damage: 400

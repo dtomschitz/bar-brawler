@@ -6,7 +6,7 @@ public class EntityStats : MonoBehaviour
 {
 
     public float maxHealth;
-    public Stat damage;
+    public float damage;
 
     public float CurrentHealth { get; protected set; }
     public event Action OnDeath;

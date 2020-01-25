@@ -13,5 +13,4 @@ namespace Items
             Player.instance.AddMoney(amount);
         }
     }
-
 }

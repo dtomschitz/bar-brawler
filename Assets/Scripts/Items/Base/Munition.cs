@@ -7,5 +7,4 @@ namespace Items
     {
         public int amount;
     }
-
 }

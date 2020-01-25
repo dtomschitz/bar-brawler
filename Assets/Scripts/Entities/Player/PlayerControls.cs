@@ -68,7 +68,7 @@ public class PlayerControls : MonoBehaviour
         inputActions.Disable();
     }
 
-    void FixedUpdate()
+    void Update()
     {
         if (IsMovementEnabled)
         {
@@ -76,7 +76,7 @@ public class PlayerControls : MonoBehaviour
             float v = movementInput.y;
 
             Vector3 input = new Vector3(h, 0f, v);
-            inputDirection = Vector3.Lerp(inputDirection, input, Time.deltaTime * 10f);
+            inputDirection = Vector3.Lerp(inputDirection, input, Time.deltaTime * 100f);
 
             Vector3 cameraForward = mainCamera.transform.forward;
             Vector3 cameraRight = mainCamera.transform.right;
@@ -128,7 +128,7 @@ public class PlayerControls : MonoBehaviour
         if (lookRotation != Vector3.zero)
         {
             Quaternion newRotation = Quaternion.LookRotation(lookRotation);
-            playerModel.transform.rotation = Quaternion.Lerp(playerModel.transform.rotation, newRotation, Time.deltaTime * 10f);
+            playerModel.transform.rotation = Quaternion.Lerp(playerModel.transform.rotation, newRotation, Time.deltaTime * 8f);
         }
     }
 

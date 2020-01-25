@@ -17,12 +17,12 @@ public class PlayerStats : EntityStats
     {
         if (newItem != null && newItem is Weapon)
         {
-            damage.AddModifier((newItem as Weapon).damageModifier);
+            damage = (newItem as Weapon).damage;
         }
 
-        if (oldItem != null && oldItem is Weapon)
+        /*if (oldItem != null && oldItem is Weapon)
         {
-            damage.RemoveModifier((oldItem as Weapon).damageModifier);
-        }
+            damage.RemoveModifier((oldItem as Weapon).damage);
+        }*/
     }
 }
