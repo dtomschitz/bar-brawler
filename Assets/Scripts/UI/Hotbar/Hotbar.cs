@@ -111,11 +111,11 @@ public class Hotbar : MonoBehaviour
         }
     }
 
-    public void SelectItem(int index)
+    public void SelectItem(int nextIndex)
     {
-        if (InBounds(index, slots))
+        if (InBounds(nextIndex, slots))
         {
-            SelectItem(slots[index].item, index);
+            SelectItem(slots[nextIndex].item, nextIndex);
         }
     }
 

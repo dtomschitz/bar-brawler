@@ -13,9 +13,6 @@ public enum AIState
 
 public class Enemy : Interactable
 {
-
-  
-
     public bool movementEnabled = true;
     public Money money;
     public GameObject damagePopup;
@@ -37,6 +34,7 @@ public class Enemy : Interactable
     private Player player;
     private Transform target;
     private NavMeshAgent agent;
+    private Canvas crosshair;
 
     void Start()
     {
@@ -96,7 +94,7 @@ public class Enemy : Interactable
         Debug.Log("attack enemie");
     }
 
-    private void OnTakeDamage(double damage)
+    public void OnTakeDamage(double damage)
     {
         if (Stats.IsDead) return;
 
@@ -111,7 +109,7 @@ public class Enemy : Interactable
         if (damagePopup) ShowDamagePopup(damage);
     }
 
-    private void Death()
+    public void Death()
     {
         agent.enabled = false;
         Animator.OnDeath();
@@ -123,10 +121,15 @@ public class Enemy : Interactable
         Destroy(gameObject, 2f);
     }
 
-    private void ShowDamagePopup(double damage)
+    public void ShowDamagePopup(double damage)
     {
         GameObject popup = Instantiate(damagePopup, transform.position, Quaternion.identity, transform);
         popup.GetComponent<TextMesh>().text = damage.ToString();
+    }
+
+    public void SetCrosshairActive(bool active)
+    {
+        crosshair.gameObject.SetActive(active);
     }
 
     private IEnumerator IsUnderAttackRoutine()

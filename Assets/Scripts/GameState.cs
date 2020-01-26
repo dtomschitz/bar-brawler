@@ -52,6 +52,7 @@ public class GameState : MonoBehaviour
     private void TogglePauseMenu()
     {
         Player.instance.controls.IsMovementEnabled = false;
+        ToggleCrosshair();
 
         UIManager.instance.SetHUDActive(false, false);
         UIManager.instance.SetShopActive(false);
@@ -62,6 +63,7 @@ public class GameState : MonoBehaviour
     private void ToggleGameOver()
     {
         Player.instance.controls.IsMovementEnabled = false;
+        ToggleCrosshair();
 
         UIManager.instance.SetHUDActive(false, false);
         UIManager.instance.SetShopActive(false);
@@ -72,7 +74,7 @@ public class GameState : MonoBehaviour
     private void ToggleShop()
     {
         Player.instance.controls.IsMovementEnabled = false;
-
+        ToggleCrosshair();
 
         UIManager.instance.SetPauseMenuActive(false);
         UIManager.instance.SetGameOverMenuActive(false);
@@ -83,11 +85,21 @@ public class GameState : MonoBehaviour
     private void ToggleIngame()
     {
         Player.instance.controls.IsMovementEnabled = true;
+        ToggleCrosshair();
 
         UIManager.instance.SetShopActive(false);
         UIManager.instance.SetPauseMenuActive(false);
         UIManager.instance.SetGameOverMenuActive(false);
         UIManager.instance.SetHUDActive(true, true);
+    }
+
+    private void ToggleCrosshair()
+    {
+        if (Crosshair.instance.IsEnabled)
+        {
+            Crosshair.instance.Toggle();
+            Crosshair.instance.IsEnabled = false;
+        }
     }
 
     public bool IsInGame
