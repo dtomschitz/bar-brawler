@@ -7,6 +7,7 @@ namespace Shop
     public class ShopItem : ScriptableObject
     {
         public Item item;
+        public string infoText;
         public int price;
 
         public virtual void OnItemBought()
@@ -15,5 +16,4 @@ namespace Shop
             Player.instance.RemoveMoney(price);
         }
     }
-
 }

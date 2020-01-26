@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: Knife
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 3382fc6221849ac498632dab982e6baf, type: 2}
+  infoText: THE KNIFE INFLICTS 30 DAMAGE TO THE ENEMY ONCE AND 10 DAMAGE MORE OVER
+    A SHORT PERIOD OF TIME.
   price: 50
