@@ -29,7 +29,17 @@ public class EntityAnimator : MonoBehaviour
     {
         animator.SetTrigger("Death");
     }
-    
+
+    public void SetForward(float forward)
+    {
+        animator.SetFloat("Forward", forward);
+    }
+
+    public void SetStrafe(float strafe)
+    {
+        animator.SetFloat("Strafe", strafe);
+    }
+
     public void SetEquipment(Equipment item)
     {
         int currentType = animator.GetInteger("Item");

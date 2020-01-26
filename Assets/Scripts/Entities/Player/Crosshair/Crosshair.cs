@@ -62,8 +62,6 @@ public class Crosshair : MonoBehaviour
             SelectEnemey(0);
             return;
         }
-
-        SelectEnemey()
     }
 
     private void SelectEnemey(int index)

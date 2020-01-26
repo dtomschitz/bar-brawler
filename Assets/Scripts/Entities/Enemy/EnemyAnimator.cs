@@ -13,7 +13,12 @@ public class EnemyAnimator : EntityAnimator
 
     void Update()
     {
-        animator.SetFloat("speed", navMeshAgent.velocity.magnitude / navMeshAgent.speed, .1f, Time.deltaTime);
+
+        float forward = Vector3.Dot(navMeshAgent.velocity.normalized, gameObject.transform.forward);
+        //float strafe = Vector3.Dot(navMeshAgent.destination, transform.right);
+
+        SetForward(forward);
+        //SetForward(strafe);
     }
 
     public override void OnPrimary()
