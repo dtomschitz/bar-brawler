@@ -30,12 +30,18 @@ public class EntityAnimator : MonoBehaviour
         animator.SetTrigger("Death");
     }
 
+    public virtual void Move(float forward, float strafe)
+    {
+        SetForward(forward);
+        SetStrafe(strafe);
+    }
+
     public void SetForward(float forward)
     {
         animator.SetFloat("Forward", forward);
     }
 
-    public void SetStrafe(float strafe)
+    private void SetStrafe(float strafe)
     {
         animator.SetFloat("Strafe", strafe);
     }

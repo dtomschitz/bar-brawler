@@ -99,8 +99,9 @@ public class PlayerControls : MonoBehaviour
     private void StopPlayerMovement()
     {
         MovePlayer(Vector3.zero);
-        playerAnimator.SetForward(0f);
-        playerAnimator.SetStrafe(0f);
+        //playerAnimator.SetForward(0f);
+        // playerAnimator.SetStrafe(0f);
+        playerAnimator.Move(0f, 0f);
     }
 
     private void MovePlayer(Vector3 desiredDirection)
@@ -136,8 +137,9 @@ public class PlayerControls : MonoBehaviour
         float forward = Vector3.Dot(movement, playerModel.transform.forward);
         float strafe = Vector3.Dot(movement, playerModel.transform.right);
 
-        playerAnimator.SetForward(forward);
-        playerAnimator.SetStrafe(strafe);
+        //playerAnimator.SetForward(forward);
+        //playerAnimator.SetStrafe(strafe);
+        playerAnimator.Move(forward, strafe);
     }
 
     public bool IsMovementEnabled
