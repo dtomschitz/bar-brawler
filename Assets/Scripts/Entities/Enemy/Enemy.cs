@@ -14,8 +14,9 @@ public enum AIState
 public class Enemy : Interactable
 {
     public bool movementEnabled = true;
-    public Money money;
+
     public GameObject damagePopup;
+    public GameObject crosshair;
 
     public float lookRadius = 10f;
     public float attackRate = 1f;
@@ -34,7 +35,6 @@ public class Enemy : Interactable
     private Player player;
     private Transform target;
     private NavMeshAgent agent;
-    private Canvas crosshair;
 
     void Start()
     {
@@ -129,7 +129,7 @@ public class Enemy : Interactable
 
     public void SetCrosshairActive(bool active)
     {
-        crosshair.gameObject.SetActive(active);
+        crosshair.SetActive(active);
     }
 
     private IEnumerator IsUnderAttackRoutine()

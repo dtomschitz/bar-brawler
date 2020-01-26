@@ -6,6 +6,7 @@ public enum State
     GAME_OVER,
     INGAME,
     IN_SHOP,
+    TARGET_ACQUISITION
 }
 
 
@@ -46,13 +47,18 @@ public class GameState : MonoBehaviour
             case State.IN_SHOP:
                 ToggleShop();
                 break;
+
+            case State.TARGET_ACQUISITION:
+                ToggleTargetAcquisition();
+                break;
+
         }
     }
 
     private void TogglePauseMenu()
     {
         Player.instance.controls.IsMovementEnabled = false;
-        ToggleCrosshair();
+        DisableTargetAcquisition();
 
         UIManager.instance.SetHUDActive(false, false);
         UIManager.instance.SetShopActive(false);
@@ -63,7 +69,7 @@ public class GameState : MonoBehaviour
     private void ToggleGameOver()
     {
         Player.instance.controls.IsMovementEnabled = false;
-        ToggleCrosshair();
+        DisableTargetAcquisition();
 
         UIManager.instance.SetHUDActive(false, false);
         UIManager.instance.SetShopActive(false);
@@ -74,7 +80,7 @@ public class GameState : MonoBehaviour
     private void ToggleShop()
     {
         Player.instance.controls.IsMovementEnabled = false;
-        ToggleCrosshair();
+        DisableTargetAcquisition();
 
         UIManager.instance.SetPauseMenuActive(false);
         UIManager.instance.SetGameOverMenuActive(false);
@@ -85,15 +91,29 @@ public class GameState : MonoBehaviour
     private void ToggleIngame()
     {
         Player.instance.controls.IsMovementEnabled = true;
-        ToggleCrosshair();
+        DisableTargetAcquisition();
 
         UIManager.instance.SetShopActive(false);
         UIManager.instance.SetPauseMenuActive(false);
         UIManager.instance.SetGameOverMenuActive(false);
         UIManager.instance.SetHUDActive(true, true);
+
+        Time.timeScale = 1.0f;
     }
 
-    private void ToggleCrosshair()
+    private void ToggleTargetAcquisition()
+    {
+        UIManager.instance.SetShopActive(false);
+        UIManager.instance.SetPauseMenuActive(false);
+        UIManager.instance.SetGameOverMenuActive(false);
+        UIManager.instance.SetHUDActive(true, false);
+
+        Player.instance.controls.IsMovementEnabled = true;
+
+        //TargetAcquisition.instance.Toggle();
+    }
+
+    private void DisableTargetAcquisition()
     {
         if (TargetAcquisition.instance.IsEnabled)
         {
@@ -104,6 +124,6 @@ public class GameState : MonoBehaviour
 
     public bool IsInGame
     {
-        get { return state == State.INGAME; }
+        get { return state == State.INGAME ||state == State.TARGET_ACQUISITION; }
     }
 }

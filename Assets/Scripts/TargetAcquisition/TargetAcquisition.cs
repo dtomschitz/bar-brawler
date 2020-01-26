@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
 
 public class TargetAcquisition : MonoBehaviour
@@ -27,6 +28,8 @@ public class TargetAcquisition : MonoBehaviour
     private readonly int interval = 2;
     private float nextTime = 0;
 
+    private float minDistance = Mathf.Infinity;
+
     public bool IsEnabled { get; set; } = false;
 
     void Update()
@@ -35,7 +38,7 @@ public class TargetAcquisition : MonoBehaviour
         {
             if (Time.time >= nextTime)
             {
-                enemies = GetEnemies();
+                enemies = UpdateEnemies();
                 nextTime += interval;
             }
         }
@@ -52,36 +55,74 @@ public class TargetAcquisition : MonoBehaviour
     }
 
     public void ToggleTargetAcquisition(CallbackContext context) => Toggle();
-    public void SelectLast(CallbackContext context) => SelectLastEnemy();
-    public void SelectNext(CallbackContext context) => SelectNextEnemy();
-    public void Unselect(CallbackContext context) => UnselectCurrentEnemy();
+
+    public void SelectLast(CallbackContext context)
+    {
+        if (IsEnabled) SelectLastEnemy();
+    }
+
+    public void SelectNext(CallbackContext context)
+    {
+        if (IsEnabled) SelectNextEnemy();
+    }
+
+    public void Unselect(CallbackContext context)
+    {
+        if (IsEnabled) UnselectCurrentEnemy();
+    }
 
     public void Toggle()
     {
+        if (!GameState.instance.IsInGame) return;
+
         IsEnabled = !IsEnabled;
+        Time.timeScale = IsEnabled ? 0.2f : 1.0f;
+        GameState.instance.SetState(IsEnabled ? State.TARGET_ACQUISITION : State.INGAME);
+
+        Debug.Log("Target Acquisition: " + IsEnabled + "(timeScale: " + Time.timeScale + ")");
 
         if (IsEnabled)
         {
-            Time.timeScale = 0.2f;
+            UpdateEnemies();
+            if (currentEnemey == null)
+            {
+                Enemy enemy = FindClosestEnemy();
+                if (enemy != null) SelectEnemy(enemy);
+            }
         }
     }
 
     public void SelectLastEnemy()
     {
-        if (currentEnemey == null && enemies.Length != 0)
+        if (enemies.Length != 0)
         {
-            SelectEnemey(currentIndex - 1);
+            SelectEnemy(currentIndex - 1);
             return;
         }
     }
 
     public void SelectNextEnemy()
     {
-        if (currentEnemey == null && enemies.Length != 0)
+        if (enemies.Length != 0)
         {
-            SelectEnemey(currentIndex + 1);
+            SelectEnemy(currentIndex + 1);
             return;
         }
+    }
+
+    public Enemy FindClosestEnemy()
+    {
+        Enemy enemy = null;
+        Vector3 playerPositon = Player.instance.gameObject.transform.position;
+        for (int i = 0; i < enemies.Length; i++) 
+        {
+            float distance = Vector3.Distance(enemies[i].transform.position, playerPositon);
+            if (distance < minDistance)
+            {
+                enemy = enemies[i];
+            }
+        }
+        return enemy;
     }
 
     public void UnselectCurrentEnemy()
@@ -92,12 +133,17 @@ public class TargetAcquisition : MonoBehaviour
         }
     }
 
-    public void SelectEnemey(int nextIndex)
+    public void SelectEnemy(Enemy enemy)
+    {
+        SetCurrentEnemy(enemy);
+    }
+
+    private void SelectEnemy(int nextIndex)
     {
         if (InBounds(nextIndex, enemies))
         {
             SetCurrentEnemy(enemies[nextIndex]);
-            currentIndex = nextIndex;
+           // currentIndex = nextIndex;
         }
     }
 
@@ -106,10 +152,11 @@ public class TargetAcquisition : MonoBehaviour
         UnselectCurrentEnemy();
 
         currentEnemey = enemy;
+        currentIndex = Array.IndexOf(enemies, enemy);
         currentEnemey.SetCrosshairActive(true);
     }
 
-    private Enemy[] GetEnemies() => FindObjectsOfType<Enemy>();
+    private Enemy[] UpdateEnemies() => enemies = FindObjectsOfType<Enemy>();
 
     private bool InBounds(int index, Enemy[] enemies)
     {

@@ -8,6 +8,7 @@ public class HUDManager : MonoBehaviour
     public MoneyInfo moneyInfo;
     public WaveInfo waveInfo;
     public InteractionHint interactionHint;
+    public HelpInfo helpInfo;
 
     public void DisplayHotbar(bool visible)
     {

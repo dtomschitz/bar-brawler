@@ -23,7 +23,6 @@ public class Hotbar : MonoBehaviour
     void Awake()
     {
         inputActions = new PlayerInputActions();
-
         inputActions.PlayerControls.HotbarOneForward.performed += SelectNextItem;
         inputActions.PlayerControls.HotbarOneBack.performed += SelectLastItem;
     }
@@ -47,10 +46,6 @@ public class Hotbar : MonoBehaviour
 
         slots = GetComponentsInChildren<HotbarSlot>();
     }
-
-    public void SetLeftBumperActive(bool active) => leftBumper.SetActive(active);
-    public void SetRightBumperActive(bool active) => rightBumper.SetActive(active);
-  
 
     private void OnItemAdded(object sender, InventoryEvent e) 
     {
@@ -124,8 +119,6 @@ public class Hotbar : MonoBehaviour
     {
         if (item != null && item is Equipment)
         {
-           
-
             if (currentItemNameCoroutine != null)
             {
                 StopCoroutine(currentItemNameCoroutine);
@@ -154,6 +147,9 @@ public class Hotbar : MonoBehaviour
         yield return new WaitForSeconds(1f);
         selectedItemName.text = "";
     }
+
+    public void SetLeftBumperActive(bool active) => leftBumper.SetActive(active);
+    public void SetRightBumperActive(bool active) => rightBumper.SetActive(active);
 
     private bool InBounds(int index, HotbarSlot[] slots)
     {

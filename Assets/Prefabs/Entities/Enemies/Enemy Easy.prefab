@@ -537,9 +537,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementEnabled: 1
-  money: {fileID: 0}
   damagePopup: {fileID: 4610692876775489689, guid: e2262ee3243caa148b85979b0d9e05cd,
     type: 3}
+  crosshair: {fileID: 1259187709027911290}
   lookRadius: 10
   attackRate: 1
   moneyDrop: 040000000500000008000000
