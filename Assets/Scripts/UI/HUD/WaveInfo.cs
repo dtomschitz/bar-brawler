@@ -23,8 +23,18 @@ public class WaveInfo : MonoBehaviour
 
         if (WaveSpawner.instance.IsWaveRunning)
         {
-            stateOfGameText.text = string.Format("Wave {0}", rounds.ToString());
+            stateOfGameText.text = string.Format("WAVE {0}", rounds.ToString());
         }
+    }
+
+    public void SetSkipTextActive(bool active)
+    {
+        skipCountdownText.gameObject.SetActive(active);
+    }
+
+    public void SetSkipCountdownActive(bool active)
+    {
+        stateOfGameText.gameObject.SetActive(active);
     }
 
 

@@ -101,7 +101,7 @@ public class WaveSpawner : MonoBehaviour
                 waveCountdown -= Time.deltaTime;
                 if (waveCountdown > 0f)
                 {
-                    stateOfGameText.text = string.Format("Next wave starts in {0}s", Mathf.Floor(waveCountdown).ToString());
+                    stateOfGameText.text = string.Format("NEXT ROUND STARTS IN {0}s", Mathf.Floor(waveCountdown).ToString());
                 }
             }
         }
