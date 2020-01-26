@@ -27,9 +27,6 @@ public class PlayerControls : MonoBehaviour
     public GameObject playerModel;
     public Transform pivot;
 
-    public event Action OnHotbarOneBack;
-    public event Action OnHotbarOneForward;
-
     public PlayerInputActions inputActions;
 
     private Camera mainCamera;

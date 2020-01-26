@@ -18,22 +18,19 @@ public class InteractionHint : FadeGraphic
             StopAllCoroutines();
             interactionHint.text = "";
         }
-        ShowHintRoutine(text, fadeTime);
+        StartCoroutine(ShowHintRoutine(text, fadeTime));
     }
 
-    public void HideHint(float fadeTime = .2f)
+    /*public void HideHint(float fadeTime = .2f)
     {
         StartCoroutine(FadeOutHint(fadeTime));
-    }
+    }*/
 
-    private void ShowHintRoutine(string text, float fadeTime)
+    private IEnumerator ShowHintRoutine(string text, float fadeTime)
     {
         interactionHint.text = text;
         FadeIn(interactionHint, fadeTime);
-    }
-
-    private IEnumerator FadeOutHint(float fadeTime)
-    {
+        yield return new WaitForSeconds(2f);
         FadeOut(interactionHint, fadeTime);
         yield return new WaitForSeconds(fadeTime);
         interactionHint.text = "";

@@ -1,23 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Hint : MonoBehaviour
 {
     public string hint;
-    public KeyCode key;
+    public InputAction key;
     public bool isHintVisibleDuringWaves = true;
 
     private bool isHintEnabled = true;
 
-    void Start()
+    /*void Start()
     {
         WaveSpawner.instance.OnWaveStateUpdate += OnWaveStateUpdate;
     }
 
     void Update()
     {
-        if (Input.GetKey(key))
+        /*if (Input.GetKey(key))
         {
             UIManager.instance.hud.interactionHint.HideHint(.2f);
             isHintEnabled = false;
@@ -26,7 +25,7 @@ public class Hint : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (isHintEnabled && other.tag == "Player")
+        if (isHintEnabled && other.gameObject.tag == "Player")
         {
             UIManager.instance.hud.interactionHint.DisplayHint(hint);
         }
@@ -34,9 +33,9 @@ public class Hint : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (isHintEnabled && other.tag == "Player")
+        if (isHintEnabled && other.gameObject.tag == "Player")
         {
-            UIManager.instance.hud.interactionHint.HideHint();
+           // UIManager.instance.hud.interactionHint.HideHint();
             isHintEnabled = true;
         }
     }
@@ -50,5 +49,5 @@ public class Hint : MonoBehaviour
         {
             isHintEnabled = true;
         }
-    }
+    }*/
 }
