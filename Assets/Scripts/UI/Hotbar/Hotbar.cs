@@ -159,5 +159,4 @@ public class Hotbar : MonoBehaviour
     {
         return (index >= 0) && (index < slots.Length);
     }
-
 }

@@ -458,6 +458,112 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Crosshair"",
+            ""id"": ""8dea03bb-0ecd-4b99-89a5-b6bfc5bde888"",
+            ""actions"": [
+                {
+                    ""name"": ""Toggle Crosshair"",
+                    ""type"": ""Button"",
+                    ""id"": ""1464dc9c-09a8-494b-ba36-24e3c4872ddc"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Select Last"",
+                    ""type"": ""Button"",
+                    ""id"": ""28f0a8e1-0ef1-4346-9ddf-edf4a724ae8e"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Select Next"",
+                    ""type"": ""Button"",
+                    ""id"": ""3e4a3ab8-3036-4a49-9466-88ecbef65a99"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Unselect"",
+                    ""type"": ""Button"",
+                    ""id"": ""b249a7a1-e798-4e85-9e8d-cbf6b5c45296"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""3c1a2820-b5d3-4897-853c-1663890120bc"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Toggle Crosshair"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b97a07ba-c2d3-4b15-9a68-bc15f278be4f"",
+                    ""path"": ""<Gamepad>/rightStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Select Last"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2f4a4c72-15f8-48e7-8612-fc5016036ada"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Select Last"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dfc76407-eb9f-4a1a-a865-3527e2b3e026"",
+                    ""path"": ""<Gamepad>/rightStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Select Next"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c6132d80-20c5-4bcc-8f57-a1dfa7dc3ede"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Select Next"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""997a722a-3cb1-4faa-931c-6532c9b02f2a"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Unselect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -500,6 +606,12 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         m_UI_TrackedDeviceSelect = m_UI.FindAction("TrackedDeviceSelect", throwIfNotFound: true);
         m_UI_Select = m_UI.FindAction("Select", throwIfNotFound: true);
         m_UI_Close = m_UI.FindAction("Close", throwIfNotFound: true);
+        // Crosshair
+        m_Crosshair = asset.FindActionMap("Crosshair", throwIfNotFound: true);
+        m_Crosshair_ToggleCrosshair = m_Crosshair.FindAction("Toggle Crosshair", throwIfNotFound: true);
+        m_Crosshair_SelectLast = m_Crosshair.FindAction("Select Last", throwIfNotFound: true);
+        m_Crosshair_SelectNext = m_Crosshair.FindAction("Select Next", throwIfNotFound: true);
+        m_Crosshair_Unselect = m_Crosshair.FindAction("Unselect", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -771,6 +883,63 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
+
+    // Crosshair
+    private readonly InputActionMap m_Crosshair;
+    private ICrosshairActions m_CrosshairActionsCallbackInterface;
+    private readonly InputAction m_Crosshair_ToggleCrosshair;
+    private readonly InputAction m_Crosshair_SelectLast;
+    private readonly InputAction m_Crosshair_SelectNext;
+    private readonly InputAction m_Crosshair_Unselect;
+    public struct CrosshairActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public CrosshairActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ToggleCrosshair => m_Wrapper.m_Crosshair_ToggleCrosshair;
+        public InputAction @SelectLast => m_Wrapper.m_Crosshair_SelectLast;
+        public InputAction @SelectNext => m_Wrapper.m_Crosshair_SelectNext;
+        public InputAction @Unselect => m_Wrapper.m_Crosshair_Unselect;
+        public InputActionMap Get() { return m_Wrapper.m_Crosshair; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(CrosshairActions set) { return set.Get(); }
+        public void SetCallbacks(ICrosshairActions instance)
+        {
+            if (m_Wrapper.m_CrosshairActionsCallbackInterface != null)
+            {
+                @ToggleCrosshair.started -= m_Wrapper.m_CrosshairActionsCallbackInterface.OnToggleCrosshair;
+                @ToggleCrosshair.performed -= m_Wrapper.m_CrosshairActionsCallbackInterface.OnToggleCrosshair;
+                @ToggleCrosshair.canceled -= m_Wrapper.m_CrosshairActionsCallbackInterface.OnToggleCrosshair;
+                @SelectLast.started -= m_Wrapper.m_CrosshairActionsCallbackInterface.OnSelectLast;
+                @SelectLast.performed -= m_Wrapper.m_CrosshairActionsCallbackInterface.OnSelectLast;
+                @SelectLast.canceled -= m_Wrapper.m_CrosshairActionsCallbackInterface.OnSelectLast;
+                @SelectNext.started -= m_Wrapper.m_CrosshairActionsCallbackInterface.OnSelectNext;
+                @SelectNext.performed -= m_Wrapper.m_CrosshairActionsCallbackInterface.OnSelectNext;
+                @SelectNext.canceled -= m_Wrapper.m_CrosshairActionsCallbackInterface.OnSelectNext;
+                @Unselect.started -= m_Wrapper.m_CrosshairActionsCallbackInterface.OnUnselect;
+                @Unselect.performed -= m_Wrapper.m_CrosshairActionsCallbackInterface.OnUnselect;
+                @Unselect.canceled -= m_Wrapper.m_CrosshairActionsCallbackInterface.OnUnselect;
+            }
+            m_Wrapper.m_CrosshairActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @ToggleCrosshair.started += instance.OnToggleCrosshair;
+                @ToggleCrosshair.performed += instance.OnToggleCrosshair;
+                @ToggleCrosshair.canceled += instance.OnToggleCrosshair;
+                @SelectLast.started += instance.OnSelectLast;
+                @SelectLast.performed += instance.OnSelectLast;
+                @SelectLast.canceled += instance.OnSelectLast;
+                @SelectNext.started += instance.OnSelectNext;
+                @SelectNext.performed += instance.OnSelectNext;
+                @SelectNext.canceled += instance.OnSelectNext;
+                @Unselect.started += instance.OnUnselect;
+                @Unselect.performed += instance.OnUnselect;
+                @Unselect.canceled += instance.OnUnselect;
+            }
+        }
+    }
+    public CrosshairActions @Crosshair => new CrosshairActions(this);
     private int m_GamepadSchemeIndex = -1;
     public InputControlScheme GamepadScheme
     {
@@ -807,5 +976,12 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         void OnTrackedDeviceSelect(InputAction.CallbackContext context);
         void OnSelect(InputAction.CallbackContext context);
         void OnClose(InputAction.CallbackContext context);
+    }
+    public interface ICrosshairActions
+    {
+        void OnToggleCrosshair(InputAction.CallbackContext context);
+        void OnSelectLast(InputAction.CallbackContext context);
+        void OnSelectNext(InputAction.CallbackContext context);
+        void OnUnselect(InputAction.CallbackContext context);
     }
 }

@@ -445,6 +445,112 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Crosshair",
+            "id": "8dea03bb-0ecd-4b99-89a5-b6bfc5bde888",
+            "actions": [
+                {
+                    "name": "Toggle Crosshair",
+                    "type": "Button",
+                    "id": "1464dc9c-09a8-494b-ba36-24e3c4872ddc",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Select Last",
+                    "type": "Button",
+                    "id": "28f0a8e1-0ef1-4346-9ddf-edf4a724ae8e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Select Next",
+                    "type": "Button",
+                    "id": "3e4a3ab8-3036-4a49-9466-88ecbef65a99",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Unselect",
+                    "type": "Button",
+                    "id": "b249a7a1-e798-4e85-9e8d-cbf6b5c45296",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "3c1a2820-b5d3-4897-853c-1663890120bc",
+                    "path": "<Gamepad>/rightStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Toggle Crosshair",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b97a07ba-c2d3-4b15-9a68-bc15f278be4f",
+                    "path": "<Gamepad>/rightStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Select Last",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2f4a4c72-15f8-48e7-8612-fc5016036ada",
+                    "path": "<Gamepad>/dpad/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Select Last",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dfc76407-eb9f-4a1a-a865-3527e2b3e026",
+                    "path": "<Gamepad>/rightStick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Select Next",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c6132d80-20c5-4bcc-8f57-a1dfa7dc3ede",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Select Next",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "997a722a-3cb1-4faa-931c-6532c9b02f2a",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Unselect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

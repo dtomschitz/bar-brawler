@@ -32,7 +32,6 @@ public class PlayerControls : MonoBehaviour
 
     public PlayerInputActions inputActions;
 
-
     private Camera mainCamera;
     private PlayerAnimator playerAnimator;
     private CharacterController character;
