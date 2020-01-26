@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
 
-public class Crosshair : MonoBehaviour
+public class TargetAcquisition : MonoBehaviour
 {
     #region Singelton
 
-    public static Crosshair instance;
+    public static TargetAcquisition instance;
     public PlayerInputActions inputActions;
 
     void Awake()

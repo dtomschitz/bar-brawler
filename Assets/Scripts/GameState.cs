@@ -95,10 +95,10 @@ public class GameState : MonoBehaviour
 
     private void ToggleCrosshair()
     {
-        if (Crosshair.instance.IsEnabled)
+        if (TargetAcquisition.instance.IsEnabled)
         {
-            Crosshair.instance.Toggle();
-            Crosshair.instance.IsEnabled = false;
+            TargetAcquisition.instance.Toggle();
+            TargetAcquisition.instance.IsEnabled = false;
         }
     }
 
