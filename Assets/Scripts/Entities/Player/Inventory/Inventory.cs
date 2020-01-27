@@ -27,7 +27,7 @@ public class Inventory : MonoBehaviour
     {
         for (int i = 0; i < maxSlots; i++)
         {
-            slots.Add(new Slot());
+            slots.Add(new Slot(i));
         }
 
         foreach(Item item in defaultItems)
@@ -67,16 +67,8 @@ public class Inventory : MonoBehaviour
 
         foreach (Slot slot in slots)
         {
-            bool success = slot.Remove(item);
-
-            if (success)
+            if (slot.Remove(item))
             {
-                if (slot.Count == 0)
-                {
-                    slots.Remove(slot);
-                    slots.Add(new Slot());
-                    Debug.Log("remove slot");
-                }
                 OnItemRemoved?.Invoke(item);
                 break;
             }
@@ -85,8 +77,8 @@ public class Inventory : MonoBehaviour
 
     public void UseItem(Item item)
     {
-        OnItemUsed?.Invoke(item);
         RemoveItem(item);
+        OnItemUsed?.Invoke(item);
     }
 
     public void UseMunition()

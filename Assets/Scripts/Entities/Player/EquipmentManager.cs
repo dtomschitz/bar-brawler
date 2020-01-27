@@ -24,7 +24,7 @@ public class EquipmentManager : MonoBehaviour
         currentHand = rightHand;
 
         inventory = GetComponent<Inventory>();
-        inventory.OnItemUsed += OnItemUsed;
+        //inventory.OnItemUsed += OnItemUsed;
         inventory.OnItemRemoved += OnItemRemoved;
 
         hotbar = FindObjectOfType<Hotbar>();
@@ -62,27 +62,34 @@ public class EquipmentManager : MonoBehaviour
         }
     }
 
-    private void OnItemUsed(Item item)
+    /*private void OnItemUsed(Item item)
     {
         if (item == currentEquipment)
         {
-            Unequip();
             if (item.slot.Count == 0)
             {
-               // EquipFirstItemInHotbar();
+                Unequip();
+                // EquipFirstItemInHotbar();
             }
         }
-    }
+    }*/
 
     private void OnItemRemoved(Item item)
     {
         if (item == currentEquipment)
         {
             Unequip();
+            
+            if (item.slot.Count != 0)
+            {
+
+            }
+
+            /*EquipItem()
             if (item.slot.Count == 0)
             {
                // EquipFirstItemInHotbar();
-            }
+            }*/
         }
     }
 

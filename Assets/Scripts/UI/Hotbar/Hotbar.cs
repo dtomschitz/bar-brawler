@@ -18,7 +18,7 @@ public class Hotbar : MonoBehaviour
     private PlayerInputActions inputActions;
     private HotbarSlot[] slots;
     private Coroutine currentItemNameCoroutine;
-    private int selectedItemIndex = -1;
+    private int currentItemIndex = -1;
 
     void Awake()
     {
@@ -40,8 +40,9 @@ public class Hotbar : MonoBehaviour
 
     void Start()
     {
-        inventory.OnItemAdded += UpdateItems;
-        inventory.OnItemRemoved += UpdateItems;
+        inventory.OnItemAdded += OnItemAdded;
+        inventory.OnItemRemoved += OnItemRemoved;
+       // inventory.OnItemUsed += OnItemUsed;
 
         slots = GetComponentsInChildren<HotbarSlot>();
     }
@@ -66,22 +67,32 @@ public class Hotbar : MonoBehaviour
     public void SelectNextItem(CallbackContext ctx)
     {
         if (GameState.instance.IsInTargetAcquisition) return;
-        SelectItem(selectedItemIndex + 1);
+        SelectNextItem();
     }
 
     public void SelectLastItem(CallbackContext ctx)
     {
         if (GameState.instance.IsInTargetAcquisition) return;
-        SelectItem(selectedItemIndex - 1);
+        SelectLastItem();
     }
 
     public void DeleteItem(CallbackContext ctx)
     {
         if (!GameState.instance.IsInShop) return;
 
-        Equipment item = slots[selectedItemIndex].item as Equipment;
+        Equipment item = slots[currentItemIndex].item as Equipment;
         if (item == null || (item != null && item.type == ItemType.Fist)) return;
         Player.instance.inventory.RemoveItem(item);
+    }
+
+    public void SelectNextItem()
+    {
+        SelectItem(currentItemIndex + 1);
+    }
+
+    public void SelectLastItem()
+    {
+        SelectItem(currentItemIndex - 1);
     }
 
     public void SelectItem(int nextIndex)
@@ -105,7 +116,7 @@ public class Hotbar : MonoBehaviour
             currentItemNameCoroutine = StartCoroutine(ShowSelectedName(item.name));
             OnItemSelected?.Invoke(item as Equipment);
 
-            selectedItemIndex = index;
+            currentItemIndex = index;
             for (int i = 0; i < slots.Length; i++)
             {
                 slots[i].SetSelected(i == index);
@@ -113,18 +124,18 @@ public class Hotbar : MonoBehaviour
         }
     }
 
-    /*private void OnItemAdded(Item item)
+    private void OnItemAdded(Item item)
     {
         for (int i = 0; i < slots.Length; i++)
         {
             if (i == item.slot.Id)
             {
-               // slots[i].Add(i, item);
+                slots[i].Add(item);
                 break;
             }
         }
 
-        if (selectedItemIndex == -1)
+        if (currentItemIndex == -1)
         {
             SelectItem(0);
         }
@@ -141,14 +152,28 @@ public class Hotbar : MonoBehaviour
 
                 if (itemCount == 0)
                 {
-                    slots[i].Clear();
-                    
-                    SelectItem(Mathf.Clamp(selectedItemIndex - 1, 0, int.MaxValue));
+                    slots[i].Clear();    
+                    SelectItem(Mathf.Clamp(currentItemIndex - 1, 0, int.MaxValue));
+                }
+
+                if (itemCount > 0)
+                {
+                    SelectItem(currentItemIndex);
                 }
                 break;
             }
         }
-    }*/
+    }
+
+    private void OnItemUsed(Item item)
+    {
+        Debug.Log(item.slot.Count);
+
+        if (item.slot.Count > 0)
+        {
+            SelectItem(currentItemIndex);
+        }
+    }
   
     private IEnumerator ShowSelectedName(string name)
     {

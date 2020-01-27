@@ -6,9 +6,9 @@ public class Slot
     private int id = 0;
     private Stack<Item> stack = new Stack<Item>();
 
-    public Slot()
+    public Slot(int id)
     {
-        //this.id = id;
+        this.id = id;
     }
 
     public void Add(Item item)
