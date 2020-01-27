@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3557717848779710567}
   - component: {fileID: 7089749155170857357}
-  - component: {fileID: 1740208669482795553}
+  - component: {fileID: 5654374662669349298}
   m_Layer: 0
   m_Name: Feuersaft
   m_TagString: Untagged
@@ -46,7 +46,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 3.8186572
   m_Center: {x: 0.00025224683, y: -0.00045114744, z: 3.8186572}
---- !u!114 &1740208669482795553
+--- !u!114 &5654374662669349298
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -55,7 +55,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 505762499375796852}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63828e3013af9a34f986d212e6d9ca8e, type: 3}
+  m_Script: {fileID: 11500000, guid: 11c48db8ae76ca54cb6e5c34cc98eb23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 967e9cfadfc249e4592f94369dcabf28, type: 2}

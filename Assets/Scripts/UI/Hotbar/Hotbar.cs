@@ -25,6 +25,7 @@ public class Hotbar : MonoBehaviour
         inputActions = new PlayerInputActions();
         inputActions.PlayerControls.HotbarOneForward.performed += SelectNextItem;
         inputActions.PlayerControls.HotbarOneBack.performed += SelectLastItem;
+        inputActions.PlayerControls.HotbarDeleteItem.performed += DeleteItem;
     }
 
     void OnEnable()
@@ -71,9 +72,12 @@ public class Hotbar : MonoBehaviour
             if (i == e.item.slot.Id)
             {
                 int itemCount = e.item.slot.Count;
+                slots[i].UpdateCount(itemCount);
+
                 if (itemCount == 0)
                 {
                     slots[i].Clear();
+                    SelectItem(Mathf.Clamp(selectedItemIndex - 1, 0, int.MaxValue));
                 }
                 break;
             }
@@ -94,13 +98,21 @@ public class Hotbar : MonoBehaviour
     {
         if (GameState.instance.IsInTargetAcquisition) return;
         SelectItem(selectedItemIndex + 1);
-        
     }
 
     public void SelectLastItem(CallbackContext ctx)
     {
-        if (!GameState.instance.IsInTargetAcquisition) return;
+        if (GameState.instance.IsInTargetAcquisition) return;
         SelectItem(selectedItemIndex - 1);
+    }
+
+    public void DeleteItem(CallbackContext ctx)
+    {
+        if (!GameState.instance.IsInShop) return;
+
+        Equipment item = slots[selectedItemIndex].item as Equipment;
+        if (item == null || (item != null && item.type == ItemType.Fist)) return;
+        Player.instance.inventory.RemoveItem(item);
     }
 
     public void SelectItem(int nextIndex)

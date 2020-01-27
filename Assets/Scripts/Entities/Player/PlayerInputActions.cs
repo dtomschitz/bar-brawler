@@ -83,9 +83,17 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Pause"",
+                    ""name"": ""Hotbar Delete Item"",
                     ""type"": ""Button"",
                     ""id"": ""f80e7d1a-fa64-4af2-b664-524586b7b8d6"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""77d1fd4f-0471-4e53-a79f-41cd23adfba5"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
@@ -188,6 +196,17 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Use Item"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b152794d-5e68-4e4d-9c1f-1d349828dc68"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Hotbar Delete Item"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -590,6 +609,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         m_PlayerControls_Interact = m_PlayerControls.FindAction("Interact", throwIfNotFound: true);
         m_PlayerControls_HotbarOneForward = m_PlayerControls.FindAction("Hotbar One Forward", throwIfNotFound: true);
         m_PlayerControls_HotbarOneBack = m_PlayerControls.FindAction("Hotbar One Back", throwIfNotFound: true);
+        m_PlayerControls_HotbarDeleteItem = m_PlayerControls.FindAction("Hotbar Delete Item", throwIfNotFound: true);
         m_PlayerControls_Pause = m_PlayerControls.FindAction("Pause", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -669,6 +689,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
     private readonly InputAction m_PlayerControls_Interact;
     private readonly InputAction m_PlayerControls_HotbarOneForward;
     private readonly InputAction m_PlayerControls_HotbarOneBack;
+    private readonly InputAction m_PlayerControls_HotbarDeleteItem;
     private readonly InputAction m_PlayerControls_Pause;
     public struct PlayerControlsActions
     {
@@ -682,6 +703,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         public InputAction @Interact => m_Wrapper.m_PlayerControls_Interact;
         public InputAction @HotbarOneForward => m_Wrapper.m_PlayerControls_HotbarOneForward;
         public InputAction @HotbarOneBack => m_Wrapper.m_PlayerControls_HotbarOneBack;
+        public InputAction @HotbarDeleteItem => m_Wrapper.m_PlayerControls_HotbarDeleteItem;
         public InputAction @Pause => m_Wrapper.m_PlayerControls_Pause;
         public InputActionMap Get() { return m_Wrapper.m_PlayerControls; }
         public void Enable() { Get().Enable(); }
@@ -716,6 +738,9 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                 @HotbarOneBack.started -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnHotbarOneBack;
                 @HotbarOneBack.performed -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnHotbarOneBack;
                 @HotbarOneBack.canceled -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnHotbarOneBack;
+                @HotbarDeleteItem.started -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnHotbarDeleteItem;
+                @HotbarDeleteItem.performed -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnHotbarDeleteItem;
+                @HotbarDeleteItem.canceled -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnHotbarDeleteItem;
                 @Pause.started -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnPause;
@@ -747,6 +772,9 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                 @HotbarOneBack.started += instance.OnHotbarOneBack;
                 @HotbarOneBack.performed += instance.OnHotbarOneBack;
                 @HotbarOneBack.canceled += instance.OnHotbarOneBack;
+                @HotbarDeleteItem.started += instance.OnHotbarDeleteItem;
+                @HotbarDeleteItem.performed += instance.OnHotbarDeleteItem;
+                @HotbarDeleteItem.canceled += instance.OnHotbarDeleteItem;
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
@@ -959,6 +987,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnHotbarOneForward(InputAction.CallbackContext context);
         void OnHotbarOneBack(InputAction.CallbackContext context);
+        void OnHotbarDeleteItem(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
     }
     public interface IUIActions

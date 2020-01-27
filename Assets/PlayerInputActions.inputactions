@@ -70,9 +70,17 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Pause",
+                    "name": "Hotbar Delete Item",
                     "type": "Button",
                     "id": "f80e7d1a-fa64-4af2-b664-524586b7b8d6",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "77d1fd4f-0471-4e53-a79f-41cd23adfba5",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
@@ -175,6 +183,17 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Use Item",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b152794d-5e68-4e4d-9c1f-1d349828dc68",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Hotbar Delete Item",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

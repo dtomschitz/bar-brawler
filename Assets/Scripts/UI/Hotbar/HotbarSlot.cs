@@ -47,6 +47,11 @@ public class HotbarSlot : MonoBehaviour
         count.text = "";
     }
 
+    public void UpdateCount(int currenCount)
+    {
+        count.text = currenCount.ToString();
+    }
+
     public void SetSelected(bool selected)
     {
         background.sprite = selected ? selectedSprite : defaultSprite;

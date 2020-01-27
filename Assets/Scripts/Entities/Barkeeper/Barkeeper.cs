@@ -78,7 +78,6 @@ public class Barkeeper : MonoBehaviour
         CloseShop();
     }
 
-
     public void OpenShop()
     {
         if (shop.IsOpen) return;
