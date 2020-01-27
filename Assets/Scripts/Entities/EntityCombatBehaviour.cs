@@ -4,11 +4,21 @@ public class EntityCombatBehaviour : StateMachineBehaviour
 {
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Player.instance.combat.SetState(CombatState.ATTACKING);
+        Player player = animator.GetComponentInParent<Player>();
+
+        if (player != null && player.equipment.CurrentEquipment != null)
+        {
+            player.combat.SetState(player.equipment.CurrentEquipment);
+        }
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Player.instance.combat.SetState(CombatState.IDLE);
+        Player player = animator.GetComponentInParent<Player>();
+
+        if (player != null)
+        {
+            player.combat.SetState(CombatState.Idle);
+        }
     }
 }

@@ -17,10 +17,12 @@ MonoBehaviour:
   kind: 1
   addToInventory: 1
   isStackable: 1
-  type: 4
+  type: 3
   prefab: {fileID: 460222663522612011, guid: c3e39dcb3966885448c77854c11f91e2, type: 3}
   itemHelp: {fileID: 2974276147454789566, guid: dfb60b366a0965c4e989d199af57c226,
     type: 3}
+  hasDuration: 1
+  duration: 5
   defaultHand: 1
   defaultPosition: {x: 0, y: 0, z: 0}
   defaultRotation: {x: 0, y: 0, z: 0}
@@ -31,20 +33,20 @@ MonoBehaviour:
     useSpecifcPosition: 1
     useSpecificRotation: 1
     specificPosition: {x: -0.026, y: 0.048, z: 0.014}
-    specificRotation: {x: 3.512, y: 148.691, z: -95.148}
+    specificRotation: {x: 180, y: 148.691, z: -95.148}
     specificDropRotation: {x: 0, y: 0, z: 0}
   - index: 1
     hand: 0
     useSpecifcPosition: 1
     useSpecificRotation: 1
     specificPosition: {x: 0.025, y: 0.0429, z: 0.0457}
-    specificRotation: {x: 4.991, y: 2.655, z: -77.594}
+    specificRotation: {x: 180, y: 2.655, z: -77.594}
     specificDropRotation: {x: 0, y: 0, z: 0}
   - index: 2
     hand: 0
     useSpecifcPosition: 1
     useSpecificRotation: 1
     specificPosition: {x: 0.01, y: 0.026, z: 0.032}
-    specificRotation: {x: 8.04, y: 18.507, z: -77.769}
+    specificRotation: {x: 180, y: 18.507, z: -77.769}
     specificDropRotation: {x: 0, y: 0, z: 0}
   damage: 30
