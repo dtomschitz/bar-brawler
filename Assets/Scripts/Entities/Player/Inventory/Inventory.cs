@@ -67,12 +67,15 @@ public class Inventory : MonoBehaviour
 
         foreach (Slot slot in slots)
         {
-            if (slot.Remove(item))
+            bool success = slot.Remove(item);
+
+            if (success)
             {
-                if (slots.Count == 0)
+                if (slot.Count == 0)
                 {
                     slots.Remove(slot);
                     slots.Add(new Slot());
+                    Debug.Log("remove slot");
                 }
                 OnItemRemoved?.Invoke(item);
                 break;

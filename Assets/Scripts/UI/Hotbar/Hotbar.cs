@@ -40,13 +40,13 @@ public class Hotbar : MonoBehaviour
 
     void Start()
     {
-       // inventory.OnItemAdded += OnItemAdded;
-        //inventory.OnItemRemoved += OnItemRemoved;
+        inventory.OnItemAdded += UpdateItems;
+        inventory.OnItemRemoved += UpdateItems;
 
         slots = GetComponentsInChildren<HotbarSlot>();
     }
 
-    void Update()
+    public void UpdateItems(Item _)
     {
         for (int i = 0; i < inventory.slots.Count; i++)
         {
@@ -113,7 +113,7 @@ public class Hotbar : MonoBehaviour
         }
     }
 
-    private void OnItemAdded(Item item)
+    /*private void OnItemAdded(Item item)
     {
         for (int i = 0; i < slots.Length; i++)
         {
@@ -148,7 +148,7 @@ public class Hotbar : MonoBehaviour
                 break;
             }
         }
-    }
+    }*/
   
     private IEnumerator ShowSelectedName(string name)
     {
