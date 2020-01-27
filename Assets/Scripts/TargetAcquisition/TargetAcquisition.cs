@@ -114,7 +114,7 @@ public class TargetAcquisition : MonoBehaviour
 
     public void SelectClosestEnemy()
     {
-         
+        SelectEnemy(FindClosestEnemy());
     }
 
     public void UnselectCurrentEnemy()
@@ -122,6 +122,7 @@ public class TargetAcquisition : MonoBehaviour
         if (CurrentEnemey != null)
         {
             CurrentEnemey.SetCrosshairActive(false);
+            SelectClosestEnemy();
         }
     }
 
@@ -135,7 +136,6 @@ public class TargetAcquisition : MonoBehaviour
         if (InBounds(nextIndex, enemies))
         {
             SetCurrentEnemy(enemies[nextIndex]);
-           // currentIndex = nextIndex;
         }
     }
 

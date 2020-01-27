@@ -117,6 +117,11 @@ public class Enemy : Interactable
         Player.instance.AddMoney(moneyDrop[Random.Range(0, moneyDrop.Length)]);
         Player.instance.combat.AddMana(10f);
 
+        if (TargetAcquisition.instance.CurrentEnemey == this)
+        {
+            TargetAcquisition.instance.UnselectCurrentEnemy();
+        }
+
         GetComponent<CapsuleCollider>().enabled = false;
         Destroy(gameObject, 2f);
     }

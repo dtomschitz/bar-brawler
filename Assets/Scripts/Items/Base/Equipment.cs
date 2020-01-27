@@ -9,6 +9,8 @@ namespace Items
         public GameObject prefab;
         public GameObject itemHelp;
 
+        public float duration;
+
         [Header("Default item position")]
         public Hand defaultHand;
         public Vector3 defaultPosition;

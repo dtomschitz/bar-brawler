@@ -66,14 +66,6 @@ namespace Items
             );
         }
 
-        public virtual void OnPrimaryAccomplished()
-        {
-        }
-
-        public virtual void OnSecondaryAccomplished()
-        {
-        }
-
         public virtual void OnHit(Enemy enemy)
         {
             enemy.Interact();
