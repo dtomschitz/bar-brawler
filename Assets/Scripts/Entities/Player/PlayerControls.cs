@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
 
 public class PlayerControls : MonoBehaviour
@@ -40,9 +39,9 @@ public class PlayerControls : MonoBehaviour
         inputActions.PlayerControls.Move.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
         inputActions.PlayerControls.Rotation.performed += ctx => lookPosition = ctx.ReadValue<Vector2>();
 
-        inputActions.PlayerControls.Primary.started += UsePrimary;
-        inputActions.PlayerControls.Secondary.started += UseSecondary;
-        inputActions.PlayerControls.UseItem.started += UseItem;
+        inputActions.PlayerControls.Primary.performed += UsePrimary;
+        inputActions.PlayerControls.Secondary.performed += UseSecondary;
+        inputActions.PlayerControls.UseItem.performed += UseItem;
         inputActions.PlayerControls.Pause.performed += PauseGame;
     }
 
@@ -154,7 +153,7 @@ public class PlayerControls : MonoBehaviour
 
         Vector3 lookDirection = (enemy.transform.position - playerModel.transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(lookDirection.x, 0, lookDirection.z));
-        playerModel.transform.rotation = lookRotation;
+        playerModel.transform.rotation = Quaternion.Lerp(playerModel.transform.rotation, lookRotation, Time.deltaTime * 10000f);
     }
 
     private void AnimatePlayerMovement(Vector3 desiredDirection)

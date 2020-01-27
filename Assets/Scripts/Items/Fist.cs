@@ -12,6 +12,7 @@
         {
             if (combat.state == CombatState.ATTACKING) return;
             base.OnSecondary();
+            combat.UseMana();
         }
     }
 }

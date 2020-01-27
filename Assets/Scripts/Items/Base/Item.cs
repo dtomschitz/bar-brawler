@@ -32,7 +32,9 @@ namespace Items
         Fist,
         Revolver,
         Bottle,
-        Drink,
         Knife,
+        Whiskey,
+        Beer,
+        Feuersaft
     }
 }

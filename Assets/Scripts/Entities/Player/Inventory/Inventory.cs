@@ -45,6 +45,9 @@ public class Inventory : MonoBehaviour
             if (freeSlot != null)
             {
                 freeSlot.Add(item);
+
+                Debug.Log(freeSlot.Count);
+
                 OnItemAdded?.Invoke(this, new InventoryEvent(item));
             }
         }

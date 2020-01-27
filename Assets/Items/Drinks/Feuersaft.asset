@@ -14,11 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Feuersaft
   icon: {fileID: 21300000, guid: b44a039e5c0581a4eb4ca59dda249992, type: 3}
-  type: 0
+  kind: 0
   addToInventory: 1
-  itemType: 3
+  isStackable: 1
+  type: 6
   prefab: {fileID: 505762499375796852, guid: 81c0912fe5d08c9448f68c93c8ac2b75, type: 3}
-  pickPosition: {x: -1.24, y: -0.57, z: -3.09}
-  pickRotation: {x: -173.608, y: 199.104, z: -128.969}
-  dropRotation: {x: 0, y: 0, z: 0}
+  itemHelp: {fileID: 0}
+  hasDuration: 0
+  duration: 0
+  defaultHand: 0
+  defaultPosition: {x: -0.247, y: -0.018, z: 0.196}
+  defaultRotation: {x: -167.721, y: -54.707, z: -81.70801}
+  defaultDropRotation: {x: 0, y: 0, z: 0}
+  equipmentAnimations: []
   healingAmount: 50

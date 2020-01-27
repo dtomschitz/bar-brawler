@@ -22,6 +22,7 @@ namespace Items
         public EquipmentAnimation[] equipmentAnimations;
 
         public bool IsMeleeWeapon => type == ItemType.Fist || type == ItemType.Knife || type == ItemType.Bottle;
+        public bool IsDrink => type == ItemType.Whiskey || type == ItemType.Beer || type == ItemType.Feuersaft;
     }
 
     [System.Serializable]

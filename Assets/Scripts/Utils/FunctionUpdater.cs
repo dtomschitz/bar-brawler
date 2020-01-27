@@ -11,7 +11,7 @@ namespace Utils {
             public Action OnUpdate;
 
             private void Update() {
-                if (OnUpdate != null) OnUpdate();
+                OnUpdate?.Invoke();
             }
 
         }

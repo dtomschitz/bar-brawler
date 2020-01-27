@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using Items;
+using Utils;
 
 public class PlayerCombat : EntityCombat
 {
@@ -59,7 +59,17 @@ public class PlayerCombat : EntityCombat
     public void UseMana(float amount = 1f)
     {
         amount = Mathf.Clamp(amount, 0, float.MaxValue);
-        CurrentMana -= amount;
+
+        if (amount == 1f)
+        {
+            CurrentMana -= amount;
+        } else
+        {
+            FunctionUpdater.Create(() =>
+            {
+                CurrentMana = Mathf.Lerp(CurrentMana, CurrentMana - amount, Time.deltaTime * 1f);
+            });
+        }
     }
 
     public override void SetState(CombatState newState)
