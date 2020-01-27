@@ -88,16 +88,32 @@ public class PlayerControls : MonoBehaviour
         }
     }
 
-    public void UsePrimary(CallbackContext ctx) => equipment.UsePrimary();
-    public void UseSecondary(CallbackContext ctx) => equipment.UseSecondary();
-    public void UseItem(CallbackContext ctx) => equipment.UseConsumable();
-    public void PauseGame(CallbackContext ctx) => GameState.instance.SetState(State.GAME_PAUSED);
+    public void UsePrimary(CallbackContext ctx) 
+    {
+        if (GameState.instance.IsInTargetAcquisition) return;
+        equipment.UsePrimary();
+    }
+
+    public void UseSecondary(CallbackContext ctx)
+    {
+        if (GameState.instance.IsInTargetAcquisition) return;
+        equipment.UseSecondary();
+    }
+
+    public void UseItem(CallbackContext ctx)
+    {
+        if (GameState.instance.IsInTargetAcquisition) return;
+        equipment.UseConsumable();
+    }
+
+    public void PauseGame(CallbackContext ctx)
+    {
+        GameState.instance.SetState(State.GAME_PAUSED);
+    }
 
     private void StopPlayerMovement()
     {
         MovePlayer(Vector3.zero);
-        //playerAnimator.SetForward(0f);
-        // playerAnimator.SetStrafe(0f);
         playerAnimator.Move(0f, 0f);
     }
 
@@ -113,6 +129,12 @@ public class PlayerControls : MonoBehaviour
 
     private void TurnPlayer()
     {
+        if (TargetAcquisition.instance.CurrentEnemy != null)
+        {
+            TurnPlayerToEnemy();
+            return;
+        }
+
         Vector2 input = lookPosition;
         Vector3 lookDirection = new Vector3(input.x, 0, input.y);
 
@@ -124,6 +146,15 @@ public class PlayerControls : MonoBehaviour
             Quaternion newRotation = Quaternion.LookRotation(lookRotation);
             playerModel.transform.rotation = Quaternion.Lerp(playerModel.transform.rotation, newRotation, Time.deltaTime * 8f);
         }
+    }
+
+    private void TurnPlayerToEnemy()
+    {
+        Enemy enemy = TargetAcquisition.instance.CurrentEnemy;
+
+        Vector3 lookDirection = (enemy.transform.position - playerModel.transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(lookDirection.x, 0, lookDirection.z));
+        playerModel.transform.rotation = lookRotation;
     }
 
     private void AnimatePlayerMovement(Vector3 desiredDirection)

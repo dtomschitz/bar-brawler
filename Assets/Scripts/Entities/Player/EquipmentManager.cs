@@ -6,10 +6,11 @@ public class EquipmentManager : MonoBehaviour
     public delegate void ItemEquipped(Equipment newItem, Equipment oldItem);
     public event ItemEquipped OnItemEquipped;
 
-    private GameObject prefab;
+    [Header("Hands")]
+    public GameObject rightHand;
+    public GameObject leftHand;
 
-    private GameObject rightHand;
-    private GameObject leftHand;
+    private GameObject prefab;
     private GameObject currentHand;
 
     private Equippable currentItem;
@@ -20,9 +21,6 @@ public class EquipmentManager : MonoBehaviour
 
     void Start()
     {
-        leftHand = GameObject.Find("mixamorig1:LeftHand");
-        rightHand = GameObject.Find("mixamorig1:RightHand");
-
         currentHand = rightHand;
 
         inventory = GetComponent<Inventory>();

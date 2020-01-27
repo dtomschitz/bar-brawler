@@ -126,4 +126,9 @@ public class GameState : MonoBehaviour
     {
         get { return state == State.INGAME ||state == State.TARGET_ACQUISITION; }
     }
+
+    public bool IsInTargetAcquisition
+    {
+        get { return state == State.TARGET_ACQUISITION; }
+    }
 }

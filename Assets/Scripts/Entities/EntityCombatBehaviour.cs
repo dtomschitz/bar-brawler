@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
-using Items;
 
-public class AttackingBehavior : StateMachineBehaviour
+public class EntityCombatBehaviour : StateMachineBehaviour
 {
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {

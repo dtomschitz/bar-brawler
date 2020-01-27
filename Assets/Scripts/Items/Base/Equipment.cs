@@ -9,6 +9,7 @@ namespace Items
         public GameObject prefab;
         public GameObject itemHelp;
 
+        public bool hasDuration;
         public float duration;
 
         [Header("Default item position")]

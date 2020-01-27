@@ -20,10 +20,13 @@ namespace Items
             if (!isPrimaryEnabled) return;
 
             Equipment equipment = item as Equipment;
-            if (equipment.duration - 1 <= 0)
+            if (equipment.hasDuration)
             {
-                Player.instance.inventory.RemoveItem(item);
-                return;
+                if (equipment.duration - 1 <= 0)
+                {
+                    Player.instance.inventory.RemoveItem(item);
+                    return;
+                }
             }
         }
 

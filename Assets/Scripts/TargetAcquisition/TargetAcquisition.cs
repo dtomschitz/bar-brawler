@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
 
@@ -21,11 +21,11 @@ public class TargetAcquisition : MonoBehaviour
 
     #endregion;
 
-    public Enemy CurrentEnemey { get; protected set; }
-    private Enemy[] enemies;
+    public Enemy CurrentEnemy { get; protected set; }
+    private List<Enemy> enemies = new List<Enemy>();
     private int currentIndex;
 
-    private readonly int interval = 2;
+    private readonly int interval = 1;
     private float nextTime = 0;
 
     private float minDistance = Mathf.Infinity;
@@ -34,13 +34,15 @@ public class TargetAcquisition : MonoBehaviour
 
     void Update()
     {
-        if (IsEnabled)
+        if (Time.time >= nextTime)
         {
-            if (Time.time >= nextTime)
+            UpdateEnemies();
+            if (enemies.Count == 0 && IsEnabled) 
             {
-                enemies = UpdateEnemies();
-                nextTime += interval;
+                Toggle();
             }
+
+            nextTime += interval;
         }
     }
 
@@ -86,8 +88,7 @@ public class TargetAcquisition : MonoBehaviour
 
         if (IsEnabled)
         {
-            UpdateEnemies();
-            if (CurrentEnemey == null)
+            if (CurrentEnemy == null)
             {
                 SelectClosestEnemy();
             }
@@ -96,7 +97,7 @@ public class TargetAcquisition : MonoBehaviour
 
     public void SelectLastEnemy()
     {
-        if (enemies.Length != 0)
+        if (enemies.Count != 0)
         {
             SelectEnemy(currentIndex - 1);
             return;
@@ -105,7 +106,7 @@ public class TargetAcquisition : MonoBehaviour
 
     public void SelectNextEnemy()
     {
-        if (enemies.Length != 0)
+        if (enemies.Count != 0)
         {
             SelectEnemy(currentIndex + 1);
             return;
@@ -119,16 +120,16 @@ public class TargetAcquisition : MonoBehaviour
 
     public void UnselectCurrentEnemy()
     {
-        if (CurrentEnemey != null)
+        if (CurrentEnemy != null)
         {
-            CurrentEnemey.SetCrosshairActive(false);
+            CurrentEnemy.SetCrosshairActive(false);
             SelectClosestEnemy();
         }
     }
 
     public void SelectEnemy(Enemy enemy)
     {
-        if (enemy) SetCurrentEnemy(enemy);
+        SetCurrentEnemy(enemy);
     }
 
     private void SelectEnemy(int nextIndex)
@@ -142,13 +143,17 @@ public class TargetAcquisition : MonoBehaviour
     private Enemy FindClosestEnemy()
     {
         Enemy enemy = null;
-        Vector3 playerPositon = Player.instance.gameObject.transform.position;
-        for (int i = 0; i < enemies.Length; i++)
+        UpdateEnemies();
+        if (enemies != null && enemies.Count != 0)
         {
-            float distance = Vector3.Distance(enemies[i].transform.position, playerPositon);
-            if (distance < minDistance)
+            Vector3 playerPositon = Player.instance.gameObject.transform.position;
+            for (int i = 0; i < enemies.Count; i++)
             {
-                enemy = enemies[i];
+                float distance = Vector3.Distance(enemies[i].transform.position, playerPositon);
+                if (distance < minDistance)
+                {
+                    enemy = enemies[i];
+                }
             }
         }
         return enemy;
@@ -156,17 +161,32 @@ public class TargetAcquisition : MonoBehaviour
 
     private void SetCurrentEnemy(Enemy enemy)
     {
-        UnselectCurrentEnemy();
+        if (CurrentEnemy != null)
+        {
+            CurrentEnemy.SetCrosshairActive(false);
+        }
 
-        CurrentEnemey = enemy;
-        currentIndex = Array.IndexOf(enemies, enemy);
-        CurrentEnemey.SetCrosshairActive(true);
+        currentIndex = enemy == null ? -1 : enemies.IndexOf(enemy);
+        CurrentEnemy = enemy;
+
+        if (CurrentEnemy != null)
+        {
+            CurrentEnemy.SetCrosshairActive(true);
+        }
     }
 
-    private Enemy[] UpdateEnemies() => enemies = FindObjectsOfType<Enemy>();
-
-    private bool InBounds(int index, Enemy[] enemies)
+    private void UpdateEnemies()
     {
-        return (index >= 0) && (index < enemies.Length);
+        enemies.Clear();
+        foreach (Enemy enemy in FindObjectsOfType<Enemy>())
+        {
+            if (enemy.Stats.IsDead) continue;
+            enemies.Add(enemy);
+        }
+    }
+
+    private bool InBounds(int index, List<Enemy> enemies)
+    {
+        return (index >= 0) && (index < enemies.Count);
     }
 }

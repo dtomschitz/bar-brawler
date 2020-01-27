@@ -117,7 +117,7 @@ public class Enemy : Interactable
         Player.instance.AddMoney(moneyDrop[Random.Range(0, moneyDrop.Length)]);
         Player.instance.combat.AddMana(10f);
 
-        if (TargetAcquisition.instance.CurrentEnemey == this)
+        if (TargetAcquisition.instance.CurrentEnemy == this)
         {
             TargetAcquisition.instance.UnselectCurrentEnemy();
         }

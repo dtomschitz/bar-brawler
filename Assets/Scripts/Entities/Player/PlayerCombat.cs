@@ -66,7 +66,7 @@ public class PlayerCombat : EntityCombat
     {
         base.SetState(newState);
 
-        switch (newState)
+       /* switch (newState)
         {
             case CombatState.ATTACKING:
                 Player.instance.controls.IsMovementEnabled = !(Player.instance.equipment.CurrentItem is Fist);
@@ -84,7 +84,7 @@ public class PlayerCombat : EntityCombat
                 Player.instance.controls.IsMovementEnabled = false;
                 break;
 
-        }
+        }*/
     }
 
     public float NormalizedMana
