@@ -9,16 +9,10 @@ public class HitCollider : MonoBehaviour
     {
         if (other.gameObject.tag == "Enemy")
         {
-            Debug.Log("HIT11");
-
-
             Player player = Player.instance;
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
 
-
-            Debug.Log(player.combat.IsAttacking);
-
-            if (enemy != null && enemy != player)
+            if (enemy != null && enemy != player && player.combat.IsAttacking)
             {
                 Debug.Log("HIT");
                 OnHit?.Invoke(enemy);

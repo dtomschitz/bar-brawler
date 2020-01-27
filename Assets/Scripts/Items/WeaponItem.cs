@@ -42,6 +42,10 @@ namespace Items
         {
             base.OnPrimary();
 
+            if (combat.IsDrinking || combat.IsAttacking) return;
+
+            Debug.Log("Attack primary");
+
             Cooldown(primaryCooldown, primaryManaRequired, combat.CurrentMana,
                 () =>
                 {
@@ -55,6 +59,8 @@ namespace Items
         public override void OnSecondary()
         {
             base.OnSecondary();
+
+            if (combat.IsDrinking || combat.IsAttacking) return;
 
             Cooldown(secondaryCooldown, secondaryManaRequired, combat.CurrentMana,
                 () =>

@@ -87,12 +87,10 @@ public class EntityCombat : MonoBehaviour
         get { return state == CombatState.Drinking; }
     }
 
-
     public bool IsStunned
     {
-        get { return state == CombatState.Fist_Attack; }
+        get { return state == CombatState.Stunned; }
     }
-
 }
 
 public enum CombatState
