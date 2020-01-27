@@ -5,9 +5,10 @@ using Items;
 
 public class Inventory : MonoBehaviour
 {
-    public List<Slot> slots = new List<Slot>();
+    private const int maxSlots = 4;
+
+    public List<Slot> slots = new List<Slot>(maxSlots);
     public List<Item> defaultItems = new List<Item>();
-    public int maxSlots = 4;
 
     [Header("Munition")]
     public int currentMunition = 0;
@@ -16,15 +17,17 @@ public class Inventory : MonoBehaviour
     public delegate void MunitionUpdate(int currentAmount);
     public event MunitionUpdate OnMunitionUpdate;
 
-    public event EventHandler<InventoryEvent> OnItemAdded;
-    public event EventHandler<InventoryEvent> OnItemRemoved;
-    public event EventHandler<InventoryEvent> OnItemUsed;
+
+    public delegate void InventoryEvent(Item item);
+    public event InventoryEvent OnItemAdded;
+    public event InventoryEvent OnItemRemoved;
+    public event InventoryEvent OnItemUsed;
 
     void Start()
     {
         for (int i = 0; i < maxSlots; i++)
         {
-            slots.Add(new Slot(i));
+            slots.Add(new Slot());
         }
 
         foreach(Item item in defaultItems)
@@ -45,10 +48,7 @@ public class Inventory : MonoBehaviour
             if (freeSlot != null)
             {
                 freeSlot.Add(item);
-
-                Debug.Log(freeSlot.Count);
-
-                OnItemAdded?.Invoke(this, new InventoryEvent(item));
+                OnItemAdded?.Invoke(item);
             }
         }
     }
@@ -69,16 +69,20 @@ public class Inventory : MonoBehaviour
         {
             if (slot.Remove(item))
             {
-                OnItemRemoved?.Invoke(this, new InventoryEvent(item));
+                if (slots.Count == 0)
+                {
+                    slots.Remove(slot);
+                    slots.Add(new Slot());
+                }
+                OnItemRemoved?.Invoke(item);
                 break;
             }
-
         }
     }
 
     public void UseItem(Item item)
     {
-        OnItemUsed?.Invoke(this, new InventoryEvent(item));
+        OnItemUsed?.Invoke(item);
         RemoveItem(item);
     }
 

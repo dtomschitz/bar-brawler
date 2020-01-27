@@ -4,7 +4,6 @@
     {
         public override void OnPrimary()
         {
-            if (combat.state == CombatState.Fist_Block) return;
             base.OnPrimary();
         }
 

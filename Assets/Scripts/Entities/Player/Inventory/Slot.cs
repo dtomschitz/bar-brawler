@@ -6,9 +6,9 @@ public class Slot
     private int id = 0;
     private Stack<Item> stack = new Stack<Item>();
 
-    public Slot(int id)
+    public Slot()
     {
-        this.id = id;
+        //this.id = id;
     }
 
     public void Add(Item item)
@@ -46,6 +46,14 @@ public class Slot
         {
             if (IsEmpty) return null;
             return stack.Peek();
+        }
+    }
+
+    public Stack<Item> Items
+    {
+        get
+        {
+            return stack;
         }
     }
 

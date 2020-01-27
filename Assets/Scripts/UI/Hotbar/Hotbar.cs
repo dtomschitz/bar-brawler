@@ -40,57 +40,26 @@ public class Hotbar : MonoBehaviour
 
     void Start()
     {
-        inventory.OnItemAdded += OnItemAdded;
-        inventory.OnItemRemoved += OnItemRemoved;
-
-        WaveSpawner.instance.OnWaveStateUpdate += OnWaveStateUpdate;
+       // inventory.OnItemAdded += OnItemAdded;
+        //inventory.OnItemRemoved += OnItemRemoved;
 
         slots = GetComponentsInChildren<HotbarSlot>();
     }
 
-    private void OnItemAdded(object sender, InventoryEvent e) 
+    void Update()
     {
-        for (int i = 0; i < slots.Length; i++)
+        for (int i = 0; i < inventory.slots.Count; i++)
         {
-            if (i == e.item.slot.Id)
+            slots[i].Clear();
+        }
+
+        for (int i = 0; i < inventory.slots.Count; i++)
+        {
+            Item item = inventory.slots[i].FirstItem;
+            if (item != null)
             {
-                slots[i].Add(i, e.item);
-                break;
+                slots[i].Add(item);
             }
-        }
-
-        if (selectedItemIndex == -1)
-        {
-            SelectItem(0);
-        }
-    } 
-
-    private void OnItemRemoved(object sender, InventoryEvent e)
-    {
-        for (int i = 0; i < slots.Length; i++)
-        {
-            if (i == e.item.slot.Id)
-            {
-                int itemCount = e.item.slot.Count;
-                slots[i].UpdateCount(itemCount);
-
-                if (itemCount == 0)
-                {
-                    slots[i].Clear();
-                    SelectItem(Mathf.Clamp(selectedItemIndex - 1, 0, int.MaxValue));
-                }
-                break;
-            }
-        }
-    }
-
-    private void OnWaveStateUpdate(WaveState state, int rounds)
-    {
-        bool isEnabled = !WaveSpawner.instance.IsWaveRunning;
-
-        for (int i = 0; i < slots.Length; i++)
-        {
-            EnableDragHandler(slots[i], isEnabled);
         }
     }
 
@@ -123,7 +92,6 @@ public class Hotbar : MonoBehaviour
         }
     }
 
-
     private void SelectItem(Item item, int index)
     {
         if (item != null && item is Equipment)
@@ -145,11 +113,43 @@ public class Hotbar : MonoBehaviour
         }
     }
 
-    private void EnableDragHandler(HotbarSlot hotbarSlot, bool isEnabled)
+    private void OnItemAdded(Item item)
     {
-        hotbarSlot.IsDragAndDropEnabled = isEnabled;
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (i == item.slot.Id)
+            {
+               // slots[i].Add(i, item);
+                break;
+            }
+        }
+
+        if (selectedItemIndex == -1)
+        {
+            SelectItem(0);
+        }
     }
 
+    private void OnItemRemoved(Item item)
+    {
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (i == item.slot.Id)
+            {
+                int itemCount = item.slot.Count;
+                slots[i].UpdateCount(itemCount);
+
+                if (itemCount == 0)
+                {
+                    slots[i].Clear();
+                    
+                    SelectItem(Mathf.Clamp(selectedItemIndex - 1, 0, int.MaxValue));
+                }
+                break;
+            }
+        }
+    }
+  
     private IEnumerator ShowSelectedName(string name)
     {
         selectedItemName.text = name;

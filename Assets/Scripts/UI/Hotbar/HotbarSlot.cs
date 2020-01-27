@@ -4,8 +4,6 @@ using Items;
 
 public class HotbarSlot : MonoBehaviour
 {
-    public int id;
-
     [Header("Sprites")]
     public Image background;
     public Sprite selectedSprite;
@@ -19,9 +17,8 @@ public class HotbarSlot : MonoBehaviour
 
     public bool IsDragAndDropEnabled { get; set; } = true;
 
-    public void Add(int id, Item item)
+    public void Add(Item item)
     {
-        this.id = id;
         this.item = item;
 
         icon.sprite = item.icon;
@@ -37,7 +34,6 @@ public class HotbarSlot : MonoBehaviour
 
     public void Clear()
     {
-        id = -1;
         item = null;
 
         icon.color = Color.clear;

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3474619239955923256}
   - component: {fileID: 8449569857796975136}
+  - component: {fileID: 697390554528216338}
   - component: {fileID: 8449569857796975137}
   m_Layer: 0
   m_Name: Knife
@@ -46,6 +47,18 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 10
   m_Center: {x: 0.37236857, y: 4.9530168, z: 0}
+--- !u!114 &697390554528216338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 460222663522612011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5b4f689227e9944a886332d89009dc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8449569857796975137
 MonoBehaviour:
   m_ObjectHideFlags: 0
