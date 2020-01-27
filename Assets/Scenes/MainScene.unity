@@ -1732,25 +1732,6 @@ MonoBehaviour:
     type: 3}
   HardEnemy: {fileID: 8921610789928665870, guid: b53ebd689bb624c42823f490be79e891,
     type: 3}
-  waveConfigs:
-  - fromRoundX: 5
-    difficulty: 0
-    minMediumEnemies: 1
-    maxMediumEnemies: 3
-    minHardEnemies: 0
-    maxHardEnemies: 0
-  - fromRoundX: 10
-    difficulty: 1
-    minMediumEnemies: 2
-    maxMediumEnemies: 4
-    minHardEnemies: 0
-    maxHardEnemies: 2
-  - fromRoundX: 15
-    difficulty: 2
-    minMediumEnemies: 2
-    maxMediumEnemies: 6
-    minHardEnemies: 2
-    maxHardEnemies: 6
   isWaveSpawnerEnabled: 0
   timeBetweenWaves: 31
   stateOfGameText: {fileID: 896722174}
@@ -8056,15 +8037,15 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 6220823756908219621, guid: f1a803a8bae0d2c45bc178c5636e8d24,
-        type: 3}
-      propertyPath: dragAndDropHandler
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3676323505710293154, guid: f1a803a8bae0d2c45bc178c5636e8d24,
         type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 1.6350021
+      objectReference: {fileID: 0}
+    - target: {fileID: 6220823756908219621, guid: f1a803a8bae0d2c45bc178c5636e8d24,
+        type: 3}
+      propertyPath: dragAndDropHandler
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1a803a8bae0d2c45bc178c5636e8d24, type: 3}
@@ -12271,6 +12252,36 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 199084740}
     m_Modifications:
+    - target: {fileID: 5105441965080216389, guid: 2528990fc2420d949a4ee103552a9b34,
+        type: 3}
+      propertyPath: orthographic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5105441965080216389, guid: 2528990fc2420d949a4ee103552a9b34,
+        type: 3}
+      propertyPath: field of view
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 5105441965080216389, guid: 2528990fc2420d949a4ee103552a9b34,
+        type: 3}
+      propertyPath: far clip plane
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5105441965080216389, guid: 2528990fc2420d949a4ee103552a9b34,
+        type: 3}
+      propertyPath: near clip plane
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5105441965080216389, guid: 2528990fc2420d949a4ee103552a9b34,
+        type: 3}
+      propertyPath: m_ClearFlags
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5105441965080216389, guid: 2528990fc2420d949a4ee103552a9b34,
+        type: 3}
+      propertyPath: m_OcclusionCulling
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5105441965080216391, guid: 2528990fc2420d949a4ee103552a9b34,
         type: 3}
       propertyPath: m_Name
@@ -12329,36 +12340,6 @@ PrefabInstance:
     - target: {fileID: 5105441965080216386, guid: 2528990fc2420d949a4ee103552a9b34,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5105441965080216389, guid: 2528990fc2420d949a4ee103552a9b34,
-        type: 3}
-      propertyPath: orthographic
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5105441965080216389, guid: 2528990fc2420d949a4ee103552a9b34,
-        type: 3}
-      propertyPath: field of view
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 5105441965080216389, guid: 2528990fc2420d949a4ee103552a9b34,
-        type: 3}
-      propertyPath: far clip plane
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 5105441965080216389, guid: 2528990fc2420d949a4ee103552a9b34,
-        type: 3}
-      propertyPath: near clip plane
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5105441965080216389, guid: 2528990fc2420d949a4ee103552a9b34,
-        type: 3}
-      propertyPath: m_ClearFlags
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5105441965080216389, guid: 2528990fc2420d949a4ee103552a9b34,
-        type: 3}
-      propertyPath: m_OcclusionCulling
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5105441965080216387, guid: 2528990fc2420d949a4ee103552a9b34,

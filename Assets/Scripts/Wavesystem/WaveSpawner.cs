@@ -12,19 +12,6 @@ public enum Difficulty
     Hard,
 }
 
-[System.Serializable]
-public struct WaveConfig
-{
-    public int fromRoundX;
-    public Difficulty difficulty;
-
-    public int minMediumEnemies;
-    public int maxMediumEnemies;
-
-    public int minHardEnemies;
-    public int maxHardEnemies;
-}
-
 public class WaveSpawner : MonoBehaviour
 {
     #region Singelton
@@ -48,9 +35,6 @@ public class WaveSpawner : MonoBehaviour
     public GameObject MediumEnemy; 
     public GameObject HardEnemy;
 
-    public WaveConfig[] waveConfigs;
-    private WaveConfig currentWaveConfig;
-
     public Dictionary<Difficulty, GameObject> enemies = new Dictionary<Difficulty, GameObject>(3);
 
     public List<SpawnPoint> SpawnPoints { get; protected set; }
@@ -66,6 +50,8 @@ public class WaveSpawner : MonoBehaviour
     public static int rounds = 0;
     private float waveCountdown;
     private float searchCountdown = 1f;
+
+    private float randomSpawnDigit;
 
     void Start()
     {
@@ -128,56 +114,35 @@ public class WaveSpawner : MonoBehaviour
        
         //stateOfGameText.text = rounds.ToString();
 
-        currentWaveConfig = GetCurrentWaveConfig;
         state = WaveState.Spawning;
         OnWaveStateUpdate?.Invoke(state, rounds);
 
         SpawnPoint spawnPoint = SpawnPoints[Random.Range(0, SpawnPoints.Count)];
         spawnPoint.OpenDoor();
 
-        StartCoroutine(SpawnEasyEnemies(spawnPoint.transform));
+        whichDifficulty();
+
+        StartCoroutine(SpawnEnemies(spawnPoint.transform));
 
         state = WaveState.Running;
         OnWaveStateUpdate?.Invoke(state, rounds);
 
     }
 
-    private IEnumerator SpawnEasyEnemies(Transform spawnPoint)
+    private IEnumerator SpawnEnemies(Transform spawnPoint)
     {
         for (int i = 0; i < rounds * 1.25; i++)
         {
-            SpawnEnemy(EasyEnemey, spawnPoint);
+            whichEnemy(spawnPoint);
             yield return new WaitForSeconds(1f);
         }
         yield break;
     }
 
-    private IEnumerator SpawnMediumEnemies(Transform spawnPoint)
-    {
-        yield break;
-    }
-
-    private IEnumerator SpawnHardEnemies(Transform spawnPoint)
-    {
-        yield break;
-    }
 
     private void SpawnEnemy(GameObject enemy, Transform spawnPoint)
     {
         Instantiate(enemy, spawnPoint.position, spawnPoint.rotation);
-    }
-
-    private WaveConfig GetCurrentWaveConfig
-    {
-        get
-        {
-            foreach (WaveConfig waveConfig in waveConfigs)
-            {
-                if (waveConfig.difficulty == difficulty) return waveConfig;
-            }
-
-            return currentWaveConfig;
-        }
     }
 
     private bool IsEnemyAlive
@@ -201,4 +166,77 @@ public class WaveSpawner : MonoBehaviour
     {
         get { return state == WaveState.Running || state == WaveState.Spawning; }
     }
+
+    private void whichDifficulty()
+    {
+        if (rounds >= 5 && rounds <= 9)
+        {
+            difficulty = Difficulty.Medium;
+        }
+
+        if (rounds >= 10)
+        {
+            difficulty = Difficulty.Hard;
+        }
+        
+        return;
+    }
+
+    private void whichEnemy(Transform spawnPoint)
+    {
+
+        if (difficulty == Difficulty.Easy)
+        {
+            SpawnEnemy(EasyEnemey, spawnPoint);
+        }
+
+        if (difficulty == Difficulty.Medium)
+        {
+            mediumSpawningAlgorithm(spawnPoint);
+        }
+
+        if (difficulty == Difficulty.Hard)
+        {
+            hardSpawningAlgorithm(spawnPoint);
+        }
+    }
+
+    private void mediumSpawningAlgorithm(Transform spawnPoint)
+    {
+        randomSpawnDigit = Random.value * 100f;
+
+        if (randomSpawnDigit < 75)
+        {
+            SpawnEnemy(EasyEnemey, spawnPoint);
+        }
+
+
+        if (randomSpawnDigit > 74) 
+        {
+            SpawnEnemy(MediumEnemy, spawnPoint);
+        }
+
+    }
+
+    private void hardSpawningAlgorithm(Transform spawnPoint)
+    {
+        randomSpawnDigit = Random.value * 100f;
+
+        if (randomSpawnDigit < 50)
+        {
+            SpawnEnemy(EasyEnemey, spawnPoint);
+        }
+
+        if (randomSpawnDigit > 49 &&  randomSpawnDigit < 85)
+        {
+            SpawnEnemy(MediumEnemy, spawnPoint);
+        }
+
+        if (randomSpawnDigit > 84) 
+        {
+            SpawnEnemy(HardEnemy, spawnPoint);
+        }
+
+    }
+
 }
