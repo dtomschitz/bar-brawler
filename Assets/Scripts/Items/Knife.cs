@@ -10,14 +10,14 @@ namespace Items
         public float bleedOutTime = 10f;
         public float timeBetweenDamage = 1f;
 
-        public override void OnPrimaryAccomplished()
+       /* public override void OnPrimaryAccomplished()
         {
             base.OnPrimaryAccomplished();
 
             //combat.state = CombatState.ATTACKING;
             StartPrimaryRoutine(PrimaryRoutine());
             animator.OnPrimary();
-        }
+        }*/
 
         public override void OnHit(Enemy enemy)
         {

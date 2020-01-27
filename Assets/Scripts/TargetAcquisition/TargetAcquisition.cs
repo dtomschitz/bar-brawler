@@ -21,7 +21,7 @@ public class TargetAcquisition : MonoBehaviour
 
     #endregion;
 
-    private Enemy currentEnemey;
+    public Enemy CurrentEnemey { get; protected set; }
     private Enemy[] enemies;
     private int currentIndex;
 
@@ -54,7 +54,10 @@ public class TargetAcquisition : MonoBehaviour
         inputActions.Disable();
     }
 
-    public void ToggleTargetAcquisition(CallbackContext context) => Toggle();
+    public void ToggleTargetAcquisition(CallbackContext context)
+    {
+        Toggle();
+    }
 
     public void SelectLast(CallbackContext context)
     {
@@ -84,10 +87,9 @@ public class TargetAcquisition : MonoBehaviour
         if (IsEnabled)
         {
             UpdateEnemies();
-            if (currentEnemey == null)
+            if (CurrentEnemey == null)
             {
-                Enemy enemy = FindClosestEnemy();
-                if (enemy != null) SelectEnemy(enemy);
+                SelectClosestEnemy();
             }
         }
     }
@@ -110,32 +112,22 @@ public class TargetAcquisition : MonoBehaviour
         }
     }
 
-    public Enemy FindClosestEnemy()
+    public void SelectClosestEnemy()
     {
-        Enemy enemy = null;
-        Vector3 playerPositon = Player.instance.gameObject.transform.position;
-        for (int i = 0; i < enemies.Length; i++) 
-        {
-            float distance = Vector3.Distance(enemies[i].transform.position, playerPositon);
-            if (distance < minDistance)
-            {
-                enemy = enemies[i];
-            }
-        }
-        return enemy;
+         
     }
 
     public void UnselectCurrentEnemy()
     {
-        if (currentEnemey != null)
+        if (CurrentEnemey != null)
         {
-            currentEnemey.SetCrosshairActive(false);
+            CurrentEnemey.SetCrosshairActive(false);
         }
     }
 
     public void SelectEnemy(Enemy enemy)
     {
-        SetCurrentEnemy(enemy);
+        if (enemy) SetCurrentEnemy(enemy);
     }
 
     private void SelectEnemy(int nextIndex)
@@ -147,13 +139,28 @@ public class TargetAcquisition : MonoBehaviour
         }
     }
 
+    private Enemy FindClosestEnemy()
+    {
+        Enemy enemy = null;
+        Vector3 playerPositon = Player.instance.gameObject.transform.position;
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            float distance = Vector3.Distance(enemies[i].transform.position, playerPositon);
+            if (distance < minDistance)
+            {
+                enemy = enemies[i];
+            }
+        }
+        return enemy;
+    }
+
     private void SetCurrentEnemy(Enemy enemy)
     {
         UnselectCurrentEnemy();
 
-        currentEnemey = enemy;
+        CurrentEnemey = enemy;
         currentIndex = Array.IndexOf(enemies, enemy);
-        currentEnemey.SetCrosshairActive(true);
+        CurrentEnemey.SetCrosshairActive(true);
     }
 
     private Enemy[] UpdateEnemies() => enemies = FindObjectsOfType<Enemy>();

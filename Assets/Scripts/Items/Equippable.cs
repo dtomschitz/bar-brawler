@@ -18,6 +18,9 @@ namespace Items
         public virtual void OnPrimary()
         {
             if (!isPrimaryEnabled) return;
+
+            Equipment equipment = item as Equipment;
+            if (equipment.duration - 1 <= 0) return;
         }
 
         public virtual void OnSecondary()
