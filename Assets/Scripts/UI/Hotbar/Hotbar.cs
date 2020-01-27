@@ -1,8 +1,12 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.UI;
-using Items;
 using static UnityEngine.InputSystem.InputAction;
+
+using Items;
+using Utils;
 
 public class Hotbar : MonoBehaviour
 {
@@ -47,23 +51,6 @@ public class Hotbar : MonoBehaviour
         slots = GetComponentsInChildren<HotbarSlot>();
     }
 
-    public void UpdateItems(Item _)
-    {
-        for (int i = 0; i < inventory.slots.Count; i++)
-        {
-            slots[i].Clear();
-        }
-
-        for (int i = 0; i < inventory.slots.Count; i++)
-        {
-            Item item = inventory.slots[i].FirstItem;
-            if (item != null)
-            {
-                slots[i].Add(item);
-            }
-        }
-    }
-
     public void SelectNextItem(CallbackContext ctx)
     {
         if (GameState.instance.IsInTargetAcquisition) return;
@@ -87,17 +74,17 @@ public class Hotbar : MonoBehaviour
 
     public void SelectNextItem()
     {
-        SelectItem(currentItemIndex + 1);
+        SelectItem(Mathf.Clamp(currentItemIndex + 1, 0, slots.Length));
     }
 
     public void SelectLastItem()
     {
-        SelectItem(currentItemIndex - 1);
+        SelectItem(Mathf.Clamp(currentItemIndex - 1, 0, slots.Length));
     }
 
     public void SelectItem(int nextIndex)
     {
-        if (InBounds(nextIndex, slots))
+        if (List.InBounds(nextIndex, slots.Length))
         {
             SelectItem(slots[nextIndex].item, nextIndex);
         }
@@ -124,13 +111,13 @@ public class Hotbar : MonoBehaviour
         }
     }
 
-    private void OnItemAdded(Item item)
+    private void OnItemAdded(object sender, InventoryEvent e)
     {
         for (int i = 0; i < slots.Length; i++)
         {
-            if (i == item.slot.Id)
+            if (i == e.item.slot.Id)
             {
-                slots[i].Add(item);
+                slots[i].Add(e.item);
                 break;
             }
         }
@@ -141,40 +128,47 @@ public class Hotbar : MonoBehaviour
         }
     }
 
-    private void OnItemRemoved(Item item)
+    private void OnItemRemoved(object sender, InventoryEvent e)
     {
         for (int i = 0; i < slots.Length; i++)
         {
-            if (i == item.slot.Id)
+            if (i == e.item.slot.Id)
             {
-                int itemCount = item.slot.Count;
+                int itemCount = e.item.slot.Count;
                 slots[i].UpdateCount(itemCount);
 
                 if (itemCount == 0)
                 {
-                    slots[i].Clear();    
-                    SelectItem(Mathf.Clamp(currentItemIndex - 1, 0, int.MaxValue));
-                }
-
-                if (itemCount > 0)
-                {
-                    SelectItem(currentItemIndex);
+                    slots[i].Clear();
                 }
                 break;
             }
         }
     }
 
-    private void OnItemUsed(Item item)
+    private void UpdateItems()
     {
-        Debug.Log(item.slot.Count);
-
-        if (item.slot.Count > 0)
+        for (int i = 0; i < slots.Length; i++)
         {
-            SelectItem(currentItemIndex);
+            slots[i].Clear();
+        }
+
+        List<Slot> inventorySlots = inventory.slots;
+        inventorySlots.RemoveAll(slot => slot.Count == 0);
+
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (List.InBounds(i, inventorySlots.Count))
+            {
+                Item item = inventorySlots[i].FirstItem;
+                if (item != null)
+                {
+                    slots[i].Add(item);
+                }
+            }
         }
     }
-  
+
     private IEnumerator ShowSelectedName(string name)
     {
         selectedItemName.text = name;
@@ -184,9 +178,4 @@ public class Hotbar : MonoBehaviour
 
     public void SetLeftBumperActive(bool active) => leftBumper.SetActive(active);
     public void SetRightBumperActive(bool active) => rightBumper.SetActive(active);
-
-    private bool InBounds(int index, HotbarSlot[] slots)
-    {
-        return (index >= 0) && (index < slots.Length);
-    }
 }

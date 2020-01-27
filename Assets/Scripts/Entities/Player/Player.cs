@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
 
     #endregion;
 
-    public int currentBalance = 0;
+    public int currentBalance = 1000;
 
     public delegate void MoneyRecived(int amount, int currentBalance);
     public delegate void MoneySpend(int amount, int currentBalance);

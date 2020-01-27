@@ -74,22 +74,11 @@ public class EquipmentManager : MonoBehaviour
         }
     }*/
 
-    private void OnItemRemoved(Item item)
+    private void OnItemRemoved(object sender, InventoryEvent e)
     {
-        if (item == currentEquipment)
+        if (e.item == currentEquipment)
         {
             Unequip();
-            
-            if (item.slot.Count != 0)
-            {
-
-            }
-
-            /*EquipItem()
-            if (item.slot.Count == 0)
-            {
-               // EquipFirstItemInHotbar();
-            }*/
         }
     }
 

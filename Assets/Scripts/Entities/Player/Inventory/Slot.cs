@@ -49,13 +49,13 @@ public class Slot
         }
     }
 
-    public Stack<Item> Items
+    /*public Stack<Item> Items
     {
         get
         {
             return stack;
         }
-    }
+    }*/
 
     public bool IsEmpty
     {

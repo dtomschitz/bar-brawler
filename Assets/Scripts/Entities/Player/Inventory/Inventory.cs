@@ -5,9 +5,9 @@ using Items;
 
 public class Inventory : MonoBehaviour
 {
-    private const int maxSlots = 4;
+    private int maxSlots = 4;
 
-    public List<Slot> slots = new List<Slot>(maxSlots);
+    public List<Slot> slots = new List<Slot>();
     public List<Item> defaultItems = new List<Item>();
 
     [Header("Munition")]
@@ -17,11 +17,9 @@ public class Inventory : MonoBehaviour
     public delegate void MunitionUpdate(int currentAmount);
     public event MunitionUpdate OnMunitionUpdate;
 
-
-    public delegate void InventoryEvent(Item item);
-    public event InventoryEvent OnItemAdded;
-    public event InventoryEvent OnItemRemoved;
-    public event InventoryEvent OnItemUsed;
+    public event EventHandler<InventoryEvent> OnItemAdded;
+    public event EventHandler<InventoryEvent> OnItemRemoved;
+    public event EventHandler<InventoryEvent> OnItemUsed;
 
     void Start()
     {
@@ -45,10 +43,13 @@ public class Inventory : MonoBehaviour
             Slot freeSlot = FindStackableSlot(item);
             if (freeSlot == null) freeSlot = FindNextEmptySlot();
 
+            Debug.Log(slots.Count);
+
             if (freeSlot != null)
             {
                 freeSlot.Add(item);
-                OnItemAdded?.Invoke(item);
+                Debug.Log("item added: " + item.name);
+                OnItemAdded?.Invoke(this, new InventoryEvent(item));
             }
         }
     }
@@ -69,7 +70,7 @@ public class Inventory : MonoBehaviour
         {
             if (slot.Remove(item))
             {
-                OnItemRemoved?.Invoke(item);
+                OnItemRemoved?.Invoke(this, new InventoryEvent(item));
                 break;
             }
         }
@@ -77,8 +78,8 @@ public class Inventory : MonoBehaviour
 
     public void UseItem(Item item)
     {
+        OnItemUsed?.Invoke(this, new InventoryEvent(item));
         RemoveItem(item);
-        OnItemUsed?.Invoke(item);
     }
 
     public void UseMunition()
