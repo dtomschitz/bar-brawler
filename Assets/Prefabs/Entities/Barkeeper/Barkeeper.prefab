@@ -75,10 +75,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hint: 
   key:
-    m_Name: 
+    m_Name: Key
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 
+    m_Id: eb83d29c-263c-40d8-9d36-58df3b83d253
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []
