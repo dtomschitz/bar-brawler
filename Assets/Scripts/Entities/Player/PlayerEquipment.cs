@@ -132,7 +132,7 @@ public class PlayerEquipment : MonoBehaviour
 
     private void Unequip()
     {
-        if (!currentEquipment.IsDrink) Destroy(currentItemGameObject);
+        Destroy(currentItemGameObject);
 
         currentItem = null;
         currentEquipment = null;

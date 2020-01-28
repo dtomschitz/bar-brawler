@@ -7,6 +7,7 @@ namespace Items
     public class Consumable : Equippable
     {
         private PlayerAnimator animator;
+        private PlayerCombat combat;
 
         void Start()
         {
@@ -16,15 +17,18 @@ namespace Items
             }
 
             animator = Player.instance.animator;
+            combat = Player.instance.combat;
         }
 
         public override void OnPrimary()
         {
             PlayerStats stats = Player.instance.stats;
-            if (stats == null || stats.HasFullLife) return;
+            if (stats == null || stats.HasFullLife || combat.IsDrinking) return;
 
-            Player.instance.inventory.RemoveItem(item);
-            gameObject.SetActive(false);
+            //
+            //gameObject.SetActive(false);
+
+            animator.OnPrimary();
         }
 
         public IEnumerator DestroyAfterTime(float time, FunctionUpdater updater = null)

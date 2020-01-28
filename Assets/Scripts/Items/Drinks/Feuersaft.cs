@@ -8,7 +8,6 @@ namespace Items
         {
             base.OnPrimary();
             Player.instance.stats.Heal((item as Drink).healingAmount);
-
         }
     }
 }

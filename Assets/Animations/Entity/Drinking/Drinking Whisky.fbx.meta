@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 4d5ed924e942ba347bc77cb9dde6c924
+guid: ac879c503ac77be488011b9d284dfca2
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: Drinking Feuersaft
+    second: Drinking Whiskey
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -35,7 +35,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Drinking Feuersaft
+      name: Drinking Whiskey
       takeName: mixamo.com
       internalID: 0
       firstFrame: 130

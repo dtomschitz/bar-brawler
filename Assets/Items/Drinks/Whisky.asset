@@ -24,8 +24,8 @@ MonoBehaviour:
   hasDuration: 0
   duration: 0
   defaultHand: 0
-  defaultPosition: {x: 0, y: 0, z: 0}
-  defaultRotation: {x: 0, y: 0, z: 0}
+  defaultPosition: {x: 0.072, y: 0.008, z: 0.071}
+  defaultRotation: {x: -28.663, y: -3.987, z: -64.22701}
   defaultDropRotation: {x: 0, y: 0, z: 0}
   equipmentAnimations: []
   healingAmount: 20
