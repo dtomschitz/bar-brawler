@@ -8,6 +8,7 @@ namespace Items
         public delegate void DurationUpdate(float duration, float maxDuration);
         public event DurationUpdate OnDurationUpdate;
 
+        [Header("Equipment")]
         public ItemType type; 
         public GameObject prefab;
         public GameObject itemHelp;

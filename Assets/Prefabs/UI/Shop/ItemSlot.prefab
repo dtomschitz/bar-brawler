@@ -132,9 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e8d70045d89f714c8b1eccbfc30aba7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  icon: {fileID: 0}
   title: {fileID: 9108506545597897288}
-  price: {fileID: 0}
   button: {fileID: 9108506544920302444}
   shopItem: {fileID: 11400000, guid: d123e651e720b6043b5e6bd830c60bdc, type: 2}
 --- !u!1 &9108506545597897290
@@ -202,7 +200,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 793181e2747f6aa40b083786aa687b64, type: 3}
-    m_FontSize: 35
+    m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0

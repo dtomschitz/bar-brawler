@@ -35,22 +35,33 @@ public class ItemInfo : FadeGraphic
 
         FadeIn(eventText, .5f);
 
-        if (Player.instance.currentBalance < shopItem.price)
+        Inventory inventory = Player.instance.inventory;
+        if (inventory != null)
         {
-            eventText.text = "Du hast nicht genug Geld!".ToUpper();
-            StartCoroutine(HideEventText());
-            return;
+            if (Player.instance.currentBalance < shopItem.price)
+            {
+                eventText.text = "Du hast nicht genug Geld!".ToUpper();
+                StartCoroutine(HideEventText());
+                return;
+            }
+
+            if (!inventory.HasSpace)
+            {
+                eventText.text = "Dein Inventar ist voll!".ToUpper();
+                StartCoroutine(HideEventText());
+                return;
+            }
+
+            if (inventory.HasItem(shopItem.item) && inventory.FindStackableSlot(shopItem.item) == null)
+            {
+                eventText.text = "Du hast schon zu viele Items dieser Art".ToUpper();
+                StartCoroutine(HideEventText());
+                return;
+            }
+
+
+            shopItem.OnItemBought();
         }
-
-        if (Player.instance.inventory.HasItem(shopItem.item) && Player.instance.inventory.FindStackableSlot(shopItem.item) == null) 
-        {
-            eventText.text = "Du hast schon zu viele Items dieser Art".ToUpper();
-            StartCoroutine(HideEventText());
-            return;
-        }
-
-
-        shopItem.OnItemBought();
     }
 
     private IEnumerator HideEventText()

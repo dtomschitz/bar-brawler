@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using Items;
 
-public class Slot
+public class InventorySlot
 {
     private int id = 0;
     private Stack<Item> stack = new Stack<Item>();
 
-    public Slot(int id)
+    public InventorySlot(int id)
     {
         this.id = id;
     }
@@ -35,7 +35,7 @@ public class Slot
         if (IsEmpty || !item.isStackable) return false;
 
         Item first = stack.Peek();
-        if (first.name == item.name) return true;
+        if (first.name == item.name && stack.Count < item.maxStackSize) return true;
 
         return false;
     }

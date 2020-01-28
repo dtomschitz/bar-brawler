@@ -94,13 +94,10 @@ public class Hotbar : MonoBehaviour
     {
         if (item != null && item is Equipment)
         {
-            if (currentItemNameCoroutine != null)
-            {
-                StopCoroutine(currentItemNameCoroutine);
-                currentItemNameCoroutine = null;
-            }
+            StopAllCoroutines();
 
-            currentItemNameCoroutine = StartCoroutine(ShowSelectedName(item.name));
+            if (!GameState.instance.IsInShop) StartCoroutine(ShowSelectedName(item.name));
+
             FindObjectOfType<AudioManager>().Play("SelectedSound");
             OnItemSelected?.Invoke(item as Equipment);
 
@@ -114,15 +111,6 @@ public class Hotbar : MonoBehaviour
 
     private void OnItemAdded(object sender, InventoryEvent e)
     {
-        /*for (int i = 0; i < slots.Length; i++)
-        {
-            if (i == e.item.slot.Id)
-            {
-                slots[i].Add(e.item);
-                break;
-            }
-        }*/
-
         HotbarSlot slot = FindHotbarSlot(e.item);
         if (slot == null) slot = FindEmptyHotbarSlot();
 
@@ -153,11 +141,7 @@ public class Hotbar : MonoBehaviour
                     SelectLastItem();
                 }
 
-                if (itemCount > 0)
-                {
-                    SelectItem(currentItemIndex);
-                }
-
+                if (itemCount > 0) SelectItem(currentItemIndex);
                 break;
             }
         }
@@ -165,12 +149,9 @@ public class Hotbar : MonoBehaviour
 
     private void UpdateItems()
     {
-        for (int i = 0; i < slots.Length; i++)
-        {
-            slots[i].Clear();
-        }
+        for (int i = 0; i < slots.Length; i++) slots[i].Clear();
 
-        List<Slot> inventorySlots = new List<Slot>(inventory.slots);
+        List<InventorySlot> inventorySlots = new List<InventorySlot>(inventory.slots);
         inventorySlots.RemoveAll(slot => slot.Count == 0);
 
         for (int i = 0; i < slots.Length; i++)
@@ -197,10 +178,7 @@ public class Hotbar : MonoBehaviour
 
     private HotbarSlot FindEmptyHotbarSlot()
     {
-        foreach (HotbarSlot slot in slots)
-        {
-            if (slot.item == null) return slot;
-        }
+        foreach (HotbarSlot slot in slots) if (slot.item == null) return slot;
         return null;
     }
 
