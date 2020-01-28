@@ -12,7 +12,7 @@ namespace Items
 
         private float cooldown = 0f;
 
-        private PlayerAnimator animator;
+        private EntityAnimator animator;
 
         void Start()
         {

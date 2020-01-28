@@ -38,7 +38,7 @@ public class ItemInfo : FadeGraphic
         Inventory inventory = Player.instance.inventory;
         if (inventory != null)
         {
-            if (Player.instance.currentBalance < shopItem.price)
+            if (Player.instance.CurrentBalance < shopItem.price)
             {
                 eventText.text = "Du hast nicht genug Geld!".ToUpper();
                 StartCoroutine(HideEventText());

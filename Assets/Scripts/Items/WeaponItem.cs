@@ -20,8 +20,8 @@ namespace Items
         private Coroutine primaryRoutine;
         private Coroutine secondaryRoutine;
 
-        protected PlayerCombat combat;
-        protected PlayerAnimator animator;
+        protected EntityCombat combat;
+        protected EntityAnimator animator;
 
         void Start()
         {
@@ -43,8 +43,6 @@ namespace Items
             base.OnPrimary();
 
             if (combat.IsDrinking || combat.IsAttacking) return;
-
-            Debug.Log("Attack primary");
 
             Cooldown(primaryCooldown, primaryManaRequired, combat.CurrentMana,
                 () =>

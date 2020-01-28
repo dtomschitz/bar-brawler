@@ -446,12 +446,13 @@ GameObject:
   - component: {fileID: 538926891696788765}
   - component: {fileID: 7974399504029188237}
   - component: {fileID: 7589187768858205314}
+  - component: {fileID: 2238615278613215709}
   - component: {fileID: 6673331655994226945}
   - component: {fileID: 6356219383110875253}
   - component: {fileID: 1592573314076958519}
   - component: {fileID: 2528973514752264677}
   m_Layer: 10
-  m_Name: Enemy Easy
+  m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -536,13 +537,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 674dfd931788c5d45ac77f7296c3d43a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stats: {fileID: 6673331655994226945}
+  combat: {fileID: 1592573314076958519}
+  animator: {fileID: 6356219383110875253}
+  equipment: {fileID: 2238615278613215709}
   movementEnabled: 1
-  damagePopup: {fileID: 4610692876775489689, guid: e2262ee3243caa148b85979b0d9e05cd,
-    type: 3}
   crosshair: {fileID: 1259187709027911290}
   lookRadius: 10
   attackRate: 1
   moneyDrop: 040000000500000008000000
+--- !u!114 &2238615278613215709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6233071837183773105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05be5af23906e2e469b182bc7e9d1ffd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rightHand: {fileID: 7344411659727841289}
+  leftHand: {fileID: 6619884461426605644}
 --- !u!114 &6673331655994226945
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -558,6 +575,7 @@ MonoBehaviour:
   maxHealth: 100
   damage: 10
   healthBar: {fileID: 1743001444}
+  damagePopup: {fileID: 0}
 --- !u!114 &6356219383110875253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -583,6 +601,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 416cefc15fd00f546a19210660206ac5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  manaRegenerationAmount: 0
+  manaRegenerationSpeed: 0
 --- !u!114 &2528973514752264677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -678,18 +698,30 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: -6057140222963153312, guid: 3a586a861033354488d8b2aaa382a4dc,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: c89949b6822c0554882061c213551808, type: 2}
     - target: {fileID: -7780734103960978560, guid: 3a586a861033354488d8b2aaa382a4dc,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 7bfd2e17114df624496b7bec10ceeb0a, type: 2}
+    - target: {fileID: -6057140222963153312, guid: 3a586a861033354488d8b2aaa382a4dc,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: c89949b6822c0554882061c213551808, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a586a861033354488d8b2aaa382a4dc, type: 3}
+--- !u!1 &7344411659727841289 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -7863682211921357141, guid: 3a586a861033354488d8b2aaa382a4dc,
+    type: 3}
+  m_PrefabInstance: {fileID: 8588929418885217954}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6619884461426605644 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3237116253809918190, guid: 3a586a861033354488d8b2aaa382a4dc,
+    type: 3}
+  m_PrefabInstance: {fileID: 8588929418885217954}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3623344922093393336 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 3a586a861033354488d8b2aaa382a4dc,

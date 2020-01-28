@@ -10,11 +10,10 @@ public enum AIState
     SEEK
 }
 
-public class Enemy : Interactable
+public class Enemy : Entity
 {
     public bool movementEnabled = true;
 
-    public GameObject damagePopup;
     public GameObject crosshair;
 
     public float lookRadius = 10f;
@@ -26,31 +25,33 @@ public class Enemy : Interactable
 
     [Header("Drops")]
     public int[] moneyDrop;
-
-    public EntityStats Stats { get; protected set; }
-    public EntityCombat Combat { get; protected set; }
-    public EnemyAnimator Animator { get; protected set; }
+    
+    //public EnemyStats stats;
+    //public EnemyCombat combat;
+    //public EnemyAnimator animator;
 
     private Player player;
     private Transform target;
     private NavMeshAgent agent;
 
-    void Start()
+    public override void Start()
     {
+        base.Start();
+
         player = Player.instance;
         target = player.gameObject.transform;
         agent = GetComponent<NavMeshAgent>();
-        Combat = GetComponent<EntityCombat>();
-        Animator = GetComponent<EnemyAnimator>();
+     //   combat = GetComponent<EnemyCombat>();
+     //   animator = GetComponent<EnemyAnimator>();
+      //  stats = GetComponent<EnemyStats>();
 
-        Stats = GetComponent<EntityStats>();
-        Stats.OnTakeDamage += OnTakeDamage;
-        Stats.OnDeath += Death;
+        //stats.OnTakeDamage += OnTakeDamage;
+       // stats.OnDeath += OnDeath;
     }
 
     void Update()
     {
-        if (!Stats.IsDead)
+        if (!stats.IsDead)
         {
             attackCooldown -= Time.deltaTime;
 
@@ -65,18 +66,18 @@ public class Enemy : Interactable
                     double velocity = agent.velocity.magnitude / agent.speed; 
                     if (velocity == 0f)
                     {
-                        PlayerStats playerStats = player.stats;
+                        /*PlayerStats playerStats = player.stats;
                         PlayerCombat playerCombat = player.combat;
                         if (playerStats != null && playerCombat != null && !playerStats.IsDead)
                         {
                             if (!IsUnderAttack)
                             {
                                 attackCooldown = 1f / attackRate;
-                                Animator.OnPrimary();
+                                animator.OnPrimary();
 
-                                if (!playerCombat.IsBlocking) Combat.Attack(playerStats);
+                                if (!playerCombat.IsBlocking) combat.Attack(playerStats);
                             }
-                        }
+                        }*/
                     }
                 } 
             }
@@ -85,36 +86,31 @@ public class Enemy : Interactable
 
     private void Think()
     {
-        
-
     }
 
-    public override void Interact()
+    public override void OnHit()
     {
-        if (Stats.IsDead) return;
+        base.OnHit();
 
-        PlayerCombat combat = Player.instance.combat;
-        combat.Attack(Stats);
+        if (stats.IsDead) return;
+        Player.instance.combat.Attack(stats);
     }
 
-    public void OnTakeDamage(double damage)
+    public override void OnTakeDamage(float damage)
     {
-        if (Stats.IsDead) return;
-
-        if (isUnderAttackRoutine != null)
-        {
-            StopCoroutine(IsUnderAttackRoutine());
-            isUnderAttackRoutine = null;
-        }
-
-        isUnderAttackRoutine = StartCoroutine(IsUnderAttackRoutine());
-        if (damagePopup) ShowDamagePopup(damage);
+        base.OnTakeDamage(damage);
     }
 
-    public void Death()
+
+    public override void OnDeath()
     {
+        base.OnDeath();
+
         agent.enabled = false;
-        Animator.OnDeath();
+        (stats as EnemyStats).healthBar.gameObject.SetActive(false);
+        GetComponent<CapsuleCollider>().enabled = false;
+
+        animator.OnDeath();
 
         Player.instance.AddMoney(moneyDrop[Random.Range(0, moneyDrop.Length)]);
         Player.instance.combat.AddMana(10f);
@@ -124,26 +120,12 @@ public class Enemy : Interactable
             TargetAcquisition.instance.UnselectCurrentEnemy(true);
         }
 
-        GetComponent<CapsuleCollider>().enabled = false;
         Destroy(gameObject, 2f);
-    }
-
-    public void ShowDamagePopup(double damage)
-    {
-        GameObject popup = Instantiate(damagePopup, transform.position, Quaternion.identity, transform);
-        popup.GetComponent<TextMesh>().text = damage.ToString();
     }
 
     public void SetCrosshairActive(bool active)
     {
         crosshair.SetActive(active);
-    }
-
-    private IEnumerator IsUnderAttackRoutine()
-    {
-        IsUnderAttack = true;
-        yield return new WaitForSeconds(.2f);
-        IsUnderAttack = false;
     }
 
     private void OnDrawGizmosSelected()

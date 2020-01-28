@@ -1,17 +1,15 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class EntityStats : MonoBehaviour
 {
-
     public float maxHealth;
     public float damage;
 
     public float CurrentHealth { get; protected set; }
     public event Action OnDeath;
 
-    public delegate void TakeDamage(double damage);
+    public delegate void TakeDamage(float damage);
     public event TakeDamage OnTakeDamage;
 
     public virtual void Awake()
@@ -36,7 +34,7 @@ public class EntityStats : MonoBehaviour
         }
     }
 
-    public void Heal(float amount)
+    public virtual void Heal(float amount)
     {
         CurrentHealth += amount;
         CurrentHealth = Mathf.Clamp(CurrentHealth, 0, maxHealth);

@@ -15,20 +15,19 @@ namespace Items
             base.OnPrimary();
         }
 
-        public override void OnHit(Enemy enemy)
+        public override void OnHit(Entity entity)
         {
+            base.OnHit(entity);
             FindObjectOfType<AudioManager>().Play("KnifeHit");
-            base.OnHit(enemy);
-            StartCoroutine(KnifeBleedOut(enemy));
-
+            StartCoroutine(KnifeBleedOut(entity));
         }
 
-        private IEnumerator KnifeBleedOut(Enemy enemy)
+        private IEnumerator KnifeBleedOut(Entity entity)
         {
             var pastTime = 0f;
             while (pastTime < bleedOutTime)
             {
-                enemy.Stats.Damage(bleedOutDamage);
+                entity.stats.Damage(bleedOutDamage);
                 pastTime++;
                 yield return new WaitForSeconds(timeBetweenDamage);
             }

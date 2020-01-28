@@ -15,17 +15,21 @@
             if (!isSecondaryEnabled) return;
         }
 
-        public virtual void OnHit(Enemy enemy)
+        public virtual void OnHit(Entity entity)
         {
-            enemy.Interact();
+            //enemy.Interact();
+            //entity.
 
-            if (item.hasDuration)
+            if (entity is Enemy)
             {
-                item.UseItem();
-                if (item.CurrentDuration <= 0)
+                if (item.hasDuration)
                 {
-                    Player.instance.inventory.RemoveItem(item);
-                    return;
+                    item.UseItem();
+                    if (item.CurrentDuration <= 0)
+                    {
+                        Player.instance.inventory.RemoveItem(item);
+                        return;
+                    }
                 }
             }
         }

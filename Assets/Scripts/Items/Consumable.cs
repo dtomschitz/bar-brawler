@@ -6,8 +6,8 @@ namespace Items
 {
     public class Consumable : Equippable
     {
-        private PlayerAnimator animator;
-        private PlayerCombat combat;
+        private EntityAnimator animator;
+        private EntityCombat combat;
 
         void Start()
         {
@@ -22,11 +22,8 @@ namespace Items
 
         public override void OnPrimary()
         {
-            PlayerStats stats = Player.instance.stats;
+            EntityStats stats = Player.instance.stats;
             if (stats == null || stats.HasFullLife || combat.IsDrinking) return;
-
-            //
-            //gameObject.SetActive(false);
 
             animator.OnPrimary();
         }

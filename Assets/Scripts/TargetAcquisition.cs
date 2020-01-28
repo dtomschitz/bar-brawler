@@ -185,7 +185,7 @@ public class TargetAcquisition : MonoBehaviour
         enemies.Clear();
         foreach (Enemy enemy in FindObjectsOfType<Enemy>())
         {
-            if (enemy.Stats.IsDead) continue;
+            if (enemy.stats.IsDead) continue;
             enemies.Add(enemy);
         }
     }

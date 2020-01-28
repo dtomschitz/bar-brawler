@@ -1,20 +1,11 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using Utils;
 
 public class PlayerCombat : EntityCombat
 {
     public int simultaneousAttackers = 1;
 
-    public const int MAX_MANA = 100;
-    public float manaRegenerationAmount;
-    public float manaRegenerationSpeed;
-
-    public float CurrentMana { get; protected set; }
-    public bool IsUsingMana { get; set; }
-
     private List<GameObject> attackers;
-
 
     protected override void Start()
     {
@@ -24,7 +15,7 @@ public class PlayerCombat : EntityCombat
         CurrentMana = MAX_MANA;
     }
 
-    void Update()
+    protected override void Update()
     {
         if (!IsUsingMana) AddMana(manaRegenerationAmount * Time.deltaTime / manaRegenerationSpeed);
     }
@@ -50,51 +41,9 @@ public class PlayerCombat : EntityCombat
         attackers.Remove(enemy);
     }
 
-    public void AddMana(float amount)
-    {
-        CurrentMana += amount;
-        CurrentMana = Mathf.Clamp(CurrentMana, 0f, MAX_MANA);
-    }
-
-    public void UseMana(float amount = 1f)
-    {
-        amount = Mathf.Clamp(amount, 0, float.MaxValue);
-
-        if (amount == 1f)
-        {
-            CurrentMana -= amount;
-        } else
-        {
-            FunctionUpdater.Create(() =>
-            {
-                CurrentMana = Mathf.Lerp(CurrentMana, CurrentMana - amount, Time.deltaTime * 1f);
-            });
-        }
-    }
-
     public override void SetState(CombatState newState)
     {
         base.SetState(newState);
-
-       /* switch (newState)
-        {
-            case CombatState.ATTACKING:
-                Player.instance.controls.IsMovementEnabled = !(Player.instance.equipment.CurrentItem is Fist);
-                break;
-
-            case CombatState.BLOCKING:
-                Player.instance.controls.IsMovementEnabled = !(Player.instance.equipment.CurrentItem is Fist);
-                break;
-
-            case CombatState.IDLE:
-                Player.instance.controls.IsMovementEnabled = true;
-                break;
-
-            case CombatState.STUNNED:
-                Player.instance.controls.IsMovementEnabled = false;
-                break;
-
-        }*/
     }
 
     public float NormalizedMana

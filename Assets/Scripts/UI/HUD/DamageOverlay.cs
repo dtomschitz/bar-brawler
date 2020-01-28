@@ -6,7 +6,7 @@ public class DamageOverlay : MonoBehaviour
     public PlayerStats stats;
     private Animator animator;
 
-    private Coroutine damageOverlayRoutine;
+    //private Coroutine damageOverlayRoutine;
 
     void Start()
     {
@@ -14,15 +14,17 @@ public class DamageOverlay : MonoBehaviour
         stats.OnTakeDamage += OnTakeDamage;
     }
 
-    public void OnTakeDamage(double damage)
+    public void OnTakeDamage(float damage)
     {
-        if (damageOverlayRoutine != null)
+        /*if (damageOverlayRoutine != null)
         {
             StopCoroutine(damageOverlayRoutine);
             damageOverlayRoutine = null;
         }
 
-        damageOverlayRoutine = StartCoroutine(ShowDamgeOverlay());
+        damageOverlayRoutine = StartCoroutine(ShowDamgeOverlay());*/
+        StopAllCoroutines();
+        StartCoroutine(ShowDamgeOverlay());
     }
 
     private IEnumerator ShowDamgeOverlay()
