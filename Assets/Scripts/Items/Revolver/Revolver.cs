@@ -30,6 +30,7 @@ namespace Items
             {
                 cooldown = 1f / fireRate;
 
+                FindObjectOfType<AudioManager>().Play("Shot");
                 muzzleFlash.Play();
 
                 Bullet newBullet = Instantiate(bullet, muzzle.position, muzzle.rotation) as Bullet;
