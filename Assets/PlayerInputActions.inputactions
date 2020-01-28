@@ -92,6 +92,14 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Skip Wave Debug",
+                    "type": "Button",
+                    "id": "62843f20-9da5-448f-906b-07a33de5d5e8",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -213,6 +221,17 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Skip Wave",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b963d48f-5c18-4a68-95f7-c27f6082ddcb",
+                    "path": "<Gamepad>/leftStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Skip Wave Debug",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

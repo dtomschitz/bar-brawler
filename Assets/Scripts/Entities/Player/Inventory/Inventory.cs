@@ -44,8 +44,6 @@ public class Inventory : MonoBehaviour
 
             if (freeSlot != null)
             {
-                Debug.Log("add item to inv: " + item.name + "(" + item + ")");
-
                 freeSlot.Add(item);
                 OnItemAdded?.Invoke(this, new InventoryEvent(item));
             }
@@ -65,8 +63,6 @@ public class Inventory : MonoBehaviour
         {
             if (slot.Remove(item))
             {
-                Debug.Log("Remove item from inv: " + item.name + "(" + item.slot.Id + ")");
-
                 OnItemRemoved?.Invoke(this, new InventoryEvent(item));
                 break;
             }

@@ -33,6 +33,7 @@ public class WaveSpawner : MonoBehaviour
         //inputActions.PlayerControls.Rotation.performed += ctx => lookPosition = ctx.ReadValue<Vector2>();
 
         inputActions.PlayerControls.SkipWave.performed += SkipWave;
+        inputActions.PlayerControls.SkipWaveDebug.performed += SkipWaveDebug;
     }
 
     #endregion;
@@ -117,18 +118,20 @@ public class WaveSpawner : MonoBehaviour
         waveCountdown = 3f;
     }
 
+    public void SkipWaveDebug(CallbackContext ctx)
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        for (var i = 0; i < enemies.Length; i++)
+        {
+            Destroy(enemies[i]);
+        }
+    }
+
 
     private void ResetWaveSpawner()
     {
+        SetState(WaveState.Counting);
         waveCountdown = timeBetweenWaves;
-        currentState = WaveState.Counting;
-        OnWaveStateUpdate?.Invoke(currentState, rounds);
-
-        /*for ()
-        spawnPoints.ForEach(delegate (SpawnPoint spawnPoint)
-        {
-            spawnPoint.CloseDoor();
-        });*/
     }
 
     private void StartWave()
@@ -137,32 +140,22 @@ public class WaveSpawner : MonoBehaviour
         SelectCurrentConfig();
 
         Debug.LogFormat("Spawning Wave (num: {0}, difficulty: {1})", rounds, currentDifficulty);
-   
-        currentState = WaveState.Spawning;
-        OnWaveStateUpdate?.Invoke(currentState, rounds);
+
+        //currentState = WaveState.Spawning;
+        //OnWaveStateUpdate?.Invoke(currentState, rounds);
+        SetState(WaveState.Spawning);
         //spawnPoint.OpenDoor();
 
         SpawnEnemies();
 
-        currentState = WaveState.Running;
-        OnWaveStateUpdate?.Invoke(currentState, rounds);
+        SetState(WaveState.Running);
+       // currentState = WaveState.Running;
+        //OnWaveStateUpdate?.Invoke(currentState, rounds);
 
     }
 
     private void SelectCurrentConfig()
     {
-        /*if (rounds >= 5 && rounds <= 9)
-        {
-            difficulty = Difficulty.Medium;
-        }
-
-        if (rounds >= 10)
-        {
-            difficulty = Difficulty.Hard;
-        }
-
-        return;*/
-
         foreach (WaveConfig config in configs)
         {
             if (config != currentConfig && config.round == rounds)
@@ -178,8 +171,6 @@ public class WaveSpawner : MonoBehaviour
         SpawnPoint spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
         if (currentConfig != null && currentConfig.enemy != null)
         {
-
-            Debug.Log("Spawnin Enemies");
             StartCoroutine(SpawnRoutine(spawnPoint.transform));
         }
     }
@@ -188,15 +179,33 @@ public class WaveSpawner : MonoBehaviour
     {
         for (int i = 0; i < rounds * 1.25; i++)
         {
-            //whichEnemy(spawnPoint);
             Instantiate(currentConfig.enemy, spawnPoint.position, spawnPoint.rotation);
             yield return new WaitForSeconds(1f);
         }
         yield break;
     }
 
+    private void SetState(WaveState newState)
+    {
+        switch (newState)
+        {
+            case WaveState.Counting:
+                break;
+
+            case WaveState.Running:
+                break;
+
+            case WaveState.Spawning:
+                break;
+        }
+
+        currentState = newState;
+        OnWaveStateUpdate?.Invoke(currentState, rounds);
+    }
+
     private void SetConfig(WaveConfig config)
     {
+        Debug.LogFormat("Update wave config {0} (round: {1}, difficulty: {2}, enemy: {3}", config, config.round, config.difficulty, config.enemy.name);
         currentConfig = config;
         currentDifficulty = config.difficulty;
     }
