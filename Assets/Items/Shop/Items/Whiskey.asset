@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Whiskey
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: c714a2e27718c77409bb7b5b5ae19e7b, type: 2}
-  infoText: Drink the whiskey and you immediately get 20 life points
+  infoText: "Drinke das stille Wasser und du erh\xE4lts sofort 10 Lebenspunkte."
   price: 20

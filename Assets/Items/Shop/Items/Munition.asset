@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Munition
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 727f4bbf441ad8e4fa02ad783185fe70, type: 2}
-  infoText: You will get 10 ammunition for your revolver.
+  infoText: "Du erh\xE4lts 10 Patronen f\xFCr dein Schie\xDFeisen."
   price: 30

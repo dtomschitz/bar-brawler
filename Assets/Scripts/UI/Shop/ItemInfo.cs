@@ -2,19 +2,22 @@
 using UnityEngine.UI;
 using TMPro;
 using Shop;
+using System.Collections;
 
-public class ItemInfo : MonoBehaviour
+public class ItemInfo : FadeGraphic
 {
     public Text title;
     public Image image;
     public TextMeshProUGUI info;
     public Button buyButton;
 
-    private ShopItem item;
+    public Text eventText;
+
+    private ShopItem shopItem;
 
     public void SetItem(ShopItem shopItem)
     {
-        this.item = shopItem;
+        this.shopItem = shopItem;
 
         gameObject.SetActive(true);
 
@@ -26,9 +29,36 @@ public class ItemInfo : MonoBehaviour
 
     public void OnItemBought()
     {
-        if (Player.instance.currentBalance >= item.price)
+        StopAllCoroutines();
+        eventText.text = "";
+        eventText.color = Color.white;
+
+        FadeIn(eventText, .5f);
+
+        if (Player.instance.currentBalance < shopItem.price)
         {
-            item.OnItemBought();
+            eventText.text = "Du hast nicht genug Geld!".ToUpper();
+            StartCoroutine(HideEventText());
+            return;
         }
+
+        if (Player.instance.inventory.HasItem(shopItem.item) && Player.instance.inventory.FindStackableSlot(shopItem.item) == null) 
+        {
+            eventText.text = "Du hast schon zu viele Items dieser Art".ToUpper();
+            StartCoroutine(HideEventText());
+            return;
+        }
+
+
+        shopItem.OnItemBought();
+    }
+
+    private IEnumerator HideEventText()
+    {
+        yield return new WaitForSeconds(2f);
+        FadeOut(eventText, .5f);
+        yield return new WaitForSeconds(.5f);
+
+        eventText.text = "";
     }
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c955a263476a794da2c6b5586e1a21d, type: 3}
   m_Name: Whisky
   m_EditorClassIdentifier: 
-  name: Wasser mit Blub
+  name: Stilles Wasser
   icon: {fileID: 0}
   kind: 0
   addToInventory: 1

@@ -84,7 +84,7 @@ public class Inventory : MonoBehaviour
         OnMunitionUpdate?.Invoke(currentMunition);
     }
 
-    private Slot FindStackableSlot(Item item)
+    public Slot FindStackableSlot(Item item)
     {
         foreach (Slot slot in slots)
         {
@@ -93,13 +93,23 @@ public class Inventory : MonoBehaviour
         return null;
     }
 
-    private Slot FindNextEmptySlot()
+    public Slot FindNextEmptySlot()
     {
         foreach (Slot slot in slots)
         {
             if (slot.IsEmpty) return slot;
         }
         return null;
+    }
+
+    public bool HasItem(Item item)
+    {
+        foreach (Slot slot in slots)
+        {
+            if (!slot.IsEmpty && slot.FirstItem.name == item.name) return true;
+        }
+
+        return false;
     }
 
     public bool HasMunition
