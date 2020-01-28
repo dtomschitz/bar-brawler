@@ -17,6 +17,7 @@ namespace Items
 
         public override void OnHit(Enemy enemy)
         {
+            FindObjectOfType<AudioManager>().Play("KnifeHit");
             base.OnHit(enemy);
             StartCoroutine(KnifeBleedOut(enemy));
 
