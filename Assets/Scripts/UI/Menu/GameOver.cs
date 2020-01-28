@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using Wave;
 
 public class GameOver : MonoBehaviour
 {

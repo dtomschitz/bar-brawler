@@ -12,7 +12,7 @@ public class PlayerCombat : EntityCombat
         base.Start();
 
         attackers = new List<GameObject>();
-        CurrentMana = MAX_MANA;
+        CurrentMana = maxMana;
     }
 
     protected override void Update()
@@ -48,7 +48,7 @@ public class PlayerCombat : EntityCombat
 
     public float NormalizedMana
     {
-        get { return CurrentMana / MAX_MANA; }
+        get { return CurrentMana / maxMana; }
     }
 
     private void OnDrawGizmos()

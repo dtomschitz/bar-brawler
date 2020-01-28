@@ -27,7 +27,6 @@ public class Player : Entity
     public override void OnDeath()
     {
         base.OnDeath();
-
         animator.OnDeath();
         GameState.instance.SetState(State.GAME_OVER);
     }

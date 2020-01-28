@@ -29,7 +29,7 @@ namespace Items
         {
             entity.OnHit(owner);
 
-            if (entity is Enemy && item.hasDuration)
+            if (entity is Enemy && owner is Player && item.hasDuration)
             {
                 item.UseItem();
                 if (item.CurrentDuration <= 0)

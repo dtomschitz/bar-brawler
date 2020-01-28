@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [RequireComponent(typeof(EntityEquipment))]
 [RequireComponent(typeof(EntityStats))]
@@ -12,13 +13,15 @@ public class Entity : MonoBehaviour
     public EntityAnimator animator;
     public EntityEquipment equipment;
 
-    public virtual void Start()
+    protected virtual void Start()
     {
-        if (stats != null)
-        {
-            stats.OnTakeDamage += OnTakeDamage;
-            stats.OnDeath += OnDeath;
-        }
+        if (stats == null) throw new ArgumentException("Entity stats class cannot be null");
+        if (combat == null) throw new ArgumentException("Entity combat class cannot be null!");
+        if (animator == null) throw new ArgumentException("Entiy animator class cannot be null!");
+        if (equipment == null) throw new ArgumentException("Entity equipment class cannot be null!");
+
+        stats.OnTakeDamage += OnTakeDamage;
+        stats.OnDeath += OnDeath;
     }
 
     public virtual void OnHit(Entity offender)

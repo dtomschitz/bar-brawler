@@ -12,18 +12,26 @@ public class EntityStats : MonoBehaviour
     public delegate void TakeDamage(float damage);
     public event TakeDamage OnTakeDamage;
 
-    public virtual void Awake()
-    {
-        CurrentHealth = maxHealth;
-    }
-
     public virtual void Start()
     {
     }
 
+    public void Init(StatsConfig config)
+    {
+        if (config != null)
+        {
+            if (config.maxHealth >= 0f)
+            {
+                maxHealth = config.maxHealth;
+                CurrentHealth = maxHealth;
+            }
+            if (config.damage >= 0f) damage = config.damage;
+        }
+    }
+
     public virtual void Damage(float damage)
     {
-        damage = Mathf.Clamp(damage, 0, float.MaxValue);
+        damage = Mathf.Clamp(damage, 0, maxHealth);
         CurrentHealth -= damage;
         OnTakeDamage?.Invoke(damage);
         FindObjectOfType<AudioManager>().Play("Punch");

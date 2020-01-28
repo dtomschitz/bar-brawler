@@ -9,7 +9,7 @@ public class EntityCombat : MonoBehaviour
     public CombatState state { get; protected set; }
 
     [Header("Mana")]
-    public const int MAX_MANA = 100;
+    public const int maxMana = 100;
     public float manaRegenerationAmount;
     public float manaRegenerationSpeed;
 
@@ -29,17 +29,17 @@ public class EntityCombat : MonoBehaviour
         if (!IsUsingMana) AddMana(manaRegenerationAmount * Time.deltaTime / manaRegenerationSpeed);
     }
 
-    /*public virtual bool OnAttack()
+    public void Init(CombatConfig config)
     {
-        //StartCoroutine(DoDamge(stats, .15f));
-        //OnAttack?.Invoke();
-        return false;
+        if (config != null)
+        {
+            if (config.manaRegenerationAmount >= 0f) manaRegenerationAmount = config.manaRegenerationAmount;
+            if (config.manaRegenerationSpeed >= 0f) manaRegenerationSpeed = config.manaRegenerationSpeed;
+        }
     }
-    */
 
     public void Attack(EntityStats stats)
     {
-        //StartCoroutine(DoDamge(stats, .15f));
         stats.Damage(this.stats.damage);
         OnAttack?.Invoke();
     }
@@ -47,7 +47,7 @@ public class EntityCombat : MonoBehaviour
     public void AddMana(float amount)
     {
         CurrentMana += amount;
-        CurrentMana = Mathf.Clamp(CurrentMana, 0f, MAX_MANA);
+        CurrentMana = Mathf.Clamp(CurrentMana, 0f, maxMana);
     }
 
     public void UseMana(float amount = 1f)
@@ -102,12 +102,6 @@ public class EntityCombat : MonoBehaviour
         if (newState == state || !GameState.instance.IsInGame) return;
         state = newState; 
     }
-
-    /*IEnumerator DoDamge(EntityStats stats, float delay)
-    {
-        stats.Damage(entityStats.damage);
-        yield return new WaitForSeconds(delay);
-    }*/
 
     public bool IsAttacking
     {
