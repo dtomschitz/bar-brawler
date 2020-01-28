@@ -6,26 +6,11 @@ namespace Items
 {
     public class Consumable : Equippable
     {
-        private EntityAnimator animator;
-        private EntityCombat combat;
-
-        void Start()
-        {
-            if (!(item is Drink))
-            {
-                throw new UnityException("Item is not of the type Drink");
-            }
-
-            animator = Player.instance.animator;
-            combat = Player.instance.combat;
-        }
-
         public override void OnPrimary()
         {
-            EntityStats stats = Player.instance.stats;
-            if (stats == null || stats.HasFullLife || combat.IsDrinking) return;
-
-            animator.OnPrimary();
+            base.OnPrimary();
+            if (owner.stats == null || owner.stats.HasFullLife || owner.combat.IsDrinking) return;
+            owner.animator.OnPrimary();
         }
 
         public IEnumerator DestroyAfterTime(float time, FunctionUpdater updater = null)

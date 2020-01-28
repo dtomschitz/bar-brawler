@@ -124,7 +124,6 @@ public class TargetAcquisition : MonoBehaviour
 
     public void UnselectCurrentEnemy(bool autoSelect = false)
     {
-        Debug.Log("Unselect");
         if (CurrentEnemy != null)
         {
             SelectEnemy(null);

@@ -15,6 +15,7 @@ public class Enemy : Entity
     public bool movementEnabled = true;
 
     public GameObject crosshair;
+    public GameObject cap;
 
     public float lookRadius = 10f;
     public float attackRate = 1f;
@@ -25,10 +26,6 @@ public class Enemy : Entity
 
     [Header("Drops")]
     public int[] moneyDrop;
-    
-    //public EnemyStats stats;
-    //public EnemyCombat combat;
-    //public EnemyAnimator animator;
 
     private Player player;
     private Transform target;
@@ -41,12 +38,6 @@ public class Enemy : Entity
         player = Player.instance;
         target = player.gameObject.transform;
         agent = GetComponent<NavMeshAgent>();
-     //   combat = GetComponent<EnemyCombat>();
-     //   animator = GetComponent<EnemyAnimator>();
-      //  stats = GetComponent<EnemyStats>();
-
-        //stats.OnTakeDamage += OnTakeDamage;
-       // stats.OnDeath += OnDeath;
     }
 
     void Update()
@@ -88,19 +79,10 @@ public class Enemy : Entity
     {
     }
 
-    public override void OnHit()
-    {
-        base.OnHit();
-
-        if (stats.IsDead) return;
-        Player.instance.combat.Attack(stats);
-    }
-
     public override void OnTakeDamage(float damage)
     {
         base.OnTakeDamage(damage);
     }
-
 
     public override void OnDeath()
     {

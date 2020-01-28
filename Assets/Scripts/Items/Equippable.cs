@@ -1,9 +1,19 @@
-﻿namespace Items
+﻿using System;
+
+namespace Items
 {
     public class Equippable : Collectable
     {
         public bool isPrimaryEnabled = true;
         public bool isSecondaryEnabled = false;
+
+        protected Entity owner;
+
+        protected virtual void Start()
+        {
+            owner = GetComponentInParent<Entity>();
+            if (owner == null) throw new ArgumentException("The item owner can't be null!");
+        }
 
         public virtual void OnPrimary()
         {
@@ -17,19 +27,15 @@
 
         public virtual void OnHit(Entity entity)
         {
-            //enemy.Interact();
-            //entity.
+            entity.OnHit(owner);
 
-            if (entity is Enemy)
+            if (entity is Enemy && item.hasDuration)
             {
-                if (item.hasDuration)
+                item.UseItem();
+                if (item.CurrentDuration <= 0)
                 {
-                    item.UseItem();
-                    if (item.CurrentDuration <= 0)
-                    {
-                        Player.instance.inventory.RemoveItem(item);
-                        return;
-                    }
+                    Player.instance.inventory.RemoveItem(item);
+                    return;
                 }
             }
         }
@@ -37,19 +43,6 @@
         public void OnEquip()
         {
             isCollected = true;
-        }
-
-        public virtual void OnDrop()
-        {
-            isCollected = false;
-            /*RaycastHit hit = new RaycastHit();
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, 1000))
-            {
-                equipmentObject.SetActive(true);
-                equipmentObject.transform.position = hit.point;
-                equipmentObject.transform.eulerAngles = item.dropRotation;
-            }*/
         }
     }
 }

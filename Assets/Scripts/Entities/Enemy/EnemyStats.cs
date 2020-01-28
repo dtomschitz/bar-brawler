@@ -6,11 +6,6 @@ public class EnemyStats : EntityStats
     public Image healthBar;
     public GameObject damagePopup;
 
-    /* public override void Damage(float damage) 
-     {
-         base.Damage(damage);
-     }*/
-
     public override void Damage(float damage)
     {
         base.Damage(damage);

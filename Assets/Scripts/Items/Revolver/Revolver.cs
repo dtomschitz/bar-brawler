@@ -2,7 +2,7 @@
 
 namespace Items
 {
-    public class Revolver : Equippable
+    public class Revolver : WeaponItem
     {
         public Bullet bullet;
         public Transform muzzle;
@@ -11,13 +11,6 @@ namespace Items
         public float fireRate = 1f;
 
         private float cooldown = 0f;
-
-        private EntityAnimator animator;
-
-        void Start()
-        {
-            animator = Player.instance.animator;
-        }
 
         void Update()
         {

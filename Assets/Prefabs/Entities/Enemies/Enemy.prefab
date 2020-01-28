@@ -450,7 +450,6 @@ GameObject:
   - component: {fileID: 6673331655994226945}
   - component: {fileID: 6356219383110875253}
   - component: {fileID: 1592573314076958519}
-  - component: {fileID: 2528973514752264677}
   m_Layer: 10
   m_Name: Enemy
   m_TagString: Enemy
@@ -575,7 +574,8 @@ MonoBehaviour:
   maxHealth: 100
   damage: 10
   healthBar: {fileID: 1743001444}
-  damagePopup: {fileID: 0}
+  damagePopup: {fileID: 4610692876775489689, guid: e2262ee3243caa148b85979b0d9e05cd,
+    type: 3}
 --- !u!114 &6356219383110875253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -588,7 +588,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b8c94523c600184abd9114345737684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  animator: {fileID: 6684105748995324098}
 --- !u!114 &1592573314076958519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -603,19 +603,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manaRegenerationAmount: 0
   manaRegenerationSpeed: 0
---- !u!114 &2528973514752264677
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6233071837183773105}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b8c94523c600184abd9114345737684, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 0}
 --- !u!1001 &8588929418885217954
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -719,6 +706,12 @@ GameObject:
 --- !u!1 &6619884461426605644 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3237116253809918190, guid: 3a586a861033354488d8b2aaa382a4dc,
+    type: 3}
+  m_PrefabInstance: {fileID: 8588929418885217954}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &6684105748995324098 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: -6057140222963153312, guid: 3a586a861033354488d8b2aaa382a4dc,
     type: 3}
   m_PrefabInstance: {fileID: 8588929418885217954}
   m_PrefabAsset: {fileID: 0}

@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(EntityEquipment))]
 [RequireComponent(typeof(EntityStats))]
 [RequireComponent(typeof(EntityCombat))]
 [RequireComponent(typeof(EntityAnimator))]
-[RequireComponent(typeof(EntityEquipment))]
 public class Entity : MonoBehaviour
 {
     [Header("Entity Base")]
@@ -21,8 +21,10 @@ public class Entity : MonoBehaviour
         }
     }
 
-    public virtual void OnHit()
+    public virtual void OnHit(Entity offender)
     {
+        if (stats.IsDead) return;
+        offender.combat.Attack(stats);
     }
 
     public virtual void OnTakeDamage(float damage)

@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Items
 {
-    [RequireComponent(typeof(HitCollider))]
     public class WeaponItem : Equippable
     {
         public float primaryAttackRate = 20f;
@@ -21,35 +20,35 @@ namespace Items
         private Coroutine primaryRoutine;
         private Coroutine secondaryRoutine;
 
-        protected EntityCombat combat;
-        protected EntityAnimator animator;
-
-        void Start()
-        {
-            combat = Player.instance.combat;
-            animator = Player.instance.animator;
-
-            HitCollider hitColider = GetComponent<HitCollider>();
-            if (hitColider) hitColider.OnHit += OnHit;
-        }
-
         void Update()
         {
             primaryCooldown -= Time.deltaTime;
             secondaryCooldown -= Time.deltaTime;
         }
 
+        void OnTriggerExit(Collider other)
+        {
+            if (other.gameObject != owner.gameObject && (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Player"))
+            {
+                if (owner.combat.IsAttacking)
+                {
+                    Entity entity = other.gameObject.GetComponent<Entity>();
+                    if (entity != null) OnHit(entity);
+                }
+            }
+        }
+
         public override void OnPrimary()
         {
             base.OnPrimary();
 
-            if (combat.IsDrinking || combat.IsAttacking) return;
+            if (owner.combat.IsDrinking || owner.combat.IsAttacking) return;
 
-            Cooldown(primaryCooldown, primaryManaRequired, combat.CurrentMana,
+            Cooldown(primaryCooldown, primaryManaRequired, owner.combat.CurrentMana,
                 () =>
                 {
                     primaryCooldown = 1f / primaryAttackRate;
-                    animator.OnPrimary();
+                    owner.animator.OnPrimary();
                 },
                 () => { } 
             );
@@ -59,13 +58,13 @@ namespace Items
         {
             base.OnSecondary();
 
-            if (combat.IsDrinking || combat.IsAttacking) return;
+            if (owner.combat.IsDrinking || owner.combat.IsAttacking) return;
 
-            Cooldown(secondaryCooldown, secondaryManaRequired, combat.CurrentMana,
+            Cooldown(secondaryCooldown, secondaryManaRequired, owner.combat.CurrentMana,
                 () =>
                 {
                     secondaryCooldown = 1f / secondaryAttackRate;
-                    animator.OnSecondary();
+                    owner.animator.OnSecondary();
                 },
                 () => { }
             );
@@ -78,8 +77,6 @@ namespace Items
                 StopCoroutine(primaryRoutine);
                 primaryRoutine = null;
             }
-
-            primaryRoutine = StartCoroutine(routine);
         }
 
         public virtual void StartSecondaryRoutine(IEnumerator routine)
@@ -89,14 +86,6 @@ namespace Items
                 StopCoroutine(secondaryRoutine);
                 secondaryRoutine = null;
             }
-            secondaryRoutine = StartCoroutine(routine);
-        }
-
-        public virtual IEnumerator PrimaryRoutine(float seconds = 1f)
-        {
-           // combat.state = CombatState.ATTACKING;
-            yield return new WaitForSeconds(seconds);
-           // combat.state = CombatState.IDLE;
         }
 
         private void Cooldown(float cooldown, float requiredMana, float currentMana, Action trueCallback, Action falseCallback)
