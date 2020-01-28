@@ -56,7 +56,7 @@ public class Enemy : Interactable
 
             Think();
 
-            /*float distance = Vector3.Distance(target.position, transform.position);
+            float distance = Vector3.Distance(target.position, transform.position);
             if (distance <= lookRadius)
             {
                 if (movementEnabled) agent.SetDestination(target.position);
@@ -79,13 +79,14 @@ public class Enemy : Interactable
                         }
                     }
                 } 
-            }*/
+            }
         }
     }
 
     private void Think()
     {
         
+
     }
 
     public override void Interact()

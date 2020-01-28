@@ -21,19 +21,32 @@ public class UIManager : MonoBehaviour
 
     public void SetHUDActive(bool active)
     {
-        SetHUDActive(active, true, true, true);
+        SetHUDActive(active, true, true, true, true);
     }
 
-    public void SetHUDActive(bool active, bool showHelp)
+    public void SetHUDActive(bool active, bool showStatsBar)
     {
-        SetHUDActive(active, true, true, showHelp);
+        SetHUDActive(active, true, true, showStatsBar, true);
     }
 
-    public void SetHUDActive(bool active, bool showWaveSkipText, bool showWaveCountdown, bool showHelp) {
+    public void SetHUDActive(bool active, bool showStatsBar, bool showHelp)
+    {
+        SetHUDActive(active, true, true, showStatsBar, showHelp);
+    }
+
+    /*public void SetHUDActive(bool active, bool showWaveSkipText, bool showWaveCountdown, bool showStatsBar, bool showHelp) {
+        SetHUDActive(active, showWaveSkipText, showWaveCountdown, showStatsBar, )
+    }*/
+
+    public void SetHUDActive(bool active, bool showWaveSkipText, bool showWaveCountdown, bool showStatsBar, bool showHelp)
+    {
         hud.gameObject.SetActive(active);
 
         hud.waveInfo.SetSkipTextActive(showWaveSkipText);
         hud.waveInfo.SetSkipCountdownActive(showWaveCountdown);
+
+        hud.healthBar.gameObject.SetActive(showStatsBar);
+        hud.manaBar.gameObject.SetActive(showStatsBar);
 
         hud.hotbar.SetLeftBumperActive(showHelp);
         hud.hotbar.SetRightBumperActive(showHelp);

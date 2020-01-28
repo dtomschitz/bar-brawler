@@ -1,4 +1,5 @@
-﻿using Utils;
+﻿using UnityEngine;
+using Utils;
 
 namespace Items
 {
@@ -7,10 +8,27 @@ namespace Items
         public override void OnPrimary()
         {
             base.OnPrimary();
-            FunctionUpdater.Create(() =>
+
+            float amount = 0f;
+            float healingAmount = (item as Drink).healingAmount;
+
+            float rate = (healingAmount / 100f) * Time.deltaTime * 10f;
+
+            FunctionUpdater functionUpdater = FunctionUpdater.Create(() =>
             {
-                Player.instance.stats.Heal((item as Drink).healingAmount);
+                //amount = Mathf.Lerp(0, healingAmount, 1f);
+                if (amount == healingAmount) return;
+
+                amount += rate;
+
+                //amount = rate * Time.deltaTime * 10f;
+                //amount = Mathf.Clamp(amount, 0, healingAmount);
+
+                Player.instance.stats.Heal(rate);
             });
+
+            DestroyAfterTime(2f, functionUpdater);
         }
     }
 }
+

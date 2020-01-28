@@ -6,5 +6,6 @@ namespace Items
     public class Drink : Equipment
     {
         public int healingAmount;
+        public float healingSpeed;
     }
 }

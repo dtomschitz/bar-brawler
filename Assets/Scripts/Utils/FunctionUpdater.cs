@@ -13,10 +13,9 @@ namespace Utils {
             private void Update() {
                 OnUpdate?.Invoke();
             }
-
         }
 
-        private static List<FunctionUpdater> updaterList; 
+        private static List<FunctionUpdater> updaterList;
         private static GameObject initGameObject;
 
         private static void InitIfNeeded() {
@@ -25,9 +24,6 @@ namespace Utils {
                 updaterList = new List<FunctionUpdater>();
             }
         }
-
-
-
         
         public static FunctionUpdater Create(Action updateFunc) {
             return Create(() => { updateFunc(); return false; }, "", true, false);

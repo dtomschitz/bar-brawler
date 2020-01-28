@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
+using Utils;
 
 namespace Items
 {
@@ -22,6 +24,15 @@ namespace Items
             if (stats == null || stats.HasFullLife) return;
 
             Player.instance.inventory.RemoveItem(item);
+            gameObject.SetActive(false);
+        }
+
+        public IEnumerator DestroyAfterTime(float time, FunctionUpdater updater = null)
+        {
+            yield return new WaitForSeconds(time);
+            Destroy(gameObject);
+
+            if (updater != null) updater.DestroySelf();
         }
     }
 }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Whisky
   m_EditorClassIdentifier: 
   name: Stilles Wasser
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 5620f00f28816c4429898e4b5891518a, type: 3}
   kind: 0
   addToInventory: 1
   isStackable: 1
@@ -27,4 +27,4 @@ MonoBehaviour:
   defaultRotation: {x: 0, y: 0, z: 0}
   defaultDropRotation: {x: 0, y: 0, z: 0}
   equipmentAnimations: []
-  healingAmount: 0
+  healingAmount: 20

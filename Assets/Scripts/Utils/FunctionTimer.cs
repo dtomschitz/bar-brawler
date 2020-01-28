@@ -7,13 +7,11 @@ namespace Utils {
     public class FunctionTimer {
 
         private class MonoBehaviourHook : MonoBehaviour {
-
             public Action OnUpdate;
 
             private void Update() {
-                if (OnUpdate != null) OnUpdate();
+                OnUpdate?.Invoke();
             }
-
         }
 
         private static List<FunctionTimer> timerList;
@@ -105,7 +103,6 @@ namespace Utils {
                 DestroySelf();
             }
         }
-
         private void DestroySelf() {
             RemoveTimer(this);
             if (gameObject != null) {

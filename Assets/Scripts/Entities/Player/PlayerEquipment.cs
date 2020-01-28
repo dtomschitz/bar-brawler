@@ -10,7 +10,7 @@ public class PlayerEquipment : MonoBehaviour
     public GameObject rightHand;
     public GameObject leftHand;
 
-    private GameObject prefab;
+    private GameObject currentItemGameObject;
     private GameObject currentHand;
 
     private Equippable currentItem;
@@ -94,7 +94,7 @@ public class PlayerEquipment : MonoBehaviour
             if (currentItem != null) Unequip();
             Equip(prefabCopy, item);
 
-            prefab = prefabCopy;
+            currentItemGameObject = prefabCopy;
             currentItem = equippable;
             currentEquipment = item;
         }
@@ -108,7 +108,7 @@ public class PlayerEquipment : MonoBehaviour
     public void UpdateItemPosition(Hand hand, Vector3 position, Vector3 rotation)
     {
         currentHand = GetHandGameObject(hand);
-        SetItemPosition(prefab, currentHand, position, rotation);
+        SetItemPosition(currentItemGameObject, currentHand, position, rotation);
     }
 
     private void Equip(GameObject prefab, Equipment item)
@@ -132,10 +132,11 @@ public class PlayerEquipment : MonoBehaviour
 
     private void Unequip()
     {
+        if (!currentEquipment.IsDrink) Destroy(currentItemGameObject);
+
         currentItem = null;
         currentEquipment = null;
         currentHand = null;
-        Destroy(prefab);
     }
 
     private GameObject GetHandGameObject(Hand hand)
