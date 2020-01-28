@@ -10,14 +10,16 @@ public class HotbarSlot : MonoBehaviour
     public Sprite defaultSprite;
 
     [Header("Item")]
-    public Item item;
+    public Equipment item;
     public Image icon;
     public Sprite iconPlaceholder;
     public Text count;
+    public GameObject durationPanel;
+    public Image durationImage;
 
     public bool IsDragAndDropEnabled { get; set; } = true;
 
-    public void Add(Item item)
+    public void Add(Equipment item)
     {
         this.item = item;
 
@@ -30,6 +32,13 @@ public class HotbarSlot : MonoBehaviour
             count.gameObject.SetActive(true);
             count.text = item.slot.Count.ToString();
         }
+
+        if (item.hasDuration)
+        {
+            durationPanel.SetActive(true);
+            durationImage.fillAmount = 1;
+            item.OnDurationUpdate += UpdateDuration;
+        }
     }
 
     public void Clear()
@@ -41,11 +50,18 @@ public class HotbarSlot : MonoBehaviour
         
         count.gameObject.SetActive(true);
         count.text = "";
+
+        durationPanel.SetActive(false);
     }
 
     public void UpdateCount(int currenCount)
     {
         count.text = currenCount.ToString();
+    }
+
+    public void UpdateDuration(float duration, float maxDuration)
+    {
+        durationImage.fillAmount = duration / maxDuration;
     }
 
     public void SetSelected(bool selected)

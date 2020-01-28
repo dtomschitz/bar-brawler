@@ -113,13 +113,21 @@ public class Hotbar : MonoBehaviour
 
     private void OnItemAdded(object sender, InventoryEvent e)
     {
-        for (int i = 0; i < slots.Length; i++)
+        /*for (int i = 0; i < slots.Length; i++)
         {
             if (i == e.item.slot.Id)
             {
                 slots[i].Add(e.item);
                 break;
             }
+        }*/
+
+        HotbarSlot slot = FindHotbarSlot(e.item);
+        if (slot == null) slot = FindEmptyHotbarSlot();
+
+        if (slot != null && e.item is Equipment)
+        {
+            slot.Add(e.item as Equipment);
         }
 
         if (currentItemIndex == -1)
@@ -140,7 +148,15 @@ public class Hotbar : MonoBehaviour
                 if (itemCount == 0)
                 {
                     slots[i].Clear();
+                    UpdateItems();
+                    SelectLastItem();
                 }
+
+                if (itemCount > 0)
+                {
+                    SelectItem(currentItemIndex);
+                }
+
                 break;
             }
         }
@@ -153,7 +169,7 @@ public class Hotbar : MonoBehaviour
             slots[i].Clear();
         }
 
-        List<Slot> inventorySlots = inventory.slots;
+        List<Slot> inventorySlots = new List<Slot>(inventory.slots);
         inventorySlots.RemoveAll(slot => slot.Count == 0);
 
         for (int i = 0; i < slots.Length; i++)
@@ -161,12 +177,30 @@ public class Hotbar : MonoBehaviour
             if (List.InBounds(i, inventorySlots.Count))
             {
                 Item item = inventorySlots[i].FirstItem;
-                if (item != null)
+                if (item != null && item is Equipment)
                 {
-                    slots[i].Add(item);
+                    slots[i].Add(item as Equipment);
                 }
             }
         }
+    }
+
+    private HotbarSlot FindHotbarSlot(Item item)
+    {
+        foreach (HotbarSlot slot in slots)
+        {
+            if (slot.item != null && slot.item.name == item.name) return slot;
+        }
+        return null;
+    }
+
+    private HotbarSlot FindEmptyHotbarSlot()
+    {
+        foreach (HotbarSlot slot in slots)
+        {
+            if (slot.item == null) return slot;
+        }
+        return null;
     }
 
     private IEnumerator ShowSelectedName(string name)

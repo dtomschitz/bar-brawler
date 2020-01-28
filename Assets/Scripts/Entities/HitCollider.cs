@@ -14,7 +14,6 @@ public class HitCollider : MonoBehaviour
 
             if (enemy != null && enemy != player && player.combat.IsAttacking)
             {
-                Debug.Log("HIT");
                 OnHit?.Invoke(enemy);
             }
         }

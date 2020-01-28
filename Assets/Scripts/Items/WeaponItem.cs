@@ -72,11 +72,6 @@ namespace Items
             );
         }
 
-        public virtual void OnHit(Enemy enemy)
-        {
-            enemy.Interact();
-        }
-
         public virtual void StartPrimaryRoutine(IEnumerator routine)
         {
             if (primaryRoutine != null)

@@ -1,16 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Items
 {
     public class Bullet : MonoBehaviour
     {
+        public delegate void Hit(Enemy enemy);
+        public event Hit OnHit;
+
         public float speed;
 
         void Start()
         {
-            Destroy(gameObject, 3f);
+            Destroy(gameObject, 10f);
         }
 
         void Update()
@@ -18,16 +19,15 @@ namespace Items
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
 
-        private void OnTriggerEnter(Collider other)
+        void OnTriggerEnter(Collider other)
         {
+            Debug.Log(other.gameObject.tag);
+            Debug.Log("DAWDD");
+
             if (other.gameObject.tag == "Enemy")
             {
                 Enemy enemy = other.gameObject.GetComponent<Enemy>();
-                if (enemy != null)
-                {
-                    enemy.Interact();
-                    Destroy(gameObject);
-                }
+                if (enemy != null)  OnHit?.Invoke(enemy);
             }
         }
     }

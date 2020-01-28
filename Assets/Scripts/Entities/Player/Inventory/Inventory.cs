@@ -37,18 +37,14 @@ public class Inventory : MonoBehaviour
     public void AddItem(Item item)
     {
         if (item == null) return;
-
         if (item.addToInventory)
         {
             Slot freeSlot = FindStackableSlot(item);
             if (freeSlot == null) freeSlot = FindNextEmptySlot();
 
-            Debug.Log(slots.Count);
-
             if (freeSlot != null)
             {
                 freeSlot.Add(item);
-                Debug.Log("item added: " + item.name);
                 OnItemAdded?.Invoke(this, new InventoryEvent(item));
             }
         }

@@ -89,19 +89,19 @@ public class PlayerControls : MonoBehaviour
 
     public void UsePrimary(CallbackContext ctx) 
     {
-        if (GameState.instance.IsInTargetAcquisition) return;
+        if (GameState.instance.IsInTargetAcquisition && !character.isGrounded) return;
         equipment.UsePrimary();
     }
 
     public void UseSecondary(CallbackContext ctx)
     {
-        if (GameState.instance.IsInTargetAcquisition) return;
+        if (GameState.instance.IsInTargetAcquisition && !character.isGrounded) return;
         equipment.UseSecondary();
     }
 
     public void UseItem(CallbackContext ctx)
     {
-        if (GameState.instance.IsInTargetAcquisition) return;
+        if (GameState.instance.IsInTargetAcquisition && !character.isGrounded) return;
         equipment.UseConsumable();
     }
 
@@ -123,7 +123,7 @@ public class PlayerControls : MonoBehaviour
 
         character.Move(movement);
 
-        movement.y += (Physics.gravity.y * gravityScale * Time.deltaTime);
+        movement.y += (Physics.gravity.y * gravityScale * Time.deltaTime * 0.6f);
     }
 
     private void TurnPlayer()

@@ -36,6 +36,11 @@ public class EntityAnimator : MonoBehaviour
         SetStrafe(strafe);
     }
 
+    public void SetIsGrounded(bool isGrounded)
+    {
+        animator.SetBool("IsGrounded", isGrounded);
+    }
+
     public void SetForward(float forward)
     {
         animator.SetFloat("Forward", forward);

@@ -84,8 +84,6 @@ public class TargetAcquisition : MonoBehaviour
         Time.timeScale = IsEnabled ? 0.2f : 1.0f;
         GameState.instance.SetState(IsEnabled ? State.TARGET_ACQUISITION : State.INGAME);
 
-        Debug.Log("Target Acquisition: " + IsEnabled + "(timeScale: " + Time.timeScale + ")");
-
         if (IsEnabled)
         {
             if (CurrentEnemy == null)

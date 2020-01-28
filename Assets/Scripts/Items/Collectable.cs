@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Items {
 
     public class Collectable : MonoBehaviour
     {
-        public Item item;
+        public Equipment item;
         public bool isCollected = false;
 
         private void OnTriggerEnter(Collider other)
@@ -16,7 +14,6 @@ namespace Items {
                 isCollected = true;
                 item.OnCollection();
                 OnCollection();
-
             }
         }
 

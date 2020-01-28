@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7691755691994482345}
   - component: {fileID: 1721955827056950431}
   - component: {fileID: 4961019385732874342}
-  - component: {fileID: 4092224862818944544}
+  - component: {fileID: 3640265838962372185}
   - component: {fileID: 126788699177342265}
   m_Layer: 0
   m_Name: Bullet
@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 670224309865224971, guid: cb4a6da9af151ba449a335b1036b0b8b, type: 3}
+  - {fileID: 2100000, guid: b74e091e0afc6cd4d882ec695521a4f0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -80,7 +80,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!136 &4092224862818944544
+--- !u!136 &3640265838962372185
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -90,8 +90,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 4
-  m_Height: 2
+  m_Radius: 3.263887
+  m_Height: 1.9921148
   m_Direction: 1
   m_Center: {x: -0.00000008940697, y: 0.003942609, z: 0.083394885}
 --- !u!114 &126788699177342265
@@ -106,4 +106,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6feb5b62e0ca40749813f26ea35c802d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 30
+  speed: 1

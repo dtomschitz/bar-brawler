@@ -26,20 +26,26 @@ namespace Items
 
         public override void OnPrimary()
         {
-            if (Player.instance.inventory.HasMunition)
+            if (Player.instance.inventory.HasMunition && cooldown <= 0f)
             {
-                if (cooldown <= 0f)
+                cooldown = 1f / fireRate;
+
+                muzzleFlash.Play();
+
+                Bullet newBullet = Instantiate(bullet, muzzle.position, muzzle.rotation) as Bullet;
+                newBullet.speed = bulletSpeed;
+                bullet.OnHit += OnHit;
+
+                if (TargetAcquisition.instance.CurrentEnemy != null)
                 {
-                    cooldown = 1f / fireRate;
+                    Enemy enemy = TargetAcquisition.instance.CurrentEnemy;
+                    Vector3 bulletDirection = enemy.transform.position - muzzle.position;
 
-                    muzzleFlash.Play();
-
-                    Bullet newBullet = Instantiate(bullet, muzzle.position, muzzle.rotation) as Bullet;
-                    newBullet.speed = bulletSpeed;
-
-                    Player.instance.inventory.UseMunition();
-                   // animator.OnPrimary();
+                    newBullet.transform.rotation = Quaternion.LookRotation(bulletDirection, Vector3.up);
                 }
+
+                Player.instance.inventory.UseMunition();
+                // animator.OnPrimary();
             }
         }
     }

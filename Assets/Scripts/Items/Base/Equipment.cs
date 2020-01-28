@@ -5,12 +5,16 @@ namespace Items
     [CreateAssetMenu(fileName = "New Equipment", menuName = "Items/Equipment")]
     public class Equipment : Item
     {
+        public delegate void DurationUpdate(float duration, float maxDuration);
+        public event DurationUpdate OnDurationUpdate;
+
         public ItemType type; 
         public GameObject prefab;
         public GameObject itemHelp;
 
         public bool hasDuration;
         public float duration;
+        private float currentDuration;
 
         [Header("Default item position")]
         public Hand defaultHand;
@@ -20,6 +24,22 @@ namespace Items
 
         [Header("Animations")]
         public EquipmentAnimation[] equipmentAnimations;
+
+        void OnEnable()
+        {
+            currentDuration = duration;
+        }
+
+        public void UseItem()
+        {
+            currentDuration--;
+            OnDurationUpdate?.Invoke(currentDuration, duration);
+        }
+
+        public float CurrentDuration
+        {
+            get { return currentDuration;  }
+        }
 
         public bool IsMeleeWeapon => type == ItemType.Fist || type == ItemType.Knife || type == ItemType.Bottle;
         public bool IsDrink => type == ItemType.Whiskey || type == ItemType.Beer || type == ItemType.Feuersaft;

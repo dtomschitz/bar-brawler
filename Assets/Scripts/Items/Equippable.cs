@@ -1,38 +1,33 @@
-﻿using UnityEngine;
-
-namespace Items
+﻿namespace Items
 {
     public class Equippable : Collectable
     {
         public bool isPrimaryEnabled = true;
         public bool isSecondaryEnabled = false;
 
-        void Start()
-        {
-            if (!(item is Equipment))
-            {
-                throw new UnityException("Item is not of the type Equipment");
-            }
-        }
-
         public virtual void OnPrimary()
         {
             if (!isPrimaryEnabled) return;
-
-            Equipment equipment = item as Equipment;
-            if (equipment.hasDuration)
-            {
-                if (equipment.duration - 1 <= 0)
-                {
-                    Player.instance.inventory.RemoveItem(item);
-                    return;
-                }
-            }
         }
 
         public virtual void OnSecondary()
         {
             if (!isSecondaryEnabled) return;
+        }
+
+        public virtual void OnHit(Enemy enemy)
+        {
+            enemy.Interact();
+
+            if (item.hasDuration)
+            {
+                item.UseItem();
+                if (item.CurrentDuration <= 0)
+                {
+                    Player.instance.inventory.RemoveItem(item);
+                    return;
+                }
+            }
         }
 
         public void OnEquip()
