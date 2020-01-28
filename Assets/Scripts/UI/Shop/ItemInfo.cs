@@ -24,7 +24,7 @@ public class ItemInfo : FadeGraphic
         title.text = shopItem.item.name.ToUpper();
         image.sprite = shopItem.item.icon;
         info.text = shopItem.infoText.ToUpper();
-        buyButton.GetComponent<Text>().text = "BUY FOR $" + shopItem.price.ToString();
+        buyButton.GetComponent<Text>().text = "KAUFEN FÜR $" + shopItem.price.ToString();
     }
 
     public void OnItemBought()

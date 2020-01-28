@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Revolver
   m_EditorClassIdentifier: 
   name: Revolver
-  icon: {fileID: 21300000, guid: d15d7c8f3130e91469fcc0cbf26f07f1, type: 3}
+  icon: {fileID: 21300000, guid: 01d3fd119545aa342b68d23599029fea, type: 3}
   kind: 1
   addToInventory: 1
   isStackable: 0
+  maxStackSize: 1
   type: 1
   prefab: {fileID: 1995762785128984484, guid: a2974865053846d4f95bfe2cb682aca7, type: 3}
   itemHelp: {fileID: 1358025448973909464, guid: f75e679bd6da0bd4c9068687ebf2ae7a,

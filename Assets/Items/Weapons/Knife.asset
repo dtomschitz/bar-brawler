@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Knife
   m_EditorClassIdentifier: 
   name: Messer
-  icon: {fileID: 21300000, guid: 4e6eaa542f3c95d4a9288e898c6513f7, type: 3}
+  icon: {fileID: 21300000, guid: bf52c1726431e1d4c9998ba00c612d48, type: 3}
   kind: 1
   addToInventory: 1
   isStackable: 1
