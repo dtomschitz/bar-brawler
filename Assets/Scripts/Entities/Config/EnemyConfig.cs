@@ -9,12 +9,12 @@ public class EnemyConfig : ScriptableObject
     public CombatConfig combat;
 
     [Header("Equipment")]
-    public EquipmentChance[] items;
+    public RandomItem[] items;
 }
 
 [Serializable]
-public class EquipmentChance
+public class RandomItem
 {
     public Equipment item;
-    public float percentage;
+    public int percentage;
 }

@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.AI;
 using Items;
-using System.Collections.Generic;
+using Utils;
 
 public enum AIState
 {
@@ -79,15 +80,11 @@ public class Enemy : Entity
         stats.Init(config.stats);
         combat.Init(config.combat);
 
-        EquipmentChance[] items = config.items;
+        RandomItem[] items = config.items;
         if (items != null)
         {
-            Debug.Log(items.Length);
-            if (items.Length == 1)
-            {
-                Debug.Log("dawda");
-                equipment.EquipItem(items[0].item);
-            }
+            Equipment item = items.Length == 1 ? items[0].item : GetRandomItem(items);
+            if (item != null) equipment.EquipItem(item);
         }
     }
 
@@ -124,6 +121,14 @@ public class Enemy : Entity
     public void SetCrosshairActive(bool active)
     {
         crosshair.SetActive(active);
+    }
+
+    private Equipment GetRandomItem(RandomItem[] items)
+    {
+        Dictionary<Equipment, int> weights = new Dictionary<Equipment, int>();
+        foreach (RandomItem item in items) weights.Add(item.item, item.percentage);
+
+        return WeightedRandomizer.From(weights).TakeOne();
     }
 
     private void OnDrawGizmosSelected()
