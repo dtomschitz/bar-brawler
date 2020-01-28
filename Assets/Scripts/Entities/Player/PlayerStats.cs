@@ -8,6 +8,9 @@ public class PlayerStats : EntityStats
     public override void Start()
     {
         base.Start();
+
+        CurrentHealth = maxHealth;
+
         equipment = GetComponent<PlayerEquipment>();
         equipment.OnItemEquipped += OnItemEquipped;
     }
@@ -18,10 +21,5 @@ public class PlayerStats : EntityStats
         {
             damage = (newItem as Weapon).damage;
         }
-
-        /*if (oldItem != null && oldItem is Weapon)
-        {
-            damage.RemoveModifier((oldItem as Weapon).damage);
-        }*/
     }
 }

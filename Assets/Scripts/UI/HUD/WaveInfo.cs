@@ -17,13 +17,11 @@ public class WaveInfo : MonoBehaviour
         if (state == WaveState.Counting)
         {
             skipCountdownText.gameObject.SetActive(true);
-        } else
-        {
-            skipCountdownText.gameObject.SetActive(false);
         }
 
         if (WaveSpawner.instance.IsWaveRunning)
         {
+            skipCountdownText.gameObject.SetActive(false);
             stateOfGameText.text = string.Format("Runde {0}", rounds.ToString());
         }
     }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Munition
   m_EditorClassIdentifier: 
   name: Munnition
-  icon: {fileID: 21300000, guid: 7947e1ad49da36a46a4a5ad7cef3700a, type: 3}
+  icon: {fileID: 21300000, guid: eecea469d7da3f544a44d520d9c18789, type: 3}
   kind: 0
   addToInventory: 0
   isStackable: 0
