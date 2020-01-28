@@ -84,6 +84,14 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Skip Wave",
+                    "type": "Button",
+                    "id": "1a97ccbc-bc59-498e-9516-d533d5b24b4f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -194,6 +202,17 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Hotbar Delete Item",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1a745190-2a23-457a-a4aa-804be5f5f3b4",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Skip Wave",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

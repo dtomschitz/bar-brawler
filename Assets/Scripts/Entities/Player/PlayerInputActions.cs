@@ -97,6 +97,14 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Skip Wave"",
+                    ""type"": ""Button"",
+                    ""id"": ""1a97ccbc-bc59-498e-9516-d533d5b24b4f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -207,6 +215,17 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Hotbar Delete Item"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1a745190-2a23-457a-a4aa-804be5f5f3b4"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Skip Wave"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -630,6 +649,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         m_PlayerControls_HotbarOneBack = m_PlayerControls.FindAction("Hotbar One Back", throwIfNotFound: true);
         m_PlayerControls_HotbarDeleteItem = m_PlayerControls.FindAction("Hotbar Delete Item", throwIfNotFound: true);
         m_PlayerControls_Pause = m_PlayerControls.FindAction("Pause", throwIfNotFound: true);
+        m_PlayerControls_SkipWave = m_PlayerControls.FindAction("Skip Wave", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -711,6 +731,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
     private readonly InputAction m_PlayerControls_HotbarOneBack;
     private readonly InputAction m_PlayerControls_HotbarDeleteItem;
     private readonly InputAction m_PlayerControls_Pause;
+    private readonly InputAction m_PlayerControls_SkipWave;
     public struct PlayerControlsActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -725,6 +746,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         public InputAction @HotbarOneBack => m_Wrapper.m_PlayerControls_HotbarOneBack;
         public InputAction @HotbarDeleteItem => m_Wrapper.m_PlayerControls_HotbarDeleteItem;
         public InputAction @Pause => m_Wrapper.m_PlayerControls_Pause;
+        public InputAction @SkipWave => m_Wrapper.m_PlayerControls_SkipWave;
         public InputActionMap Get() { return m_Wrapper.m_PlayerControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -764,6 +786,9 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                 @Pause.started -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnPause;
+                @SkipWave.started -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnSkipWave;
+                @SkipWave.performed -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnSkipWave;
+                @SkipWave.canceled -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnSkipWave;
             }
             m_Wrapper.m_PlayerControlsActionsCallbackInterface = instance;
             if (instance != null)
@@ -798,6 +823,9 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
+                @SkipWave.started += instance.OnSkipWave;
+                @SkipWave.performed += instance.OnSkipWave;
+                @SkipWave.canceled += instance.OnSkipWave;
             }
         }
     }
@@ -1017,6 +1045,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         void OnHotbarOneBack(InputAction.CallbackContext context);
         void OnHotbarDeleteItem(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnSkipWave(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

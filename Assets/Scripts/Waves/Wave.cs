@@ -6,5 +6,4 @@ public class Wave : MonoBehaviour
 {
     public int number;
     public int enemiesCount;
-
 }
