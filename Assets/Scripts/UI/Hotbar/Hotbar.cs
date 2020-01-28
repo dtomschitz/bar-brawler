@@ -53,13 +53,13 @@ public class Hotbar : MonoBehaviour
 
     public void SelectNextItem(CallbackContext ctx)
     {
-        if (GameState.instance.IsInTargetAcquisition) return;
+        if (GameState.instance.IsInTargetAcquisition || Player.instance.combat.IsDrinking) return;
         SelectNextItem();
     }
 
     public void SelectLastItem(CallbackContext ctx)
     {
-        if (GameState.instance.IsInTargetAcquisition) return;
+        if (GameState.instance.IsInTargetAcquisition || Player.instance.combat.IsDrinking) return;
         SelectLastItem();
     }
 
@@ -92,6 +92,8 @@ public class Hotbar : MonoBehaviour
 
     private void SelectItem(Item item, int index)
     {
+        Debug.Log(item);
+
         if (item != null && item is Equipment)
         {
             StopAllCoroutines();

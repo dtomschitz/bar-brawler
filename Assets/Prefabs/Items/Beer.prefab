@@ -182,6 +182,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2509050466611808609}
+  - component: {fileID: 3953525104129255136}
   m_Layer: 0
   m_Name: Beer
   m_TagString: Untagged
@@ -198,7 +199,7 @@ Transform:
   m_GameObject: {fileID: 1480182086663551858}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 19.10265, y: 0.935, z: 16.245804}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4061800117881441123}
   - {fileID: 7062006294590219997}
@@ -206,6 +207,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3953525104129255136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1480182086663551858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f517c3d3d054bb4097abb6041fa4af5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: c445bb7c6aca4344cb625dac757352d3, type: 2}
+  isCollected: 0
+  isPrimaryEnabled: 1
+  isSecondaryEnabled: 0
 --- !u!1 &3757926991510686719
 GameObject:
   m_ObjectHideFlags: 0
