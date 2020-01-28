@@ -17,6 +17,7 @@ MonoBehaviour:
   kind: 0
   addToInventory: 1
   isStackable: 1
+  maxStackSize: 2
   type: 6
   prefab: {fileID: 505762499375796852, guid: 81c0912fe5d08c9448f68c93c8ac2b75, type: 3}
   itemHelp: {fileID: 0}
@@ -28,3 +29,4 @@ MonoBehaviour:
   defaultDropRotation: {x: 0, y: 0, z: 0}
   equipmentAnimations: []
   healingAmount: 50
+  healingSpeed: 0

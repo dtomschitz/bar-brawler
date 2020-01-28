@@ -45,7 +45,7 @@ public class ItemInfo : FadeGraphic
                 return;
             }
 
-            if (!inventory.HasSpace)
+            if (!inventory.HasItem(shopItem.item) && inventory.FindStackableSlot(shopItem.item) == null && inventory.FindNextEmptySlot() == null)
             {
                 eventText.text = "Dein Inventar ist voll!".ToUpper();
                 StartCoroutine(HideEventText());

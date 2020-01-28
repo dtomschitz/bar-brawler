@@ -57,6 +57,11 @@ public class InventorySlot
         }
     }*/
 
+    public bool IsFull
+    {
+        get { return FirstItem != null && Count == FirstItem.maxStackSize; }
+    }
+
     public bool IsEmpty
     {
         get { return Count == 0; }

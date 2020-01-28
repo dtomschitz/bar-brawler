@@ -17,9 +17,12 @@ MonoBehaviour:
   kind: 1
   addToInventory: 1
   isStackable: 1
+  maxStackSize: 7
   type: 2
   prefab: {fileID: 6961491707144222098, guid: 4a5398231e78ca9408932335d080cea2, type: 3}
   itemHelp: {fileID: 981712078624116010, guid: 4c16a73d12f555e45aac4f8d9465be5d, type: 3}
+  hasDuration: 1
+  duration: 4
   defaultHand: 0
   defaultPosition: {x: 0, y: 0, z: 0}
   defaultRotation: {x: 0, y: 0, z: 0}

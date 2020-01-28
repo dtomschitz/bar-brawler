@@ -5,7 +5,7 @@ using Items;
 
 public class Inventory : MonoBehaviour
 {
-    private int maxSlots = 4;
+    private int maxSlots = 5;
 
     public List<InventorySlot> slots = new List<InventorySlot>();
     public List<Item> defaultItems = new List<Item>();
@@ -44,6 +44,8 @@ public class Inventory : MonoBehaviour
 
             if (freeSlot != null)
             {
+                Debug.Log("add item to inv: " + item.name + "(" + item + ")");
+
                 freeSlot.Add(item);
                 OnItemAdded?.Invoke(this, new InventoryEvent(item));
             }
@@ -59,13 +61,12 @@ public class Inventory : MonoBehaviour
     public void RemoveItem(Item item)
     {
         if (item == null) return;
-
-        Debug.Log("Remove item from inv: " + item.name + "(" + item.slot.Id + ")");
-
         foreach (InventorySlot slot in slots)
         {
             if (slot.Remove(item))
             {
+                Debug.Log("Remove item from inv: " + item.name + "(" + item.slot.Id + ")");
+
                 OnItemRemoved?.Invoke(this, new InventoryEvent(item));
                 break;
             }
@@ -112,14 +113,15 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
-    public bool HasSpace
+    public bool IsFull
     {
         get
         {
             foreach (InventorySlot slot in slots)
             {
-                
+                if (slot.IsEmpty || !slot.IsFull) return false;
             }
+
             return true;
         }
     }
