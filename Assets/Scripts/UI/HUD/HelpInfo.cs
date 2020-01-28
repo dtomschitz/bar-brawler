@@ -6,10 +6,13 @@ public class HelpInfo : MonoBehaviour
 
     public void UpdateHelp(GameObject newHelp)
     {
-        GameObject copy = Instantiate(newHelp, transform, false);
-
         Destroy(currentHelp);
-        currentHelp = copy;
+
+        if (newHelp != null)
+        {
+            GameObject copy = Instantiate(newHelp, transform, false);
+            currentHelp = copy;
+        }
     }
 
     public void SetActive(bool active) => gameObject.SetActive(active);
