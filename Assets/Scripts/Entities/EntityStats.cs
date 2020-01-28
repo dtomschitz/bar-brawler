@@ -38,8 +38,6 @@ public class EntityStats : MonoBehaviour
 
     public void Heal(float amount)
     {
-        Debug.Log(amount);
-
         CurrentHealth += amount;
         CurrentHealth = Mathf.Clamp(CurrentHealth, 0, maxHealth);
     }
