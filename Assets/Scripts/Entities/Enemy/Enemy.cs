@@ -90,8 +90,6 @@ public class Enemy : Interactable
 
         PlayerCombat combat = Player.instance.combat;
         combat.Attack(Stats);
-
-        Debug.Log("attack enemie");
     }
 
     public void OnTakeDamage(double damage)
@@ -105,7 +103,6 @@ public class Enemy : Interactable
         }
 
         isUnderAttackRoutine = StartCoroutine(IsUnderAttackRoutine());
-
         if (damagePopup) ShowDamagePopup(damage);
     }
 
@@ -119,7 +116,7 @@ public class Enemy : Interactable
 
         if (TargetAcquisition.instance.CurrentEnemy == this)
         {
-            TargetAcquisition.instance.UnselectCurrentEnemy();
+            TargetAcquisition.instance.UnselectCurrentEnemy(true);
         }
 
         GetComponent<CapsuleCollider>().enabled = false;

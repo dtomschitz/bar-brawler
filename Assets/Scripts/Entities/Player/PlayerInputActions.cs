@@ -513,6 +513,14 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Select Nearest"",
+                    ""type"": ""Button"",
+                    ""id"": ""d39f722a-0042-4278-9450-7815c93f9b9c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -581,6 +589,17 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                     ""action"": ""Unselect"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9c6eccc6-2cf7-4857-aa23-908cf35d54e8"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Select Nearest"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -632,6 +651,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         m_Crosshair_SelectLast = m_Crosshair.FindAction("Select Last", throwIfNotFound: true);
         m_Crosshair_SelectNext = m_Crosshair.FindAction("Select Next", throwIfNotFound: true);
         m_Crosshair_Unselect = m_Crosshair.FindAction("Unselect", throwIfNotFound: true);
+        m_Crosshair_SelectNearest = m_Crosshair.FindAction("Select Nearest", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -919,6 +939,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
     private readonly InputAction m_Crosshair_SelectLast;
     private readonly InputAction m_Crosshair_SelectNext;
     private readonly InputAction m_Crosshair_Unselect;
+    private readonly InputAction m_Crosshair_SelectNearest;
     public struct CrosshairActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -927,6 +948,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         public InputAction @SelectLast => m_Wrapper.m_Crosshair_SelectLast;
         public InputAction @SelectNext => m_Wrapper.m_Crosshair_SelectNext;
         public InputAction @Unselect => m_Wrapper.m_Crosshair_Unselect;
+        public InputAction @SelectNearest => m_Wrapper.m_Crosshair_SelectNearest;
         public InputActionMap Get() { return m_Wrapper.m_Crosshair; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -948,6 +970,9 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                 @Unselect.started -= m_Wrapper.m_CrosshairActionsCallbackInterface.OnUnselect;
                 @Unselect.performed -= m_Wrapper.m_CrosshairActionsCallbackInterface.OnUnselect;
                 @Unselect.canceled -= m_Wrapper.m_CrosshairActionsCallbackInterface.OnUnselect;
+                @SelectNearest.started -= m_Wrapper.m_CrosshairActionsCallbackInterface.OnSelectNearest;
+                @SelectNearest.performed -= m_Wrapper.m_CrosshairActionsCallbackInterface.OnSelectNearest;
+                @SelectNearest.canceled -= m_Wrapper.m_CrosshairActionsCallbackInterface.OnSelectNearest;
             }
             m_Wrapper.m_CrosshairActionsCallbackInterface = instance;
             if (instance != null)
@@ -964,6 +989,9 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                 @Unselect.started += instance.OnUnselect;
                 @Unselect.performed += instance.OnUnselect;
                 @Unselect.canceled += instance.OnUnselect;
+                @SelectNearest.started += instance.OnSelectNearest;
+                @SelectNearest.performed += instance.OnSelectNearest;
+                @SelectNearest.canceled += instance.OnSelectNearest;
             }
         }
     }
@@ -1012,5 +1040,6 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         void OnSelectLast(InputAction.CallbackContext context);
         void OnSelectNext(InputAction.CallbackContext context);
         void OnUnselect(InputAction.CallbackContext context);
+        void OnSelectNearest(InputAction.CallbackContext context);
     }
 }

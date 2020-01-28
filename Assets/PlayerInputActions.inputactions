@@ -500,6 +500,14 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Select Nearest",
+                    "type": "Button",
+                    "id": "d39f722a-0042-4278-9450-7815c93f9b9c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -566,6 +574,17 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Unselect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9c6eccc6-2cf7-4857-aa23-908cf35d54e8",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Select Nearest",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

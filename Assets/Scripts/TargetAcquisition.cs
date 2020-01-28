@@ -16,6 +16,7 @@ public class TargetAcquisition : MonoBehaviour
         inputActions.Crosshair.ToggleCrosshair.performed += ToggleTargetAcquisition;
         inputActions.Crosshair.SelectLast.performed += SelectLast;
         inputActions.Crosshair.SelectNext.performed += SelectNext;
+        inputActions.Crosshair.SelectNearest.performed += SelectNearest;
         inputActions.Crosshair.Unselect.performed += Unselect;
     }
 
@@ -59,6 +60,11 @@ public class TargetAcquisition : MonoBehaviour
     public void ToggleTargetAcquisition(CallbackContext context)
     {
         Toggle();
+    }
+
+    public void SelectNearest(CallbackContext context)
+    {
+        if (IsEnabled) SelectClosestEnemy();
     }
 
     public void SelectLast(CallbackContext context)
@@ -116,12 +122,13 @@ public class TargetAcquisition : MonoBehaviour
         SelectEnemy(FindClosestEnemy());
     }
 
-    public void UnselectCurrentEnemy()
+    public void UnselectCurrentEnemy(bool autoSelect = false)
     {
+        Debug.Log("Unselect");
         if (CurrentEnemy != null)
         {
-            CurrentEnemy.SetCrosshairActive(false);
-            SelectClosestEnemy();
+            SelectEnemy(null);
+            if (autoSelect) SelectClosestEnemy();
         }
     }
 

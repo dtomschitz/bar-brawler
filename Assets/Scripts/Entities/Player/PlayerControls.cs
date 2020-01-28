@@ -89,19 +89,19 @@ public class PlayerControls : MonoBehaviour
 
     public void UsePrimary(CallbackContext ctx) 
     {
-        if (GameState.instance.IsInTargetAcquisition && !character.isGrounded) return;
+        if (GameState.instance.IsInTargetAcquisition) return;
         equipment.UsePrimary();
     }
 
     public void UseSecondary(CallbackContext ctx)
     {
-        if (GameState.instance.IsInTargetAcquisition && !character.isGrounded) return;
+        if (GameState.instance.IsInTargetAcquisition) return;
         equipment.UseSecondary();
     }
 
     public void UseItem(CallbackContext ctx)
     {
-        if (GameState.instance.IsInTargetAcquisition && !character.isGrounded) return;
+        if (GameState.instance.IsInTargetAcquisition) return;
         equipment.UseConsumable();
     }
 
