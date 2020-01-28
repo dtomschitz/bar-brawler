@@ -31,7 +31,7 @@ public class PlayerControls : MonoBehaviour
     private Camera mainCamera;
     private PlayerAnimator playerAnimator;
     private CharacterController character;
-    private EquipmentManager equipment;
+    private PlayerEquipment equipment;
 
     void Awake()
     {
@@ -50,7 +50,7 @@ public class PlayerControls : MonoBehaviour
         mainCamera = Camera.main;
         character = GetComponent<CharacterController>();
         playerAnimator = GetComponent<PlayerAnimator>();
-        equipment = GetComponent<EquipmentManager>();
+        equipment = GetComponent<PlayerEquipment>();
     }
 
     void OnEnable()

@@ -18,7 +18,7 @@ MonoBehaviour:
   addToInventory: 1
   isStackable: 1
   type: 0
-  prefab: {fileID: 505762499375796852, guid: 81c0912fe5d08c9448f68c93c8ac2b75, type: 3}
+  prefab: {fileID: 1480182086663551858, guid: 4e298a715d6387946a73a903f97a4da6, type: 3}
   itemHelp: {fileID: 0}
   hasDuration: 0
   duration: 0

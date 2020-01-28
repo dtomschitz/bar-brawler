@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
     public PlayerCombat combat;
     public PlayerAnimator animator;
     public Inventory inventory;
-    public EquipmentManager equipment;
+    public PlayerEquipment equipment;
 
     void Start()
     {
@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
         combat = GetComponent<PlayerCombat>();
         animator = GetComponent<PlayerAnimator>();
         inventory = GetComponent<Inventory>();
-        equipment = GetComponent<EquipmentManager>();
+        equipment = GetComponent<PlayerEquipment>();
 
         stats.OnDeath += OnDeath;
     }

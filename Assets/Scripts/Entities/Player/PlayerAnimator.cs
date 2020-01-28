@@ -5,7 +5,7 @@ public class PlayerAnimator : EntityAnimator
     protected override void Start()
     {
         base.Start();
-        GetComponent<EquipmentManager>().OnItemEquipped += OnItemEquipped;
+        GetComponent<PlayerEquipment>().OnItemEquipped += OnItemEquipped;
     }
 
     public void OnItemEquipped(Equipment newItem, Equipment oldItem) => SetEquipment(newItem);

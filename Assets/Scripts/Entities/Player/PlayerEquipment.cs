@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Items;
 
-public class EquipmentManager : MonoBehaviour
+public class PlayerEquipment : MonoBehaviour
 {
     public delegate void ItemEquipped(Equipment newItem, Equipment oldItem);
     public event ItemEquipped OnItemEquipped;

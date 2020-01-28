@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using Items;
 
 public enum AIState
 {
@@ -49,15 +48,15 @@ public class Enemy : Interactable
         Stats.OnDeath += Death;
     }
 
-
-
     void Update()
     {
         if (!Stats.IsDead)
         {
-            attackCooldown -= Time.deltaTime; 
+            attackCooldown -= Time.deltaTime;
 
-            float distance = Vector3.Distance(target.position, transform.position);
+            Think();
+
+            /*float distance = Vector3.Distance(target.position, transform.position);
             if (distance <= lookRadius)
             {
                 if (movementEnabled) agent.SetDestination(target.position);
@@ -80,8 +79,13 @@ public class Enemy : Interactable
                         }
                     }
                 } 
-            }
+            }*/
         }
+    }
+
+    private void Think()
+    {
+        
     }
 
     public override void Interact()

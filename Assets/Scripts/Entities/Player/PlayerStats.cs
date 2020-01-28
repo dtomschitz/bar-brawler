@@ -4,12 +4,12 @@ public class PlayerStats : EntityStats
 {
     public float manaRegenerationSpeed;
 
-    private EquipmentManager equipment;
+    private PlayerEquipment equipment;
 
     public override void Start()
     {
         base.Start();
-        equipment = GetComponent<EquipmentManager>();
+        equipment = GetComponent<PlayerEquipment>();
         equipment.OnItemEquipped += OnItemEquipped;
     }
 
