@@ -15,7 +15,6 @@ public class WaveConfig
     public GameObject enemy;
 }
 
-
 public class WaveSpawner : MonoBehaviour
 {
     #region Singelton
@@ -41,10 +40,10 @@ public class WaveSpawner : MonoBehaviour
     public delegate void WaveStateUpdate(WaveState state, int rounds);
     public event WaveStateUpdate OnWaveStateUpdate;
 
-    [Header("Enemies")]
-    public GameObject EasyEnemey; 
-    public GameObject MediumEnemy; 
-    public GameObject HardEnemy;
+    //[Header("Enemies")]
+    //public GameObject EasyEnemey; 
+    //public GameObject MediumEnemy; 
+    //public GameObject HardEnemy;
 
     [Header("Spawnpoints")]
     public List<SpawnPoint> spawnPoints;

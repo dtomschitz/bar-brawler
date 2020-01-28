@@ -1392,12 +1392,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 260583835ad3e6a45bcba660b2a91632, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EasyEnemey: {fileID: 6233071837183773105, guid: 9354e9efdde01b9438de6d33a1e12199,
-    type: 3}
-  MediumEnemy: {fileID: 8176691609783943476, guid: cce4c5cda71cf3c4f8b55a9d229168b8,
-    type: 3}
-  HardEnemy: {fileID: 8921610789928665870, guid: b53ebd689bb624c42823f490be79e891,
-    type: 3}
   spawnPoints:
   - {fileID: 473731432}
   - {fileID: 1823892637}
@@ -11265,6 +11259,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 6471249496328121834, guid: 2f37015f39bbd864bb343d7af48ab995,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bd1209ba4bed72d40b5f261d65cdc06f, type: 2}
     - target: {fileID: 2020527858394982064, guid: 2f37015f39bbd864bb343d7af48ab995,
         type: 3}
       propertyPath: m_LocalRotation.x

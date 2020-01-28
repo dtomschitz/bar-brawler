@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Items
 {
+    [RequireComponent(typeof(HitCollider))]
     public class WeaponItem : Equippable
     {
         public float primaryAttackRate = 20f;

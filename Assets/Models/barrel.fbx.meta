@@ -3,7 +3,22 @@ guid: 6bbf88e260d7fc94ab854fe674ff7f54
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Korken
+    second: {fileID: 2100000, guid: 7577afcdae74a3445ac6fa41619e0ace, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2100000, guid: 7577afcdae74a3445ac6fa41619e0ace, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wood
+    second: {fileID: 2100000, guid: 7577afcdae74a3445ac6fa41619e0ace, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
