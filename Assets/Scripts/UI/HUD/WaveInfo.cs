@@ -23,7 +23,7 @@ public class WaveInfo : MonoBehaviour
 
         if (WaveSpawner.instance.IsWaveRunning)
         {
-            stateOfGameText.text = string.Format("WAVE {0}", rounds.ToString());
+            stateOfGameText.text = string.Format("Runde {0}", rounds.ToString());
         }
     }
 

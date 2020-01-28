@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8c283d6bc48df746a0a4b0fbda25744, type: 3}
   m_Name: Whiskey
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 967e9cfadfc249e4592f94369dcabf28, type: 2}
+  item: {fileID: 11400000, guid: c714a2e27718c77409bb7b5b5ae19e7b, type: 2}
+  infoText: Drink the whiskey and you immediately get 20 life points
   price: 20

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8018c1ac16484f14d84b755dfb2f2911, type: 3}
   m_Name: Fist
   m_EditorClassIdentifier: 
-  name: Fist
+  name: Faust
   icon: {fileID: 21300000, guid: ccec83482d316e5459b221d80dff338c, type: 3}
   kind: 1
   addToInventory: 1
