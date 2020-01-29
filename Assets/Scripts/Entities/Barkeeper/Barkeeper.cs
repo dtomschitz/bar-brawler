@@ -84,6 +84,8 @@ public class Barkeeper : MonoBehaviour
     {
         if (shop.IsOpen) return;
 
+        Debug.Log("TEst");
+
         GameState.instance.SetState(State.IN_SHOP);
         shop.IsOpen = true;
     }
