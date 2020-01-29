@@ -11,7 +11,7 @@ public class DamageOverlay : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        stats.OnTakeDamage += OnTakeDamage;
+        stats.OnDamaged += OnTakeDamage;
     }
 
     public void OnTakeDamage(float damage)

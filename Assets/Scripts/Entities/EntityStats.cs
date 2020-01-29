@@ -10,8 +10,11 @@ public class EntityStats : MonoBehaviour
     public float CurrentHealth { get; protected set; }
     public event Action OnDeath;
 
-    public delegate void TakeDamage(float damage);
-    public event TakeDamage OnTakeDamage;
+    public delegate void Damaged(float damage);
+    public event Damaged OnDamaged;
+
+    public delegate void Healed(float amount);
+    public event Healed OnHealed;
 
     public virtual void Start()
     {
@@ -34,7 +37,7 @@ public class EntityStats : MonoBehaviour
     {
         damage = Mathf.Clamp(damage, 0, maxHealth);
         CurrentHealth -= damage;
-        OnTakeDamage?.Invoke(damage);
+        OnDamaged?.Invoke(damage);
 
         FindObjectOfType<AudioManager>().Play("Punch");
         FindObjectOfType<AudioManager>().Play("FightReaction");
@@ -46,9 +49,11 @@ public class EntityStats : MonoBehaviour
     {
         CurrentHealth += amount;
         CurrentHealth = Mathf.Clamp(CurrentHealth, 0, maxHealth);
+
+        OnHealed?.Invoke(amount);
     }
 
-    public float NormalizedHealth
+    public float HealthNormalized
     {
         get { return CurrentHealth / maxHealth; }
     }

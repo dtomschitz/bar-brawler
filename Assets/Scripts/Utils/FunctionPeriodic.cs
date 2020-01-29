@@ -15,13 +15,14 @@ namespace Utils {
             }
         }
 
-        private static List<FunctionPeriodic> functions;
+
+        private static List<FunctionPeriodic> funcList;
         private static GameObject initGameObject;
 
         private static void InitIfNeeded() {
             if (initGameObject == null) {
                 initGameObject = new GameObject("FunctionPeriodic_Global");
-                functions = new List<FunctionPeriodic>();
+                funcList = new List<FunctionPeriodic>();
             }
         }
 
@@ -58,7 +59,7 @@ namespace Utils {
             FunctionPeriodic functionPeriodic = new FunctionPeriodic(gameObject, action, timer, testDestroy, functionName, useUnscaledDeltaTime);
             gameObject.GetComponent<MonoBehaviourHook>().OnUpdate = functionPeriodic.Update;
 
-            functions.Add(functionPeriodic);
+            funcList.Add(functionPeriodic);
 
             if (triggerImmediately) action();
 
@@ -67,14 +68,14 @@ namespace Utils {
 
         public static void RemoveTimer(FunctionPeriodic funcTimer) {
             InitIfNeeded();
-            functions.Remove(funcTimer);
+            funcList.Remove(funcTimer);
         }
 
         public static void StopTimer(string _name) {
             InitIfNeeded();
-            for (int i = 0; i < functions.Count; i++) {
-                if (functions[i].functionName == _name) {
-                    functions[i].DestroySelf();
+            for (int i = 0; i < funcList.Count; i++) {
+                if (funcList[i].functionName == _name) {
+                    funcList[i].DestroySelf();
                     return;
                 }
             }
@@ -82,9 +83,9 @@ namespace Utils {
 
         public static void StopAllFunc(string _name) {
             InitIfNeeded();
-            for (int i = 0; i < functions.Count; i++) {
-                if (functions[i].functionName == _name) {
-                    functions[i].DestroySelf();
+            for (int i = 0; i < funcList.Count; i++) {
+                if (funcList[i].functionName == _name) {
+                    funcList[i].DestroySelf();
                     i--;
                 }
             }
@@ -92,8 +93,8 @@ namespace Utils {
 
         public static bool IsFuncActive(string name) {
             InitIfNeeded();
-            for (int i = 0; i < functions.Count; i++) {
-                if (functions[i].functionName == name) {
+            for (int i = 0; i < funcList.Count; i++) {
+                if (funcList[i].functionName == name) {
                     return true;
                 }
             }
@@ -131,8 +132,10 @@ namespace Utils {
             if (timer <= 0) {
                 action();
                 if (testDestroy != null && testDestroy()) {
+                    //Destroy
                     DestroySelf();
-                } else { 
+                } else {
+                    //Repeat
                     timer += baseTimer;
                 }
             }

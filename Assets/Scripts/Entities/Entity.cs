@@ -21,7 +21,7 @@ public class Entity : MonoBehaviour
         if (animator == null) throw new ArgumentException("Entiy animator class cannot be null!");
         if (equipment == null) throw new ArgumentException("Entity equipment class cannot be null!");
 
-        stats.OnTakeDamage += OnTakeDamage;
+        stats.OnDamaged += OnTakeDamage;
         stats.OnDeath += OnDeath;
     }
 
