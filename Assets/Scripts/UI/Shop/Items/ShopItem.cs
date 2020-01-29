@@ -9,11 +9,13 @@ namespace Shop
         public Item item;
         public string infoText;
         public int price;
+        public static int spendMoney;
 
         public virtual void OnItemBought()
         {
             Player.instance.inventory.AddItem(item);
             Player.instance.RemoveMoney(price);
+            spendMoney += price;
         }
     }
 }

@@ -30,6 +30,8 @@ public class Enemy : Entity
     private Transform target;
     private NavMeshAgent agent;
 
+    public static int enemyDeathCounter;
+
     protected override void Start()
     {
         base.Start();
@@ -120,6 +122,7 @@ public class Enemy : Entity
             TargetAcquisition.instance.UnselectCurrentEnemy(true);
         }
 
+        enemyDeathCounter++;
         Destroy(gameObject, 2f);
     }
 

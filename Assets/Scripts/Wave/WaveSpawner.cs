@@ -51,7 +51,7 @@
         public Difficulty currentDifficulty { get; protected set; }
         public WaveConfig currentConfig { get; protected set; }
 
-        public static int rounds = 0;
+        public static int rounds;
         private float waveCountdown;
         private float searchCountdown = 1f;
 
