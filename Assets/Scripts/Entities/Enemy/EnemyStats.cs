@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using Items;
 
 public class EnemyStats : EntityStats
 {
@@ -11,7 +12,6 @@ public class EnemyStats : EntityStats
         base.Damage(damage);
 
         if (IsDead) return;
-
         healthBar.fillAmount = CurrentHealth / maxHealth;
         if (damagePopup) ShowDamagePopup(damage);
     }

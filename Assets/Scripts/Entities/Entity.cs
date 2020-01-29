@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using Items;
 
 [RequireComponent(typeof(EntityEquipment))]
 [RequireComponent(typeof(EntityStats))]
@@ -24,10 +25,12 @@ public class Entity : MonoBehaviour
         stats.OnDeath += OnDeath;
     }
 
-    public virtual void OnHit(Entity offender)
+    public virtual void OnHit(Entity offender, Equipment item)
     {
         if (stats.IsDead) return;
         offender.combat.Attack(stats);
+
+        animator.OnHit(item.type);
     }
 
     public virtual void OnTakeDamage(float damage)

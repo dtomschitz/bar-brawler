@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Items
 {
@@ -27,7 +28,12 @@ namespace Items
 
         public virtual void OnHit(Entity entity)
         {
-            if (!entity.combat.IsBlocking) entity.OnHit(owner);
+            Debug.Log("hit: " + entity);
+
+            if (!entity.combat.IsBlocking)
+            {
+                entity.OnHit(owner, item);
+            }
 
             if (entity is Enemy && owner is Player && item.hasDuration)
             {

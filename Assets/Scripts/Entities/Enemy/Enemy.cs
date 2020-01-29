@@ -66,7 +66,7 @@ public class Enemy : Entity
                     if (velocity == 0f)
                     {
                         attackCooldown = 1f / attackRate;
-                        equipment.UsePrimary();
+                       // equipment.UsePrimary();
                         /*PlayerStats playerStats = player.stats;
                         PlayerCombat playerCombat = player.combat;
                         if (playerStats != null && playerCombat != null && !playerStats.IsDead)
@@ -111,6 +111,8 @@ public class Enemy : Entity
     public override void OnTakeDamage(float damage)
     {
         base.OnTakeDamage(damage);
+
+        //TODO: FLEE if hit by knife
     }
 
     public override void OnDeath()

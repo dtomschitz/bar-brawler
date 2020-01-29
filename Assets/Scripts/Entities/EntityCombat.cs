@@ -1,11 +1,10 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Items;
 using Utils;
 
 public class EntityCombat : MonoBehaviour
 {
-    public event Action OnAttack;
+   // public event Action OnAttack;
     public CombatState state { get; protected set; }
 
     [Header("Mana")]
@@ -41,7 +40,7 @@ public class EntityCombat : MonoBehaviour
     public void Attack(EntityStats stats)
     {
         stats.Damage(this.stats.damage);
-        OnAttack?.Invoke();
+        //OnAttack?.Invoke();
     }
 
     public void AddMana(float amount)
