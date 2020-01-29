@@ -1,22 +1,17 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using Utils;
 
-public class ManaBar : MonoBehaviour
+public class ManaBar : ShrinkBar
 {
-    public Image manaBarImage;
-    public PlayerCombat playerCombat;
+    private EntityCombat combat;
 
     void Start()
     {
-        if (!manaBarImage)
-        {
-            throw new NullReferenceException("Manabar image is not set!");
-        }
+        combat = Player.instance.combat;
+        combat.OnManaUsed += OnManaUsed;
     }
 
-    void Update()
+    public void OnManaUsed()
     {
-        if (playerCombat) manaBarImage.fillAmount = playerCombat.NormalizedMana;
+        SetFillAmount(combat.ManaNormalized);
     }
 }

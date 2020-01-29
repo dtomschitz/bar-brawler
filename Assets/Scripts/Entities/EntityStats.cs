@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using Items;
 
 public class EntityStats : MonoBehaviour
 {

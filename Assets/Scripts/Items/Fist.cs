@@ -4,9 +4,9 @@
     {
         public override void OnSecondary()
         {
-            if (owner.combat.state == CombatState.Fist_Attack) return;
+            if (owner.combat.IsAttacking) return;
             base.OnSecondary();
-            owner.combat.UseMana();
+            owner.combat.UseMana(20f);
         }
     }
 }
