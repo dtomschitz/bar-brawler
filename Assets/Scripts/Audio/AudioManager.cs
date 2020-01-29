@@ -31,6 +31,12 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        Play("Theme");
+    }
+
+
     public void Play(string name)
     {
         Debug.Log("sounds: " + sounds.Length);
