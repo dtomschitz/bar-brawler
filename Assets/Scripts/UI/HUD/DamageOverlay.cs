@@ -23,8 +23,11 @@ public class DamageOverlay : MonoBehaviour
         }
 
         damageOverlayRoutine = StartCoroutine(ShowDamgeOverlay());*/
-        StopAllCoroutines();
-        StartCoroutine(ShowDamgeOverlay());
+        if (GameState.instance.IsInGame)
+        {
+            StopAllCoroutines();
+            StartCoroutine(ShowDamgeOverlay());
+        }
     }
 
     private IEnumerator ShowDamgeOverlay()

@@ -44,15 +44,6 @@ namespace Items
 
             if (owner.combat.IsDrinking || owner.combat.IsAttacking) return;
 
-            /*Cooldown(primaryCooldown, primaryManaRequired, owner.combat.CurrentMana,
-                () =>
-                {
-                    primaryCooldown = 1f / primaryAttackRate;
-                    owner.animator.OnPrimary();
-                },
-                () => { } 
-            );*/
-
             if (primaryCooldown <= 0f)
             {
                 primaryCooldown = 1f / primaryAttackRate;
@@ -71,16 +62,6 @@ namespace Items
                 secondaryCooldown = 1f / secondaryAttackRate;
                 owner.animator.OnSecondary();
             }
-
-
-           /* Cooldown(secondaryCooldown, secondaryManaRequired, owner.combat.CurrentMana,
-                () =>
-                {
-                    secondaryCooldown = 1f / secondaryAttackRate;
-                    owner.animator.OnSecondary();
-                },
-                () => { }
-            );*/
         }
 
         public virtual void StartPrimaryRoutine(IEnumerator routine)
