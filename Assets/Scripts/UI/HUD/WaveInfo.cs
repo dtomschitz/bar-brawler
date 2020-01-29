@@ -25,13 +25,13 @@ public class WaveInfo : MonoBehaviour
         if (state == WaveState.Counting)
         {
             skipCountdownText.gameObject.SetActive(true);
-            //skipCountdownText.color = Color.white;
+            skipCountdownText.color = Color.white;
         }
 
         if (WaveSpawner.instance.IsWaveRunning)
         {
             skipCountdownText.gameObject.SetActive(false);
-            stateOfGameText.text = string.Format("Runde {0}", rounds.ToString());
+            stateOfGameText.text = string.Format("RUNDE {0}", rounds.ToString());
         }
     }
 
@@ -41,6 +41,7 @@ public class WaveInfo : MonoBehaviour
         {
             stateOfGameText.color = warningColor;
         }
+        
         stateOfGameText.text = string.Format("NÄCHSTE RUNDE IN {0}s", Mathf.Floor(countdown).ToString());
     }
 

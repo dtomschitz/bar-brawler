@@ -13,21 +13,20 @@ public class Statistics : MonoBehaviour
 
     #endregion;
 
-    public int SurvivedRounds { get; protected set; } = 0;
-    public int Kills { get; protected set; } = 0;
-    public float DamageCaused { get; protected set; } = 0;
-    public int SpendMoney { get; protected set; } = 0;
+    public int SurvivedRounds { get; protected set; }
+    public int Kills { get; protected set; }
+    public float DamageCaused { get; protected set; }
+    public int SpendMoney { get; protected set; }
 
     void Start()
     {
-        SurvivedRounds = 0;
+        /*SurvivedRounds = 0;
         Kills = 0;
         SpendMoney = 0;
-        DamageCaused = 0f;
+        DamageCaused = 0f;*/
 
-        Debug.Log("Start new game");
+       // Debug.Log("Start new game");
     }
-
 
     public void AddRound() => SurvivedRounds++;
     public void AddKill() => Kills++;

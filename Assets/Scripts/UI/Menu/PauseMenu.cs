@@ -23,6 +23,7 @@ public class PauseMenu : MonoBehaviour
 
     public void OnRetry()
     {
+        GameState.instance.SetState(State.INGAME);
         sceneFader.FadeTo(SceneManager.GetActiveScene().name);
     }
 

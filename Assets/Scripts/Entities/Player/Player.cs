@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class Player : Entity
 {
@@ -22,13 +23,14 @@ public class Player : Entity
     public PlayerControls controls;
     public Inventory inventory;
 
-    public int CurrentBalance { get; set; } = 1000;
+    public int CurrentBalance { get; set; }
 
     public override void OnDeath()
     {
         base.OnDeath();
         animator.OnDeath();
-        GameState.instance.SetState(State.GAME_OVER);
+
+        StartCoroutine(DeathRoutine());
     }
 
     public void AddMoney(int amount)
@@ -42,5 +44,11 @@ public class Player : Entity
     {
         CurrentBalance -= amount;
         OnMoneySpend?.Invoke(amount, CurrentBalance);
+    }
+
+    private IEnumerator DeathRoutine()
+    {
+        yield return new WaitForSeconds(3f);
+        GameState.instance.SetState(State.GAME_OVER);
     }
 }

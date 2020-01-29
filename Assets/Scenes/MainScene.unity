@@ -6182,6 +6182,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuSceneName: MainMenu
   sceneFader: {fileID: 1508618963}
+  statistics: {fileID: 247322029}
   statisticsPanel: {fileID: 1747763344}
   rounds: {fileID: 1331108026}
   kills: {fileID: 418437689}
@@ -8045,7 +8046,7 @@ PrefabInstance:
     - target: {fileID: 4251900538022576369, guid: a5694255a417f164c9596164663fb42b,
         type: 3}
       propertyPath: m_Name
-      value: New Player
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 4251900538022576369, guid: a5694255a417f164c9596164663fb42b,
         type: 3}
@@ -8082,7 +8083,7 @@ PrefabInstance:
     - target: {fileID: 4251900538022576383, guid: a5694255a417f164c9596164663fb42b,
         type: 3}
       propertyPath: currentMunition
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4251900538022576383, guid: a5694255a417f164c9596164663fb42b,
         type: 3}
