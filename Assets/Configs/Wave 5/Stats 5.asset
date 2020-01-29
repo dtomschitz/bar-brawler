@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Stats 5
   m_EditorClassIdentifier: 
   maxHealth: 100
-  damage: 12
+  damage: 32
