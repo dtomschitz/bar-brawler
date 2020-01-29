@@ -7,9 +7,16 @@ public class WaveInfo : MonoBehaviour
     public Text stateOfGameText;
     public Text skipCountdownText;
 
+    public float nextRoundWarning;
+
     void Start()
     {
-        WaveSpawner.instance.OnWaveStateUpdate += OnWaveStateUpdate;
+        WaveSpawner waveSpawner = WaveSpawner.instance;
+        if (waveSpawner != null)
+        {
+            waveSpawner.OnWaveStateUpdate += OnWaveStateUpdate;
+            waveSpawner.OnWaveCountdownUpdate += OnWaveCountdownUpdate;
+        }
     }
 
     public void OnWaveStateUpdate(WaveState state, int rounds)
@@ -17,6 +24,7 @@ public class WaveInfo : MonoBehaviour
         if (state == WaveState.Counting)
         {
             skipCountdownText.gameObject.SetActive(true);
+            //skipCountdownText.color = Color.white;
         }
 
         if (WaveSpawner.instance.IsWaveRunning)
@@ -24,6 +32,12 @@ public class WaveInfo : MonoBehaviour
             skipCountdownText.gameObject.SetActive(false);
             stateOfGameText.text = string.Format("Runde {0}", rounds.ToString());
         }
+    }
+
+    public void OnWaveCountdownUpdate(float countdown)
+    {
+        if (countdown <= nextRoundWarning) stateOfGameText.color = new Color(178, 11, 19, 255f);
+        stateOfGameText.text = string.Format("NÄCHSTE RUNDE IN {0}s", Mathf.Floor(countdown).ToString());
     }
 
     public void SetSkipTextActive(bool active)

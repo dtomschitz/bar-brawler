@@ -34,6 +34,9 @@
         public delegate void WaveStateUpdate(WaveState state, int rounds);
         public event WaveStateUpdate OnWaveStateUpdate;
 
+        public delegate void WaveCountdownUpdate(float countdown);
+        public event WaveCountdownUpdate OnWaveCountdownUpdate;
+
         [Header("Spawnpoints")]
         public List<SpawnPoint> spawnPoints;
 
@@ -52,8 +55,6 @@
         private float waveCountdown;
         private float searchCountdown = 1f;
 
-        private float randomSpawnDigit;
-
         void Start()
         {
             currentState = WaveState.Counting;
@@ -70,7 +71,6 @@
             inputActions.Disable();
         }
 
-
         void Update()
         {
             if (isWaveSpawnerEnabled && (GameState.instance.state != State.GAME_OVER || GameState.instance.state != State.GAME_PAUSED))
@@ -84,19 +84,13 @@
                 if (waveCountdown <= 0f)
                 {
                     waveCountdown = 0f;
-                    if (currentState != WaveState.Spawning)
-                    {
-                        StartWave();
-                    }
+                    if (currentState != WaveState.Spawning) StartWave();
+
+                    return;
                 }
-                else
-                {
-                    waveCountdown -= Time.deltaTime;
-                    if (waveCountdown > 0f)
-                    {
-                        stateOfGameText.text = string.Format("NEXT ROUND STARTS IN {0}s", Mathf.Floor(waveCountdown).ToString());
-                    }
-                }
+               
+                waveCountdown -= Time.deltaTime;
+                if (waveCountdown > 0f) OnWaveCountdownUpdate?.Invoke(waveCountdown);
             }
         }
 
@@ -156,18 +150,20 @@
 
         private void SpawnEnemies()
         {
-            SpawnPoint spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
             if (currentConfig != null && currentConfig.enemy != null)
             {
-                StartCoroutine(SpawnRoutine(spawnPoint.transform));
+                StartCoroutine(SpawnRoutine());
             }
         }
 
-        private IEnumerator SpawnRoutine(Transform spawnPoint)
+        private IEnumerator SpawnRoutine()
         {
             for (int i = 0; i < rounds * 1.25; i++)
             {
-                Enemy enemy = Instantiate(currentConfig.enemy, spawnPoint.position, spawnPoint.rotation).GetComponent<Enemy>();
+                SpawnPoint spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
+
+
+                Enemy enemy = Instantiate(currentConfig.enemy, spawnPoint.Position, spawnPoint.Rotation).GetComponent<Enemy>();
                 if (enemy != null) enemy.Init(currentConfig.enemyConfig);
 
                 yield return new WaitForSeconds(1f);
