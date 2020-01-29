@@ -528,7 +528,6 @@ MonoBehaviour:
   model: {fileID: 293838824096753579}
   crosshair: {fileID: 1259187709027911290}
   cap: {fileID: 8706628408514130960}
-  moneyDrop: 040000000500000008000000
   movementEnabled: 1
   lookRadius: 10
   attackRate: 1
