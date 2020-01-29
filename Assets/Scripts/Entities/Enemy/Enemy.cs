@@ -66,18 +66,6 @@ public class Enemy : Entity
                     {
                         attackCooldown = 1f / attackRate;
                         equipment.UsePrimary();
-                        /*PlayerStats playerStats = player.stats;
-                        PlayerCombat playerCombat = player.combat;
-                        if (playerStats != null && playerCombat != null && !playerStats.IsDead)
-                        {
-                            if (!IsUnderAttack)
-                            {
-                                attackCooldown = 1f / attackRate;
-                                animator.OnPrimary();
-
-                                if (!playerCombat.IsBlocking) combat.Attack(playerStats);
-                            }
-                        }*/
                     }
                 } 
             }
@@ -94,14 +82,11 @@ public class Enemy : Entity
         RandomItem[] items = config.items;
         if (items != null)
         {
-            Equipment item = items.Length == 1 ? items[0].item : GetRandomItem(items);
-            if (item != null)
-            {
-                equipment.EquipItem(item);
+            RandomItem randomItem = GetRandomItem(items);
+            equipment.EquipItem(randomItem.item);
+            animator.SetEquipment(randomItem.item);
 
-                //Workaround..
-                animator.SetEquipment(item);
-            }
+            if (randomItem.damageOverride >= 0) stats.damage = randomItem.damageOverride;
         }
     }
 
@@ -151,10 +136,10 @@ public class Enemy : Entity
         crosshair.SetActive(active);
     }
 
-    private Equipment GetRandomItem(RandomItem[] items)
+    private RandomItem GetRandomItem(RandomItem[] items)
     {
-        Dictionary<Equipment, int> weights = new Dictionary<Equipment, int>();
-        foreach (RandomItem item in items) weights.Add(item.item, item.percentage);
+        Dictionary<RandomItem, int> weights = new Dictionary<RandomItem, int>();
+        foreach (RandomItem item in items) weights.Add(item, item.percentage);
 
         return WeightedRandomizer.From(weights).TakeOne();
     }
