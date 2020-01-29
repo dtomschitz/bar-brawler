@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: c445bb7c6aca4344cb625dac757352d3, type: 2}
   infoText: Der Hopfensmoothie braucht ein wenig, bis er seine volle Wirkung entfaltet.
-  price: 4
+  price: 8
