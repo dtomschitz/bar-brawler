@@ -11,6 +11,16 @@ public class EntityCombatBehaviour : StateMachineBehaviour
         if (entity != null && entity.equipment.CurrentEquipment != null)
         {
             entity.combat.SetState(entity.equipment.CurrentEquipment);
+
+            if (entity is Player)
+            {
+                Player player = entity as Player;
+                Equipment item = player.equipment.CurrentEquipment;
+                if (item != null && item.IsDrink)
+                {
+                   // FindObjectOfType<AudioManager>().Play("Drinking");
+                }
+            }
         }
 
         /*if (player != null && player.equipment.CurrentEquipment != null)
@@ -39,7 +49,11 @@ public class EntityCombatBehaviour : StateMachineBehaviour
             {
                 Player player = entity as Player;
                 Equipment item = player.equipment.CurrentEquipment;
-                if (item != null && item.IsDrink) player.inventory.RemoveItem(item);
+                if (item != null && item.IsDrink)
+                {
+                    player.inventory.RemoveItem(item);
+                  //  F//indObjectOfType<AudioManager>()
+                }
             }
         }
     }
