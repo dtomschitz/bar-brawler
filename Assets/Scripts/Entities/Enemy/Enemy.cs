@@ -19,14 +19,13 @@ public class Enemy : Entity
     public GameObject crosshair;
     public GameObject cap;
 
-    [Header("Drops")]
-    public int[] moneyDrop;
-
     [Header("Settings")]
     public bool movementEnabled = true;
     public float lookRadius = 10f;
     public float attackRate = 1f;
     private float attackCooldown = 0f;
+
+    private int[] moneyDrops;
 
     private Transform target;
     private NavMeshAgent agent;
@@ -90,6 +89,8 @@ public class Enemy : Entity
         stats.Init(config.stats);
         combat.Init(config.combat);
 
+        moneyDrops = config.moneyDrops;
+
         RandomItem[] items = config.items;
         if (items != null)
         {
@@ -122,12 +123,13 @@ public class Enemy : Entity
         agent.enabled = false;
         (stats as EnemyStats).healthBar.gameObject.SetActive(false);
         GetComponent<CapsuleCollider>().enabled = false;
-
         animator.OnDeath();
 
-        Player.instance.AddMoney(moneyDrop[Random.Range(0, moneyDrop.Length)]);
         Player.instance.combat.AddMana(10f);
-
+        if (moneyDrops != null)
+        {
+            Player.instance.AddMoney(moneyDrops[Random.Range(0, moneyDrops.Length)]);
+        }
         if (TargetAcquisition.instance.CurrentEnemy == this)
         {
             TargetAcquisition.instance.UnselectCurrentEnemy(true);
