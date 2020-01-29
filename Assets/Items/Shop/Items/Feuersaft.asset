@@ -15,4 +15,4 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 967e9cfadfc249e4592f94369dcabf28, type: 2}
   infoText: Kann dir in brenzligen Situationen das Leben retten, muss jedoch im Stehen
     gedrunken werden.
-  price: 30
+  price: 25
