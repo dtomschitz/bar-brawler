@@ -1,10 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Items;
-using Utils;
 
 public class EntityCombat : MonoBehaviour
 {
-   // public event Action OnAttack;
     public CombatState state { get; protected set; }
 
     [Header("Mana")]
@@ -12,8 +11,9 @@ public class EntityCombat : MonoBehaviour
     public float manaRegenerationAmount;
     public float manaRegenerationSpeed;
 
+    public event Action OnManaUsed;
+
     public float CurrentMana { get; protected set; }
-    public bool IsUsingMana { get; set; }
 
     private EntityStats stats;
 
@@ -25,7 +25,7 @@ public class EntityCombat : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (!IsUsingMana) AddMana(manaRegenerationAmount * Time.deltaTime / manaRegenerationSpeed);
+        //if(!IsBlocking) AddMana(manaRegenerationAmount * Time.deltaTime / manaRegenerationSpeed);
     }
 
     public void Init(CombatConfig config)
@@ -51,19 +51,9 @@ public class EntityCombat : MonoBehaviour
 
     public void UseMana(float amount = 1f)
     {
-        amount = Mathf.Clamp(amount, 0, float.MaxValue);
-
-        if (amount == 1f)
-        {
-            CurrentMana -= amount;
-        }
-        else
-        {
-            FunctionUpdater.Create(() =>
-            {
-                CurrentMana = Mathf.Lerp(CurrentMana, CurrentMana - amount, Time.deltaTime * 1f);
-            });
-        }
+        //amount = Mathf.Clamp(amount, 0, float.MaxValue);
+        CurrentMana -= amount;
+        OnManaUsed?.Invoke();
     }
 
     public void SetState(Equipment item)
@@ -100,6 +90,11 @@ public class EntityCombat : MonoBehaviour
     {
         if (newState == state || !GameState.instance.IsInGame) return;
         state = newState; 
+    }
+
+    public float ManaNormalized
+    {
+        get { return CurrentMana / maxMana; }
     }
 
     public bool IsInAction

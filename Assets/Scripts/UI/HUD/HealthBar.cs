@@ -1,8 +1,28 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using Utils;
 
-public class HealthBar : MonoBehaviour
+public class HealthBar : ShrinkBar
+{
+    private EntityStats stats;
+
+    void Start()
+    {
+        stats = Player.instance.stats;
+        stats.OnDamaged += OnDamaged;
+        stats.OnHealed += OnHealed;
+    }
+
+    public void OnDamaged(float damage)
+    {
+        SetFillAmount(stats.HealthNormalized);
+    }
+
+    private void OnHealed(float amount)
+    {
+        SetFillAmount(stats.HealthNormalized);
+    }
+}
+
+/*public class HealthBar : MonoBehaviour
 {
     public Image healthBarImage;
     public Image damagedBarImage;
@@ -48,3 +68,32 @@ public class HealthBar : MonoBehaviour
         healthBarImage.fillAmount = health;
     }
 }
+
+public class ShrinkBar : MonoBehaviour
+{
+    public Image barImage;
+    public Image shrinkBarImage;
+
+    public float maxShrinkTimer = 0.6f;
+
+    private float shrinkTimer;
+
+    void Update()
+    {
+        shrinkTimer -= Time.deltaTime;
+        if (shrinkTimer < 0)
+        {
+            if (barImage.fillAmount < shrinkBarImage.fillAmount)
+            {
+                float shrinkSpeed = 1f;
+                shrinkBarImage.fillAmount -= shrinkSpeed * Time.deltaTime;
+            }
+        }
+    }
+
+    protected void SetFillAmount(float amount)
+    {
+        shrinkTimer = maxShrinkTimer;
+        barImage.fillAmount = amount;
+    }
+}*/

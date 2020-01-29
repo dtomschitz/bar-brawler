@@ -4,7 +4,6 @@ using UnityEngine;
 public class PlayerCombat : EntityCombat
 {
     public int simultaneousAttackers = 1;
-
     private List<GameObject> attackers;
 
     protected override void Start()
@@ -13,11 +12,6 @@ public class PlayerCombat : EntityCombat
 
         attackers = new List<GameObject>();
         CurrentMana = maxMana;
-    }
-
-    protected override void Update()
-    {
-        if (!IsUsingMana) AddMana(manaRegenerationAmount * Time.deltaTime / manaRegenerationSpeed);
     }
 
     public void OnRequestAttack(GameObject enemy)
@@ -39,16 +33,6 @@ public class PlayerCombat : EntityCombat
     public void OnCancelAttack(GameObject enemy)
     {
         attackers.Remove(enemy);
-    }
-
-    public override void SetState(CombatState newState)
-    {
-        base.SetState(newState);
-    }
-
-    public float NormalizedMana
-    {
-        get { return CurrentMana / maxMana; }
     }
 
     private void OnDrawGizmos()
