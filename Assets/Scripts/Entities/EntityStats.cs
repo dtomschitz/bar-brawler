@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using Items;
 
 public class EntityStats : MonoBehaviour
 {
@@ -34,12 +35,11 @@ public class EntityStats : MonoBehaviour
         damage = Mathf.Clamp(damage, 0, maxHealth);
         CurrentHealth -= damage;
         OnTakeDamage?.Invoke(damage);
+
         FindObjectOfType<AudioManager>().Play("Punch");
         FindObjectOfType<AudioManager>().Play("FightReaction");
-        if (IsDead)
-        {
-            OnDeath?.Invoke();
-        }
+
+        if (IsDead) OnDeath?.Invoke();
     }
 
     public virtual void Heal(float amount)

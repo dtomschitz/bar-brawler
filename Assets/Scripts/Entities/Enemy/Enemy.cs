@@ -111,6 +111,8 @@ public class Enemy : Entity
     public override void OnTakeDamage(float damage)
     {
         base.OnTakeDamage(damage);
+
+        //TODO: FLEE if hit by knife
     }
 
     public override void OnDeath()

@@ -27,9 +27,10 @@ public class EntityAnimator : MonoBehaviour
         animator.SetTrigger("Secondary");
     }
 
-    public virtual void OnPunchHit()
+    public virtual void OnHit(ItemType itemType)
     {
-        animator.SetTrigger("PunchHit");
+        animator.SetInteger("HitItem", (int)itemType);
+        animator.SetTrigger("Hit");
     }
 
     public virtual void OnDeath()
