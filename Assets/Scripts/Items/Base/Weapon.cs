@@ -6,6 +6,6 @@ namespace Items
     public class Weapon : Equipment
     {
         [Header("Damage")]
-        public int damage;
+        public float damage;
     }
 }

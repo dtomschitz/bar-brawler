@@ -94,14 +94,24 @@ public class Enemy : Entity
         RandomItem[] items = config.items;
         if (items != null)
         {
-            Equipment item = items.Length == 1 ? items[0].item : GetRandomItem(items);
-            if (item != null)
+            /*Equipment item;
+            if (items.Length == 1)
             {
-                equipment.EquipItem(item);
-
-                //Workaround..
-                animator.SetEquipment(item);
+                item = items[0].item;
+            } else
+            {
+                RandomItem randomItem = GetRandomItem(items);
             }
+
+            equipment.EquipItem(item);
+            stats.damage = rand
+            animator.SetEquipment(item);*/
+
+            RandomItem randomItem = GetRandomItem(items);
+            equipment.EquipItem(randomItem.item);
+            animator.SetEquipment(randomItem.item);
+
+            if (randomItem.damageOverride >= 0) stats.damage = randomItem.damageOverride;
         }
     }
 
@@ -151,10 +161,10 @@ public class Enemy : Entity
         crosshair.SetActive(active);
     }
 
-    private Equipment GetRandomItem(RandomItem[] items)
+    private RandomItem GetRandomItem(RandomItem[] items)
     {
-        Dictionary<Equipment, int> weights = new Dictionary<Equipment, int>();
-        foreach (RandomItem item in items) weights.Add(item.item, item.percentage);
+        Dictionary<RandomItem, int> weights = new Dictionary<RandomItem, int>();
+        foreach (RandomItem item in items) weights.Add(item, item.percentage);
 
         return WeightedRandomizer.From(weights).TakeOne();
     }

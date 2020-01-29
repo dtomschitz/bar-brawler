@@ -18,6 +18,7 @@ public class EnemyConfig : ScriptableObject
 [Serializable]
 public class RandomItem
 {
-    public Equipment item;
     public int percentage;
+    public Equipment item;
+    public int damageOverride;
 }
