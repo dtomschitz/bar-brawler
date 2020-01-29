@@ -103,6 +103,11 @@ public class EntityCombat : MonoBehaviour
         state = newState; 
     }
 
+    public bool IsInAction
+    {
+        get { return IsAttacking || IsDrinking; }
+    }
+
     public bool IsAttacking
     {
         get { return state == CombatState.Fist_Attack || state == CombatState.Bottle_Attack || state == CombatState.Knife_Attack || state == CombatState.Revolver_Attack; }
