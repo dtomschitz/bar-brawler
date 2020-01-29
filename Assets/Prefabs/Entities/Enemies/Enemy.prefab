@@ -501,7 +501,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 2
+  m_StoppingDistance: 5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -525,6 +525,7 @@ MonoBehaviour:
   combat: {fileID: 1592573314076958519}
   animator: {fileID: 6356219383110875253}
   equipment: {fileID: 2238615278613215709}
+  model: {fileID: 293838824096753579}
   crosshair: {fileID: 1259187709027911290}
   cap: {fileID: 8706628408514130960}
   moneyDrop: 040000000500000008000000
@@ -788,6 +789,12 @@ Animator:
 --- !u!4 &3623344922093393336 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 3a586a861033354488d8b2aaa382a4dc,
+    type: 3}
+  m_PrefabInstance: {fileID: 8588929418885217954}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &293838824096753579 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 3a586a861033354488d8b2aaa382a4dc,
     type: 3}
   m_PrefabInstance: {fileID: 8588929418885217954}
   m_PrefabAsset: {fileID: 0}

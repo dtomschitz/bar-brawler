@@ -27,7 +27,7 @@ namespace Items
 
         public virtual void OnHit(Entity entity)
         {
-            entity.OnHit(owner);
+            if (!entity.combat.IsBlocking) entity.OnHit(owner);
 
             if (entity is Enemy && owner is Player && item.hasDuration)
             {

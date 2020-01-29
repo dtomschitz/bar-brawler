@@ -44,14 +44,20 @@ namespace Items
 
             if (owner.combat.IsDrinking || owner.combat.IsAttacking) return;
 
-            Cooldown(primaryCooldown, primaryManaRequired, owner.combat.CurrentMana,
+            /*Cooldown(primaryCooldown, primaryManaRequired, owner.combat.CurrentMana,
                 () =>
                 {
                     primaryCooldown = 1f / primaryAttackRate;
                     owner.animator.OnPrimary();
                 },
                 () => { } 
-            );
+            );*/
+
+            if (primaryCooldown <= 0f)
+            {
+                primaryCooldown = 1f / primaryAttackRate;
+                owner.animator.OnPrimary();
+            }
         }
 
         public override void OnSecondary()
@@ -60,14 +66,21 @@ namespace Items
 
             if (owner.combat.IsDrinking || owner.combat.IsAttacking) return;
 
-            Cooldown(secondaryCooldown, secondaryManaRequired, owner.combat.CurrentMana,
+            if (secondaryCooldown <= 0f && owner.combat.CurrentMana >= secondaryManaRequired)
+            {
+                secondaryCooldown = 1f / secondaryAttackRate;
+                owner.animator.OnSecondary();
+            }
+
+
+           /* Cooldown(secondaryCooldown, secondaryManaRequired, owner.combat.CurrentMana,
                 () =>
                 {
                     secondaryCooldown = 1f / secondaryAttackRate;
                     owner.animator.OnSecondary();
                 },
                 () => { }
-            );
+            );*/
         }
 
         public virtual void StartPrimaryRoutine(IEnumerator routine)

@@ -7,8 +7,8 @@ public class EnemyAnimator : EntityAnimator
 
     protected override void Start()
     {
-        navMeshAgent = GetComponent<NavMeshAgent>();
         base.Start();
+        navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
     void Update()
@@ -19,10 +19,5 @@ public class EnemyAnimator : EntityAnimator
 
         SetForward(forward);
         //SetForward(strafe);
-    }
-
-    public override void OnPrimary()
-    {
-        base.OnPrimary();
     }
 }

@@ -15,6 +15,7 @@ public enum AIState
 public class Enemy : Entity
 {
     [Header("Visuals")]
+    public GameObject model;
     public GameObject crosshair;
     public GameObject cap;
 
@@ -51,12 +52,21 @@ public class Enemy : Entity
             float distance = Vector3.Distance(target.position, transform.position);
             if (distance <= lookRadius)
             {
-                if (movementEnabled) agent.SetDestination(target.position);
-                /*if (distance <= agent.stoppingDistance && attackCooldown <= 0f)
+                if (movementEnabled)
                 {
-                    double velocity = agent.velocity.magnitude / agent.speed; 
+                    agent.SetDestination(target.position);
+                }
+
+                if (distance <= agent.stoppingDistance && attackCooldown <= 0f)
+                {
+                    double velocity = agent.velocity.magnitude / agent.speed;
+
+                    TurnEnemyToPlayer();
+
                     if (velocity == 0f)
                     {
+                        attackCooldown = 1f / attackRate;
+                        equipment.UsePrimary();
                         /*PlayerStats playerStats = player.stats;
                         PlayerCombat playerCombat = player.combat;
                         if (playerStats != null && playerCombat != null && !playerStats.IsDead)
@@ -68,9 +78,9 @@ public class Enemy : Entity
 
                                 if (!playerCombat.IsBlocking) combat.Attack(playerStats);
                             }
-                        }
+                        }*/
                     }
-                } */
+                } 
             }
         }
     }
@@ -84,7 +94,13 @@ public class Enemy : Entity
         if (items != null)
         {
             Equipment item = items.Length == 1 ? items[0].item : GetRandomItem(items);
-            if (item != null) equipment.EquipItem(item);
+            if (item != null)
+            {
+                equipment.EquipItem(item);
+
+                //Workaround..
+                animator.SetEquipment(item);
+            }
         }
     }
 
@@ -117,6 +133,14 @@ public class Enemy : Entity
 
         Destroy(gameObject, 2f);
     }
+
+    private void TurnEnemyToPlayer()
+    {
+        Vector3 lookDirection = (target.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(lookDirection.x, 0, lookDirection.z));
+        transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, Time.deltaTime * 1000f);
+    }
+
 
     public void SetCrosshairActive(bool active)
     {

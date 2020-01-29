@@ -10,11 +10,6 @@ namespace Items
         public float bleedOutTime = 10f;
         public float timeBetweenDamage = 1f;
 
-        public override void OnPrimary()
-        {
-            base.OnPrimary();
-        }
-
         public override void OnHit(Entity entity)
         {
             base.OnHit(entity);

@@ -59,28 +59,9 @@ public class EntityEquipment : MonoBehaviour
         }
     }
 
-    /*private void OnItemUsed(Item item)
-    {
-        if (item == currentEquipment)
-        {
-            if (item.slot.Count == 0)
-            {
-                Unequip();
-                // EquipFirstItemInHotbar();
-            }
-        }
-    }*/
-
-    private void OnItemRemoved(object sender, InventoryEvent e)
-    {
-        if (e.item == currentEquipment)
-        {
-            Unequip();
-        }
-    }
-
     public void EquipItem(Equipment item)
     {
+
         GameObject prefabCopy = Instantiate(item.prefab);
         Equippable equippable = prefabCopy.GetComponent<Equippable>();
         if (equippable != null)
