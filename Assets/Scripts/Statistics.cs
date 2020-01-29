@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
-using Wave;
-using Shop;
+
 public class Statistics : MonoBehaviour
 {
     #region Singelton
@@ -15,24 +13,24 @@ public class Statistics : MonoBehaviour
 
     #endregion;
 
-    public Text roundsText;
-    public Text Kills;
-    public Text Damage;
-    public Text MoneySpend;
+    public int SurvivedRounds { get; protected set; } = 0;
+    public int Kills { get; protected set; } = 0;
+    public float DamageCaused { get; protected set; } = 0;
+    public int SpendMoney { get; protected set; } = 0;
 
     void Start()
     {
-        WaveSpawner.rounds = 0;
-        Enemy.enemyDeathCounter = 0;
-        EnemyStats.damageTaken = 0;
-        ShopItem.spendMoney = 0;
+        SurvivedRounds = 0;
+        Kills = 0;
+        SpendMoney = 0;
+        DamageCaused = 0f;
+
+        Debug.Log("Start new game");
     }
 
-    public void OnEnable()
-    {
-        roundsText.text = WaveSpawner.rounds.ToString();
-        Kills.text = Enemy.enemyDeathCounter.ToString();
-        Damage.text = Mathf.Floor(EnemyStats.damageTaken).ToString();
-        MoneySpend.text = ShopItem.spendMoney.ToString();
-    }
+
+    public void AddRound() => SurvivedRounds++;
+    public void AddKill() => Kills++;
+    public void AddDamage(float damage) => DamageCaused += damage;
+    public void AddMoney(int amount) => SpendMoney += amount;
 }

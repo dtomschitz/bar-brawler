@@ -47,17 +47,18 @@
 
         public Text stateOfGameText;
 
-        public WaveState currentState { get; protected set; }
-        public Difficulty currentDifficulty { get; protected set; }
-        public WaveConfig currentConfig { get; protected set; }
+        public WaveState CurrentState { get; protected set; }
+        public Difficulty CurrentDifficulty { get; protected set; }
+        public WaveConfig CurrentConfig { get; protected set; }
 
-        public static int rounds;
+        public int Rounds { get; protected set; }
+
         private float waveCountdown;
         private float searchCountdown = 1f;
 
         void Start()
         {
-            currentState = WaveState.Counting;
+            CurrentState = WaveState.Counting;
             ResetWaveSpawner();
         }
 
@@ -75,7 +76,7 @@
         {
             if (isWaveSpawnerEnabled && (GameState.instance.state != State.GAME_OVER || GameState.instance.state != State.GAME_PAUSED))
             {
-                if (currentState == WaveState.Running)
+                if (CurrentState == WaveState.Running)
                 {
                     if (IsEnemyAlive) return;
                     ResetWaveSpawner();
@@ -84,7 +85,7 @@
                 if (waveCountdown <= 0f)
                 {
                     waveCountdown = 0f;
-                    if (currentState != WaveState.Spawning) StartWave();
+                    if (CurrentState != WaveState.Spawning) StartNextWave();
 
                     return;
                 }
@@ -116,31 +117,22 @@
             waveCountdown = timeBetweenWaves;
         }
 
-        private void StartWave()
+        private void StartNextWave()
         {
-            rounds++;
+            Rounds++;
+            Debug.LogFormat("Spawning Wave (num: {0}, difficulty: {1})", Rounds, CurrentDifficulty);
+
             SelectCurrentConfig();
-
-            Debug.LogFormat("Spawning Wave (num: {0}, difficulty: {1})", rounds, currentDifficulty);
-
-            //currentState = WaveState.Spawning;
-            //OnWaveStateUpdate?.Invoke(currentState, rounds);
-            SetState(WaveState.Spawning);
-            //spawnPoint.OpenDoor();
-
             SpawnEnemies();
 
-            SetState(WaveState.Running);
-            // currentState = WaveState.Running;
-            //OnWaveStateUpdate?.Invoke(currentState, rounds);
-
+            Statistics.instance.AddRound();
         }
 
         private void SelectCurrentConfig()
         {
             foreach (WaveConfig config in configs)
             {
-                if (config != currentConfig && config.round == rounds)
+                if (config != CurrentConfig && config.round == Rounds)
                 {
                     SetConfig(config);
                     return;
@@ -150,7 +142,7 @@
 
         private void SpawnEnemies()
         {
-            if (currentConfig != null && currentConfig.enemy != null)
+            if (CurrentConfig != null && CurrentConfig.enemy != null)
             {
                 StartCoroutine(SpawnRoutine());
             }
@@ -158,16 +150,19 @@
 
         private IEnumerator SpawnRoutine()
         {
-            for (int i = 0; i < rounds * 1.25; i++)
+            SetState(WaveState.Spawning);
+
+            for (int i = 0; i < Rounds * 1.25; i++)
             {
                 SpawnPoint spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
 
 
-                Enemy enemy = Instantiate(currentConfig.enemy, spawnPoint.Position, spawnPoint.Rotation).GetComponent<Enemy>();
-                if (enemy != null) enemy.Init(currentConfig.enemyConfig);
+                Enemy enemy = Instantiate(CurrentConfig.enemy, spawnPoint.Position, spawnPoint.Rotation).GetComponent<Enemy>();
+                if (enemy != null) enemy.Init(CurrentConfig.enemyConfig);
 
                 yield return new WaitForSeconds(1f);
             }
+            SetState(WaveState.Spawning);
             yield break;
         }
 
@@ -185,15 +180,15 @@
                     break;
             }
 
-            currentState = newState;
-            OnWaveStateUpdate?.Invoke(currentState, rounds);
+            CurrentState = newState;
+            OnWaveStateUpdate?.Invoke(CurrentState, Rounds);
         }
 
         private void SetConfig(WaveConfig config)
         {
             Debug.LogFormat("Update wave config {0} (round: {1}, difficulty: {2}, enemy: {3}", config, config.round, config.difficulty, config.enemy.name);
-            currentConfig = config;
-            currentDifficulty = config.difficulty;
+            CurrentConfig = config;
+            CurrentDifficulty = config.difficulty;
         }
 
         private bool IsEnemyAlive
@@ -215,7 +210,7 @@
 
         public bool IsWaveRunning
         {
-            get { return currentState == WaveState.Running || currentState == WaveState.Spawning; }
+            get { return CurrentState == WaveState.Running || CurrentState == WaveState.Spawning; }
         }
 
         /* private void whichEnemy(Transform spawnPoint)

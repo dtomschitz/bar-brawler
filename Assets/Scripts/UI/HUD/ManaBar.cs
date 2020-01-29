@@ -8,10 +8,18 @@ public class ManaBar : ShrinkBar
     {
         combat = Player.instance.combat;
         combat.OnManaUsed += OnManaUsed;
+        combat.OnManaUsed += OnManaUsed;
+    }
+
+    public void OnManaAdded()
+    {
+        SetBarFillAmount(combat.ManaNormalized);
+        AlignBars();
     }
 
     public void OnManaUsed()
     {
-        SetFillAmount(combat.ManaNormalized);
+        ResetTimer();
+        SetBarFillAmount(combat.ManaNormalized);
     }
 }

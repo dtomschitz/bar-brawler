@@ -12,6 +12,7 @@ public class EntityCombat : MonoBehaviour
     public float manaRegenerationSpeed;
 
     public event Action OnManaUsed;
+    public event Action OnManaAdded;
 
     public float CurrentMana { get; protected set; }
 
@@ -25,7 +26,7 @@ public class EntityCombat : MonoBehaviour
 
     protected virtual void Update()
     {
-        //if(!IsBlocking) AddMana(manaRegenerationAmount * Time.deltaTime / manaRegenerationSpeed);
+        AddMana(manaRegenerationAmount * Time.deltaTime / manaRegenerationSpeed);
     }
 
     public void Init(CombatConfig config)
@@ -47,6 +48,7 @@ public class EntityCombat : MonoBehaviour
     {
         CurrentMana += amount;
         CurrentMana = Mathf.Clamp(CurrentMana, 0f, maxMana);
+        OnManaAdded?.Invoke();
     }
 
     public void UseMana(float amount = 1f)

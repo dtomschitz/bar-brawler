@@ -25,9 +25,18 @@ namespace Utils
             }
         }
 
-        protected void SetFillAmount(float amount)
+        protected void AlignBars()
+        {
+            shrinkBarImage.fillAmount = barImage.fillAmount;
+        }
+
+        protected void ResetTimer()
         {
             shrinkTimer = maxShrinkTimer;
+        }
+
+        protected void SetBarFillAmount(float amount)
+        {
             barImage.fillAmount = amount;
         }
     }

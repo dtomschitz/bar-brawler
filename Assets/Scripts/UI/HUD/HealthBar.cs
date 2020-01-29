@@ -12,13 +12,15 @@ public class HealthBar : ShrinkBar
         stats.OnHealed += OnHealed;
     }
 
-    public void OnDamaged(float damage, Equipment item)
-    {
-        SetFillAmount(stats.HealthNormalized);
-    }
-
     private void OnHealed(float amount)
     {
-        SetFillAmount(stats.HealthNormalized);
+        SetBarFillAmount(stats.HealthNormalized);
+        AlignBars();
+    }
+
+    public void OnDamaged(float damage, Equipment item)
+    {
+        ResetTimer();
+        SetBarFillAmount(stats.HealthNormalized);
     }
 }

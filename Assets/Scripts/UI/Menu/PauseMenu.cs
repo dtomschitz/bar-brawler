@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using Wave;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -24,8 +23,6 @@ public class PauseMenu : MonoBehaviour
 
     public void OnRetry()
     {
-        GameState.instance.SetState(State.INGAME);
-        WaveSpawner.rounds = 0;
         sceneFader.FadeTo(SceneManager.GetActiveScene().name);
     }
 

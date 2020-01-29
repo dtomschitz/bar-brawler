@@ -17,6 +17,8 @@ namespace Items
         private float primaryCooldown = 0f;
         private float secondaryCooldown = 0f;
 
+        private bool collided = false;
+
         private Coroutine primaryRoutine;
         private Coroutine secondaryRoutine;
 
@@ -26,15 +28,28 @@ namespace Items
             secondaryCooldown -= Time.deltaTime;
         }
 
-        void OnTriggerExit(Collider other)
+        void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject != owner.gameObject && (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Player"))
+            if (collided) return;
+            if (owner != null && other.gameObject != owner.gameObject && (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Player"))
             {
                 if (owner.combat.IsAttacking)
                 {
                     Entity entity = other.gameObject.GetComponent<Entity>();
                     if (entity != null) OnHit(entity);
                 }
+
+                collided = true;
+            }
+        }
+
+        void OnTriggerExit(Collider other)
+        {
+            if (!collided) return;
+
+            if (owner != null && other.gameObject != owner.gameObject && (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Player"))
+            {
+                collided = false;
             }
         }
 

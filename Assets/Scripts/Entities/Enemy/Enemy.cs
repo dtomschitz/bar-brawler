@@ -32,8 +32,6 @@ public class Enemy : Entity
     private Transform target;
     private NavMeshAgent agent;
 
-    public static int enemyDeathCounter;
-
     protected override void Start()
     {
         base.Start();
@@ -87,6 +85,7 @@ public class Enemy : Entity
         if (items != null)
         {
             RandomItem randomItem = GetRandomItem(items);
+
             equipment.EquipItem(randomItem.item);
             animator.SetEquipment(randomItem.item);
 
@@ -111,16 +110,11 @@ public class Enemy : Entity
         animator.OnDeath();
 
         Player.instance.combat.AddMana(10f);
-        if (moneyDrops != null)
-        {
-            Player.instance.AddMoney(moneyDrops[Random.Range(0, moneyDrops.Length)]);
-        }
-        if (TargetAcquisition.instance.CurrentEnemy == this)
-        {
-            TargetAcquisition.instance.UnselectCurrentEnemy(true);
-        }
+        if (moneyDrops != null) Player.instance.AddMoney(moneyDrops[Random.Range(0, moneyDrops.Length)]);
+        if (TargetAcquisition.instance.CurrentEnemy == this) TargetAcquisition.instance.UnselectCurrentEnemy(true);
 
-        enemyDeathCounter++;
+        Statistics.instance.AddKill();
+
         Destroy(gameObject, 2f);
     }
 

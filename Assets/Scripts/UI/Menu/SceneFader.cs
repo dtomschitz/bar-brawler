@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -8,6 +7,7 @@ public class SceneFader : MonoBehaviour
 {
     public Image img;
     public AnimationCurve fadeCurve;
+
     private void Start()
     {
         StartCoroutine(FadeIn());
@@ -44,5 +44,4 @@ public class SceneFader : MonoBehaviour
         }
         SceneManager.LoadScene(scene);
     }
-
 }

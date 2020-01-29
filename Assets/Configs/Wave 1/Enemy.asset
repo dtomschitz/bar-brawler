@@ -18,4 +18,4 @@ MonoBehaviour:
   items:
   - percentage: 100
     item: {fileID: 11400000, guid: dfef5eb85bcbea8499448b629546c92d, type: 2}
-    damageOverride: 1
+    damageOverride: 50

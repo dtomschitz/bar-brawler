@@ -1388,6 +1388,7 @@ GameObject:
   m_Component:
   - component: {fileID: 247322026}
   - component: {fileID: 247322028}
+  - component: {fileID: 247322029}
   - component: {fileID: 247322027}
   - component: {fileID: 247322025}
   m_Layer: 0
@@ -1462,6 +1463,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 2
+--- !u!114 &247322029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 247322024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2d432fae6b4dff4196a0ab3fdfafee0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &268896579 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4498888811650392992, guid: 77ba59c64d4dcc041972b79fa5fc8e86,
@@ -6169,6 +6182,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuSceneName: MainMenu
   sceneFader: {fileID: 1508618963}
+  statisticsPanel: {fileID: 1747763344}
+  rounds: {fileID: 1331108026}
+  kills: {fileID: 418437689}
+  damage: {fileID: 536917393}
+  money: {fileID: 245624102}
 --- !u!95 &1196435170
 Animator:
   serializedVersion: 3
@@ -6974,8 +6992,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a7aedbc566369d45b36830c2c75a833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  barImage: {fileID: 1147758982}
-  shrinkBarImage: {fileID: 2139640385}
+  barImage: {fileID: 2139640385}
+  shrinkBarImage: {fileID: 1147758982}
   maxShrinkTimer: 0.6
 --- !u!114 &1350290713
 MonoBehaviour:
@@ -8136,12 +8154,12 @@ PrefabInstance:
     - target: {fileID: 4251900538022576379, guid: a5694255a417f164c9596164663fb42b,
         type: 3}
       propertyPath: manaRegenerationSpeed
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4251900538022576379, guid: a5694255a417f164c9596164663fb42b,
         type: 3}
       propertyPath: manaRegenerationAmount
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9114016593438539423, guid: a5694255a417f164c9596164663fb42b,
         type: 3}
@@ -9323,10 +9341,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2d432fae6b4dff4196a0ab3fdfafee0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roundsText: {fileID: 1331108026}
-  Kills: {fileID: 418437689}
-  Damage: {fileID: 536917393}
-  MoneySpend: {fileID: 245624102}
 --- !u!1001 &1771756523
 PrefabInstance:
   m_ObjectHideFlags: 0
