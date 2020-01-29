@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Combat Config", menuName = "Configs/Combat Config")]
 public class CombatConfig : ScriptableObject

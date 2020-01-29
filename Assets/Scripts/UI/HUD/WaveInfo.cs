@@ -7,6 +7,7 @@ public class WaveInfo : MonoBehaviour
     public Text stateOfGameText;
     public Text skipCountdownText;
 
+    public Color warningColor;
     public float nextRoundWarning;
 
     void Start()
@@ -36,7 +37,10 @@ public class WaveInfo : MonoBehaviour
 
     public void OnWaveCountdownUpdate(float countdown)
     {
-        if (countdown <= nextRoundWarning) stateOfGameText.color = new Color(178, 11, 19, 255f);
+        if (countdown <= nextRoundWarning)
+        {
+            stateOfGameText.color = warningColor;
+        }
         stateOfGameText.text = string.Format("NÄCHSTE RUNDE IN {0}s", Mathf.Floor(countdown).ToString());
     }
 
