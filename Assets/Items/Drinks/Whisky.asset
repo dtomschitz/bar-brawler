@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Whisky
   m_EditorClassIdentifier: 
   name: Stilles Wasser
-  icon: {fileID: 21300000, guid: 5620f00f28816c4429898e4b5891518a, type: 3}
+  icon: {fileID: 21300000, guid: 9f977d5e9488cd64790d7cce7fe7cfb0, type: 3}
   kind: 0
   addToInventory: 1
   isStackable: 1

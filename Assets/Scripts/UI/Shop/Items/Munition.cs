@@ -8,9 +8,7 @@ namespace Shop
         public override void OnItemBought()
         {
             base.OnItemBought();
-            Debug.Log((item as Items.Munition).amount);
             Player.instance.inventory.AddMunition((item as Items.Munition).amount);
         }
     }
-
 }

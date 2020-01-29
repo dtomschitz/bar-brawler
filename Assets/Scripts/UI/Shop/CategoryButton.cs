@@ -13,8 +13,6 @@ namespace Shop
 
         public void SetSelected(bool selected)
         {
-            Debug.Log(id + " selected: " + selected);
-
             title.color = selected ? selectedColor : defaultColor;
         }
     }

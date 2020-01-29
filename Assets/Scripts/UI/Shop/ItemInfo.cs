@@ -44,21 +44,23 @@ public class ItemInfo : FadeGraphic
                 StartCoroutine(HideEventText());
                 return;
             }
-
-            if (!inventory.HasItem(shopItem.item) && inventory.FindStackableSlot(shopItem.item) == null && inventory.FindNextEmptySlot() == null)
+            
+            if (!(shopItem is Munition))
             {
-                eventText.text = "Dein Inventar ist voll!".ToUpper();
-                StartCoroutine(HideEventText());
-                return;
-            }
+                if (!inventory.HasItem(shopItem.item) && inventory.FindStackableSlot(shopItem.item) == null && inventory.FindNextEmptySlot() == null)
+                {
+                    eventText.text = "Dein Inventar ist voll!".ToUpper();
+                    StartCoroutine(HideEventText());
+                    return;
+                }
 
-            if (inventory.HasItem(shopItem.item) && inventory.FindStackableSlot(shopItem.item) == null)
-            {
-                eventText.text = "Du hast schon zu viele Items dieser Art".ToUpper();
-                StartCoroutine(HideEventText());
-                return;
+                if (inventory.HasItem(shopItem.item) && inventory.FindStackableSlot(shopItem.item) == null)
+                {
+                    eventText.text = "Du hast schon zu viele Items dieser Art".ToUpper();
+                    StartCoroutine(HideEventText());
+                    return;
+                }
             }
-
 
             shopItem.OnItemBought();
         }
