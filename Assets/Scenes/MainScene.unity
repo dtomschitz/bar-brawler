@@ -1444,6 +1444,10 @@ MonoBehaviour:
   timeBetweenWaves: 31
   configs:
   - {fileID: 11400000, guid: 902e425edc236294d8051a20877c9706, type: 2}
+  - {fileID: 11400000, guid: 8f21f0654d409a94797dd133cf0ea7a5, type: 2}
+  - {fileID: 11400000, guid: e065c4c72eadea04fa58e06710791fa2, type: 2}
+  - {fileID: 11400000, guid: be64a6ae73e080e47a386a33f7619094, type: 2}
+  - {fileID: 11400000, guid: 4f79b3d7de46e17438bc59b1f9e3a509, type: 2}
   stateOfGameText: {fileID: 896722174}
 --- !u!114 &247322028
 MonoBehaviour:
@@ -13036,6 +13040,11 @@ PrefabInstance:
     - target: {fileID: 6149152869625538260, guid: 1b1970ea4b8f2dc45b2ea0f39db6c49c,
         type: 3}
       propertyPath: sounds.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6149152869625538260, guid: 1b1970ea4b8f2dc45b2ea0f39db6c49c,
+        type: 3}
+      propertyPath: sounds.Array.size
       value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6149152869625538260, guid: 1b1970ea4b8f2dc45b2ea0f39db6c49c,
@@ -13077,6 +13086,31 @@ PrefabInstance:
         type: 3}
       propertyPath: sounds.Array.data[7].volume
       value: 0.025
+      objectReference: {fileID: 0}
+    - target: {fileID: 6149152869625538260, guid: 1b1970ea4b8f2dc45b2ea0f39db6c49c,
+        type: 3}
+      propertyPath: sounds.Array.data[8].name
+      value: Theme
+      objectReference: {fileID: 0}
+    - target: {fileID: 6149152869625538260, guid: 1b1970ea4b8f2dc45b2ea0f39db6c49c,
+        type: 3}
+      propertyPath: sounds.Array.data[8].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 9741485b75042a64fb5f5fec61d82a60, type: 3}
+    - target: {fileID: 6149152869625538260, guid: 1b1970ea4b8f2dc45b2ea0f39db6c49c,
+        type: 3}
+      propertyPath: sounds.Array.data[8].volume
+      value: 0.025
+      objectReference: {fileID: 0}
+    - target: {fileID: 6149152869625538260, guid: 1b1970ea4b8f2dc45b2ea0f39db6c49c,
+        type: 3}
+      propertyPath: sounds.Array.data[8].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6149152869625538260, guid: 1b1970ea4b8f2dc45b2ea0f39db6c49c,
+        type: 3}
+      propertyPath: sounds.Array.data[8].loop
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6149152869625538260, guid: 1b1970ea4b8f2dc45b2ea0f39db6c49c,
         type: 3}
