@@ -529,7 +529,7 @@ MonoBehaviour:
   crosshair: {fileID: 1259187709027911290}
   cap: {fileID: 8706628408514130960}
   movementEnabled: 1
-  lookRadius: 10
+  lookRadius: 50
   attackRate: 1
 --- !u!114 &2238615278613215709
 MonoBehaviour:

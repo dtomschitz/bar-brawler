@@ -98,8 +98,6 @@ public class Enemy : Entity
     {
         base.OnDamaged(damage, item);
 
-        Debug.Log(item);
-
         //TODO: FLEE if hit by knife
     }
 
