@@ -8,7 +8,14 @@ public class EntityAnimator : MonoBehaviour
     protected virtual void Start()
     {
         animator = GetComponentInChildren<Animator>();
+        GetComponent<EntityEquipment>().OnItemEquipped += OnItemEquipped;
     }
+
+    public void OnItemEquipped(Equipment newItem, Equipment oldItem)
+    {
+        SetEquipment(newItem);
+    }
+
 
     public virtual void OnPrimary()
     {

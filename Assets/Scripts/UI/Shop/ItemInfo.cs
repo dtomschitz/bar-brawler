@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Shop;
-using System.Collections;
+using Utils;
 
 public class ItemInfo : FadeGraphic
 {

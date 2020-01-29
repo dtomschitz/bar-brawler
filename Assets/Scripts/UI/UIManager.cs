@@ -34,10 +34,6 @@ public class UIManager : MonoBehaviour
         SetHUDActive(active, true, true, showStatsBar, showHelp);
     }
 
-    /*public void SetHUDActive(bool active, bool showWaveSkipText, bool showWaveCountdown, bool showStatsBar, bool showHelp) {
-        SetHUDActive(active, showWaveSkipText, showWaveCountdown, showStatsBar, )
-    }*/
-
     public void SetHUDActive(bool active, bool showWaveSkipText, bool showWaveCountdown, bool showStatsBar, bool showHelp)
     {
         hud.gameObject.SetActive(active);

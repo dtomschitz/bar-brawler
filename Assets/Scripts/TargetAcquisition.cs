@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
+using Utils;
 
 public class TargetAcquisition : MonoBehaviour
 {
@@ -26,25 +27,21 @@ public class TargetAcquisition : MonoBehaviour
     private List<Enemy> enemies = new List<Enemy>();
     private int currentIndex;
 
-    private readonly int interval = 1;
-    private float nextTime = 0;
-
     private float minDistance = Mathf.Infinity;
 
     public bool IsEnabled { get; set; } = false;
 
-    void Update()
+    void Start()
     {
-        if (Time.time >= nextTime)
+        FunctionPeriodic.Create(() =>
         {
             UpdateEnemies();
-            if (enemies.Count == 0 && IsEnabled) 
+            if (enemies.Count == 0 && IsEnabled)
             {
                 Toggle();
             }
 
-            nextTime += interval;
-        }
+        }, 1f);
     }
 
     void OnEnable()

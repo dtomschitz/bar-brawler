@@ -106,11 +106,9 @@ public class GameState : MonoBehaviour
         UIManager.instance.SetShopActive(false);
         UIManager.instance.SetPauseMenuActive(false);
         UIManager.instance.SetGameOverMenuActive(false);
-        UIManager.instance.SetHUDActive(true, false);
+        UIManager.instance.SetHUDActive(true);
 
         Player.instance.controls.IsMovementEnabled = true;
-
-        //TargetAcquisition.instance.Toggle();
     }
 
     private void DisableTargetAcquisition()

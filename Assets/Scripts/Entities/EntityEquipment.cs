@@ -37,7 +37,7 @@ public class EntityEquipment : MonoBehaviour
             {
                 EquipmentAnimation animation = currentEquipment.equipmentAnimations[Random.Range(0, animations.Length)];
                 UpdateItemPosition(animation);
-                GetComponent<PlayerAnimator>().SetEquipmentAnimation(animation);
+                GetComponent<EntityAnimator>().SetEquipmentAnimation(animation);
             }
             currentItem.OnPrimary();
         }
@@ -121,7 +121,7 @@ public class EntityEquipment : MonoBehaviour
 
     protected void SetItemPosition(GameObject prefab, GameObject hand, Vector3 position, Vector3 rotation)
     {
-        prefab.SetActive(true);
+        //prefab.SetActive(true);
         prefab.transform.parent = hand.transform;
         prefab.transform.localPosition = position;
         prefab.transform.localEulerAngles = rotation;

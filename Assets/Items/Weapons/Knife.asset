@@ -33,7 +33,7 @@ MonoBehaviour:
     hand: 1
     useSpecifcPosition: 1
     useSpecificRotation: 1
-    specificPosition: {x: -0.026, y: 0.048, z: 0.014}
+    specificPosition: {x: 0, y: 0, z: 0}
     specificRotation: {x: 180, y: 148.691, z: -95.148}
     specificDropRotation: {x: 0, y: 0, z: 0}
   - index: 1
