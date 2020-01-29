@@ -7,6 +7,8 @@ public class EnemyStats : EntityStats
     public Image healthBar;
     public GameObject damagePopup;
 
+    public static float damageTaken;
+
     public override void Damage(float damage)
     {
         base.Damage(damage);
@@ -14,6 +16,7 @@ public class EnemyStats : EntityStats
         if (IsDead) return;
         healthBar.fillAmount = CurrentHealth / maxHealth;
         if (damagePopup) ShowDamagePopup(damage);
+        damageTaken += damage;
     }
 
     public void ShowDamagePopup(double damage)

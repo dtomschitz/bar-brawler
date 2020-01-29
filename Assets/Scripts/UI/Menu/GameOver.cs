@@ -10,7 +10,6 @@ public class GameOver : MonoBehaviour
 
     public void Restart()
     {
-        WaveSpawner.rounds = 0;
         sceneFader.FadeTo(SceneManager.GetActiveScene().name);
     }
 
