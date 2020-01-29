@@ -49,4 +49,54 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     loop: 0
+    spatialBlend: 1
+    source: {fileID: 0}
+  - name: GetMoney
+    clip: {fileID: 8300000, guid: 3c77222a7430ba0498d5e5f54e14f412, type: 3}
+    volume: 0.6
+    pitch: 1
+    loop: 0
+    spatialBlend: 1
+    source: {fileID: 0}
+  - name: Punch
+    clip: {fileID: 8300000, guid: 65c38a7fafc571341864d20c70d1c872, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    spatialBlend: 1
+    source: {fileID: 0}
+  - name: FightReaction
+    clip: {fileID: 8300000, guid: cfabd09fc168f9445963a4713df7b226, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    spatialBlend: 1
+    source: {fileID: 0}
+  - name: SelectedSound
+    clip: {fileID: 8300000, guid: 2d733a6f659465748a0684d64146fd56, type: 3}
+    volume: 0.1
+    pitch: 1
+    loop: 0
+    spatialBlend: 0
+    source: {fileID: 0}
+  - name: Shot
+    clip: {fileID: 8300000, guid: a6c0d45f9d3a68d4ab196a74d9e39fea, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 0
+    spatialBlend: 1
+    source: {fileID: 0}
+  - name: KnifeHit
+    clip: {fileID: 8300000, guid: 907dc7f834780af40ac8d95d7a1e5244, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 0
+    spatialBlend: 1
+    source: {fileID: 0}
+  - name: Theme
+    clip: {fileID: 8300000, guid: 9741485b75042a64fb5f5fec61d82a60, type: 3}
+    volume: 0.1
+    pitch: 1
+    loop: 1
+    spatialBlend: 0
     source: {fileID: 0}

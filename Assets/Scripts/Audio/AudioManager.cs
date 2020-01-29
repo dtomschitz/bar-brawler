@@ -27,8 +27,15 @@ public class AudioManager : MonoBehaviour
             s.source.volume = s.volume;
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
+            s.source.spatialBlend = s.spatialBlend;
         }
     }
+
+    void Start()
+    {
+        Play("Theme");
+    }
+
 
     public void Play(string name)
     {
