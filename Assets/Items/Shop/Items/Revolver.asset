@@ -15,4 +15,4 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 7a7f82a596053554a9708f359d62dc02, type: 2}
   infoText: "Dieses Schie\xDFeisen kann bei einem guten Treffer das sofortige Ende
     f\xFCr deinen Gegner bedeuten."
-  price: 120
+  price: 40

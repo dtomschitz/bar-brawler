@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: c714a2e27718c77409bb7b5b5ae19e7b, type: 2}
   infoText: "Drinke das stille Wasser und du erh\xE4lts sofort 10 Lebenspunkte."
-  price: 20
+  price: 1

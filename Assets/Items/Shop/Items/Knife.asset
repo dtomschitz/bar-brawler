@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 3382fc6221849ac498632dab982e6baf, type: 2}
   infoText: "Das Messer hat einen erh\xF6hten Schaden und l\xE4sst den Gegner ausbluten."
-  price: 50
+  price: 10
