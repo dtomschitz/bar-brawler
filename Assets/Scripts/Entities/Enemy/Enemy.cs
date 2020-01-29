@@ -66,18 +66,6 @@ public class Enemy : Entity
                     {
                         attackCooldown = 1f / attackRate;
                         equipment.UsePrimary();
-                        /*PlayerStats playerStats = player.stats;
-                        PlayerCombat playerCombat = player.combat;
-                        if (playerStats != null && playerCombat != null && !playerStats.IsDead)
-                        {
-                            if (!IsUnderAttack)
-                            {
-                                attackCooldown = 1f / attackRate;
-                                animator.OnPrimary();
-
-                                if (!playerCombat.IsBlocking) combat.Attack(playerStats);
-                            }
-                        }*/
                     }
                 } 
             }
@@ -94,19 +82,6 @@ public class Enemy : Entity
         RandomItem[] items = config.items;
         if (items != null)
         {
-            /*Equipment item;
-            if (items.Length == 1)
-            {
-                item = items[0].item;
-            } else
-            {
-                RandomItem randomItem = GetRandomItem(items);
-            }
-
-            equipment.EquipItem(item);
-            stats.damage = rand
-            animator.SetEquipment(item);*/
-
             RandomItem randomItem = GetRandomItem(items);
             equipment.EquipItem(randomItem.item);
             animator.SetEquipment(randomItem.item);
