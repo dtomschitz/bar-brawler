@@ -14,6 +14,7 @@ namespace Shop
         public void SetSelected(bool selected)
         {
             title.color = selected ? selectedColor : defaultColor;
+            FindObjectOfType<AudioManager>().Play("SelectedSound");
         }
     }
 }

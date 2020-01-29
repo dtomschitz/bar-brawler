@@ -10,5 +10,4 @@ namespace Shop
         new public string name;
         public List<ShopItem> items;
     }
-
 }

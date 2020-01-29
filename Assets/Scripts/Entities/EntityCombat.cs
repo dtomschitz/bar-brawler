@@ -37,9 +37,9 @@ public class EntityCombat : MonoBehaviour
         }
     }
 
-    public void Attack(EntityStats stats)
+    public void Attack(EntityStats stats, Equipment item)
     {
-        stats.Damage(this.stats.damage);
+        stats.Damage(this.stats.damage, item);
         //OnAttack?.Invoke();
     }
 

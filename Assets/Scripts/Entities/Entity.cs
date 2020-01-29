@@ -21,19 +21,19 @@ public class Entity : MonoBehaviour
         if (animator == null) throw new ArgumentException("Entiy animator class cannot be null!");
         if (equipment == null) throw new ArgumentException("Entity equipment class cannot be null!");
 
-        stats.OnDamaged += OnTakeDamage;
+        stats.OnDamaged += OnDamaged;
         stats.OnDeath += OnDeath;
     }
 
     public virtual void OnHit(Entity offender, Equipment item)
     {
         if (stats.IsDead) return;
-        offender.combat.Attack(stats);
+        offender.combat.Attack(stats, item);
 
         animator.OnHit(item.type);
     }
 
-    public virtual void OnTakeDamage(float damage)
+    public virtual void OnDamaged(float damage, Equipment item)
     {
     }
 

@@ -529,7 +529,7 @@ MonoBehaviour:
   crosshair: {fileID: 1259187709027911290}
   cap: {fileID: 8706628408514130960}
   movementEnabled: 1
-  lookRadius: 10
+  lookRadius: 50
   attackRate: 1
 --- !u!114 &2238615278613215709
 MonoBehaviour:
@@ -584,7 +584,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6233071837183773105}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 416cefc15fd00f546a19210660206ac5, type: 3}
+  m_Script: {fileID: 11500000, guid: c7ab69663633e9549a97f29a0fa43577, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   manaRegenerationAmount: 0
@@ -691,16 +691,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character
       objectReference: {fileID: 0}
-    - target: {fileID: -7780734103960978560, guid: 3a586a861033354488d8b2aaa382a4dc,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 7bfd2e17114df624496b7bec10ceeb0a, type: 2}
-    - target: {fileID: -6057140222963153312, guid: 3a586a861033354488d8b2aaa382a4dc,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: c89949b6822c0554882061c213551808, type: 2}
     - target: {fileID: -4216859302048453862, guid: 3a586a861033354488d8b2aaa382a4dc,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -771,6 +761,16 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: -6057140222963153312, guid: 3a586a861033354488d8b2aaa382a4dc,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: c89949b6822c0554882061c213551808, type: 2}
+    - target: {fileID: -7780734103960978560, guid: 3a586a861033354488d8b2aaa382a4dc,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7bfd2e17114df624496b7bec10ceeb0a, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a586a861033354488d8b2aaa382a4dc, type: 3}
 --- !u!1 &6619884461426605644 stripped

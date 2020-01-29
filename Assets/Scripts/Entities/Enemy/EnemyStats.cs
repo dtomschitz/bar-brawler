@@ -9,9 +9,9 @@ public class EnemyStats : EntityStats
 
     public static float damageTaken;
 
-    public override void Damage(float damage)
+    public override void Damage(float damage, Equipment item = null)
     {
-        base.Damage(damage);
+        base.Damage(damage, item);
 
         if (IsDead) return;
         healthBar.fillAmount = CurrentHealth / maxHealth;
