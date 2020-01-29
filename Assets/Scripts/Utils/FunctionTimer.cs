@@ -7,12 +7,14 @@ namespace Utils {
     public class FunctionTimer {
 
         private class MonoBehaviourHook : MonoBehaviour {
+
             public Action OnUpdate;
 
             private void Update() {
                 OnUpdate?.Invoke();
             }
         }
+
 
         private static List<FunctionTimer> timerList;
         private static GameObject initGameObject;
@@ -99,10 +101,12 @@ namespace Utils {
                 timer -= Time.deltaTime;
             }
             if (timer <= 0) {
+                // Timer complete, trigger Action
                 action();
                 DestroySelf();
             }
         }
+
         private void DestroySelf() {
             RemoveTimer(this);
             if (gameObject != null) {
@@ -123,6 +127,7 @@ namespace Utils {
             public void Update() {
                 Update(Time.deltaTime);
             }
+
             public void Update(float deltaTime) {
                 timer -= deltaTime;
                 if (timer <= 0) {

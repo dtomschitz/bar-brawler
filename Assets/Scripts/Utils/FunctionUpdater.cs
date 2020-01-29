@@ -5,7 +5,6 @@ using System.Collections.Generic;
 namespace Utils {
 
     public class FunctionUpdater {
-
         private class MonoBehaviourHook : MonoBehaviour {
 
             public Action OnUpdate;
@@ -24,7 +23,7 @@ namespace Utils {
                 updaterList = new List<FunctionUpdater>();
             }
         }
-        
+
         public static FunctionUpdater Create(Action updateFunc) {
             return Create(() => { updateFunc(); return false; }, "", true, false);
         }
