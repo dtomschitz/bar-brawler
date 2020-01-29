@@ -4,12 +4,12 @@ using UnityEngine.AI;
 using Items;
 using Utils;
 
-public enum AIState
+public enum EnemyState
 {
-    ATTACK,
-    STRAFE,
-    AVOID,
-    SEEK
+    Attack,
+    Strafe,
+    Avoid,
+    Seek
 }
 
 public class Enemy : Entity
@@ -25,6 +25,8 @@ public class Enemy : Entity
     public float attackRate = 1f;
     private float attackCooldown = 0f;
 
+    public EnemyState State { get; protected set; }
+
     private int[] moneyDrops;
 
     private Transform target;
@@ -39,6 +41,8 @@ public class Enemy : Entity
         target = Player.instance.gameObject.transform;
         agent = GetComponent<NavMeshAgent>();
 
+        State = EnemyState.Seek;
+
         cap.SetActive(Random.value < 0.5f ? true : false);
     }
 
@@ -48,9 +52,7 @@ public class Enemy : Entity
         {
             attackCooldown -= Time.deltaTime;
 
-            Think();
-
-            float distance = Vector3.Distance(target.position, transform.position);
+            /* distance = Vector3.Distance(target.position, transform.position);
             if (distance <= lookRadius)
             {
                 if (movementEnabled)
@@ -70,7 +72,7 @@ public class Enemy : Entity
                         equipment.UsePrimary();
                     }
                 } 
-            }
+            }*/
         }
     }
 
@@ -90,10 +92,6 @@ public class Enemy : Entity
 
             if (randomItem.damageOverride >= 0) stats.damage = randomItem.damageOverride;
         }
-    }
-
-    private void Think()
-    {
     }
 
     public override void OnTakeDamage(float damage)
@@ -132,7 +130,6 @@ public class Enemy : Entity
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(lookDirection.x, 0, lookDirection.z));
         transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, Time.deltaTime * 1000f);
     }
-
 
     public void SetCrosshairActive(bool active)
     {
