@@ -52,6 +52,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stateOfGameText: {fileID: 4498888811057729053}
   skipCountdownText: {fileID: 4498888811658543374}
+  nextRoundWarning: 10
 --- !u!1 &4498888811658543369
 GameObject:
   m_ObjectHideFlags: 0
