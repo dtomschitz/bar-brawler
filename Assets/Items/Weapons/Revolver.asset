@@ -29,4 +29,4 @@ MonoBehaviour:
   defaultRotation: {x: 23.036, y: 179.333, z: 102.262}
   defaultDropRotation: {x: 0, y: 0, z: 0}
   equipmentAnimations: []
-  damage: 400
+  damage: 100

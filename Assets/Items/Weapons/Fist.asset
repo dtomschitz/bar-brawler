@@ -50,4 +50,4 @@ MonoBehaviour:
     specificPosition: {x: 0, y: 0, z: 0}
     specificRotation: {x: 0, y: 0, z: 0}
     specificDropRotation: {x: 0, y: 0, z: 0}
-  damage: 20
+  damage: 16
