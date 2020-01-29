@@ -1,4 +1,5 @@
 ﻿using Utils;
+using Items;
 
 public class HealthBar : ShrinkBar
 {
@@ -11,7 +12,7 @@ public class HealthBar : ShrinkBar
         stats.OnHealed += OnHealed;
     }
 
-    public void OnDamaged(float damage)
+    public void OnDamaged(float damage, Equipment item)
     {
         SetFillAmount(stats.HealthNormalized);
     }

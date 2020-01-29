@@ -16,6 +16,8 @@ namespace Shop
             Player.instance.inventory.AddItem(item);
             Player.instance.RemoveMoney(price);
             spendMoney += price;
+
+            FindObjectOfType<AudioManager>().Play("SelectedSound");
         }
     }
 }

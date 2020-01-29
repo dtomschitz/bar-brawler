@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Items;
 
 public class DamageOverlay : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class DamageOverlay : MonoBehaviour
         stats.OnDamaged += OnTakeDamage;
     }
 
-    public void OnTakeDamage(float damage)
+    public void OnTakeDamage(float damage, Equipment item)
     {
         /*if (damageOverlayRoutine != null)
         {

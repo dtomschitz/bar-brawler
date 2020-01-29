@@ -52,7 +52,7 @@ public class Enemy : Entity
         {
             attackCooldown -= Time.deltaTime;
 
-            /* distance = Vector3.Distance(target.position, transform.position);
+            float distance = Vector3.Distance(target.position, transform.position);
             if (distance <= lookRadius)
             {
                 if (movementEnabled)
@@ -72,7 +72,7 @@ public class Enemy : Entity
                         equipment.UsePrimary();
                     }
                 } 
-            }*/
+            }
         }
     }
 
@@ -94,9 +94,11 @@ public class Enemy : Entity
         }
     }
 
-    public override void OnTakeDamage(float damage)
+    public override void OnDamaged(float damage, Equipment item)
     {
-        base.OnTakeDamage(damage);
+        base.OnDamaged(damage, item);
+
+        Debug.Log(item);
 
         //TODO: FLEE if hit by knife
     }

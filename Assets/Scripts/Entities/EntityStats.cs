@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using Items;
 
 public class EntityStats : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class EntityStats : MonoBehaviour
     public float CurrentHealth { get; protected set; }
     public event Action OnDeath;
 
-    public delegate void Damaged(float damage);
+    public delegate void Damaged(float damage, Equipment item = null);
     public event Damaged OnDamaged;
 
     public delegate void Healed(float amount);
@@ -32,11 +33,11 @@ public class EntityStats : MonoBehaviour
         }
     }
 
-    public virtual void Damage(float damage)
+    public virtual void Damage(float damage, Equipment item = null)
     {
         damage = Mathf.Clamp(damage, 0, maxHealth);
         CurrentHealth -= damage;
-        OnDamaged?.Invoke(damage);
+        OnDamaged?.Invoke(damage, item);
 
         FindObjectOfType<AudioManager>().Play("Punch");
         FindObjectOfType<AudioManager>().Play("FightReaction");
