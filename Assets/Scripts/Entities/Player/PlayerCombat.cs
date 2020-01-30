@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerCombat : EntityCombat
 {
-    public int simultaneousAttackers = 1;
+    public int simultaneousAttackers = 2;
     private List<GameObject> attackers;
 
     protected override void Start()
@@ -22,11 +22,6 @@ public class PlayerCombat : EntityCombat
         {
             if (!attackers.Contains(enemy)) attackers.Add(enemy);
             enemy.SendMessage("OnAllowAttack", gameObject);
-            Debug.Log("Attack accepted, current attackers: " + attackers.Count);
-        }
-        else
-        {
-            Debug.Log("Attack REJECTED, current attackers: " + attackers.Count);
         }
     }
 

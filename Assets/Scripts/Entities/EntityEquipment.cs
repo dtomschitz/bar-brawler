@@ -23,9 +23,6 @@ public class EntityEquipment : MonoBehaviour
 
     public void UsePrimary()
     {
-        Debug.Log("item:" + currentItem);
-        Debug.Log("equip:" + currentEquipment);
-
         if (currentItem == null && currentEquipment == null)
         {
             FindObjectOfType<Hotbar>().SelectItem(0);

@@ -36,16 +36,15 @@ namespace Items
                 {
                     Entity entity = other.gameObject.GetComponent<Entity>();
                     if (entity != null) OnHit(entity);
-                }
 
-                collided = true;
+                    collided = true;
+                }
             }
         }
 
         void OnTriggerExit(Collider other)
         {
             if (!collided) return;
-
             if (owner != null && other.gameObject != owner.gameObject && (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Player"))
             {
                 collided = false;
@@ -72,7 +71,7 @@ namespace Items
         {
             base.OnPrimary();
 
-            if (owner.combat.IsDrinking || owner.combat.IsAttacking) return;
+            if (owner != null && owner.combat != null && (owner.combat.IsDrinking || owner.combat.IsAttacking)) return;
             if (primaryCooldown <= 0f)
             {
                 primaryCooldown = 1f / primaryAttackRate;

@@ -13345,7 +13345,7 @@ PrefabInstance:
     - target: {fileID: 4498888811658543374, guid: 77ba59c64d4dcc041972b79fa5fc8e86,
         type: 3}
       propertyPath: m_Text
-      value: "DR\xDCCKE A UM DIE N\xC4CHSTE RUNDE ZU STARTEN"
+      value: "DR\xDCCKE B UM DIE N\xC4CHSTE RUNDE ZU STARTEN"
       objectReference: {fileID: 0}
     - target: {fileID: 4498888812293996570, guid: 77ba59c64d4dcc041972b79fa5fc8e86,
         type: 3}
