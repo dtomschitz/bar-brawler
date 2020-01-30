@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Player : Entity
 {
@@ -23,12 +22,19 @@ public class Player : Entity
     public PlayerControls controls;
     public Inventory inventory;
 
-    public int CurrentBalance { get; set; } = 100;
+    public int CurrentBalance { get; set; }
 
     public override void OnDeath()
     {
         base.OnDeath();
         animator.OnDeath();
+
+        Enemy[] enemies = FindObjectsOfType<Enemy>();
+        if (enemies != null)
+        {
+            foreach (Enemy enemy in enemies) enemy.animator.OnVictory();
+        }
+
         GameState.instance.SetState(State.GAME_OVER);
     }
 

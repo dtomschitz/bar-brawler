@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
+using static UnityEngine.InputSystem.InputAction;
+
 using Shop;
 using Wave;
-
-using static UnityEngine.InputSystem.InputAction;
 
 public class Barkeeper : MonoBehaviour
 {
@@ -23,6 +23,7 @@ public class Barkeeper : MonoBehaviour
     #endregion;
 
     public ItemShop shop;
+    public Animator animatior;
     private WaveSpawner waveSpawner;
 
     public bool isPlayerInReach = false;

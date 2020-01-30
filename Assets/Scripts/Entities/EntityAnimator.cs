@@ -27,15 +27,20 @@ public class EntityAnimator : MonoBehaviour
         animator.SetTrigger("Secondary");
     }
 
-    public virtual void OnHit(ItemType itemType)
+    public virtual void OnHit(int id)
     {
-        animator.SetInteger("HitItem", (int)itemType);
+        animator.SetInteger("HitAnimation", id);
         animator.SetTrigger("Hit");
     }
 
     public virtual void OnDeath()
     {
         animator.SetTrigger("Death");
+    }
+
+    public virtual void OnVictory()
+    {
+        animator.SetTrigger("Victory");
     }
 
     public virtual void Move(float forward, float strafe)

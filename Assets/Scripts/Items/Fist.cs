@@ -8,5 +8,12 @@
             base.OnSecondary();
             owner.combat.UseMana(20f);
         }
+
+        public override void OnHit(Entity entity)
+        {
+            base.OnHit(entity);
+
+            FindObjectOfType<AudioManager>().Play("FightReaction");
+        }
     }
 }

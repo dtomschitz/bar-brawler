@@ -25,21 +25,6 @@ namespace Items
             if (!isSecondaryEnabled) return;
         }
 
-        public virtual void OnHit(Entity entity)
-        {
-            if (!entity.combat.IsBlocking) entity.OnHit(owner, item);
-
-            if (entity is Enemy && owner is Player && item.hasDuration)
-            {
-                item.UseItem();
-                if (item.CurrentDuration <= 0)
-                {
-                    Player.instance.inventory.RemoveItem(item);
-                    return;
-                }
-            }
-        }
-
         public void OnEquip()
         {
             isCollected = true;

@@ -30,11 +30,12 @@ public class Entity : MonoBehaviour
         if (stats.IsDead) return;
         offender.combat.Attack(stats, item);
 
-        animator.OnHit(item.type);
+        animator.OnHit(0);
     }
 
     public virtual void OnDamaged(float damage, Equipment item)
     {
+        FindObjectOfType<AudioManager>().Play("FightReaction");
     }
 
     public virtual void OnDeath()

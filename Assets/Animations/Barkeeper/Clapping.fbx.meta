@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 482204c3b1c5a4a43a917e33129ade9e
+guid: 87d4f96d0cdde9649b54a9387480c413
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: Barkeeper Idle 0
+    second: Clapping
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -38,11 +38,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Barkeeper Idle 0
+      name: Clapping
       takeName: mixamo.com
       internalID: 0
-      firstFrame: 0
-      lastFrame: 997
+      firstFrame: 55
+      lastFrame: 209
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

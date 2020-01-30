@@ -14,7 +14,6 @@ public class HealthBar : ShrinkBar
 
     private void OnHealed(float amount)
     {
-        //ResetEnlargeTimer();
         SetBarFillAmount(stats.HealthNormalized);
         AlignBars();
     }

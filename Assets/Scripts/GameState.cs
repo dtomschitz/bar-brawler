@@ -116,7 +116,7 @@ public class GameState : MonoBehaviour
         UIManager.instance.SetShopActive(false);
         UIManager.instance.SetPauseMenuActive(false);
         UIManager.instance.SetGameOverMenuActive(false);
-        UIManager.instance.SetHUDActive(true);
+        UIManager.instance.SetHUDActive(true, false, true, true, false);
 
         Player.instance.controls.IsMovementEnabled = true;
     }

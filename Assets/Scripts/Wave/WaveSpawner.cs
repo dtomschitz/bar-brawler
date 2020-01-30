@@ -79,6 +79,7 @@
                 if (CurrentState == WaveState.Running)
                 {
                     if (IsEnemyAlive) return;
+                    Player.instance.animator.OnVictory();
                     ResetWaveSpawner();
                 }
 
@@ -162,7 +163,7 @@
 
                 yield return new WaitForSeconds(1f);
             }
-            SetState(WaveState.Spawning);
+            SetState(WaveState.Running);
             yield break;
         }
 

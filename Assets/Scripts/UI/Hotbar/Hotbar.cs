@@ -93,7 +93,7 @@ public class Hotbar : MonoBehaviour
 
     private void SelectItem(Item item, int index)
     {
-        if (item != null && item is Equipment)
+        if (item != null && item is Equipment && index != currentItemIndex)
         {
             StopAllCoroutines();
 

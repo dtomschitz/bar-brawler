@@ -1,11 +1,14 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 namespace Items
 {
     public class WeaponItem : Equippable
     {
+        [Header("Sounds")]
+        public AudioSource[] attacks;
+        public AudioSource[] hits;
+
         public float primaryAttackRate = 20f;
         public float secondaryAttackRate = 20f;
 
@@ -53,16 +56,35 @@ namespace Items
             }
         }
 
+        public virtual void OnHit(Entity entity)
+        {
+            if (entity.combat.IsBlocking && owner.equipment.CurrentEquipment.type == ItemType.Fist) return;
+
+            entity.OnHit(owner, item);
+
+            //if (hits != null && hits.Length != 0) hits[Random.Range(0, hits.Length)].Play();
+
+            if (entity is Enemy && owner is Player && item.hasDuration)
+            {
+                item.UseItem();
+                if (item.CurrentDuration <= 0)
+                {
+                    Player.instance.inventory.RemoveItem(item);
+                    return;
+                }
+            }
+        }
+
         public override void OnPrimary()
         {
             base.OnPrimary();
 
             if (owner.combat.IsDrinking || owner.combat.IsAttacking) return;
-
             if (primaryCooldown <= 0f)
             {
                 primaryCooldown = 1f / primaryAttackRate;
                 owner.animator.OnPrimary();
+                //if (attacks != null && attacks.Length != 0) hits[Random.Range(0, attacks.Length)].Play();
             }
         }
 
@@ -95,12 +117,6 @@ namespace Items
                 StopCoroutine(secondaryRoutine);
                 secondaryRoutine = null;
             }
-        }
-
-        private void Cooldown(float cooldown, float requiredMana, float currentMana, Action trueCallback, Action falseCallback)
-        {
-            if (cooldown <= 0f && currentMana >= requiredMana) trueCallback();
-            else falseCallback();
         }
     }
 }
