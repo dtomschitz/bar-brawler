@@ -14,13 +14,14 @@ public class HealthBar : ShrinkBar
 
     private void OnHealed(float amount)
     {
+        //ResetEnlargeTimer();
         SetBarFillAmount(stats.HealthNormalized);
         AlignBars();
     }
 
     public void OnDamaged(float damage, Equipment item)
     {
-        ResetTimer();
+        ResetShrinkTimer();
         SetBarFillAmount(stats.HealthNormalized);
     }
 }

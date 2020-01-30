@@ -19,7 +19,7 @@ public class ManaBar : ShrinkBar
 
     public void OnManaUsed()
     {
-        ResetTimer();
+        ResetShrinkTimer();
         SetBarFillAmount(combat.ManaNormalized);
     }
 }
