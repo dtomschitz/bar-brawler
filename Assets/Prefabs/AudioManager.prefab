@@ -46,14 +46,14 @@ MonoBehaviour:
   sounds:
   - name: Walking
     clip: {fileID: 8300000, guid: 2c9d9b71f9a0c934b8ee8b594ff97186, type: 3}
-    volume: 1
+    volume: 0.1
     pitch: 1
     loop: 0
     spatialBlend: 1
     source: {fileID: 0}
   - name: GetMoney
     clip: {fileID: 8300000, guid: 3c77222a7430ba0498d5e5f54e14f412, type: 3}
-    volume: 0.6
+    volume: 1
     pitch: 1
     loop: 0
     spatialBlend: 1
@@ -67,7 +67,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: FightReaction
     clip: {fileID: 8300000, guid: cfabd09fc168f9445963a4713df7b226, type: 3}
-    volume: 0.5
+    volume: 1
     pitch: 1
     loop: 0
     spatialBlend: 1
@@ -88,14 +88,21 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: KnifeHit
     clip: {fileID: 8300000, guid: 907dc7f834780af40ac8d95d7a1e5244, type: 3}
-    volume: 1
+    volume: 0.8
     pitch: 1
     loop: 0
     spatialBlend: 1
     source: {fileID: 0}
   - name: Theme
     clip: {fileID: 8300000, guid: 9741485b75042a64fb5f5fec61d82a60, type: 3}
-    volume: 0.1
+    volume: 0.025
+    pitch: 1
+    loop: 1
+    spatialBlend: 0
+    source: {fileID: 0}
+  - name: Drinking
+    clip: {fileID: 8300000, guid: 9a7458460ef26004389c0ef9c868d56c, type: 3}
+    volume: 0.025
     pitch: 1
     loop: 1
     spatialBlend: 0
