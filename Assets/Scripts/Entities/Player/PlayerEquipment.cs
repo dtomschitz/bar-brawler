@@ -8,10 +8,10 @@
         base.Start();
 
         inventory = Player.instance.inventory;
-        if (inventory != null) inventory.OnItemRemoved += OnItemRemoved;
+        inventory.OnItemRemoved += OnItemRemoved;
 
         hotbar = FindObjectOfType<Hotbar>();
-        if (hotbar != null) hotbar.OnItemSelected += EquipItem;
+        hotbar.OnItemSelected += EquipItem;
     }
 
     private void OnItemRemoved(object sender, InventoryEvent e)

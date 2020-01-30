@@ -107,7 +107,6 @@ public class PlayerControls : MonoBehaviour
 
     public void PauseGame(CallbackContext ctx)
     {
-        Debug.Log("dwada");
         GameState.instance.SetState(State.GAME_PAUSED);
     }
 

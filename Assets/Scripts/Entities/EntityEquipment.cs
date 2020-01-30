@@ -19,17 +19,14 @@ public class EntityEquipment : MonoBehaviour
     protected virtual void Start()
     {
         currentHand = rightHand;
-
-        //inventory = GetComponent<Inventory>();
-        //inventory.OnItemUsed += OnItemUsed;
-       // inventory.OnItemRemoved += OnItemRemoved;
-
-      //  hotbar = FindObjectOfType<Hotbar>();
-       // hotbar.OnItemSelected += EquipItem;
     }
 
     public void UsePrimary()
     {
+        Debug.Log("item:" + currentItem);
+        Debug.Log("equip:" + currentEquipment);
+
+
         if (currentItem != null && currentItem is Equippable && currentEquipment != null && currentEquipment is Weapon)
         {
             EquipmentAnimation[] animations = currentEquipment.equipmentAnimations;
@@ -61,7 +58,6 @@ public class EntityEquipment : MonoBehaviour
 
     public void EquipItem(Equipment item)
     {
-
         GameObject prefabCopy = Instantiate(item.prefab);
         Equippable equippable = prefabCopy.GetComponent<Equippable>();
         if (equippable != null)

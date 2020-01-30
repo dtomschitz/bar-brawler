@@ -2,9 +2,7 @@
 
 public class PlayerStats : EntityStats
 {
-    public float manaRegenerationSpeed;
     private PlayerEquipment equipment;
-
     public override void Start()
     {
         base.Start();
