@@ -29,8 +29,7 @@ public class Player : Entity
     {
         base.OnDeath();
         animator.OnDeath();
-
-        StartCoroutine(DeathRoutine());
+        GameState.instance.SetState(State.GAME_OVER);
     }
 
     public void AddMoney(int amount)
@@ -44,11 +43,5 @@ public class Player : Entity
     {
         CurrentBalance -= amount;
         OnMoneySpend?.Invoke(amount, CurrentBalance);
-    }
-
-    private IEnumerator DeathRoutine()
-    {
-        yield return new WaitForSeconds(3f);
-        GameState.instance.SetState(State.GAME_OVER);
     }
 }

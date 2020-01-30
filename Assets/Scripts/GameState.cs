@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public enum State
 {
@@ -19,6 +20,7 @@ public class GameState : MonoBehaviour
     void Awake()
     {
         instance = this;
+        Time.timeScale = 1f;
     }
 
     #endregion;
@@ -74,8 +76,16 @@ public class GameState : MonoBehaviour
         UIManager.instance.SetHUDActive(false, false);
         UIManager.instance.SetShopActive(false);
         UIManager.instance.SetPauseMenuActive(false);
+
+        StartCoroutine(OpenGameOverMenu());
+    }
+
+    private IEnumerator OpenGameOverMenu()
+    {
+        yield return new WaitForSeconds(3f);
         UIManager.instance.SetGameOverMenuActive(true);
     }
+
 
     private void ToggleShop()
     {
