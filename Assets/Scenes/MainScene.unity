@@ -8677,7 +8677,7 @@ PrefabInstance:
     - target: {fileID: 4251900538022576383, guid: a5694255a417f164c9596164663fb42b,
         type: 3}
       propertyPath: defaultItems.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4251900538022576383, guid: a5694255a417f164c9596164663fb42b,
         type: 3}
@@ -8765,12 +8765,12 @@ PrefabInstance:
     - target: {fileID: 4251900538022576379, guid: a5694255a417f164c9596164663fb42b,
         type: 3}
       propertyPath: manaRegenerationSpeed
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4251900538022576379, guid: a5694255a417f164c9596164663fb42b,
         type: 3}
       propertyPath: manaRegenerationAmount
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 9114016593438539423, guid: a5694255a417f164c9596164663fb42b,
         type: 3}

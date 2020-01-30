@@ -5,10 +5,6 @@ namespace Items
 {
     public class WeaponItem : Equippable
     {
-        [Header("Sounds")]
-        public AudioSource[] attacks;
-        public AudioSource[] hits;
-
         public float primaryAttackRate = 20f;
         public float secondaryAttackRate = 20f;
 
@@ -61,9 +57,6 @@ namespace Items
             if (entity.combat.IsBlocking && owner.equipment.CurrentEquipment.type == ItemType.Fist) return;
 
             entity.OnHit(owner, item);
-
-            //if (hits != null && hits.Length != 0) hits[Random.Range(0, hits.Length)].Play();
-
             if (entity is Enemy && owner is Player && item.hasDuration)
             {
                 item.UseItem();

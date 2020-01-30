@@ -26,7 +26,7 @@ public class EntityCombat : MonoBehaviour
 
     protected virtual void Update()
     {
-        AddMana(manaRegenerationAmount * Time.deltaTime / manaRegenerationSpeed);
+        if (!IsBlocking) AddMana(manaRegenerationAmount * Time.deltaTime / manaRegenerationSpeed);
     }
 
     public void Init(CombatConfig config)

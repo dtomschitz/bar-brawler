@@ -7,7 +7,7 @@ public class ManaBar : ShrinkBar
     void Start()
     {
         combat = Player.instance.combat;
-        combat.OnManaUsed += OnManaUsed;
+        combat.OnManaAdded += OnManaAdded;
         combat.OnManaUsed += OnManaUsed;
     }
 
