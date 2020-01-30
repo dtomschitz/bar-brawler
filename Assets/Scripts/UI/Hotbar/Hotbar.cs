@@ -101,8 +101,6 @@ public class Hotbar : MonoBehaviour
 
             FindObjectOfType<AudioManager>().Play("SelectedSound");
 
-            Debug.Log(item);
-
             OnItemSelected?.Invoke(item as Equipment);
 
             currentItemIndex = index;

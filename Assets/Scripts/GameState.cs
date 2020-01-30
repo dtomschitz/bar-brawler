@@ -21,6 +21,7 @@ public class GameState : MonoBehaviour
     {
         instance = this;
         Time.timeScale = 1f;
+        Cursor.visible = false;
     }
 
     #endregion;
