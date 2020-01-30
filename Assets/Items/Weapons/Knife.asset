@@ -23,7 +23,7 @@ MonoBehaviour:
   itemHelp: {fileID: 2974276147454789566, guid: dfb60b366a0965c4e989d199af57c226,
     type: 3}
   hasDuration: 1
-  duration: 2
+  duration: 12
   defaultHand: 1
   defaultPosition: {x: 0, y: 0, z: 0}
   defaultRotation: {x: 0, y: 0, z: 0}

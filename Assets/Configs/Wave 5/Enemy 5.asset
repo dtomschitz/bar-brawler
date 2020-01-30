@@ -18,10 +18,13 @@ MonoBehaviour:
   items:
   - percentage: 50
     item: {fileID: 11400000, guid: dfef5eb85bcbea8499448b629546c92d, type: 2}
-    damageOverride: 0
+    damageOverride: 80
+    healthOverride: 75
   - percentage: 35
     item: {fileID: 11400000, guid: 3382fc6221849ac498632dab982e6baf, type: 2}
-    damageOverride: 0
+    damageOverride: 25
+    healthOverride: 50
   - percentage: 15
     item: {fileID: 11400000, guid: 7a7f82a596053554a9708f359d62dc02, type: 2}
-    damageOverride: 0
+    damageOverride: 50
+    healthOverride: 35
