@@ -26,6 +26,11 @@ public class EntityEquipment : MonoBehaviour
         Debug.Log("item:" + currentItem);
         Debug.Log("equip:" + currentEquipment);
 
+        if (currentItem == null && currentEquipment == null)
+        {
+            FindObjectOfType<Hotbar>().SelectItem(0);
+        }
+
 
         if (currentItem != null && currentItem is Equippable && currentEquipment != null && currentEquipment is Weapon)
         {

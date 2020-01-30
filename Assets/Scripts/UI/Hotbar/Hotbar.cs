@@ -30,6 +30,8 @@ public class Hotbar : MonoBehaviour
         inputActions.PlayerControls.HotbarOneForward.performed += SelectNextItem;
         inputActions.PlayerControls.HotbarOneBack.performed += SelectLastItem;
         inputActions.PlayerControls.HotbarDeleteItem.performed += DeleteItem;
+
+        slots = GetComponentsInChildren<HotbarSlot>();
     }
 
     void OnEnable()
@@ -47,8 +49,6 @@ public class Hotbar : MonoBehaviour
         inventory.OnItemAdded += OnItemAdded;
         inventory.OnItemRemoved += OnItemRemoved;
        // inventory.OnItemUsed += OnItemUsed;
-
-        slots = GetComponentsInChildren<HotbarSlot>();
     }
 
     public void SelectNextItem(CallbackContext ctx)
@@ -123,10 +123,10 @@ public class Hotbar : MonoBehaviour
             slot.Add(e.item as Equipment);
         }
 
-        if (currentItemIndex == -1)
+       /* if (currentItemIndex == -1)
         {
             SelectItem(0);
-        }
+        }*/
     }
 
     private void OnItemRemoved(object sender, InventoryEvent e)

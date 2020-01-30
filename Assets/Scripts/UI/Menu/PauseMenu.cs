@@ -29,7 +29,7 @@ public class PauseMenu : MonoBehaviour
 
     public void ExitToMainMenu()
     {
-        gameObject.SetActive(false);
+        GameState.instance.SetState(State.INGAME);
         sceneFader.FadeTo(menuSceneName);
     }
 }
