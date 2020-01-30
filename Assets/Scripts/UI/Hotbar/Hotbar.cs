@@ -69,6 +69,7 @@ public class Hotbar : MonoBehaviour
 
         Equipment item = slots[currentItemIndex].item as Equipment;
         if (item == null || (item != null && item.type == ItemType.Fist)) return;
+
         Player.instance.inventory.RemoveItem(item);
     }
 

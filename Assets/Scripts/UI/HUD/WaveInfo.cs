@@ -39,6 +39,7 @@ public class WaveInfo : MonoBehaviour
     {
         if (countdown <= nextRoundWarning)
         {
+            skipCountdownText.gameObject.SetActive(false);
             stateOfGameText.color = warningColor;
         }
         
