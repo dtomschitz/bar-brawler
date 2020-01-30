@@ -5,5 +5,6 @@ using UnityEngine;
 public class StatsConfig : ScriptableObject
 {
     public float maxHealth;
+    public float minHealth;
     public float damage;
 }

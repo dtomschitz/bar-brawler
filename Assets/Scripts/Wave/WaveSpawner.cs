@@ -98,8 +98,8 @@
 
         public void SkipWave(CallbackContext ctx)
         {
-            if (GameState.instance.IsInTargetAcquisition || GameState.instance.IsInShop || waveCountdown <= 6f) return;
-            waveCountdown = 6f;
+            if (GameState.instance.IsInTargetAcquisition || GameState.instance.IsInShop || waveCountdown <= 4f) return;
+            waveCountdown = 4f;
         }
 
         public void SkipWaveDebug(CallbackContext ctx)

@@ -71,7 +71,7 @@ namespace Items
         {
             base.OnPrimary();
 
-            if (owner != null && owner.combat != null && (owner.combat.IsDrinking || owner.combat.IsAttacking)) return;
+            if (owner != null && owner.combat != null && (owner.combat.IsDrinking || owner.combat.IsAttacking || owner.combat.IsStunned)) return;
             if (primaryCooldown <= 0f)
             {
                 primaryCooldown = 1f / primaryAttackRate;
@@ -84,8 +84,7 @@ namespace Items
         {
             base.OnSecondary();
 
-            if (owner.combat.IsDrinking || owner.combat.IsAttacking) return;
-
+            if (owner != null && owner.combat != null && (owner.combat.IsDrinking || owner.combat.IsAttacking || owner.combat.IsStunned)) return;
             if (secondaryCooldown <= 0f && owner.combat.CurrentMana >= secondaryManaRequired)
             {
                 secondaryCooldown = 1f / secondaryAttackRate;

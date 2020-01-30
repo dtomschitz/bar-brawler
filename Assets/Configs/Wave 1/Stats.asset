@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b07a7683686ac0046a5a9c2f467da414, type: 3}
   m_Name: Stats
   m_EditorClassIdentifier: 
-  maxHealth: 50
+  maxHealth: 80
+  minHealth: 50
   damage: 16

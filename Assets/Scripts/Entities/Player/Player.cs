@@ -22,7 +22,7 @@ public class Player : Entity
     public PlayerControls controls;
     public Inventory inventory;
 
-    public int CurrentBalance { get; set; } = 100;
+    public int CurrentBalance { get; set; }
 
     public override void OnDeath()
     {

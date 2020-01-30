@@ -294,9 +294,8 @@ public class Enemy : Entity
         else if (shouldAttack)
         {
             State = EnemyState.Attack;
-            if (!combat.IsAttacking/*&& AttackCooldown <= 0.0f*/)
+            if (!combat.IsAttacking && !combat.IsStunned)
             {
-                //dude.Look(prey.transform.position - transform.position);
                 TurnEnemyToPlayer();
                 if (equipment != null) equipment.UsePrimary();
 
@@ -307,14 +306,11 @@ public class Enemy : Entity
         else if (shouldStrafe)
         {
             State = EnemyState.Strafe;
-
-            Debug.Log("Strafe");
             Strafe(player.transform.position);
         }
         else
         {
             State = EnemyState.Seek;
-            Debug.Log("Seek");
             Seek(distance);
         }
     }
@@ -330,11 +326,19 @@ public class Enemy : Entity
         if (items != null)
         {
             RandomItem randomItem = GetRandomItem(items);
+            Equipment item = randomItem.item;
+            float damageOverride = randomItem.damageOverride;
+            float healthOverride = randomItem.healthOverride;
 
-            equipment.EquipItem(randomItem.item);
-            animator.SetEquipment(randomItem.item);
+            equipment.EquipItem(item);
+            animator.SetEquipment(item);
 
-            if (randomItem.damageOverride >= 0) stats.damage = randomItem.damageOverride;
+            if (damageOverride > 0) stats.damage = damageOverride;
+            if (healthOverride > 0)
+            {
+                stats.maxHealth = healthOverride;
+                stats.CurrentHealth = healthOverride;
+            }
         }
     }
 

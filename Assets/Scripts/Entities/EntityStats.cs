@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Items;
 
 public class EntityStats : MonoBehaviour
@@ -7,8 +6,8 @@ public class EntityStats : MonoBehaviour
     public float maxHealth;
     public float damage;
 
-    public float CurrentHealth { get; protected set; }
-    public event Action OnDeath;
+    public float CurrentHealth { get; set; }
+    public event System.Action OnDeath;
 
     public delegate void Damaged(float damage, Equipment item = null);
     public event Damaged OnDamaged;
@@ -24,12 +23,14 @@ public class EntityStats : MonoBehaviour
     {
         if (config != null)
         {
-            if (config.maxHealth >= 0f)
+            if (config.minHealth > 0f && config.maxHealth > 0f)
             {
-                maxHealth = config.maxHealth;
-                CurrentHealth = maxHealth;
+                float health = Random.Range(config.minHealth, config.maxHealth);
+                maxHealth = health;
+                CurrentHealth = health;
             }
-            if (config.damage >= 0f) damage = config.damage;
+
+            if (config.damage > 0f) damage = config.damage;
         }
     }
 

@@ -1,10 +1,13 @@
 ﻿using System;
 using UnityEngine;
 using Items;
+using System.Collections;
 
 public class EntityCombat : MonoBehaviour
 {
     public CombatState state { get; protected set; }
+
+    public float maxStunnedTime;
 
     [Header("Mana")]
     public const int maxMana = 100;
@@ -92,6 +95,17 @@ public class EntityCombat : MonoBehaviour
     {
         if (newState == state || !GameState.instance.IsInGame) return;
         state = newState; 
+
+        if (newState == CombatState.Stunned)
+        {
+            StartCoroutine(StunnedRountine());
+        }
+    }
+
+    private IEnumerator StunnedRountine()
+    {
+        yield return new WaitForSeconds(maxStunnedTime);
+        SetState(CombatState.Idle);
     }
 
     public float ManaNormalized

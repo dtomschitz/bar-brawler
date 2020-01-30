@@ -650,6 +650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7ab69663633e9549a97f29a0fa43577, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxStunnedTime: 0.6
   manaRegenerationAmount: 0
   manaRegenerationSpeed: 0
 --- !u!1001 &861812048781143321

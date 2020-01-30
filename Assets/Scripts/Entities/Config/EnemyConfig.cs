@@ -21,4 +21,5 @@ public class RandomItem
     public int percentage;
     public Equipment item;
     public int damageOverride;
+    public int healthOverride;
 }
