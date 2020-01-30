@@ -85,11 +85,6 @@ public class EntityEquipment : MonoBehaviour
     {
         currentHand = GetHandGameObject(item.defaultHand);
         SetItemPosition(prefab, currentHand, item.defaultPosition, item.defaultRotation);
-
-        if (item.itemHelp)
-        {
-            UIManager.instance.hud.helpInfo.UpdateHelp(item.itemHelp);
-        }
     }
 
     protected void SetItemPosition(GameObject prefab, GameObject hand, Vector3 position, Vector3 rotation)

@@ -96,6 +96,9 @@ public class GameState : MonoBehaviour
         UIManager.instance.SetGameOverMenuActive(false);
         UIManager.instance.SetHUDActive(true, false, true, false, true);
         UIManager.instance.SetShopActive(true);
+
+        UIManager.instance.hud.helpInfo.SetWeaponHelpActive(false);
+        UIManager.instance.hud.helpInfo.SetTargetHelpActive(false);
     }
 
     private void ToggleIngame()
@@ -108,6 +111,9 @@ public class GameState : MonoBehaviour
         UIManager.instance.SetGameOverMenuActive(false);
         UIManager.instance.SetHUDActive(true, true);
 
+        UIManager.instance.hud.helpInfo.SetWeaponHelpActive(true);
+        UIManager.instance.hud.helpInfo.SetTargetHelpActive(false);
+
         Time.timeScale = 1.0f;
     }
 
@@ -117,6 +123,10 @@ public class GameState : MonoBehaviour
         UIManager.instance.SetPauseMenuActive(false);
         UIManager.instance.SetGameOverMenuActive(false);
         UIManager.instance.SetHUDActive(true);
+
+        UIManager.instance.hud.helpInfo.SetWeaponHelpActive(false);
+        UIManager.instance.hud.helpInfo.SetTargetHelpActive(true);
+
 
         Player.instance.controls.IsMovementEnabled = true;
     }

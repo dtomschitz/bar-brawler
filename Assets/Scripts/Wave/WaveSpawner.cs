@@ -104,11 +104,11 @@
 
         public void SkipWaveDebug(CallbackContext ctx)
         {
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+          /*  GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
             for (var i = 0; i < enemies.Length; i++)
             {
                 Destroy(enemies[i]);
-            }
+            }*/
         }
 
 

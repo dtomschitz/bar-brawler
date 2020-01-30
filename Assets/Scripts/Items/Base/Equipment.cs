@@ -11,7 +11,6 @@ namespace Items
         [Header("Equipment")]
         public ItemType type; 
         public GameObject prefab;
-        public GameObject itemHelp;
 
         public bool hasDuration;
         public float duration;

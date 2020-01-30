@@ -1,4 +1,6 @@
-﻿public class PlayerEquipment : EntityEquipment
+﻿using Items;
+
+public class PlayerEquipment : EntityEquipment
 {
     private Inventory inventory;
     private Hotbar hotbar;
@@ -12,6 +14,8 @@
 
         hotbar = FindObjectOfType<Hotbar>();
         hotbar.OnItemSelected += EquipItem;
+
+        EquipItem(inventory.defaultItems[0] as Equipment);
     }
 
     private void OnItemRemoved(object sender, InventoryEvent e)

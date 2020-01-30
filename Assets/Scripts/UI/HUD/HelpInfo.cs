@@ -2,17 +2,17 @@
 
 public class HelpInfo : MonoBehaviour
 {
-    public GameObject currentHelp;
+    public GameObject weaponHelp;
+    public GameObject targetHelp;
 
-    public void UpdateHelp(GameObject newHelp)
+    public void SetWeaponHelpActive(bool active)
     {
-        Destroy(currentHelp);
+        weaponHelp.gameObject.SetActive(active);
+    }
 
-        if (newHelp != null)
-        {
-            GameObject copy = Instantiate(newHelp, transform, false);
-            currentHelp = copy;
-        }
+    public void SetTargetHelpActive(bool active)
+    {
+        targetHelp.gameObject.SetActive(active);
     }
 
     public void SetActive(bool active) => gameObject.SetActive(active);
