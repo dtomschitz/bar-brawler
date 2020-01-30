@@ -9,7 +9,7 @@ namespace Items
         {
             base.OnPrimary();
 
-            float amount = 0f;
+            /*float amount = 0f;
             float healingAmount = (item as Drink).healingAmount;
 
             float rate = (healingAmount / 100f) * Time.deltaTime * 10f;
@@ -27,7 +27,7 @@ namespace Items
                 Player.instance.stats.Heal(rate);
             });
 
-            DestroyAfterTime(2f, functionUpdater);
+            DestroyAfterTime(2f, functionUpdater);*/
         }
     }
 }
