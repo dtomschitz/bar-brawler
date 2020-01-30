@@ -10,7 +10,6 @@ public enum State
     TARGET_ACQUISITION
 }
 
-
 public class GameState : MonoBehaviour
 {
     #region Singelton
@@ -117,7 +116,7 @@ public class GameState : MonoBehaviour
         UIManager.instance.SetShopActive(false);
         UIManager.instance.SetPauseMenuActive(false);
         UIManager.instance.SetGameOverMenuActive(false);
-        UIManager.instance.SetHUDActive(true, false, true, true, false);
+        UIManager.instance.SetHUDActive(true, false, false, true, false);
 
         Player.instance.controls.IsMovementEnabled = true;
     }

@@ -26,7 +26,7 @@ public class UIManager : MonoBehaviour
 
     public void SetHUDActive(bool active, bool showStatsBar)
     {
-        SetHUDActive(active, true, true, showStatsBar, true);
+        SetHUDActive(active, true, true, showStatsBar, showStatsBar);
     }
 
     public void SetHUDActive(bool active, bool showStatsBar, bool showHelp)
