@@ -43,6 +43,7 @@ public class Player : Entity
         CurrentBalance += amount;
         OnMoneyReceived?.Invoke(amount, CurrentBalance);
         FindObjectOfType<AudioManager>().Play("GetMoney");
+
     }
 
     public void RemoveMoney(int amount)

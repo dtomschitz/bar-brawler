@@ -81,14 +81,14 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Shot
     clip: {fileID: 8300000, guid: a6c0d45f9d3a68d4ab196a74d9e39fea, type: 3}
-    volume: 0.3
+    volume: 1
     pitch: 1
     loop: 0
     spatialBlend: 1
     source: {fileID: 0}
   - name: KnifeHit
     clip: {fileID: 8300000, guid: 907dc7f834780af40ac8d95d7a1e5244, type: 3}
-    volume: 0.3
+    volume: 1
     pitch: 1
     loop: 0
     spatialBlend: 1

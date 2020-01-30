@@ -19,27 +19,30 @@ public class UIManager : MonoBehaviour
     public PauseMenu pauseMenu;
     public GameObject gameOverUI;
 
-    public void SetHUDActive(bool active)
+    public void SetHUDActive(bool active, bool ignore = true)
     {
-        SetHUDActive(active, true, true, true, true);
+        SetHUDActive(active, true, true, true, true, ignore);
     }
 
-    public void SetHUDActive(bool active, bool showStatsBar)
+    public void SetHUDActive(bool active, bool showStatsBar, bool ignore = true)
     {
-        SetHUDActive(active, true, true, showStatsBar, showStatsBar);
+        SetHUDActive(active, true, true, showStatsBar, showStatsBar, ignore);
     }
 
-    public void SetHUDActive(bool active, bool showStatsBar, bool showHelp)
+    public void SetHUDActive(bool active, bool showStatsBar, bool showHelp, bool ignore = true)
     {
-        SetHUDActive(active, true, true, showStatsBar, showHelp);
+        SetHUDActive(active, true, true, showStatsBar, showHelp, ignore);
     }
 
-    public void SetHUDActive(bool active, bool showWaveSkipText, bool showWaveCountdown, bool showStatsBar, bool showHelp)
+    public void SetHUDActive(bool active, bool showWaveSkipText, bool showWaveCountdown, bool showStatsBar, bool showHelp, bool ignore = true)
     {
         hud.gameObject.SetActive(active);
 
-        hud.waveInfo.SetSkipTextActive(showWaveSkipText);
-        hud.waveInfo.SetSkipCountdownActive(showWaveCountdown);
+        if (!ignore)
+        {
+            hud.waveInfo.SetSkipTextActive(showWaveSkipText);
+            hud.waveInfo.SetSkipCountdownActive(showWaveCountdown);
+        }
 
         hud.healthBar.gameObject.SetActive(showStatsBar);
         hud.manaBar.gameObject.SetActive(showStatsBar);

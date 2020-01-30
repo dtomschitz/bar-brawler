@@ -121,10 +121,10 @@ public class Hotbar : MonoBehaviour
             slot.Add(e.item as Equipment);
         }
 
-       /* if (currentItemIndex == -1)
+        if (currentItemIndex == -1)
         {
             SelectItem(0);
-        }*/
+        }
     }
 
     private void OnItemRemoved(object sender, InventoryEvent e)

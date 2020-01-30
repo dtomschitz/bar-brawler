@@ -28,5 +28,5 @@ MonoBehaviour:
   defaultRotation: {x: -28.663, y: -3.987, z: -64.22701}
   defaultDropRotation: {x: 0, y: 0, z: 0}
   equipmentAnimations: []
-  healingAmount: 20
-  healingSpeed: 0
+  healingAmount: 30
+  healingSpeed: 30

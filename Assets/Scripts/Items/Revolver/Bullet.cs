@@ -11,18 +11,17 @@ namespace Items
 
         void Start()
         {
-            //Destroy(gameObject, 10f);
+            Destroy(gameObject, 10f);
         }
 
         void Update()
         {
-           // transform.Translate(Vector3.forward * speed * Time.deltaTime);
+            transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
 
-        void OnTriggerEnter(Collider other)
+        void OnCollisionEnter(Collision other)
         {
             Debug.Log(other.gameObject.tag);
-            Debug.Log("DAWDD");
 
             if (other.gameObject.tag == "Enemy")
             {

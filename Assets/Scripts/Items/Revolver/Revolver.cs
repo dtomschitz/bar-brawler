@@ -36,6 +36,8 @@ namespace Items
                     Vector3 bulletDirection = enemy.transform.position - muzzle.position;
 
                     newBullet.transform.rotation = Quaternion.LookRotation(bulletDirection, Vector3.up);
+
+                    OnHit(TargetAcquisition.instance.CurrentEnemy);
                 }
 
                 Player.instance.inventory.UseMunition();

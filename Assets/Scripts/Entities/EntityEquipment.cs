@@ -23,12 +23,6 @@ public class EntityEquipment : MonoBehaviour
 
     public void UsePrimary()
     {
-        if (currentItem == null && currentEquipment == null)
-        {
-            FindObjectOfType<Hotbar>().SelectItem(0);
-        }
-
-
         if (currentItem != null && currentItem is Equippable && currentEquipment != null && currentEquipment is Weapon)
         {
             EquipmentAnimation[] animations = currentEquipment.equipmentAnimations;
@@ -108,8 +102,9 @@ public class EntityEquipment : MonoBehaviour
 
     protected void Unequip()
     {
-        Destroy(currentItemGameObject);
+        Destroy(currentItemGameObject, 10f);
 
+        CurrentItem.gameObject.SetActive(false);
         currentItem = null;
         currentEquipment = null;
         currentHand = null;

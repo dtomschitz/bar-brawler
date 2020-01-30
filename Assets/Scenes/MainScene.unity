@@ -8614,24 +8614,23 @@ PrefabInstance:
         type: 3}
       propertyPath: defaultItems.Array.data[1]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11400000, guid: 7a7f82a596053554a9708f359d62dc02,
+        type: 2}
     - target: {fileID: 4251900538022576383, guid: a5694255a417f164c9596164663fb42b,
         type: 3}
       propertyPath: defaultItems.Array.data[2]
       value: 
-      objectReference: {fileID: 11400000, guid: 967e9cfadfc249e4592f94369dcabf28,
-        type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 4251900538022576383, guid: a5694255a417f164c9596164663fb42b,
         type: 3}
       propertyPath: currentMunition
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4251900538022576383, guid: a5694255a417f164c9596164663fb42b,
         type: 3}
       propertyPath: defaultItems.Array.data[3]
       value: 
-      objectReference: {fileID: 11400000, guid: c714a2e27718c77409bb7b5b5ae19e7b,
-        type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 4251900538022576383, guid: a5694255a417f164c9596164663fb42b,
         type: 3}
       propertyPath: defaultItems.Array.data[4]
