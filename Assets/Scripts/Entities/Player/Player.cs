@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
+using Items;
 
 public class Player : Entity
 {
@@ -23,6 +25,11 @@ public class Player : Entity
     public Inventory inventory;
 
     public int CurrentBalance { get; set; }
+
+    public override void OnHit(Entity offender, Equipment item)
+    {
+        base.OnHit(offender, item);
+    } 
 
     public override void OnDeath()
     {

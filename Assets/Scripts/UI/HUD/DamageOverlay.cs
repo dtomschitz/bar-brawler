@@ -4,13 +4,14 @@ using Items;
 
 public class DamageOverlay : MonoBehaviour
 {
-    public PlayerStats stats;
+    private EntityStats stats;
     private Animator animator;
 
     //private Coroutine damageOverlayRoutine;
 
     void Start()
     {
+        stats = Player.instance.stats;
         animator = GetComponent<Animator>();
         stats.OnDamaged += OnTakeDamage;
     }

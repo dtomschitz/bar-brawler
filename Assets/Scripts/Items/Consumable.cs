@@ -26,6 +26,7 @@ namespace Items
             base.OnPrimary();
             if (owner.stats == null || owner.stats.HasFullLife || owner.combat.IsAttacking || owner.combat.IsBlocking || owner.combat.IsDrinking) return;
             owner.animator.OnPrimary();
+            owner.stats.Heal((item as Drink).healingAmount);
         }
 
         public virtual void StartDrinking()

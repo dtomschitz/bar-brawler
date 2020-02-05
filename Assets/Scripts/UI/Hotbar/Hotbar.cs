@@ -17,8 +17,8 @@ public class Hotbar : MonoBehaviour
 
     public GameObject leftBumper;
     public GameObject rightBumper;
-    public Inventory inventory;
 
+    private Inventory inventory;
     private PlayerInputActions inputActions;
     private HotbarSlot[] slots;
     private Coroutine currentItemNameCoroutine;
@@ -46,6 +46,7 @@ public class Hotbar : MonoBehaviour
 
     void Start()
     {
+        inventory = Player.instance.inventory;
         inventory.OnItemAdded += OnItemAdded;
         inventory.OnItemRemoved += OnItemRemoved;
        // inventory.OnItemUsed += OnItemUsed;

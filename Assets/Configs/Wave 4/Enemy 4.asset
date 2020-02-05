@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: 2b9d63653513adc4884c27c2a16e9110, type: 2}
   combat: {fileID: 0}
-  moneyDrops: 02000000
+  moneyDrops: 0300000004000000
   items:
   - percentage: 60
     item: {fileID: 11400000, guid: dfef5eb85bcbea8499448b629546c92d, type: 2}

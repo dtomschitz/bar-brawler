@@ -8,6 +8,7 @@ public class MunitionInfo : MonoBehaviour
 
     void Start()
     {
+       // inventory = Player.instance.inventory;
         inventory.OnMunitionUpdate += OnMunitionUpdate;    
     }
 
