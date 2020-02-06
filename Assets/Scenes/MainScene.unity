@@ -13671,6 +13671,11 @@ PrefabInstance:
       propertyPath: pivot
       value: 
       objectReference: {fileID: 1329877445}
+    - target: {fileID: 4251900538022576378, guid: a5694255a417f164c9596164663fb42b,
+        type: 3}
+      propertyPath: maxHealth
+      value: 300
+      objectReference: {fileID: 0}
     - target: {fileID: 4251900538022576379, guid: a5694255a417f164c9596164663fb42b,
         type: 3}
       propertyPath: maxStunnedTime

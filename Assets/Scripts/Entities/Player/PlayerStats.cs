@@ -1,4 +1,7 @@
-﻿using Items;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using Items;
 
 public class PlayerStats : EntityStats
 {
@@ -13,11 +16,25 @@ public class PlayerStats : EntityStats
         equipment.OnItemEquipped += OnItemEquipped;
     }
 
-    private void OnItemEquipped(Equipment newItem, Equipment oldItem)
+    public void OnItemEquipped(Equipment newItem, Equipment oldItem)
     {
         if (newItem != null && newItem is Weapon)
         {
             damage = (newItem as Weapon).damage;
         }
+    }
+
+    public override void Damage(float damage, Equipment item = null)
+    {
+        base.Damage(damage, item);
+        StopAllCoroutines();
+        StartCoroutine(StartGamePadVibration(damage));
+    }
+
+    private IEnumerator StartGamePadVibration(float damage)
+    {
+        Gamepad.current.SetMotorSpeeds(damage / 100, damage / 100);
+        yield return new WaitForSeconds(.5f);
+        Gamepad.current.SetMotorSpeeds(0, 0);
     }
 }
