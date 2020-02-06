@@ -1,15 +1,17 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class MunitionInfo : MonoBehaviour
 {
     public Text currentMunition;
-    public Inventory inventory;
 
     void Start()
     {
-       // inventory = Player.instance.inventory;
-        inventory.OnMunitionUpdate += OnMunitionUpdate;    
+        Inventory inventory = Player.instance.inventory;
+        if (inventory == null) throw new ArgumentNullException("The player inventory cannot be null!");
+
+        inventory.OnMunitionUpdate += OnMunitionUpdate;
     }
 
     public void OnMunitionUpdate(int currentAmount)
