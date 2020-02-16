@@ -87,7 +87,7 @@ public class PlayerControls : MonoBehaviour
         }
     }
 
-    public void UsePrimary(CallbackContext ctx) 
+    public void UsePrimary(CallbackContext ctx)
     {
         if (GameState.instance.IsInTargetAcquisition) return;
         equipment.UsePrimary();
@@ -107,7 +107,7 @@ public class PlayerControls : MonoBehaviour
 
     public void PauseGame(CallbackContext ctx)
     {
-        GameState.instance.SetState(State.GAME_PAUSED);
+        GameState.instance.SetState(GameStateType.GAME_PAUSED);
     }
 
     private void StopPlayerMovement()
@@ -172,7 +172,7 @@ public class PlayerControls : MonoBehaviour
     public bool IsMovementEnabled
     {
         get { return isMovementEnebaled; }
-        set 
+        set
         {
             if (isMovementEnebaled == value) return;
             isMovementEnebaled = value;
@@ -180,7 +180,8 @@ public class PlayerControls : MonoBehaviour
             {
                 inputActions.Disable();
                 StopPlayerMovement();
-            } else
+            }
+            else
             {
                 inputActions.Enable();
             }

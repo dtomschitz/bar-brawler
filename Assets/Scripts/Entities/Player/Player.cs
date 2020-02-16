@@ -42,7 +42,7 @@ public class Player : Entity
             foreach (Enemy enemy in enemies) enemy.animator.OnVictory();
         }
 
-        GameState.instance.SetState(State.GAME_OVER);
+        GameState.instance.SetState(GameStateType.GAME_OVER);
     }
 
     public void AddMoney(int amount)

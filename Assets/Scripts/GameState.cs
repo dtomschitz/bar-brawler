@@ -1,15 +1,18 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public enum State
+public enum GameStateType
 {
     GAME_PAUSED,
     GAME_OVER,
-    INGAME,
+    IN_GAME,
     IN_SHOP,
     TARGET_ACQUISITION
 }
 
+/// <summary>
+/// Class <c>GameState</c> manages the current game state.
+/// </summary>
 public class GameState : MonoBehaviour
 {
     #region Singelton
@@ -25,39 +28,48 @@ public class GameState : MonoBehaviour
 
     #endregion;
 
-    public State state = State.INGAME;
+    GameStateType state = GameStateType.IN_GAME;
 
-    public void SetState(State newState)
+    /// <summary>
+    /// Sets the new game state and calls the relevant method for displaying and
+    /// hiding relevant and irrelevant information.
+    /// </summary>
+    /// <param name="newState">The new game state to set</param>
+    public void SetState(GameStateType newState)
     {
         if (state == newState) return;
         state = newState;
 
         switch(newState)
         {
-            case State.GAME_PAUSED:
+            case GameStateType.GAME_PAUSED:
                 TogglePauseMenu();
                 break;
 
-            case State.GAME_OVER:
+            case GameStateType.GAME_OVER:
                 ToggleGameOver();
                 break;
 
-            case State.INGAME:
+            case GameStateType.IN_GAME:
                 ToggleIngame();
                 break;
 
-            case State.IN_SHOP:
+            case GameStateType.IN_SHOP:
                 ToggleShop();
                 break;
 
-            case State.TARGET_ACQUISITION:
+            case GameStateType.TARGET_ACQUISITION:
                 ToggleTargetAcquisition();
                 break;
 
         }
     }
 
-    private void TogglePauseMenu()
+    /// <summary>
+    /// Toggles the game state <see cref="GameStateType.GAME_PAUSED"/> and hides
+    /// all unrelevant information.
+    /// </summary>
+    void TogglePauseMenu()
     {
         Player.instance.controls.IsMovementEnabled = false;
         DisableTargetAcquisition();
@@ -68,7 +80,11 @@ public class GameState : MonoBehaviour
         UIManager.instance.SetPauseMenuActive(true);
     }
 
-    private void ToggleGameOver()
+    /// <summary>
+    /// Toggles the game state <see cref="GameStateType.GAME_OVER"/> and hides
+    /// all unrelevant information.
+    /// </summary>
+    void ToggleGameOver()
     {
         Player.instance.controls.IsMovementEnabled = false;
         DisableTargetAcquisition();
@@ -80,14 +96,18 @@ public class GameState : MonoBehaviour
         StartCoroutine(OpenGameOverMenu());
     }
 
-    private IEnumerator OpenGameOverMenu()
+    /// <summary>Displays the game over menu.</summary>
+    IEnumerator OpenGameOverMenu()
     {
         yield return new WaitForSeconds(3f);
         UIManager.instance.SetGameOverMenuActive(true);
     }
 
-
-    private void ToggleShop()
+    /// <summary>
+    /// Toggles the game state <see cref="GameStateType.IN_SHOP"/> and hides all
+    /// unrelevant information.
+    /// </summary>
+    void ToggleShop()
     {
         Player.instance.controls.IsMovementEnabled = false;
         DisableTargetAcquisition();
@@ -101,7 +121,11 @@ public class GameState : MonoBehaviour
         UIManager.instance.hud.helpInfo.SetTargetHelpActive(false);
     }
 
-    private void ToggleIngame()
+    /// <summary>
+    /// Disables the game state <see cref="GameStateType.IN_GAME"/> and displays
+    /// the game relevant informations.
+    /// </summary>
+    void ToggleIngame()
     {
         Player.instance.controls.IsMovementEnabled = true;
         DisableTargetAcquisition();
@@ -117,7 +141,11 @@ public class GameState : MonoBehaviour
         Time.timeScale = 1.0f;
     }
 
-    private void ToggleTargetAcquisition()
+    /// <summary>
+    /// Toggles the game state <see cref="GameStateType.TARGET_ACQUISITION"/>
+    /// and hides all unrelevant information.
+    /// </summary>
+    void ToggleTargetAcquisition()
     {
         UIManager.instance.SetShopActive(false);
         UIManager.instance.SetPauseMenuActive(false);
@@ -131,6 +159,7 @@ public class GameState : MonoBehaviour
         Player.instance.controls.IsMovementEnabled = true;
     }
 
+    /// <summary>Displays the target acquisition if it got enabled.</summary>
     private void DisableTargetAcquisition()
     {
         if (TargetAcquisition.instance.IsEnabled)
@@ -140,18 +169,44 @@ public class GameState : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This method checks if the player is currently in game.
+    /// </summary>
+    /// <returns>True if the current game state is equals to
+    /// <see cref="GameStateType.IN_GAME"/> and <see cref="GameStateType.TARGET_ACQUISITION"/>;
+    /// otherwise, false.
+    /// </returns>
     public bool IsInGame
     {
-        get { return state == State.INGAME ||state == State.TARGET_ACQUISITION; }
+        get { return state == GameStateType.IN_GAME ||state == GameStateType.TARGET_ACQUISITION; }
     }
 
+    /// <summary>
+    /// This method checks if the player is currently in the shop.
+    /// </summary>
+    /// <returns>True if the current game state is equals to
+    /// <see cref="GameStateType.IN_SHOP"/>; otherwise, false.
+    /// </returns>
     public bool IsInShop
     {
-        get { return state == State.IN_SHOP; }
+        get { return state == GameStateType.IN_SHOP; }
     }
 
+    /// <summary>
+    /// This method checks if the player is currently in target acquisition mode.
+    /// </summary>
+    /// <returns>True if the current game state is equals to
+    /// <see cref="GameStateType.TARGET_ACQUISITION"/>; otherwise, false.
+    /// </returns>
     public bool IsInTargetAcquisition
     {
-        get { return state == State.TARGET_ACQUISITION; }
+        get { return state == GameStateType.TARGET_ACQUISITION; }
+    }
+
+    /// <summary>This methods returns the current game state.</summary>
+    /// <returns>The current game state.</returns>
+    public GameStateType State
+    {
+        get { return state; }
     }
 }

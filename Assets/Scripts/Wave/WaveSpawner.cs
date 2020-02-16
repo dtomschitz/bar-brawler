@@ -74,7 +74,7 @@
 
         void Update()
         {
-            if (isWaveSpawnerEnabled && (GameState.instance.state != State.GAME_OVER || GameState.instance.state != State.GAME_PAUSED))
+            if (isWaveSpawnerEnabled && (GameState.instance.state != GameStateType.GAME_OVER || GameState.instance.state != GameStateType.GAME_PAUSED))
             {
                 if (CurrentState == WaveState.Running)
                 {
@@ -90,7 +90,7 @@
 
                     return;
                 }
-               
+
                 waveCountdown -= Time.deltaTime;
                 if (waveCountdown > 0f) OnWaveCountdownUpdate?.Invoke(waveCountdown);
             }
@@ -104,11 +104,11 @@
 
         public void SkipWaveDebug(CallbackContext ctx)
         {
-          /*  GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-            for (var i = 0; i < enemies.Length; i++)
-            {
-                Destroy(enemies[i]);
-            }*/
+            /*  GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+              for (var i = 0; i < enemies.Length; i++)
+              {
+                  Destroy(enemies[i]);
+              }*/
         }
 
 

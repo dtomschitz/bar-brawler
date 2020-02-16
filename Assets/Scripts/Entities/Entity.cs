@@ -2,10 +2,9 @@
 using UnityEngine;
 using Items;
 
-[RequireComponent(typeof(EntityEquipment))]
-[RequireComponent(typeof(EntityStats))]
-[RequireComponent(typeof(EntityCombat))]
-[RequireComponent(typeof(EntityAnimator))]
+/// <summary>
+/// 
+/// </summary>
 public class Entity : MonoBehaviour
 {
     [Header("Entity Base")]

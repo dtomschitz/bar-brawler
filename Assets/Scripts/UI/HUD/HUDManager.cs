@@ -1,5 +1,9 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Class HUDManager is used to centralize all management classes of visual
+/// relevant informations the player can see  in the Hud.
+/// </summary>
 public class HUDManager : MonoBehaviour
 {
     public Hotbar hotbar;
@@ -10,28 +14,48 @@ public class HUDManager : MonoBehaviour
     public InteractionHint interactionHint;
     public HelpInfo helpInfo;
 
-    public void DisplayHotbar(bool visible)
+    /// <summary>
+    /// Displays or hides the hotbar in the Hud.
+    /// </summary>
+    /// <param name="active"></param>
+    public void DisplayHotbar(bool active)
     {
-        hotbar.gameObject.SetActive(visible);
+        hotbar.gameObject.SetActive(active);
     }
 
-    public void DisplayHealthBar(bool visible)
+    /// <summary>
+    /// Displays or hides the health bar in the Hud.
+    /// </summary>
+    /// <param name="active"></param>
+    public void DisplayHealthBar(bool active)
     {
-        healthBar.gameObject.SetActive(visible);
+        healthBar.gameObject.SetActive(active);
     }
 
-    public void DisplayManaBar(bool visible)
+    /// <summary>
+    /// Displays or hides the mana bar in the Hud.
+    /// </summary>
+    /// <param name="active"></param>
+    public void DisplayManaBar(bool active)
     {
-        manaBar.gameObject.SetActive(visible);
+        manaBar.gameObject.SetActive(active);
     }
 
-    public void DisplayWaveInfo(bool visible)
+    /// <summary>
+    /// Displays or hides the wave informationen in the Hud
+    /// </summary>
+    /// <param name="active"></param>
+    public void DisplayWaveInfo(bool active)
     {
-        waveInfo.gameObject.SetActive(visible);
+        waveInfo.gameObject.SetActive(active);
     }
 
-    public void DisplayInteractionHint(bool visible)
+    /// <summary>
+    /// Displays or hides the interactions hints in the Hud.
+    /// </summary>
+    /// <param name="active"></param>
+    public void DisplayInteractionHint(bool active)
     {
-        interactionHint.gameObject.SetActive(visible);
+        interactionHint.gameObject.SetActive(active);
     }
 }
