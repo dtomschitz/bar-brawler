@@ -19,51 +19,47 @@ public class UIManager : MonoBehaviour
     public PauseMenu pauseMenu;
     public GameObject gameOverUI;
 
-    public void SetHUDActive(bool active, bool ignore = true)
+    public void SetHUDActive(bool active)
     {
-        SetHUDActive(active, true, true, true, true, ignore);
+        SetHUDActive(active, true, true, true, true, true);
     }
 
-    public void SetHUDActive(bool active, bool showStatsBar, bool ignore = true)
+    public void SetHUDActive(bool active, bool showHelp)
     {
-        SetHUDActive(active, true, true, showStatsBar, showStatsBar, ignore);
+        SetHUDActive(active, true, true, showHelp);
     }
 
-    public void SetHUDActive(bool active, bool showStatsBar, bool showHelp, bool ignore = true)
+    public void SetHUDActive(bool active, bool showWaveCountdown, bool showWaveSkipText)
     {
-        SetHUDActive(active, true, true, showStatsBar, showHelp, ignore);
+        SetHUDActive(active, showWaveCountdown, showWaveSkipText, true, true, true);
     }
 
-    public void SetHUDActive(bool active, bool showWaveSkipText, bool showWaveCountdown, bool showStatsBar, bool showHelp, bool ignore = true)
+    public void SetHUDActive(bool active, bool showWaveCountdown = true, bool showWaveSkipText = true, bool showHealthBar = true, bool showManaBar = true, bool showHelp = true)
     {
         hud.gameObject.SetActive(active);
 
-        if (!ignore)
-        {
-            hud.waveInfo.SetSkipTextActive(showWaveSkipText);
-            hud.waveInfo.SetSkipCountdownActive(showWaveCountdown);
-        }
+        hud.waveInfo.SetSkipTextActive(showWaveSkipText);
+        hud.waveInfo.SetSkipCountdownActive(showWaveCountdown);
 
-        hud.healthBar.gameObject.SetActive(showStatsBar);
-        hud.manaBar.gameObject.SetActive(showStatsBar);
+        hud.healthBar.gameObject.SetActive(showHealthBar);
+        hud.manaBar.gameObject.SetActive(showManaBar);
 
         hud.hotbar.SetLeftBumperActive(showHelp);
         hud.hotbar.SetRightBumperActive(showHelp);
     }
 
-    public void SetShopActive(bool active) => shopCanvas.gameObject.SetActive(active);
-
-    public void SetPauseMenuActive(bool active) => pauseMenu.gameObject.SetActive(active);
-
-    public void SetGameOverMenuActive(bool active) => gameOverCanvas.gameObject.SetActive(active);
-
-    public void DisplayGameOverUI(bool visible)
+    public void SetShopActive(bool active)
     {
-        //DisplayHealthBar(!visible);
-       // DisplayManaBar(!visible);
-        //DisplayHotbar(!visible);
-       // DisplayWaveInfo(!visible);
-        //DisplayInteractionHint(visible);
-        gameOverUI.SetActive(visible);
+        shopCanvas.gameObject.SetActive(active);
+    }
+
+    public void SetPauseMenuActive(bool active)
+    {
+        pauseMenu.gameObject.SetActive(active);
+    }
+
+    public void SetGameOverMenuActive(bool active)
+    {
+        gameOverCanvas.gameObject.SetActive(active);
     }
 }

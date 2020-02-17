@@ -6,8 +6,28 @@
     using UnityEngine.UI;
     using static UnityEngine.InputSystem.InputAction;
 
-    public enum WaveState { Spawning, Counting, Running }
-    public enum Difficulty { Easy, Medium, Hard }
+    /// <summary>
+    /// Enum <c>WaveState</c> is used to set the current state of the wave spawner.
+    /// <para>
+    /// If the current wave state is set to <see cref="WaveState.Spawning"/> the wave spawner is the currently summoning new enemies.
+    /// The state <see cref="WaveState.Counting"/> will be used if the wave spawner is currently paused and the countdown for the new wave is displayed.
+    /// When the current wave is still ongoing the wave spawner state will be set to <see cref="WaveState.Running"/>.
+    /// </para>
+    /// </summary>
+    public enum WaveState { 
+        Spawning, 
+        Counting,
+        Running 
+    }
+
+    /// <summary>
+    /// Enum <c>Difficulty</c> is used to define the current wave difficulty. Based on the given wave config the difficulity will be used to summon different enemy types and adjust thier health, strengh and weapons
+    /// </summary>
+    public enum Difficulty {
+        Easy, 
+        Medium, 
+        Hard 
+    }
 
     public class WaveSpawner : MonoBehaviour
     {
@@ -25,7 +45,7 @@
             //inputActions.PlayerControls.Move.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
             //inputActions.PlayerControls.Rotation.performed += ctx => lookPosition = ctx.ReadValue<Vector2>();
 
-            inputActions.PlayerControls.SkipWave.performed += SkipWave;
+            inputActions.PlayerControls.SkipWave.performed += SkipWaveCountdown;
             inputActions.PlayerControls.SkipWaveDebug.performed += SkipWaveDebug;
         }
 
@@ -74,7 +94,7 @@
 
         void Update()
         {
-            if (isWaveSpawnerEnabled && (GameState.instance.state != GameStateType.GAME_OVER || GameState.instance.state != GameStateType.GAME_PAUSED))
+            if (isWaveSpawnerEnabled && (GameState.instance.State != GameStateType.GAME_OVER || GameState.instance.State != GameStateType.GAME_PAUSED))
             {
                 if (CurrentState == WaveState.Running)
                 {
@@ -96,7 +116,12 @@
             }
         }
 
-        public void SkipWave(CallbackContext ctx)
+
+        /// <summary>
+        /// Gets called if the user pressed the B button while he is in not in the shop or in target acquisition mode. The countdown for the next wave will then be eventually skipped to 3 seconds.
+        /// </summary>
+        /// <param name="ctx"></param>
+        public void SkipWaveCountdown(CallbackContext ctx)
         {
             if (GameState.instance.IsInTargetAcquisition || GameState.instance.IsInShop || waveCountdown <= 4f) return;
             waveCountdown = 4f;
@@ -112,43 +137,49 @@
         }
 
 
+        /// <summary>
+        /// This method resets the current state to <see cref="WaveState.Counting"/> and the wave countdown to the set initial value.
+        /// </summary>
         private void ResetWaveSpawner()
         {
             SetState(WaveState.Counting);
             waveCountdown = timeBetweenWaves;
         }
 
+        /// <summary>
+        /// This method starts the next wave. It will add a new round to the <see cref="WaveSpawner.Rounds"/> counter, select the specific config which should be used for the new wave and will summon the new enemies.
+        /// </summary>
         private void StartNextWave()
         {
             Rounds++;
             Debug.LogFormat("Spawning Wave (num: {0}, difficulty: {1})", Rounds, CurrentDifficulty);
 
-            SelectCurrentConfig();
-            SpawnEnemies();
-
-            Statistics.instance.AddRound();
+            WaveConfig waveConfig = SelectCurrentConfig();
+            if (waveConfig != null)
+            {
+                SetConfig(waveConfig);
+                StartCoroutine(SpawnRoutine());
+                Statistics.instance.AddRound();
+            }
         }
 
-        private void SelectCurrentConfig()
+        /// <summary>
+        /// This method determinants which of the set <see cref="WaveSpawner.configs"/>configs should be used for the current wave and returns it.
+        /// </summary>
+        /// <returns>The wave config which is intended for the current round number.</returns>
+        private WaveConfig SelectCurrentConfig()
         {
             foreach (WaveConfig config in configs)
             {
-                if (config != CurrentConfig && config.round == Rounds)
-                {
-                    SetConfig(config);
-                    return;
-                }
+                if (config != CurrentConfig && config.round == Rounds) return config;
             }
+            return null;
         }
 
-        private void SpawnEnemies()
-        {
-            if (CurrentConfig != null && CurrentConfig.enemy != null)
-            {
-                StartCoroutine(SpawnRoutine());
-            }
-        }
-
+        /// <summary>
+        /// This method spawns the enemies.
+        /// </summary>
+        /// <returns></returns>
         private IEnumerator SpawnRoutine()
         {
             SetState(WaveState.Spawning);
@@ -167,6 +198,10 @@
             yield break;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="newState"></param>
         private void SetState(WaveState newState)
         {
             switch (newState)

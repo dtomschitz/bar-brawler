@@ -63,7 +63,6 @@ public class Barkeeper : MonoBehaviour
         if (WaveSpawner.instance.IsWaveRunning)
         {
             if (shop.IsOpen) CloseShop();
-
             inputActions.Disable();
         } else
         {
@@ -73,7 +72,7 @@ public class Barkeeper : MonoBehaviour
 
     public void Select(CallbackContext ctx)
     {
-        if (isPlayerInReach && GameState.instance.state != GameStateType.GAME_PAUSED && GameState.instance.state != GameStateType.GAME_OVER)
+        if (isPlayerInReach && GameState.instance.State != GameStateType.GAME_PAUSED && GameState.instance.State != GameStateType.GAME_OVER)
         {
             OpenShop();
         }

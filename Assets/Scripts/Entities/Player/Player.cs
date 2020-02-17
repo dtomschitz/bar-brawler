@@ -24,7 +24,7 @@ public class Player : Entity
     public PlayerControls controls;
     public Inventory inventory;
 
-    public int CurrentBalance { get; set; }
+    public int CurrentBalance { get; set; } = 300;
 
     public override void OnHit(Entity offender, Equipment item)
     {

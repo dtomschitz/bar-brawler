@@ -1462,7 +1462,7 @@ Transform:
   m_LocalScale: {x: -6.5226097, y: 2.1922998, z: 1.31878}
   m_Children: []
   m_Father: {fileID: 1172424963}
-  m_RootOrder: 11
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!65 &232864847
 BoxCollider:
@@ -1638,7 +1638,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 274d1c57b21cde04bbc2752a1fbc5550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 2
 --- !u!114 &247322029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2579,7 +2578,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 202867464}
     m_SelectOnDown: {fileID: 1025578211}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 687838700}
+    m_SelectOnRight: {fileID: 0}
   m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -2605,7 +2604,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1355473839}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1355473841}
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &361969890
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2691,7 +2701,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1172424963}
+    m_TransformParent: {fileID: 2127830145}
     m_Modifications:
     - target: {fileID: 782423497661347512, guid: ed912f0559cf63145893317f74b29483,
         type: 3}
@@ -2736,7 +2746,7 @@ PrefabInstance:
     - target: {fileID: 4359734984023671979, guid: ed912f0559cf63145893317f74b29483,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4359734984023671979, guid: ed912f0559cf63145893317f74b29483,
         type: 3}
@@ -2895,7 +2905,7 @@ PrefabInstance:
     - target: {fileID: 3407927908699762507, guid: 6a19dafdf7166124da8a96eca7865db1,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3407927908699762507, guid: 6a19dafdf7166124da8a96eca7865db1,
         type: 3}
@@ -3831,18 +3841,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 668355965}
   m_CullTransparentMesh: 0
---- !u!114 &687838700 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2347219822551593032, guid: 76834ff816de9f240af6201a67865e0d,
-    type: 3}
-  m_PrefabInstance: {fileID: 120191121}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &691739194
 GameObject:
   m_ObjectHideFlags: 0
@@ -3957,7 +3955,7 @@ PrefabInstance:
     - target: {fileID: 3407927908699762507, guid: 6a19dafdf7166124da8a96eca7865db1,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3407927908699762507, guid: 6a19dafdf7166124da8a96eca7865db1,
         type: 3}
@@ -4430,7 +4428,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1172424963}
+    m_TransformParent: {fileID: 2127830145}
     m_Modifications:
     - target: {fileID: 782423497661347512, guid: ed912f0559cf63145893317f74b29483,
         type: 3}
@@ -4475,7 +4473,7 @@ PrefabInstance:
     - target: {fileID: 4359734984023671979, guid: ed912f0559cf63145893317f74b29483,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4359734984023671979, guid: ed912f0559cf63145893317f74b29483,
         type: 3}
@@ -4761,7 +4759,7 @@ Transform:
   m_LocalScale: {x: -4.602368, y: 14.06147, z: 0.17916943}
   m_Children: []
   m_Father: {fileID: 1172424963}
-  m_RootOrder: 12
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}
 --- !u!65 &835742082
 BoxCollider:
@@ -4866,7 +4864,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1172424963}
+    m_TransformParent: {fileID: 2127830145}
     m_Modifications:
     - target: {fileID: 782423497661347512, guid: ed912f0559cf63145893317f74b29483,
         type: 3}
@@ -4911,7 +4909,7 @@ PrefabInstance:
     - target: {fileID: 4359734984023671979, guid: ed912f0559cf63145893317f74b29483,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4359734984023671979, guid: ed912f0559cf63145893317f74b29483,
         type: 3}
@@ -5302,7 +5300,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 1635912902}
     m_SelectOnDown: {fileID: 1062974527}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 1647447489}
+    m_SelectOnRight: {fileID: 0}
   m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -5328,7 +5326,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 919687290}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 919687292}
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &919687290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5392,6 +5401,7 @@ MonoBehaviour:
   title: {fileID: 332487885}
   button: {fileID: 919687289}
   shopItem: {fileID: 11400000, guid: c43deaf2fd63ba64889b0280038e1dce, type: 2}
+  eventText: {fileID: 1740112639}
 --- !u!222 &919687293
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5661,7 +5671,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 353821009}
     m_SelectOnDown: {fileID: 1817024833}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 687838700}
+    m_SelectOnRight: {fileID: 0}
   m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -5687,7 +5697,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1025578212}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1025578214}
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1025578212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5751,6 +5772,7 @@ MonoBehaviour:
   title: {fileID: 302521763}
   button: {fileID: 1025578211}
   shopItem: {fileID: 11400000, guid: 4ed6ebb9c07d9244592a720c27a633ed, type: 2}
+  eventText: {fileID: 1740112639}
 --- !u!222 &1025578215
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5964,7 +5986,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 1635912902}
     m_SelectOnDown: {fileID: 1216156950}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 1647447489}
+    m_SelectOnRight: {fileID: 0}
   m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -5990,7 +6012,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1062974528}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1062974529}
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1062974528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6034,6 +6067,7 @@ MonoBehaviour:
   title: {fileID: 1186949598}
   button: {fileID: 1062974527}
   shopItem: {fileID: 11400000, guid: bea418ffaf722294a88cc530a8ed4c88, type: 2}
+  eventText: {fileID: 1740112639}
 --- !u!222 &1062974530
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7473,15 +7507,12 @@ Transform:
   m_LocalPosition: {x: -5, y: 0, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1354270042}
-  - {fileID: 875080195}
-  - {fileID: 408635192}
-  - {fileID: 798395436}
   - {fileID: 1094682932}
-  - {fileID: 1467370894}
   - {fileID: 473731431}
   - {fileID: 1823892636}
   - {fileID: 698947508}
+  - {fileID: 1354270042}
+  - {fileID: 1467370894}
   - {fileID: 2127830145}
   - {fileID: 1690703063}
   - {fileID: 232864846}
@@ -7924,7 +7955,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 1062974527}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 1647447489}
+    m_SelectOnRight: {fileID: 0}
   m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -7950,7 +7981,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1216156951}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1216156952}
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1216156951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7994,6 +8036,7 @@ MonoBehaviour:
   title: {fileID: 1486332214}
   button: {fileID: 1216156950}
   shopItem: {fileID: 11400000, guid: 5f208858dbe9f65478e706bb2e1d4526, type: 2}
+  eventText: {fileID: 1740112639}
 --- !u!222 &1216156953
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8818,7 +8861,7 @@ Transform:
   m_LocalScale: {x: 100, y: 1, z: 100}
   m_Children: []
   m_Father: {fileID: 1172424963}
-  m_RootOrder: 0
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1354270043
 BoxCollider:
@@ -8962,6 +9005,7 @@ MonoBehaviour:
   title: {fileID: 1642954829}
   button: {fileID: 353821009}
   shopItem: {fileID: 11400000, guid: c59c03e6410f3724fa95a8912ae52a65, type: 2}
+  eventText: {fileID: 1740112639}
 --- !u!222 &1355473842
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10187,6 +10231,7 @@ MonoBehaviour:
   title: {fileID: 883295761}
   button: {fileID: 1635912902}
   shopItem: {fileID: 11400000, guid: d123e651e720b6043b5e6bd830c60bdc, type: 2}
+  eventText: {fileID: 1740112639}
 --- !u!222 &1585085976
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10291,7 +10336,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 1444855380}
     m_SelectOnDown: {fileID: 1062974527}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 1647447489}
+    m_SelectOnRight: {fileID: 0}
   m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -10317,7 +10362,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1585085973}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1585085975}
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1642954827
 GameObject:
   m_ObjectHideFlags: 0
@@ -10395,18 +10451,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1642954827}
   m_CullTransparentMesh: 0
---- !u!114 &1647447489 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2347219822551593032, guid: 76834ff816de9f240af6201a67865e0d,
-    type: 3}
-  m_PrefabInstance: {fileID: 2347219824192748937}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1650992795
 GameObject:
   m_ObjectHideFlags: 0
@@ -10599,7 +10643,7 @@ Transform:
   m_LocalScale: {x: -6.5226097, y: 1.6003989, z: 1.3187776}
   m_Children: []
   m_Father: {fileID: 1172424963}
-  m_RootOrder: 10
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1690703064
 BoxCollider:
@@ -11431,7 +11475,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 1025578211}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 687838700}
+    m_SelectOnRight: {fileID: 0}
   m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -11457,7 +11501,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1817024834}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1817024835}
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1817024834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11501,6 +11556,7 @@ MonoBehaviour:
   title: {fileID: 815627106}
   button: {fileID: 1817024833}
   shopItem: {fileID: 11400000, guid: b4a98ce8c60b4694aa5a9eb273bd0dda, type: 2}
+  eventText: {fileID: 1740112639}
 --- !u!222 &1817024836
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11579,7 +11635,7 @@ PrefabInstance:
     - target: {fileID: 3407927908699762507, guid: 6a19dafdf7166124da8a96eca7865db1,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3407927908699762507, guid: 6a19dafdf7166124da8a96eca7865db1,
         type: 3}
@@ -13712,8 +13768,11 @@ Transform:
   m_Children:
   - {fileID: 478378904}
   - {fileID: 1673749465}
+  - {fileID: 875080195}
+  - {fileID: 408635192}
+  - {fileID: 798395436}
   m_Father: {fileID: 1172424963}
-  m_RootOrder: 9
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2139479350
 PrefabInstance:
@@ -14200,7 +14259,7 @@ PrefabInstance:
     - target: {fileID: 1885532935001671181, guid: 2f37015f39bbd864bb343d7af48ab995,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1885532935001671181, guid: 2f37015f39bbd864bb343d7af48ab995,
         type: 3}
@@ -14530,6 +14589,56 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5581217197876708174, guid: 76834ff816de9f240af6201a67865e0d,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5581217197876708174, guid: 76834ff816de9f240af6201a67865e0d,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5581217197876708174, guid: 76834ff816de9f240af6201a67865e0d,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5581217197876708174, guid: 76834ff816de9f240af6201a67865e0d,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 175.28851
+      objectReference: {fileID: 0}
+    - target: {fileID: 5581217197876708174, guid: 76834ff816de9f240af6201a67865e0d,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 350.57703
+      objectReference: {fileID: 0}
+    - target: {fileID: 6634262005508280798, guid: 76834ff816de9f240af6201a67865e0d,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6634262005508280798, guid: 76834ff816de9f240af6201a67865e0d,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6634262005508280798, guid: 76834ff816de9f240af6201a67865e0d,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 450.38852
+      objectReference: {fileID: 0}
+    - target: {fileID: 6634262005508280798, guid: 76834ff816de9f240af6201a67865e0d,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -40
+      objectReference: {fileID: 0}
+    - target: {fileID: 6634262005508280798, guid: 76834ff816de9f240af6201a67865e0d,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 199.62299
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 76834ff816de9f240af6201a67865e0d, type: 3}
@@ -14906,12 +15015,12 @@ PrefabInstance:
     - target: {fileID: 4498888811650392992, guid: 77ba59c64d4dcc041972b79fa5fc8e86,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -3.3
+      value: -0.000012398
       objectReference: {fileID: 0}
     - target: {fileID: 4498888811650392992, guid: 77ba59c64d4dcc041972b79fa5fc8e86,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -97.72504
+      value: -97.775
       objectReference: {fileID: 0}
     - target: {fileID: 4498888811650392992, guid: 77ba59c64d4dcc041972b79fa5fc8e86,
         type: 3}
@@ -15002,6 +15111,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_FontData.m_FontSize
       value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 4498888811057729053, guid: 77ba59c64d4dcc041972b79fa5fc8e86,
+        type: 3}
+      propertyPath: m_FontData.m_AlignByGeometry
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4498888811658543374, guid: 77ba59c64d4dcc041972b79fa5fc8e86,
         type: 3}

@@ -1,78 +1,25 @@
-﻿using System.Collections;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine.UI;
 using TMPro;
-using Shop;
 using Utils;
 
-public class ItemInfo : FadeGraphic
+namespace Shop
 {
-    public Text title;
-    public Image image;
-    public TextMeshProUGUI info;
-    public Button buyButton;
-
-    public Text eventText;
-
-    private ShopItem shopItem;
-
-    public void SetItem(ShopItem shopItem)
+    public class ItemInfo : FadeGraphic
     {
-        this.shopItem = shopItem;
+        public Text title;
+        public Text price;
+        public Image image;
+        public TextMeshProUGUI info;
 
-        gameObject.SetActive(true);
-
-        title.text = shopItem.item.name.ToUpper();
-        image.sprite = shopItem.item.icon;
-        info.text = shopItem.infoText.ToUpper();
-        buyButton.GetComponent<Text>().text = "KAUFEN FÜR $" + shopItem.price.ToString();
-    }
-
-    public void OnItemBought()
-    {
-        StopAllCoroutines();
-        eventText.text = "";
-        eventText.color = Color.white;
-
-        FadeIn(eventText, .5f);
-
-        Inventory inventory = Player.instance.inventory;
-        if (inventory != null)
+        public void SetItem(ShopItem shopItem)
         {
-            if (Player.instance.CurrentBalance < shopItem.price)
-            {
-                eventText.text = "Du hast nicht genug Geld!".ToUpper();
-                StartCoroutine(HideEventText());
-                return;
-            }
-            
-            if (!(shopItem is Munition))
-            {
-                if (!inventory.HasItem(shopItem.item) && inventory.FindStackableSlot(shopItem.item) == null && inventory.FindNextEmptySlot() == null)
-                {
-                    eventText.text = "Dein Inventar ist voll!".ToUpper();
-                    StartCoroutine(HideEventText());
-                    return;
-                }
+            gameObject.SetActive(true);
 
-                if (inventory.HasItem(shopItem.item) && inventory.FindStackableSlot(shopItem.item) == null)
-                {
-                    eventText.text = "Du hast schon zu viele Items dieser Art".ToUpper();
-                    StartCoroutine(HideEventText());
-                    return;
-                }
-            }
+            title.text = shopItem.item.name.ToUpper();
+            price.text = "$" + shopItem.price.ToString();
+            info.text = shopItem.infoText.ToUpper();
 
-            shopItem.OnItemBought();
+            image.sprite = shopItem.item.icon;
         }
-    }
-
-    private IEnumerator HideEventText()
-    {
-        yield return new WaitForSeconds(2f);
-        FadeOut(eventText, .5f);
-        yield return new WaitForSeconds(.5f);
-
-        eventText.text = "";
     }
 }

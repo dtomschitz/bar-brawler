@@ -28,7 +28,7 @@ public class GameState : MonoBehaviour
 
     #endregion;
 
-    GameStateType state = GameStateType.IN_GAME;
+    public GameStateType State { get; protected set; } = GameStateType.IN_GAME;
 
     /// <summary>
     /// Sets the new game state and calls the relevant method for displaying and
@@ -37,8 +37,8 @@ public class GameState : MonoBehaviour
     /// <param name="newState">The new game state to set</param>
     public void SetState(GameStateType newState)
     {
-        if (state == newState) return;
-        state = newState;
+        if (State == newState) return;
+        State = newState;
 
         switch(newState)
         {
@@ -114,7 +114,8 @@ public class GameState : MonoBehaviour
 
         UIManager.instance.SetPauseMenuActive(false);
         UIManager.instance.SetGameOverMenuActive(false);
-        UIManager.instance.SetHUDActive(true, false, true, false, true);
+        //UIManager.instance.SetHUDActive(true, false, true, false, true);
+        UIManager.instance.SetHUDActive(true, true, false);
         UIManager.instance.SetShopActive(true);
 
         UIManager.instance.hud.helpInfo.SetWeaponHelpActive(false);
@@ -178,7 +179,7 @@ public class GameState : MonoBehaviour
     /// </returns>
     public bool IsInGame
     {
-        get { return state == GameStateType.IN_GAME ||state == GameStateType.TARGET_ACQUISITION; }
+        get { return State == GameStateType.IN_GAME || State == GameStateType.TARGET_ACQUISITION; }
     }
 
     /// <summary>
@@ -189,7 +190,7 @@ public class GameState : MonoBehaviour
     /// </returns>
     public bool IsInShop
     {
-        get { return state == GameStateType.IN_SHOP; }
+        get { return State == GameStateType.IN_SHOP; }
     }
 
     /// <summary>
@@ -200,13 +201,6 @@ public class GameState : MonoBehaviour
     /// </returns>
     public bool IsInTargetAcquisition
     {
-        get { return state == GameStateType.TARGET_ACQUISITION; }
-    }
-
-    /// <summary>This methods returns the current game state.</summary>
-    /// <returns>The current game state.</returns>
-    public GameStateType State
-    {
-        get { return state; }
+        get { return State == GameStateType.TARGET_ACQUISITION; }
     }
 }
