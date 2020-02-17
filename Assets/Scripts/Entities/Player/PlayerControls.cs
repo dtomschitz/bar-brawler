@@ -107,7 +107,7 @@ public class PlayerControls : MonoBehaviour
 
     public void PauseGame(CallbackContext ctx)
     {
-        GameState.instance.SetState(GameStateType.GAME_PAUSED);
+        GameState.instance.SetState(GameStateType.GamePaused);
     }
 
     private void StopPlayerMovement()

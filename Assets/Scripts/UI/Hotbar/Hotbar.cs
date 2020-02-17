@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -21,7 +22,6 @@ public class Hotbar : MonoBehaviour
     private Inventory inventory;
     private PlayerInputActions inputActions;
     private HotbarSlot[] slots;
-    private Coroutine currentItemNameCoroutine;
     private int currentItemIndex = -1;
 
     void Awake()
@@ -47,9 +47,30 @@ public class Hotbar : MonoBehaviour
     void Start()
     {
         inventory = Player.instance.inventory;
-        inventory.OnItemAdded += OnItemAdded;
-        inventory.OnItemRemoved += OnItemRemoved;
-       // inventory.OnItemUsed += OnItemUsed;
+        if (inventory == null) throw new ArgumentException("Player inventory cannot be null");
+
+        // inventory.OnItemAdded += OnItemAdded;
+        //inventory.OnItemRemoved += OnItemRemoved;
+    }
+
+    void Update()
+    {
+        for (int i = 0; i < slots.Length; i++) slots[i].Clear();
+
+        List<InventorySlot> inventorySlots = new List<InventorySlot>(inventory.slots);
+        inventorySlots.RemoveAll(slot => slot.Count == 0);
+
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (List.InBounds(i, inventorySlots.Count))
+            {
+                Item item = inventorySlots[i].FirstItem;
+                if (item != null && item is Equipment)
+                {
+                    slots[i].Add(item as Equipment);
+                }
+            }
+        }
     }
 
     public void SelectNextItem(CallbackContext ctx)
@@ -112,10 +133,13 @@ public class Hotbar : MonoBehaviour
         }
     }
 
-    private void OnItemAdded(object sender, InventoryEvent e)
+    /*private void OnItemAdded(object sender, InventoryEvent e)
     {
         HotbarSlot slot = FindHotbarSlot(e.item);
         if (slot == null) slot = FindEmptyHotbarSlot();
+
+        Debug.Log("ADd item to hotbar");
+
 
         if (slot != null && e.item is Equipment)
         {
@@ -148,9 +172,9 @@ public class Hotbar : MonoBehaviour
                 break;
             }
         }
-    }
+    }*/
 
-    private void UpdateItems()
+    /*private void UpdateItems()
     {
         for (int i = 0; i < slots.Length; i++) slots[i].Clear();
 
@@ -168,9 +192,9 @@ public class Hotbar : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
 
-    private HotbarSlot FindHotbarSlot(Item item)
+    /*private HotbarSlot FindHotbarSlot(Item item)
     {
         foreach (HotbarSlot slot in slots)
         {
@@ -183,7 +207,7 @@ public class Hotbar : MonoBehaviour
     {
         foreach (HotbarSlot slot in slots) if (slot.item == null) return slot;
         return null;
-    }
+    }*/
 
     private IEnumerator ShowSelectedName(string name)
     {

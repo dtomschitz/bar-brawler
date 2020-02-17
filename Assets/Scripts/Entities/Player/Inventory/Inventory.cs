@@ -40,8 +40,8 @@ public class Inventory : MonoBehaviour
         if (item.addToInventory)
         {
             InventorySlot freeSlot = FindStackableSlot(item);
-            if (freeSlot == null) freeSlot = FindNextEmptySlot();
 
+            if (freeSlot == null) freeSlot = FindNextEmptySlot();
             if (freeSlot != null)
             {
                 freeSlot.Add(item);

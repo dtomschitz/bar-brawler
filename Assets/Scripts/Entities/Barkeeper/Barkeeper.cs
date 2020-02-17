@@ -72,7 +72,7 @@ public class Barkeeper : MonoBehaviour
 
     public void Select(CallbackContext ctx)
     {
-        if (isPlayerInReach && GameState.instance.State != GameStateType.GAME_PAUSED && GameState.instance.State != GameStateType.GAME_OVER)
+        if (isPlayerInReach && GameState.instance.State != GameStateType.GamePaused && GameState.instance.State != GameStateType.GameOver)
         {
             OpenShop();
         }
@@ -86,7 +86,7 @@ public class Barkeeper : MonoBehaviour
     public void OpenShop()
     {
         if (shop.IsOpen) return;
-        GameState.instance.SetState(GameStateType.IN_SHOP);
+        GameState.instance.SetState(GameStateType.InShop);
         shop.IsOpen = true;
     }
 
@@ -95,6 +95,6 @@ public class Barkeeper : MonoBehaviour
         if (!shop.IsOpen) return;
 
         shop.IsOpen = false;
-        GameState.instance.SetState(GameStateType.IN_GAME);
+        GameState.instance.SetState(GameStateType.InGame);
     }
 }

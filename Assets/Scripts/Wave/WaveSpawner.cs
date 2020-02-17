@@ -94,7 +94,7 @@
 
         void Update()
         {
-            if (isWaveSpawnerEnabled && (GameState.instance.State != GameStateType.GAME_OVER || GameState.instance.State != GameStateType.GAME_PAUSED))
+            if (isWaveSpawnerEnabled && (GameState.instance.State != GameStateType.GameOver || GameState.instance.State != GameStateType.GamePaused))
             {
                 if (CurrentState == WaveState.Running)
                 {

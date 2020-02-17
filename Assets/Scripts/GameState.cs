@@ -3,11 +3,11 @@ using UnityEngine;
 
 public enum GameStateType
 {
-    GAME_PAUSED,
-    GAME_OVER,
-    IN_GAME,
-    IN_SHOP,
-    TARGET_ACQUISITION
+    GamePaused,
+    GameOver,
+    InGame,
+    InShop,
+    TargetAcquisition
 }
 
 /// <summary>
@@ -28,7 +28,7 @@ public class GameState : MonoBehaviour
 
     #endregion;
 
-    public GameStateType State { get; protected set; } = GameStateType.IN_GAME;
+    public GameStateType State { get; protected set; } = GameStateType.InGame;
 
     /// <summary>
     /// Sets the new game state and calls the relevant method for displaying and
@@ -42,23 +42,23 @@ public class GameState : MonoBehaviour
 
         switch(newState)
         {
-            case GameStateType.GAME_PAUSED:
+            case GameStateType.GamePaused:
                 TogglePauseMenu();
                 break;
 
-            case GameStateType.GAME_OVER:
+            case GameStateType.GameOver:
                 ToggleGameOver();
                 break;
 
-            case GameStateType.IN_GAME:
+            case GameStateType.InGame:
                 ToggleIngame();
                 break;
 
-            case GameStateType.IN_SHOP:
+            case GameStateType.InShop:
                 ToggleShop();
                 break;
 
-            case GameStateType.TARGET_ACQUISITION:
+            case GameStateType.TargetAcquisition:
                 ToggleTargetAcquisition();
                 break;
 
@@ -66,7 +66,7 @@ public class GameState : MonoBehaviour
     }
 
     /// <summary>
-    /// Toggles the game state <see cref="GameStateType.GAME_PAUSED"/> and hides
+    /// Toggles the game state <see cref="GameStateType.GamePaused"/> and hides
     /// all unrelevant information.
     /// </summary>
     void TogglePauseMenu()
@@ -81,7 +81,7 @@ public class GameState : MonoBehaviour
     }
 
     /// <summary>
-    /// Toggles the game state <see cref="GameStateType.GAME_OVER"/> and hides
+    /// Toggles the game state <see cref="GameStateType.GameOver"/> and hides
     /// all unrelevant information.
     /// </summary>
     void ToggleGameOver()
@@ -104,7 +104,7 @@ public class GameState : MonoBehaviour
     }
 
     /// <summary>
-    /// Toggles the game state <see cref="GameStateType.IN_SHOP"/> and hides all
+    /// Toggles the game state <see cref="GameStateType.InShop"/> and hides all
     /// unrelevant information.
     /// </summary>
     void ToggleShop()
@@ -123,7 +123,7 @@ public class GameState : MonoBehaviour
     }
 
     /// <summary>
-    /// Disables the game state <see cref="GameStateType.IN_GAME"/> and displays
+    /// Disables the game state <see cref="GameStateType.InGame"/> and displays
     /// the game relevant informations.
     /// </summary>
     void ToggleIngame()
@@ -143,7 +143,7 @@ public class GameState : MonoBehaviour
     }
 
     /// <summary>
-    /// Toggles the game state <see cref="GameStateType.TARGET_ACQUISITION"/>
+    /// Toggles the game state <see cref="GameStateType.TargetAcquisition"/>
     /// and hides all unrelevant information.
     /// </summary>
     void ToggleTargetAcquisition()
@@ -174,33 +174,33 @@ public class GameState : MonoBehaviour
     /// This method checks if the player is currently in game.
     /// </summary>
     /// <returns>True if the current game state is equals to
-    /// <see cref="GameStateType.IN_GAME"/> and <see cref="GameStateType.TARGET_ACQUISITION"/>;
+    /// <see cref="GameStateType.InGame"/> and <see cref="GameStateType.TargetAcquisition"/>;
     /// otherwise, false.
     /// </returns>
     public bool IsInGame
     {
-        get { return State == GameStateType.IN_GAME || State == GameStateType.TARGET_ACQUISITION; }
+        get { return State == GameStateType.InGame || State == GameStateType.TargetAcquisition; }
     }
 
     /// <summary>
     /// This method checks if the player is currently in the shop.
     /// </summary>
     /// <returns>True if the current game state is equals to
-    /// <see cref="GameStateType.IN_SHOP"/>; otherwise, false.
+    /// <see cref="GameStateType.InShop"/>; otherwise, false.
     /// </returns>
     public bool IsInShop
     {
-        get { return State == GameStateType.IN_SHOP; }
+        get { return State == GameStateType.InShop; }
     }
 
     /// <summary>
     /// This method checks if the player is currently in target acquisition mode.
     /// </summary>
     /// <returns>True if the current game state is equals to
-    /// <see cref="GameStateType.TARGET_ACQUISITION"/>; otherwise, false.
+    /// <see cref="GameStateType.TargetAcquisition"/>; otherwise, false.
     /// </returns>
     public bool IsInTargetAcquisition
     {
-        get { return State == GameStateType.TARGET_ACQUISITION; }
+        get { return State == GameStateType.TargetAcquisition; }
     }
 }

@@ -18,18 +18,18 @@ public class PauseMenu : MonoBehaviour
 
     public void OnContinue()
     {
-        GameState.instance.SetState(GameStateType.IN_GAME);
+        GameState.instance.SetState(GameStateType.InGame);
     }
 
     public void OnRetry()
     {
-        GameState.instance.SetState(GameStateType.IN_GAME);
+        GameState.instance.SetState(GameStateType.InGame);
         sceneFader.FadeTo(SceneManager.GetActiveScene().name);
     }
 
     public void ExitToMainMenu()
     {
-        GameState.instance.SetState(GameStateType.IN_GAME);
+        GameState.instance.SetState(GameStateType.InGame);
         sceneFader.FadeTo(menuSceneName);
     }
 }

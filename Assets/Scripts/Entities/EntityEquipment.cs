@@ -56,6 +56,7 @@ public class EntityEquipment : MonoBehaviour
     {
         GameObject prefabCopy = Instantiate(item.prefab);
         Equippable equippable = prefabCopy.GetComponent<Equippable>();
+
         if (equippable != null)
         {
             OnItemEquipped?.Invoke(item, currentEquipment);
