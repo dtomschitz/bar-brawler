@@ -3,7 +3,7 @@ using UnityEngine;
 using Items;
 
 /// <summary>
-/// 
+/// Class <c>Entity</c> is used as the base class for all entities such as the player, enemies or the barkeeper.     
 /// </summary>
 public class Entity : MonoBehaviour
 {
