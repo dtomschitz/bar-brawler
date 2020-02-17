@@ -100,7 +100,7 @@ public class Hotbar : MonoBehaviour
 
             if (!GameState.instance.IsInShop) StartCoroutine(ShowSelectedName(item.name));
 
-            FindObjectOfType<AudioManager>().Play("SelectedSound");
+            //FindObjectOfType<AudioManager>().Play("SelectedSound");
 
             OnItemSelected?.Invoke(item as Equipment);
 

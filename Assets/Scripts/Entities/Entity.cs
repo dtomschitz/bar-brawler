@@ -36,7 +36,7 @@ public class Entity : MonoBehaviour
 
     public virtual void OnDamaged(float damage, Equipment item)
     {
-        FindObjectOfType<AudioManager>().Play("FightReaction");
+        //FindObjectOfType<AudioManager>().Play("FightReaction");
     }
 
     public virtual void OnDeath()

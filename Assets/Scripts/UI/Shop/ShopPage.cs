@@ -9,7 +9,7 @@ namespace Shop
         public void OnItemSelected(ShopItem item)
         {
             itemInfo.SetItem(item);
-            FindObjectOfType<AudioManager>().Play("SelectedSound");
+            //FindObjectOfType<AudioManager>().Play("SelectedSound");
         }
 
         public void SetActive(bool active)

@@ -13,7 +13,7 @@ namespace Items
         public override void OnHit(Entity entity)
         {
             base.OnHit(entity);
-            FindObjectOfType<AudioManager>().Play("KnifeHit");
+            AudioManager.instance.PlaySound(Sound.KnifeHit, entity.transform.position);
             StartCoroutine(KnifeBleedOut(entity));
         }
 

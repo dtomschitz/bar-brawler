@@ -13,8 +13,7 @@
         public override void OnHit(Entity entity)
         {
             base.OnHit(entity);
-
-            FindObjectOfType<AudioManager>().Play("FightReaction");
+            AudioManager.instance.PlaySound(Sound.FistHit, entity.transform.position);
         }
     }
 }

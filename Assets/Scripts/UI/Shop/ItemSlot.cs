@@ -28,6 +28,8 @@ namespace Shop
 
         public void OnClick()
         {
+            Debug.Log("DAda");
+
             StopAllCoroutines();
             eventText.text = "";
             eventText.color = Color.white;
