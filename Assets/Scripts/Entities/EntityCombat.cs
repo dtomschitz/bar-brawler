@@ -4,8 +4,9 @@ using Items;
 using System.Collections;
 
 /// <summary>
-/// Class <c>EntityCombat</c> handels combat relatet stuff such as changing the
-/// combat state and so the behvaior of the entity or updating the mana.
+/// Class <c>EntityCombat</c> is the base class which handels combat relatet
+/// stuff such as changing the combat state and so the behvaior of the entity or
+/// updating the mana.
 /// </summary>
 public class EntityCombat : MonoBehaviour
 {

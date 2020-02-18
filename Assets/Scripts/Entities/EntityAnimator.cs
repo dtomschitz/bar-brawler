@@ -3,7 +3,7 @@ using UnityEngine;
 using Items;
 
 /// <summary>
-/// Class <c>EntityAnimator</c> is used to play the desired animation.
+/// Class <c>EntityAnimator</c> is the base class to handle animations for an entity.
 /// </summary>
 public class EntityAnimator : MonoBehaviour
 {

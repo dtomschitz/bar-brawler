@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using Items;
 
+/// <summary>
+/// Class <c>EntityStats</c> is used as the base class for all statistic
+/// releavant things for the entity such as the health and damage. 
+/// </summary>
 public class EntityStats : MonoBehaviour
 {
     public float maxHealth;
@@ -19,6 +23,10 @@ public class EntityStats : MonoBehaviour
     {
     }
 
+    /// <summary>
+    /// Loads the given <see cref="StatsConfig"/> for the enemy.
+    /// </summary>
+    /// <param name="config">The config which should be loaded.</param>
     public void Init(StatsConfig config)
     {
         if (config != null)
@@ -34,17 +42,29 @@ public class EntityStats : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This method gets called if the entity took damage and will update the
+    /// health of the entity based on the given damage ammount. It will also
+    /// fire the <see cref="OnDamaged"/> event. The event <see cref="OnDeath"/>
+    /// will get fired aswell if the health dropped below 0.
+    /// </summary>
+    /// <param name="damage">The damage which the entity took.</param>
+    /// <param name="item">The item with which the damage where dealed.</param>
     public virtual void Damage(float damage, Equipment item = null)
     {
         damage = Mathf.Clamp(damage, 0, maxHealth);
         CurrentHealth -= damage;
         OnDamaged?.Invoke(damage, item);
 
-        //FindObjectOfType<AudioManager>().Play("Punch");
-
         if (IsDead) OnDeath?.Invoke();
     }
 
+    /// <summary>
+    /// This method gets called if the entity got healed and will then update
+    /// the health of the entity based on the given amount of live points. It will
+    /// also fire the <see cref="OnHealed"/> event.
+    /// </summary>
+    /// <param name="amount">The ammount of healt points the player received.</param>
     public virtual void Heal(float amount)
     {
         CurrentHealth += amount;
@@ -53,16 +73,27 @@ public class EntityStats : MonoBehaviour
         OnHealed?.Invoke(amount);
     }
 
+    /// <summary>
+    /// Returns the normalized health.
+    /// </summary>
     public float HealthNormalized
     {
         get { return CurrentHealth / maxHealth; }
     }
 
+    /// <summary>
+    /// Determinates whether the health of the entity is full or not. If its true
+    /// the method will return true; otherwise false.
+    /// </summary>
     public bool HasFullLife
     {
         get { return CurrentHealth == maxHealth; }
     }
 
+    /// <summary>
+    /// Determinates whether the entity is dead or not. If the entity is dead
+    /// the method will return true; otherwise false.
+    /// </summary>
     public bool IsDead
     {
         get { return CurrentHealth <= 0; }
