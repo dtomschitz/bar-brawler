@@ -13,11 +13,11 @@ public class PlayerEquipment : EntityEquipment
         base.Start();
 
         inventory = Player.instance.inventory;
-        if (inventory == null) throw new ArgumentException("Player inventory cannot be null");
+        if (inventory == null) throw new NullReferenceException("Player inventory cannot be null");
         inventory.OnItemRemoved += OnItemRemoved;
 
         hotbar = FindObjectOfType<Hotbar>();
-        if (hotbar == null) throw new ArgumentException("Hotbar cannot be null");
+        if (hotbar == null) throw new NullReferenceException("Hotbar cannot be null");
         hotbar.OnItemSelected += EquipItem;
     }
 

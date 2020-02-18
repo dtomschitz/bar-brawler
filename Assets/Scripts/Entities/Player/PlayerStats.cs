@@ -6,7 +6,7 @@ using Items;
 public class PlayerStats : EntityStats
 {
     private PlayerEquipment equipment;
-    public override void Start()
+    protected override void Start()
     {
         base.Start();
 

@@ -27,6 +27,8 @@ public class EntityCombat : MonoBehaviour
     protected virtual void Start()
     {
         stats = GetComponent<EntityStats>();
+        if (stats == null) throw new NullReferenceException("Entity stats paramter cannot be null");
+
         State = CombatState.Idle;
     }
 

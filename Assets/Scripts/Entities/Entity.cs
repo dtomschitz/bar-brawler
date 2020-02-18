@@ -24,10 +24,10 @@ public class Entity : MonoBehaviour
 
     protected virtual void Start()
     {
-        if (stats == null) throw new ArgumentException("Entity stats class cannot be null");
-        if (combat == null) throw new ArgumentException("Entity combat class cannot be null!");
-        if (animator == null) throw new ArgumentException("Entiy animator class cannot be null!");
-        if (equipment == null) throw new ArgumentException("Entity equipment class cannot be null!");
+        if (stats == null) throw new NullReferenceException("Entity stats paramter cannot be null");
+        if (combat == null) throw new NullReferenceException("Entity combat paramter cannot be null!");
+        if (animator == null) throw new NullReferenceException("Entiy animator paramter cannot be null!");
+        if (equipment == null) throw new NullReferenceException("Entity equipment paramter cannot be null!");
 
         stats.OnDamaged += OnDamaged;
         stats.OnDeath += OnDeath;

@@ -15,7 +15,7 @@ public class EntityStats : MonoBehaviour
     public delegate void Healed(float amount);
     public event Healed OnHealed;
 
-    public virtual void Start()
+    protected virtual void Start()
     {
     }
 

@@ -3,7 +3,7 @@ using Items;
 
 public class EntityCombatBehaviour : StateMachineBehaviour
 {
-    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+   public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         Entity entity = animator.GetComponentInParent<Entity>();
         if (entity != null && entity.equipment.CurrentEquipment != null && !entity.combat.IsBlocking)
@@ -22,7 +22,7 @@ public class EntityCombatBehaviour : StateMachineBehaviour
         }
     }
 
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
 
         Entity entity = animator.GetComponentInParent<Entity>();

@@ -21,6 +21,7 @@ public class EntityEquipment : MonoBehaviour
         currentHand = rightHand;
     }
 
+    
     public void UsePrimary()
     {
         if (currentItem != null && currentItem is Equippable && currentEquipment != null && currentEquipment is Weapon)

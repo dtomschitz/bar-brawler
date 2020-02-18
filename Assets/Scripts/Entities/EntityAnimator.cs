@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Items;
 
 /// <summary>
@@ -11,6 +12,7 @@ public class EntityAnimator : MonoBehaviour
     protected virtual void Start()
     {
         animator = GetComponentInChildren<Animator>();
+        if (animator == null) throw new NullReferenceException("Animator parameter cannot be null");
         GetComponent<EntityEquipment>().OnItemEquipped += OnItemEquipped;
     }
 
