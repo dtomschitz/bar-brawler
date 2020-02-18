@@ -20,6 +20,7 @@ public class Hotbar : MonoBehaviour
     public GameObject rightBumper;
 
     private Inventory inventory;
+    private PlayerEquipment equipment;
     private PlayerInputActions inputActions;
     private HotbarSlot[] slots;
     private int currentItemIndex = -1;
@@ -47,41 +48,45 @@ public class Hotbar : MonoBehaviour
     void Start()
     {
         inventory = Player.instance.inventory;
+        equipment = Player.instance.equipment as PlayerEquipment;
         if (inventory == null) throw new ArgumentException("Player inventory cannot be null");
+        if (equipment == null) throw new ArgumentException("Player equipment cannot be null");
 
-        // inventory.OnItemAdded += OnItemAdded;
-        //inventory.OnItemRemoved += OnItemRemoved;
+        inventory.OnItemAdded += OnItemAdded;
+        inventory.OnItemRemoved += OnItemRemoved;
+
+        AddDefaultItems();
     }
 
     void Update()
     {
-        for (int i = 0; i < slots.Length; i++) slots[i].Clear();
+        /* for (int i = 0; i < slots.Length; i++) slots[i].Clear();
 
-        List<InventorySlot> inventorySlots = new List<InventorySlot>(inventory.slots);
-        inventorySlots.RemoveAll(slot => slot.Count == 0);
+         List<InventorySlot> inventorySlots = new List<InventorySlot>(inventory.slots);
+         inventorySlots.RemoveAll(slot => slot.Count == 0);
 
-        for (int i = 0; i < slots.Length; i++)
-        {
-            if (List.InBounds(i, inventorySlots.Count))
-            {
-                Item item = inventorySlots[i].FirstItem;
-                if (item != null && item is Equipment)
-                {
-                    slots[i].Add(item as Equipment);
-                }
-            }
-        }
+         for (int i = 0; i < slots.Length; i++)
+         {
+             if (List.InBounds(i, inventorySlots.Count))
+             {
+                 Item item = inventorySlots[i].FirstItem;
+                 if (item != null && item is Equipment)
+                 {
+                     slots[i].Add(item as Equipment);
+                 }
+             }
+         }*/
     }
 
     public void SelectNextItem(CallbackContext ctx)
     {
-        if (GameState.instance.IsInTargetAcquisition || Player.instance.combat.IsInAction) return;
+        if (GameState.instance.IsInTargetAcquisition/* || Player.instance.combat.IsInAction*/) return;
         SelectNextItem();
     }
 
     public void SelectLastItem(CallbackContext ctx)
     {
-        if (GameState.instance.IsInTargetAcquisition || Player.instance.combat.IsInAction) return;
+        if (GameState.instance.IsInTargetAcquisition/* || Player.instance.combat.IsInAction*/) return;
         SelectLastItem();
     }
 
@@ -121,8 +126,6 @@ public class Hotbar : MonoBehaviour
 
             if (!GameState.instance.IsInShop) StartCoroutine(ShowSelectedName(item.name));
 
-            //FindObjectOfType<AudioManager>().Play("SelectedSound");
-
             OnItemSelected?.Invoke(item as Equipment);
 
             currentItemIndex = index;
@@ -133,13 +136,10 @@ public class Hotbar : MonoBehaviour
         }
     }
 
-    /*private void OnItemAdded(object sender, InventoryEvent e)
+    private void OnItemAdded(object sender, InventoryEvent e)
     {
         HotbarSlot slot = FindHotbarSlot(e.item);
         if (slot == null) slot = FindEmptyHotbarSlot();
-
-        Debug.Log("ADd item to hotbar");
-
 
         if (slot != null && e.item is Equipment)
         {
@@ -172,13 +172,13 @@ public class Hotbar : MonoBehaviour
                 break;
             }
         }
-    }*/
+    }
 
-    /*private void UpdateItems()
+    private void UpdateItems()
     {
         for (int i = 0; i < slots.Length; i++) slots[i].Clear();
 
-        List<InventorySlot> inventorySlots = new List<InventorySlot>(inventory.slots);
+        List<InventorySlot> inventorySlots = new List<InventorySlot>(inventory.Slots);
         inventorySlots.RemoveAll(slot => slot.Count == 0);
 
         for (int i = 0; i < slots.Length; i++)
@@ -192,9 +192,18 @@ public class Hotbar : MonoBehaviour
                 }
             }
         }
-    }*/
+    }
 
-    /*private HotbarSlot FindHotbarSlot(Item item)
+    private void AddDefaultItems()
+    {
+        foreach (Item item in equipment.defaultItems)
+        {
+            inventory.AddItem(item);
+        }
+        equipment.EquipFirstItem();
+    }
+
+    private HotbarSlot FindHotbarSlot(Item item)
     {
         foreach (HotbarSlot slot in slots)
         {
@@ -207,7 +216,7 @@ public class Hotbar : MonoBehaviour
     {
         foreach (HotbarSlot slot in slots) if (slot.item == null) return slot;
         return null;
-    }*/
+    }
 
     private IEnumerator ShowSelectedName(string name)
     {

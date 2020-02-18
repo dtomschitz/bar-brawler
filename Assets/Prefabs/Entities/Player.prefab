@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 4251900538022576368}
   - component: {fileID: 4251900538022576382}
   - component: {fileID: 5635219115318464584}
-  - component: {fileID: 4251900538022576376}
   - component: {fileID: 4251900538022576383}
+  - component: {fileID: 4251900538022576376}
   - component: {fileID: 4251900538022576377}
   - component: {fileID: 4251900538022576378}
   - component: {fileID: 4251900538022576379}
@@ -107,6 +107,20 @@ MonoBehaviour:
   equipment: {fileID: 4251900538022576376}
   controls: {fileID: 4251900538022576377}
   inventory: {fileID: 4251900538022576383}
+--- !u!114 &4251900538022576383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4251900538022576369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd3b23cecc3df5b4ead7a4cbdf24a6e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMunition: 0
+  maxMunition: 30
 --- !u!114 &4251900538022576376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,22 +135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rightHand: {fileID: 3017235494052053806}
   leftHand: {fileID: 1724110200887645547}
---- !u!114 &4251900538022576383
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4251900538022576369}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd3b23cecc3df5b4ead7a4cbdf24a6e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultItems:
-  - {fileID: 11400000, guid: dfef5eb85bcbea8499448b629546c92d, type: 2}
-  currentMunition: 0
-  maxMunition: 30
+  defaultItems: []
 --- !u!114 &4251900538022576377
 MonoBehaviour:
   m_ObjectHideFlags: 0

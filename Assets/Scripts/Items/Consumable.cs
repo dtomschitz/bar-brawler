@@ -12,21 +12,23 @@ namespace Items
 
         void Update()
         {
-            if (drunk)
+          /*  if (drunk)
             {
                 if (owner.stats.CurrentHealth < newHealth)
                 {
                     owner.stats.Heal(healingSpeed * Time.deltaTime);
                 }
-            }
+            }*/
         }
 
         public override void OnPrimary()
         {
             base.OnPrimary();
-            if (owner.stats == null || owner.stats.HasFullLife || owner.combat.IsAttacking || owner.combat.IsBlocking || owner.combat.IsDrinking) return;
+            if (owner.combat.IsAttacking || owner.combat.IsBlocking) return;
             owner.animator.OnPrimary();
             owner.stats.Heal((item as Drink).healingAmount);
+
+            Debug.Log("Drinking");
         }
 
         public virtual void StartDrinking()

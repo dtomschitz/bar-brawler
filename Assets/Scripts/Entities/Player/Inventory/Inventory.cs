@@ -5,10 +5,9 @@ using Items;
 
 public class Inventory : MonoBehaviour
 {
-    private int maxSlots = 5;
+    private readonly int maxSlots = 5;
 
-    public List<InventorySlot> slots = new List<InventorySlot>();
-    public List<Item> defaultItems = new List<Item>();
+    public List<InventorySlot> Slots { get; protected set; } = new List<InventorySlot>();
 
     [Header("Munition")]
     public int currentMunition = 0;
@@ -25,12 +24,7 @@ public class Inventory : MonoBehaviour
     {
         for (int i = 0; i < maxSlots; i++)
         {
-            slots.Add(new InventorySlot(i));
-        }
-
-        foreach(Item item in defaultItems)
-        {
-            AddItem(item);
+            Slots.Add(new InventorySlot(i));
         }
     }
 
@@ -59,7 +53,7 @@ public class Inventory : MonoBehaviour
     public void RemoveItem(Item item)
     {
         if (item == null) return;
-        foreach (InventorySlot slot in slots)
+        foreach (InventorySlot slot in Slots)
         {
             if (slot.Remove(item))
             {
@@ -83,7 +77,7 @@ public class Inventory : MonoBehaviour
 
     public InventorySlot FindStackableSlot(Item item)
     {
-        foreach (InventorySlot slot in slots)
+        foreach (InventorySlot slot in Slots)
         {
             if (slot.IsStackable(item)) return slot;
         }
@@ -92,7 +86,7 @@ public class Inventory : MonoBehaviour
 
     public InventorySlot FindNextEmptySlot()
     {
-        foreach (InventorySlot slot in slots)
+        foreach (InventorySlot slot in Slots)
         {
             if (slot.IsEmpty) return slot;
         }
@@ -101,7 +95,7 @@ public class Inventory : MonoBehaviour
 
     public bool HasItem(Item item)
     {
-        foreach (InventorySlot slot in slots)
+        foreach (InventorySlot slot in Slots)
         {
             if (!slot.IsEmpty && slot.FirstItem.name == item.name) return true;
         }
@@ -113,7 +107,7 @@ public class Inventory : MonoBehaviour
     {
         get
         {
-            foreach (InventorySlot slot in slots)
+            foreach (InventorySlot slot in Slots)
             {
                 if (slot.IsEmpty || !slot.IsFull) return false;
             }

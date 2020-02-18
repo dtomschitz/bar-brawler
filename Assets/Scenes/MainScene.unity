@@ -1979,7 +1979,7 @@ MonoBehaviour:
   - {fileID: 473731432}
   - {fileID: 1823892637}
   - {fileID: 698947509}
-  isWaveSpawnerEnabled: 1
+  isWaveSpawnerEnabled: 0
   timeBetweenWaves: 31
   configs:
   - {fileID: 11400000, guid: 902e425edc236294d8051a20877c9706, type: 2}
@@ -12921,6 +12921,17 @@ PrefabInstance:
       propertyPath: maxStunnedTime
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 4251900538022576376, guid: a5694255a417f164c9596164663fb42b,
+        type: 3}
+      propertyPath: defaultItems.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4251900538022576376, guid: a5694255a417f164c9596164663fb42b,
+        type: 3}
+      propertyPath: defaultItems.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: dfef5eb85bcbea8499448b629546c92d,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5694255a417f164c9596164663fb42b, type: 3}
 --- !u!1 &2127830144
