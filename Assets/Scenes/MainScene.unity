@@ -1979,7 +1979,8 @@ MonoBehaviour:
   - {fileID: 473731432}
   - {fileID: 1823892637}
   - {fileID: 698947509}
-  isWaveSpawnerEnabled: 0
+  enableWaveSpawner: 1
+  enableDebug: 1
   timeBetweenWaves: 31
   configs:
   - {fileID: 11400000, guid: 902e425edc236294d8051a20877c9706, type: 2}

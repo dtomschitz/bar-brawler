@@ -61,7 +61,8 @@
         public List<SpawnPoint> spawnPoints;
 
         [Header("Settings")]
-        public bool isWaveSpawnerEnabled = true;
+        public bool enableWaveSpawner = true;
+        public bool enableDebug = false;
         public float timeBetweenWaves = 31f;
         public List<WaveConfig> configs;
 
@@ -94,7 +95,7 @@
 
         void Update()
         {
-            if (isWaveSpawnerEnabled && (GameState.instance.State != GameStateType.GameOver || GameState.instance.State != GameStateType.GamePaused))
+            if (enableWaveSpawner && (GameState.instance.State != GameStateType.GameOver || GameState.instance.State != GameStateType.GamePaused))
             {
                 if (CurrentState == WaveState.Running)
                 {
@@ -129,11 +130,10 @@
 
         public void SkipWaveDebug(CallbackContext ctx)
         {
-            /*  GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-              for (var i = 0; i < enemies.Length; i++)
-              {
-                  Destroy(enemies[i]);
-              }*/
+            if (!enableDebug) return;
+
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            for (var i = 0; i < enemies.Length; i++) Destroy(enemies[i]);
         }
 
 
@@ -151,27 +151,39 @@
         /// </summary>
         private void StartNextWave()
         {
-            Rounds++;
-            Debug.LogFormat("Spawning Wave (num: {0}, difficulty: {1})", Rounds, CurrentDifficulty);
-
-            WaveConfig waveConfig = SelectCurrentConfig();
+            /*WaveConfig waveConfig = SelectCurrentConfig();
             if (waveConfig != null)
             {
+                Rounds++;
+                Debug.LogFormat("Spawning Wave (num: {0}, difficulty: {1})", Rounds, CurrentDifficulty);
+
                 SetConfig(waveConfig);
                 StartCoroutine(SpawnRoutine());
                 Statistics.instance.AddRound();
+            }*/
+
+            WaveConfig nextConfig = GetNextWaveConfig();
+            if (nextConfig != null)
+            {
+                SetConfig(nextConfig);
             }
+
+            Rounds++;
+            Debug.LogFormat("Spawning Wave (num: {0}, difficulty: {1})", Rounds, CurrentDifficulty);
+
+            StartCoroutine(SpawnRoutine());
+            Statistics.instance.AddRound();
         }
 
         /// <summary>
-        /// This method determinants which of the set <see cref="WaveSpawner.configs"/>configs should be used for the current wave and returns it.
+        /// This method determinants which of the set <see cref="WaveSpawner.configs"/>configs should be used for the next wave and returns it.
         /// </summary>
         /// <returns>The wave config which is intended for the current round number.</returns>
-        private WaveConfig SelectCurrentConfig()
+        private WaveConfig GetNextWaveConfig()
         {
             foreach (WaveConfig config in configs)
             {
-                if (config != CurrentConfig && config.round == Rounds) return config;
+                if (config.round == Rounds) return config;
             }
             return null;
         }

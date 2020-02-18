@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3160e046920b8284198821b8ea9f309a, type: 3}
-  m_Name: Wave 2
+  m_Name: WaveConfig3
   m_EditorClassIdentifier: 
-  round: 4
+  round: 8
   difficulty: 1
   enemy: {fileID: 6233071837183773105, guid: 9354e9efdde01b9438de6d33a1e12199, type: 3}
-  enemyConfig: {fileID: 11400000, guid: 470ca93f9648d3d46a14a90f5f500a00, type: 2}
+  enemyConfig: {fileID: 11400000, guid: acdfd609cbb55a94cbfa5cf5d22b86a2, type: 2}

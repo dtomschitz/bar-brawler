@@ -327,6 +327,7 @@ public class Enemy : Entity
         {
             RandomItem randomItem = GetRandomItem(items);
             Equipment item = randomItem.item;
+
             float damageOverride = randomItem.damageOverride;
             float healthOverride = randomItem.healthOverride;
 
