@@ -8,11 +8,9 @@
 
     /// <summary>
     /// Enum <c>WaveState</c> is used to set the current state of the wave spawner.
-    /// <para>
     /// If the current wave state is set to <see cref="WaveState.Spawning"/> the wave spawner is the currently summoning new enemies.
     /// The state <see cref="WaveState.Counting"/> will be used if the wave spawner is currently paused and the countdown for the new wave is displayed.
     /// When the current wave is still ongoing the wave spawner state will be set to <see cref="WaveState.Running"/>.
-    /// </para>
     /// </summary>
     public enum WaveState { 
         Spawning, 
@@ -21,7 +19,9 @@
     }
 
     /// <summary>
-    /// Enum <c>Difficulty</c> is used to define the current wave difficulty. Based on the given wave config the difficulity will be used to summon different enemy types and adjust thier health, strengh and weapons
+    /// Enum <c>Difficulty</c> is used to define the current wave difficulty.
+    /// Based on the given wave config the difficulity will be used to summon
+    /// different enemy types and adjust thier health, strengh and weapons.
     /// </summary>
     public enum Difficulty {
         Easy, 
@@ -42,9 +42,6 @@
             instance = this;
 
             inputActions = new PlayerInputActions();
-            //inputActions.PlayerControls.Move.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
-            //inputActions.PlayerControls.Rotation.performed += ctx => lookPosition = ctx.ReadValue<Vector2>();
-
             inputActions.PlayerControls.SkipWave.performed += SkipWaveCountdown;
             inputActions.PlayerControls.SkipWaveDebug.performed += SkipWaveDebug;
         }
@@ -65,8 +62,6 @@
         public bool enableDebug = false;
         public float timeBetweenWaves = 31f;
         public List<WaveConfig> configs;
-
-        public Text stateOfGameText;
 
         public WaveState CurrentState { get; protected set; }
         public Difficulty CurrentDifficulty { get; protected set; }
@@ -108,7 +103,6 @@
                 {
                     waveCountdown = 0f;
                     if (CurrentState != WaveState.Spawning) StartNextWave();
-
                     return;
                 }
 
@@ -119,7 +113,9 @@
 
 
         /// <summary>
-        /// Gets called if the user pressed the B button while he is in not in the shop or in target acquisition mode. The countdown for the next wave will then be eventually skipped to 3 seconds.
+        /// Gets called if the user pressed the B button while he is in not in
+        /// the shop or in target acquisition mode. The countdown for the next
+        /// wave will then be eventually skipped to 3 seconds.
         /// </summary>
         /// <param name="ctx"></param>
         public void SkipWaveCountdown(CallbackContext ctx)
@@ -138,7 +134,8 @@
 
 
         /// <summary>
-        /// This method resets the current state to <see cref="WaveState.Counting"/> and the wave countdown to the set initial value.
+        /// This method resets the current state to <see cref="WaveState.Counting"/>
+        /// and the wave countdown to the set initial value.
         /// </summary>
         private void ResetWaveSpawner()
         {
@@ -147,21 +144,12 @@
         }
 
         /// <summary>
-        /// This method starts the next wave. It will add a new round to the <see cref="WaveSpawner.Rounds"/> counter, select the specific config which should be used for the new wave and will summon the new enemies.
+        /// This method starts the next wave. It will add a new round to the
+        /// <see cref="WaveSpawner.Rounds"/> counter, select the specific config
+        /// which should be used for the new wave and will summon the new enemies.
         /// </summary>
         private void StartNextWave()
         {
-            /*WaveConfig waveConfig = SelectCurrentConfig();
-            if (waveConfig != null)
-            {
-                Rounds++;
-                Debug.LogFormat("Spawning Wave (num: {0}, difficulty: {1})", Rounds, CurrentDifficulty);
-
-                SetConfig(waveConfig);
-                StartCoroutine(SpawnRoutine());
-                Statistics.instance.AddRound();
-            }*/
-
             WaveConfig nextConfig = GetNextWaveConfig();
             if (nextConfig != null)
             {
@@ -176,7 +164,8 @@
         }
 
         /// <summary>
-        /// This method determinants which of the set <see cref="WaveSpawner.configs"/>configs should be used for the next wave and returns it.
+        /// This method determinants which of the set <see cref="WaveSpawner.configs"/>
+        /// configs should be used for the next wave and returns it.
         /// </summary>
         /// <returns>The wave config which is intended for the current round number.</returns>
         private WaveConfig GetNextWaveConfig()
@@ -189,7 +178,10 @@
         }
 
         /// <summary>
-        /// This method spawns the enemies.
+        /// This method spawns the enemies for the current wave. For each enemy
+        /// one of the set spawn points will be selected randomly. The new
+        /// instantiate enemy will then get the enemy config of the current wave
+        /// config in order to create random enemy types.
         /// </summary>
         /// <returns></returns>
         private IEnumerator SpawnRoutine()
@@ -211,9 +203,11 @@
         }
 
         /// <summary>
-        /// 
+        /// This methods sets the current state to the new one and will fire the
+        /// <see cref="OnWaveStateUpdate"/> event in order to provide the new
+        /// state to the shop system and certain ui elements.
         /// </summary>
-        /// <param name="newState"></param>
+        /// <param name="newState">The new state.</param>
         private void SetState(WaveState newState)
         {
             switch (newState)
@@ -232,6 +226,11 @@
             OnWaveStateUpdate?.Invoke(CurrentState, Rounds);
         }
 
+        /// <summary>
+        /// This method sets the current <see cref="WaveConfig"/> to the new one
+        /// and updates the current difficulty.
+        /// </summary>
+        /// <param name="config">The new wave config.</param>
         private void SetConfig(WaveConfig config)
         {
             Debug.LogFormat("Update wave config {0} (round: {1}, difficulty: {2}, enemy: {3}", config, config.round, config.difficulty, config.enemy.name);
@@ -239,6 +238,12 @@
             CurrentDifficulty = config.difficulty;
         }
 
+        /// <summary>
+        /// This method determines whether there is enemies are still alive or
+        /// not. This is achieved by searching every set time for game objects
+        /// with the enemy tag. If an enemy where found the method returns true;
+        /// otherwise false.
+        /// </summary>
         private bool IsEnemyAlive
         {
             get
@@ -256,66 +261,14 @@
             }
         }
 
+        /// <summary>
+        /// This method determines wether a wave is running. This is the case
+        /// when the current state is equals to <see cref="WaveState.Running"/>
+        /// or <see cref="WaveState.Spawning"/>.
+        /// </summary>
         public bool IsWaveRunning
         {
             get { return CurrentState == WaveState.Running || CurrentState == WaveState.Spawning; }
         }
-
-        /* private void whichEnemy(Transform spawnPoint)
-         {
-
-             if (currentDifficulty == Difficulty.Easy)
-             {
-                 SpawnEnemy(EasyEnemey, spawnPoint);
-             }
-
-             if (currentDifficulty == Difficulty.Medium)
-             {
-                 mediumSpawningAlgorithm(spawnPoint);
-             }
-
-             if (currentDifficulty == Difficulty.Hard)
-             {
-                 hardSpawningAlgorithm(spawnPoint);
-             }
-         }
-
-         private void mediumSpawningAlgorithm(Transform spawnPoint)
-         {
-             randomSpawnDigit = Random.value * 100f;
-
-             if (randomSpawnDigit < 75)
-             {
-                 SpawnEnemy(EasyEnemey, spawnPoint);
-             }
-
-
-             if (randomSpawnDigit > 74) 
-             {
-                 SpawnEnemy(MediumEnemy, spawnPoint);
-             }
-
-         }
-
-         private void hardSpawningAlgorithm(Transform spawnPoint)
-         {
-             randomSpawnDigit = Random.value * 100f;
-
-             if (randomSpawnDigit < 50)
-             {
-                 SpawnEnemy(EasyEnemey, spawnPoint);
-             }
-
-             if (randomSpawnDigit > 49 &&  randomSpawnDigit < 85)
-             {
-                 SpawnEnemy(MediumEnemy, spawnPoint);
-             }
-
-             if (randomSpawnDigit > 84) 
-             {
-                 SpawnEnemy(HardEnemy, spawnPoint);
-             }
-
-         }*/
     }
 }

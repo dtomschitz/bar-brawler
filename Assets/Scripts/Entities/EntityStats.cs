@@ -24,10 +24,10 @@ public class EntityStats : MonoBehaviour
     }
 
     /// <summary>
-    /// Loads the given <see cref="StatsConfig"/> for the enemy.
+    /// Loads the given <see cref="EnemyStatsConfig"/> for the enemy.
     /// </summary>
     /// <param name="config">The config which should be loaded.</param>
-    public void Init(StatsConfig config)
+    public void Init(EnemyStatsConfig config)
     {
         if (config != null)
         {

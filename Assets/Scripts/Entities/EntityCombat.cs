@@ -49,7 +49,7 @@ public class EntityCombat : MonoBehaviour
     /// Loads a preset configurationen for enemis.
     /// </summary>
     /// <param name="config">The combat config which should get loaded.</param>
-    public void Init(CombatConfig config)
+    public void Init(EnemyCombatConfig config)
     {
         if (config != null)
         {
