@@ -1,6 +1,10 @@
 ﻿using System;
 using Items;
 
+/// <summary>
+/// Class <c>PlayerEquipment</c> extends the <c>EntityEquipment</c> class and
+/// adds additional methods.
+/// </summary>
 public class PlayerEquipment : EntityEquipment
 {
     public Item[] defaultItems;
@@ -21,6 +25,10 @@ public class PlayerEquipment : EntityEquipment
         hotbar.OnItemSelected += EquipItem;
     }
 
+    /// <summary>
+    /// This method equips the first item out of the default items the player
+    /// received on the game start.
+    /// </summary>
     public void EquipFirstItem()
     {
         if (defaultItems.Length != 0)
@@ -29,6 +37,12 @@ public class PlayerEquipment : EntityEquipment
         }
     }
 
+    /// <summary>
+    /// This method gets triggered if an item got removed from the inventory.
+    /// It will then perhaps unequipp the current equipped item
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void OnItemRemoved(object sender, InventoryEvent e)
     {
         if (e.item == currentEquipment) Unequip();

@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
 
+/// <summary>
+/// This class <c>PlayerControls</c> is used to control the player movement such
+/// as moving, rotatining, jumping and triggering the primary and secondary action.
+/// In order to move the player the <see cref="CharacterController"/> is used under
+/// the hut.
+/// </summary>
 public class PlayerControls : MonoBehaviour
 {
     [Header("Movement")]
@@ -33,6 +39,9 @@ public class PlayerControls : MonoBehaviour
     private CharacterController character;
     private PlayerEquipment equipment;
 
+    /// <summary>
+    /// Subscribes to the set <see cref="PlayerInputActions"/> controlls. 
+    /// </summary>
     void Awake()
     {
         inputActions = new PlayerInputActions();
@@ -63,6 +72,12 @@ public class PlayerControls : MonoBehaviour
         inputActions.Disable();
     }
 
+    /// <summary>
+    /// Updates the player movement direction and caluulates the new desired
+    /// direction. Then the methods <see cref="MovePlayer(Vector3)"/>,
+    /// <see cref="RotatePlayer"/> and <see cref="AnimatePlayerMovement(Vector3)"/>
+    /// gets called with the new calculated parameters.
+    /// </summary>
     void Update()
     {
         if (IsMovementEnabled)
@@ -82,40 +97,80 @@ public class PlayerControls : MonoBehaviour
             Vector3 desiredDirection = cameraForward * inputDirection.z + cameraRight * inputDirection.x;
 
             MovePlayer(desiredDirection);
-            TurnPlayer();
+            RotatePlayer();
             AnimatePlayerMovement(desiredDirection);
         }
     }
 
+    /// <summary>
+    /// This method is used to subscribe to the specific <see cref="PlayerInputActions"/>
+    /// method and gets called if the user pressed the button which should trigger
+    /// the primary action. If the game state is currently set to
+    /// <see cref="GameStateType.TargetAcquisition"/> the request will get rejected.
+    /// </summary>
+    /// <param name="ctx"></param>
     public void UsePrimary(CallbackContext ctx)
     {
         if (GameState.instance.IsInTargetAcquisition) return;
         equipment.UsePrimary();
     }
 
+    /// <summary>
+    /// This method is used to subscribe to the specific <see cref="PlayerInputActions"/>
+    /// method and gets called if the user pressed the button which should trigger
+    /// the secondary action. If the game state is currently set to
+    /// <see cref="GameStateType.TargetAcquisition"/> the request will get rejected.
+    /// </summary>
+    /// <param name="ctx"></param>
     public void UseSecondary(CallbackContext ctx)
     {
         if (GameState.instance.IsInTargetAcquisition) return;
         equipment.UseSecondary();
     }
 
+    /// <summary>
+    /// This method is used to subscribe to the specific <see cref="PlayerInputActions"/>
+    /// method and gets called if the user pressed the button which should trigger
+    /// action to use an item. If the game state is currently set to
+    /// <see cref="GameStateType.TargetAcquisition"/> the request will get rejected.
+    /// </summary>
+    /// <param name="ctx"></param>
     public void UseItem(CallbackContext ctx)
     {
         if (GameState.instance.IsInTargetAcquisition) return;
         equipment.UseConsumable();
     }
 
+    /// <summary>
+    /// This method sets game state to <see cref="GameStateType.GamePaused"/> and
+    /// and will thereby pause the game.
+    /// </summary>
+    /// <param name="ctx"></param>
     public void PauseGame(CallbackContext ctx)
     {
         GameState.instance.SetState(GameStateType.GamePaused);
     }
 
+    /// <summary>
+    /// This method stops the player by setting the desired movement direction to
+    /// <see cref="Vector3.zero"/>. In addition the currently played animation
+    /// will blend to the idle animation by setting the forward and strafe velocity
+    /// to zero.
+    /// </summary>
     private void StopPlayerMovement()
     {
         MovePlayer(Vector3.zero);
         playerAnimator.Move(0f, 0f);
     }
 
+    /// <summary>
+    /// This method moves the player to the given desired direction by multiplying
+    /// it with the set speed and the <see cref="Time.deltaTime"/>. In order to
+    /// move the whole game object the class <see cref="CharacterController"/>
+    /// gets used as mentioned. Furthermore the method calculcates the movement
+    /// on the y-axis.
+    /// </summary>
+    /// <param name="desiredDirection">The calculated deseired movement direction.</param>
     private void MovePlayer(Vector3 desiredDirection)
     {
         movement.Set(desiredDirection.x, movement.y, desiredDirection.z);
@@ -126,9 +181,17 @@ public class PlayerControls : MonoBehaviour
         movement.y += (Physics.gravity.y * gravityScale * Time.deltaTime * 0.6f);
     }
 
-    private void TurnPlayer()
+    /// <summary>
+    /// This method is used to rotate the player to a desired location.
+    /// If the game state is for example currently set to <see cref="GameStateType.TargetAcquisition"/>
+    /// and the user has selected an enemy, the player will automaticly rotate
+    /// towards the enemy. This should improve and simplify the attacking behavior.
+    /// If the aforementioned case has not occurred the player rotates based on
+    /// the game pad input respectively the current camera looking direction.
+    /// </summary> 
+    private void RotatePlayer()
     {
-        if (TargetAcquisition.instance.CurrentEnemy != null)
+        if (GameState.instance.IsInTargetAcquisition && TargetAcquisition.instance.CurrentEnemy != null)
         {
             TurnPlayerToEnemy();
             return;
@@ -147,6 +210,10 @@ public class PlayerControls : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This method rotates the player towards the currently selected enemy from
+    /// the target acquisition mod.
+    /// </summary>
     private void TurnPlayerToEnemy()
     {
         Enemy enemy = TargetAcquisition.instance.CurrentEnemy;
@@ -156,6 +223,11 @@ public class PlayerControls : MonoBehaviour
         playerModel.transform.rotation = Quaternion.Lerp(playerModel.transform.rotation, lookRotation, Time.deltaTime * 10000f);
     }
 
+    /// <summary>
+    /// This method sets the movement forward and strafe velocity in order to trigger
+    /// the specifc animations. 
+    /// </summary>
+    /// <param name="desiredDirection"></param>
     private void AnimatePlayerMovement(Vector3 desiredDirection)
     {
         if (!playerAnimator) return;
@@ -164,8 +236,6 @@ public class PlayerControls : MonoBehaviour
         float forward = Vector3.Dot(movement, playerModel.transform.forward);
         float strafe = Vector3.Dot(movement, playerModel.transform.right);
 
-        //playerAnimator.SetForward(forward);
-        //playerAnimator.SetStrafe(strafe);
         playerAnimator.Move(forward, strafe);
     }
 

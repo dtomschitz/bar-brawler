@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
-using UnityEngine.InputSystem;
-using Items;
 
+/// <summary>
+/// Class <c>Player</c> extends the <c>Entity</c> class an overrides some of the
+/// base methods in order to handle player specific stuff.
+/// </summary>
 public class Player : Entity
 {
     #region Singelton
@@ -26,11 +28,11 @@ public class Player : Entity
 
     public int CurrentBalance { get; set; } = 300;
 
-    public override void OnHit(Entity offender, Equipment item)
-    {
-        base.OnHit(offender, item);
-    } 
-
+    /// <summary>
+    /// This method gets called if the player died and will then trigger the
+    /// death animation, the victory animation for all enemies and sets the
+    /// <see cref="GameState"/> to <see cref="GameStateType.GameOver"/>.
+    /// </summary>
     public override void OnDeath()
     {
         base.OnDeath();
@@ -45,6 +47,11 @@ public class Player : Entity
         GameState.instance.SetState(GameStateType.GameOver);
     }
 
+    /// <summary>
+    /// Adds the given amount of money to the current balance <see cref="Current Balance"/>,
+    /// triggers the <see cref="OnMoneyReceived"/> event and plays the <see cref="Sound.ReceiveMoney"/>.
+    /// </summary>
+    /// <param name="amount">The ammount of money the played received.</param>
     public void AddMoney(int amount)
     {
         CurrentBalance += amount;
@@ -53,6 +60,10 @@ public class Player : Entity
         AudioManager.instance.PlaySound(Sound.ReceiveMoney);
     }
 
+    /// <summary>
+    /// Removes the given amount of money from the current balance <see cref="Current Balance"/>
+    /// and triggers the <see cref="OnMoneySpend"/> event.
+    /// <param name="amount">The ammount of money the played spent.</param>
     public void RemoveMoney(int amount)
     {
         CurrentBalance -= amount;

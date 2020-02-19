@@ -61,6 +61,9 @@ public class Entity : MonoBehaviour
     {
     }
 
+    /// <summary>
+    /// This method gets called if the entity died.
+    /// </summary>
     public virtual void OnDeath()
     {
     }
