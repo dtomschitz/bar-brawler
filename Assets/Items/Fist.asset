@@ -20,8 +20,6 @@ MonoBehaviour:
   maxStackSize: 1
   type: 0
   prefab: {fileID: 475282169417098924, guid: b1561fb5e8e54e34cbc32de82b4bd34d, type: 3}
-  itemHelp: {fileID: 8395895103007362534, guid: 6ebada79eabaad540b6ad3044bbd6903,
-    type: 3}
   hasDuration: 0
   duration: 0
   defaultHand: 0

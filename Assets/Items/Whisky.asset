@@ -20,7 +20,6 @@ MonoBehaviour:
   maxStackSize: 5
   type: 4
   prefab: {fileID: 7782211589630758734, guid: 92ba38e14140a204a9d6d2e5637eb9a8, type: 3}
-  itemHelp: {fileID: 0}
   hasDuration: 0
   duration: 0
   defaultHand: 0
@@ -30,3 +29,4 @@ MonoBehaviour:
   equipmentAnimations: []
   healingAmount: 30
   healingSpeed: 30
+  healingDelay: 0
