@@ -46,19 +46,6 @@ public class EntityCombat : MonoBehaviour
     }
 
     /// <summary>
-    /// Loads a preset configurationen for enemis.
-    /// </summary>
-    /// <param name="config">The combat config which should get loaded.</param>
-    public void Init(EnemyCombatConfig config)
-    {
-        if (config != null)
-        {
-            if (config.manaRegenerationAmount >= 0f) manaRegenerationAmount = config.manaRegenerationAmount;
-            if (config.manaRegenerationSpeed >= 0f) manaRegenerationSpeed = config.manaRegenerationSpeed;
-        }
-    }
-
-    /// <summary>
     /// This method will update the entity stats of the attacked entity based on
     /// the current set damage.
     /// </summary>

@@ -23,24 +23,6 @@ public class EntityStats : MonoBehaviour
     {
     }
 
-    /// <summary>
-    /// Loads the given <see cref="EnemyStatsConfig"/> for the enemy.
-    /// </summary>
-    /// <param name="config">The config which should be loaded.</param>
-    public void Init(EnemyStatsConfig config)
-    {
-        if (config != null)
-        {
-            if (config.minHealth > 0f && config.maxHealth > 0f)
-            {
-                float health = Random.Range(config.minHealth, config.maxHealth);
-                maxHealth = health;
-                CurrentHealth = health;
-            }
-
-            if (config.damage > 0f) damage = config.damage;
-        }
-    }
 
     /// <summary>
     /// This method gets called if the entity took damage and will update the

@@ -317,8 +317,8 @@ public class Enemy : Entity
 
     public void Init(EnemyConfig config)
     {
-        stats.Init(config.stats);
-        combat.Init(config.combat);
+        (stats as EnemyStats).Init(config.stats);
+        (combat as EnemyCombat).Init(config.combat);
 
         moneyDrops = config.moneyDrops;
 
