@@ -1,7 +1,13 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using Wave;
 
+/// <summary>
+/// Class <c>WaveInfo</c> manages the visualisation of the wave state text and
+/// the wave skip text by subscribing to the <see cref="WaveSpawner.OnWaveStateUpdate"/>
+/// and <see cref="WaveSpawner.OnWaveCountdownUpdate"/> events.
+/// </summary>
 public class WaveInfo : MonoBehaviour
 {
     public Text stateOfGameText;
@@ -14,13 +20,21 @@ public class WaveInfo : MonoBehaviour
     void Start()
     {
         WaveSpawner waveSpawner = WaveSpawner.instance;
-        if (waveSpawner != null)
-        {
-            waveSpawner.OnWaveStateUpdate += OnWaveStateUpdate;
-            waveSpawner.OnWaveCountdownUpdate += OnWaveCountdownUpdate;
-        }
+        if (waveSpawner == null) throw new ArgumentNullException("WaveSpawner class cannot be null!");
+
+        waveSpawner.OnWaveStateUpdate += OnWaveStateUpdate;
+        waveSpawner.OnWaveCountdownUpdate += OnWaveCountdownUpdate;
     }
 
+    /// <summary>
+    /// Gets called if the <see cref="WaveSpawner.State"/> got updated. If the
+    /// new state is set to <see cref="WaveState.Counting"/> the method will 
+    /// display the skip countdown message.
+    /// Is the wave ongoing the method will display the amount of rounds the
+    /// player reached.
+    /// </summary>
+    /// <param name="state">The new state</param>
+    /// <param name="rounds">The amount of rounds the player survived.</param>
     public void OnWaveStateUpdate(WaveState state, int rounds)
     {
         if (state == WaveState.Counting)
@@ -37,6 +51,12 @@ public class WaveInfo : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This method gets called if the <see cref="WaveSpawner.State"/> is set to
+    /// <see cref="WaveState.Counting"/> and will update the countdown for the
+    /// next approaching wave. 
+    /// </summary>
+    /// <param name="countdown">The current countdown</param>
     public void OnWaveCountdownUpdate(float countdown)
     {
         if (countdown <= nextRoundWarning)

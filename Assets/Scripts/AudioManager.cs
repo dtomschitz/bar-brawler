@@ -12,6 +12,13 @@ public enum Sound
     ReceiveMoney
 }
 
+/// <summary>
+/// Class <c>SoundClip</c> is used to combine a <see cref="Sound"/> with an existing
+/// <see cref="AudioClip"/>. The class can also store some important configuration
+/// paramaters such as the volume, the pitch or the <see cref="maxTimer"/> which
+/// is used to set the amount of time it takes before the sound can get played
+/// again.
+/// </summary>
 [System.Serializable]
 public class SoundClip
 {
@@ -31,6 +38,10 @@ public class SoundClip
     public float maxDistance = 100f;
 }
 
+/// <summary>
+/// Class <c>AudioManager</c> is used play back a specific <see cref="SoundClip"/>
+/// for once.
+/// </summary>
 public class AudioManager : MonoBehaviour
 {
     #region Singelton
@@ -56,6 +67,16 @@ public class AudioManager : MonoBehaviour
         soundTimer[Sound.PlayerMove] = 0f;
     }
 
+    /// <summary>
+    /// Plays the specific <see cref="SoundClip"/> at the given position.
+    /// The Method will determine whether the sound can be played currently or
+    /// not. If it can a new game object with the <see cref="AudioSource"/>
+    /// component attached will be created. Based on the given <see cref="Sound"/>
+    /// the method will find the associated <see cref="SoundClip"/>. 
+    /// The created game object will get destoryed after the sound ended.
+    /// </summary>
+    /// <param name="sound">The sound which should get played.</param>
+    /// <param name="position">The position where the sound should be played.</param>
     public void PlaySound(Sound sound, Vector3 position)
     {
         if (CanPlay(sound))
@@ -73,6 +94,16 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// Plays the specific <see cref="SoundClip"/>.
+    /// The Method will determine whether the sound can be played currently or
+    /// not. If it can a new game object with the <see cref="AudioSource"/>
+    /// component attached will be created. Based on the given <see cref="Sound"/>
+    /// the method will find the associated <see cref="SoundClip"/>.
+    /// </summary>
+    /// <param name="sound">The sound which should get played.</param>
+    /// <param name="position">The position where the sound should be played.</param>
     public void PlaySound(Sound sound)
     {
         if (CanPlay(sound))
@@ -90,6 +121,12 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Loads the paramters of the <see cref="SoundClip"/> into the <see cref="AudioSource"/>
+    /// component.
+    /// </summary>
+    /// <param name="audioSource">The created <see cref="AudioSource"/>.</param>
+    /// <param name="soundClip">The <see cref="SoundClip"/> which gets played.</param>
     private void SetAudioSourceConfig(AudioSource audioSource, SoundClip soundClip)
     {
         audioSource.clip = soundClip.clip;
@@ -100,6 +137,13 @@ public class AudioManager : MonoBehaviour
         audioSource.dopplerLevel = 0f;
     }
 
+    /// <summary>
+    /// Tries to find the assoicated <see cref="SoundClip"/> to the given
+    /// <see cref="Sound"/> and returns it. If no <see cref="SoundClip"/> could
+    /// be found the method will return null.
+    /// </summary>
+    /// <param name="sound"></param>
+    /// <returns></returns>
     private SoundClip GetSoundClip(Sound sound)
     {
         foreach (SoundClip soundClip in soundClips)
@@ -113,6 +157,12 @@ public class AudioManager : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Checks whether the sound can be played again or not.This method is used
+    /// to ensure that sounds like the movement sound could not played overlapping.
+    /// </summary>
+    /// <param name="sound">The sound which should get played.</param>
+    /// <returns>True if the sound can be played; otherwise false.</returns>
     private bool CanPlay(Sound sound)
     {
         foreach (KeyValuePair<Sound, float> soundTime in soundTimer)

@@ -2,6 +2,11 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// Class <c>GameOver</c> is used to display the game over screen when the player
+/// died. From here the play could either restart the game or go back to the main
+/// menu.
+/// </summary>
 public class GameOver : MonoBehaviour
 {
     public string menuSceneName = "MainMenu";
@@ -25,11 +30,17 @@ public class GameOver : MonoBehaviour
         money.text = "$" + statistics.SpendMoney.ToString();
     }
 
+    /// <summary>
+    /// Restarts the game by reloading the main level.
+    /// </summary>
     public void Restart()
     {
         sceneFader.FadeTo(SceneManager.GetActiveScene().name);
     }
 
+    /// <summary>
+    /// Fades back to the main menu scene.
+    /// </summary>
     public void ExitToMainMenu()
     {
         sceneFader.FadeTo(menuSceneName);

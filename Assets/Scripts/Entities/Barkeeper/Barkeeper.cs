@@ -4,6 +4,9 @@ using static UnityEngine.InputSystem.InputAction;
 using Shop;
 using Wave;
 
+/// <summary>
+/// 
+/// </summary>
 public class Barkeeper : MonoBehaviour
 {
     #region Singelton
@@ -46,7 +49,10 @@ public class Barkeeper : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player") isPlayerInReach = true;
+        if (other.gameObject.tag == "Player")
+        {
+            isPlayerInReach = true;
+        }
     }
 
     void OnTriggerExit(Collider other)

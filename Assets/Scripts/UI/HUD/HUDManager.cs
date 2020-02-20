@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 /// <summary>
 /// Class HUDManager is used to centralize all management classes of visual
@@ -13,6 +14,17 @@ public class HUDManager : MonoBehaviour
     public WaveInfo waveInfo;
     public InteractionHint interactionHint;
     public HelpInfo helpInfo;
+
+    void Start()
+    {
+        if (hotbar == null) throw new NullReferenceException("Hotbar class cannot be null");
+        if (healthBar == null) throw new NullReferenceException("HealthBar class cannot be null");
+        if (manaBar == null) throw new NullReferenceException("ManaBar class cannot be null");
+        if (moneyInfo == null) throw new NullReferenceException("MoneyInfo class cannot be null");
+        if (waveInfo == null) throw new NullReferenceException("WaveInfo class cannot be null");
+        if (interactionHint == null) throw new NullReferenceException("InteractionHint class cannot be null");
+        if (helpInfo == null) throw new NullReferenceException("HelpInfo class cannot be null");
+    }
 
     /// <summary>
     /// Displays or hides the hotbar in the Hud.

@@ -5,7 +5,7 @@ namespace Items
     [CreateAssetMenu(fileName = "New Equipment", menuName = "Items/Equipment")]
     public class Equipment : Item
     {
-        public delegate void DurationUpdate(float duration, float maxDuration);
+        public delegate void DurationUpdate(float normalizedDuration);
         public event DurationUpdate OnDurationUpdate;
 
         [Header("Equipment")]
@@ -33,7 +33,12 @@ namespace Items
         public void UseItem()
         {
             currentDuration--;
-            OnDurationUpdate?.Invoke(currentDuration, duration);
+            OnDurationUpdate?.Invoke(NormalizedDuration);
+        }
+
+        public float NormalizedDuration
+        {
+            get { return currentDuration / duration; }
         }
 
         public float CurrentDuration

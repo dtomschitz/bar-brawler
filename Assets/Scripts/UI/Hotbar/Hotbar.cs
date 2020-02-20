@@ -9,6 +9,14 @@ using static UnityEngine.InputSystem.InputAction;
 using Items;
 using Utils;
 
+/// <summary>
+/// Class <c>Hotbar</c> is used to visualize the items the player has in his
+/// inventory. Through this class the user can select on of the items in the
+/// hotbar in order to equipp it to the player. The class also handles the
+/// updating process if the player received an item, lost one or used one.
+/// In the beginning this class also adds the default items to the inventory of
+/// the player and selects the first item of it.
+/// </summary>
 public class Hotbar : MonoBehaviour
 {
     public Text selectedItemName;
@@ -25,6 +33,9 @@ public class Hotbar : MonoBehaviour
     private HotbarSlot[] slots;
     private int currentItemIndex = -1;
 
+    /// <summary>
+    /// Subscribes to the set <see cref="PlayerInputActions"/> controlls. 
+    /// </summary>
     void Awake()
     {
         inputActions = new PlayerInputActions();
@@ -58,38 +69,41 @@ public class Hotbar : MonoBehaviour
         AddDefaultItems();
     }
 
-    void Update()
-    {
-        /* for (int i = 0; i < slots.Length; i++) slots[i].Clear();
-
-         List<InventorySlot> inventorySlots = new List<InventorySlot>(inventory.slots);
-         inventorySlots.RemoveAll(slot => slot.Count == 0);
-
-         for (int i = 0; i < slots.Length; i++)
-         {
-             if (List.InBounds(i, inventorySlots.Count))
-             {
-                 Item item = inventorySlots[i].FirstItem;
-                 if (item != null && item is Equipment)
-                 {
-                     slots[i].Add(item as Equipment);
-                 }
-             }
-         }*/
-    }
-
+    /// <summary>
+    /// This method is used to subscribe to the specific <see cref="PlayerInputActions"/>
+    /// method and gets called if the user pressed the button which should trigger
+    /// the selecting of the next item in the hotbar. If the game state is currently set to
+    /// <see cref="GameStateType.TargetAcquisition"/> the request will get rejected.
+    /// </summary>
+    /// <param name="ctx"></param>
     public void SelectNextItem(CallbackContext ctx)
     {
         if (GameState.instance.IsInTargetAcquisition/* || Player.instance.combat.IsInAction*/) return;
         SelectNextItem();
     }
 
+    /// <summary>
+    /// This method is used to subscribe to the specific <see cref="PlayerInputActions"/>
+    /// method and gets called if the user pressed the button which should trigger
+    /// the selecting of the last item in the hotbar. If the game state is currently set to
+    /// <see cref="GameStateType.TargetAcquisition"/> the request will get rejected.
+    /// </summary>
+    /// <param name="ctx"></param>
     public void SelectLastItem(CallbackContext ctx)
     {
         if (GameState.instance.IsInTargetAcquisition/* || Player.instance.combat.IsInAction*/) return;
         SelectLastItem();
     }
 
+    /// <summary>
+    /// This method is used to subscribe to the specific <see cref="PlayerInputActions"/>
+    /// method and gets called if the user pressed the button which should trigger
+    /// the deleting of the current selected item. This method can only be used
+    /// while the user has opened the shop. It should enable the player to delete
+    /// unwanted items and free some space in the inventory in order to buy new
+    /// items.
+    /// </summary>
+    /// <param name="ctx"></param>
     public void DeleteItem(CallbackContext ctx)
     {
         if (!GameState.instance.IsInShop) return;
@@ -100,24 +114,42 @@ public class Hotbar : MonoBehaviour
         Player.instance.inventory.RemoveItem(item);
     }
 
+    /// <summary>
+    /// Selects the next item in the hotbar.
+    /// </summary>
     public void SelectNextItem()
     {
         SelectItem(Mathf.Clamp(currentItemIndex + 1, 0, slots.Length));
     }
 
+    /// <summary>
+    /// Selects the last item in the hotbar.
+    /// </summary>
     public void SelectLastItem()
     {
         SelectItem(Mathf.Clamp(currentItemIndex - 1, 0, slots.Length));
     }
 
-    public void SelectItem(int nextIndex)
+    /// <summary>
+    /// Tries to select an item from the <see cref="Hotbar"/> with the given index.
+    /// </summary>
+    /// <param name="index">The position of the item in the hotbar</param>
+    public void SelectItem(int index)
     {
-        if (List.InBounds(nextIndex, slots.Length))
+        if (List.InBounds(index, slots.Length))
         {
-            SelectItem(slots[nextIndex].item, nextIndex);
+            SelectItem(slots[index].item, index);
         }
     }
 
+    /// <summary>
+    /// This method selects an given item from the <see cref="Hotbar"/>, dislays
+    /// the name of the selected item in the hud and fires the <see cref="OnItemSelected"/>
+    /// event. It also updates the <see cref="HotbarSlot"/> and calls the
+    /// <see cref="HotbarSlot.SetSelected(bool)"/> in order to visualize it.
+    /// </summary>
+    /// <param name="item">The item which should get selected.</param>
+    /// <param name="index">The position of the item in the hotbar.</param>
     private void SelectItem(Item item, int index)
     {
         if (item != null && item is Equipment && index != currentItemIndex)
@@ -136,6 +168,13 @@ public class Hotbar : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Gets called if an new item got added to the player inventory. The method
+    /// will then find and and hotbar slot which is empty or contains the same
+    /// type of item and has still enough space. 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void OnItemAdded(object sender, InventoryEvent e)
     {
         HotbarSlot slot = FindHotbarSlot(e.item);
@@ -152,6 +191,16 @@ public class Hotbar : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Gets called if an item got removed from the player inventory. The method
+    /// will then determinate wether the given item is in general in the hotbar.
+    /// Is this the case the item will get removed from the hotbar so the player
+    /// can not use it anymore. But if the item stack count is not equals to zero
+    /// the item will not get fully removed from the <see cref="Hotbar"/> nut
+    /// rather the item count will get updated.
+    /// </summary>in 
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void OnItemRemoved(object sender, InventoryEvent e)
     {
         for (int i = 0; i < slots.Length; i++)
@@ -174,6 +223,11 @@ public class Hotbar : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This method will update the complete <see cref="Hotbar"/>. This happens
+    /// by clearing all hotbarslots first and adding all the items from the
+    /// inventory back into the <see cref="HotbarSlot"/>.
+    /// </summary>
     private void UpdateItems()
     {
         for (int i = 0; i < slots.Length; i++) slots[i].Clear();
@@ -194,6 +248,10 @@ public class Hotbar : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// Adds all default items to the inventory and the hotbar itself. 
+    /// </summary>
     private void AddDefaultItems()
     {
         foreach (Item item in equipment.defaultItems)
@@ -203,6 +261,11 @@ public class Hotbar : MonoBehaviour
         equipment.EquipFirstItem();
     }
 
+    /// <summary>
+    /// Tries to find a slot in the hotbar where the items got the same type.
+    /// </summary>
+    /// <param name="item">The item which should get added into a <see cref="HotbarSlot"/></param>
+    /// <returns>The found hotbar slot if there is one; otherwise null.</returns>
     private HotbarSlot FindHotbarSlot(Item item)
     {
         foreach (HotbarSlot slot in slots)
@@ -212,6 +275,10 @@ public class Hotbar : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Tries to find an empty slot in the hotbar and returns it.
+    /// </summary>
+    /// <returns>The found hotbar slot if there is one; otherwise null.</returns>
     private HotbarSlot FindEmptyHotbarSlot()
     {
         foreach (HotbarSlot slot in slots) if (slot.item == null) return slot;

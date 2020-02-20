@@ -2,6 +2,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Class <c>MoneyInfo</c> manages the visualisation of the players balance by
+/// subscribing to the <see cref="Player.OnMoneyReceived"/> and
+/// <see cref="EntityCombat.OnManaUsed"/> events.
+/// </summary>
 public class MoneyInfo : MonoBehaviour
 {
     public GameObject moneyRecived;
@@ -19,12 +24,24 @@ public class MoneyInfo : MonoBehaviour
         Player.instance.OnMoneySpend += OnMoneySpend;    
     }
 
+    /// <summary>
+    /// Gets called if the player received money through killing some enemies
+    /// and updates the visual count accordingly.
+    /// </summary>
+    /// <param name="amount">The amount of money the player received</param>
+    /// <param name="currentBalance">The current balance of the player.</param>
     public void OnMoneyReceived(int amount, int currentBalance)
     {
         InstantiateMoneyText(moneyRecived, amount, "+");
         StartCoroutine(MoneyUpdateRoutine(currentBalance, .7f));
     }
 
+    /// <summary>
+    /// Gets called if the player spent money through buying items in the shop
+    /// and updates the visual count accordingly.
+    /// </summary>
+    /// <param name="amount">The amount of money the player spent</param>
+    /// <param name="currentBalance">The current balance of the player.</param>
     public void OnMoneySpend(int amount, int currentBalance)
     {
         InstantiateMoneyText(moneySpend, amount, "-");

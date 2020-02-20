@@ -1,5 +1,10 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Class <c>Statistics</c> is used to store different values which can increas
+/// will the player is playing. This values will be displayed in the <see cref="GameOver"/>
+/// screen when the player finally died.
+/// </summary>
 public class Statistics : MonoBehaviour
 {
     #region Singelton
@@ -13,20 +18,25 @@ public class Statistics : MonoBehaviour
 
     #endregion;
 
+    /// <summary>
+    /// The amount of rounds the player survived.
+    /// </summary>
     public int SurvivedRounds { get; protected set; }
+
+    /// <summary>
+    /// The amount of kills the player made.
+    /// </summary>
     public int Kills { get; protected set; }
+
+    /// <summary>
+    /// The amount of damage the player dealed
+    /// </summary>
     public float DamageCaused { get; protected set; }
+
+    /// <summary>
+    /// The amount of money the player spend.
+    /// </summary>
     public int SpendMoney { get; protected set; }
-
-    void Start()
-    {
-        /*SurvivedRounds = 0;
-        Kills = 0;
-        SpendMoney = 0;
-        DamageCaused = 0f;*/
-
-       // Debug.Log("Start new game");
-    }
 
     public void AddRound() => SurvivedRounds++;
     public void AddKill() => Kills++;

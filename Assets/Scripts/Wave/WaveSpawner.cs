@@ -63,7 +63,7 @@
         public float timeBetweenWaves = 31f;
         public List<WaveConfig> configs;
 
-        public WaveState CurrentState { get; protected set; }
+        public WaveState State { get; protected set; }
         public Difficulty CurrentDifficulty { get; protected set; }
         public WaveConfig CurrentConfig { get; protected set; }
 
@@ -74,7 +74,7 @@
 
         void Start()
         {
-            CurrentState = WaveState.Counting;
+            State = WaveState.Counting;
             ResetWaveSpawner();
         }
 
@@ -92,7 +92,7 @@
         {
             if (enableWaveSpawner && (GameState.instance.State != GameStateType.GameOver || GameState.instance.State != GameStateType.GamePaused))
             {
-                if (CurrentState == WaveState.Running)
+                if (State == WaveState.Running)
                 {
                     if (IsEnemyAlive) return;
                     Player.instance.animator.OnVictory();
@@ -102,7 +102,7 @@
                 if (waveCountdown <= 0f)
                 {
                     waveCountdown = 0f;
-                    if (CurrentState != WaveState.Spawning) StartNextWave();
+                    if (State != WaveState.Spawning) StartNextWave();
                     return;
                 }
 
@@ -222,8 +222,8 @@
                     break;
             }
 
-            CurrentState = newState;
-            OnWaveStateUpdate?.Invoke(CurrentState, Rounds);
+            State = newState;
+            OnWaveStateUpdate?.Invoke(State, Rounds);
         }
 
         /// <summary>
@@ -268,7 +268,7 @@
         /// </summary>
         public bool IsWaveRunning
         {
-            get { return CurrentState == WaveState.Running || CurrentState == WaveState.Spawning; }
+            get { return State == WaveState.Running || State == WaveState.Spawning; }
         }
     }
 }
