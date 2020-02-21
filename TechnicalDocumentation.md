@@ -66,7 +66,7 @@ Im Pausemenü kann der Spieler das Spiel fortsetzen, die aktuelle Spielsitzung n
         Time.timeScale = 1f;
     }
 ```
-Sämtliche anderen Overlays werden deaktiviert, sowie auch das Movement des Charakters
+Sämtliche anderen Overlays werden durch *TogglePauseMenu* deaktiviert, sowie auch das Movement des Charakters
 ```csharp
     void TogglePauseMenu()
     {
@@ -79,7 +79,7 @@ Sämtliche anderen Overlays werden deaktiviert, sowie auch das Movement des Char
         UIManager.instance.SetPauseMenuActive(true);
 ```
 ## GameOver-Menü
-Das Game Over Overlay wird aufgerufen, wenn der Spieler stirbt. Wie im Pausemenü werden sämtliche anderen Overlays deaktiviert. Das Menü wird durch eine Animation auf den Bildschirm gebracht. Im Game Over Menü kann der Spieler Statistiken einsehen, die aus einer Runde gesammelt wurden.
+Das Game Over Overlay wird aufgerufen, wenn der Spieler stirbt. Wie im Pausemenü werden sämtliche anderen Overlays durch *ToggleGameOver* deaktiviert. Das Menü wird durch eine Animation auf den Bildschirm gebracht. Im Game Over Menü kann der Spieler Statistiken einsehen, die aus einer Runde gesammelt wurden.
 
 # Implementierung
 ## Entity
