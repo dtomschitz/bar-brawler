@@ -59,9 +59,14 @@ Die Power-UPs sowie die Flasche, welche der Spieler im Shop erwerben könnte, wu
 
 # User Interface
 ## HUD
+Das Hud besteht aus verschiedenen Anzeigeflächen die dem Spieler visuell darstellen sollen in welchem Zustand sich das Spiel aktuell befindet. Zu diesen gehört die Hotbar, die Lebens- und Ausdaueranzeige, die Munitionsinfo und eine Info über den gesamt Betrag des gesammelten Geldes. In der Hotbar kann der Spieler zu jeder Zeit sehen welche Items er erworben hat und auch benutzen kann. Des Weiteren ist es möglich ein Damage-Overlay für einen kurzen Zeitraum im Hud anzuzeigen, wenn der Spieler von einer Attacke getroffen wurde.
+
 ## Shop
+Der Shop kann nach jeder runde vom Spieler geöffnet werden, wenn dieser an der Bar steht. Durch den Shop kann der Spieler sein erworbenes Geld für neue Waffen und Getränke ausgeben, welche ihm im fortlaufenden Spiel helfen sollten.
+
 ## Hauptmenü
-Im Hauptmenü kann der Spieler das Spiel starten oder beenden. 
+Das Hauptmenü beinhaltet den Titel des Spiels sowie die Buttons um das Spiel zu starten und zu beenden. Im Hintergrund kann der Nutzer den Saloon mit dem Barkeeper, einem Pianist und dem Spieler selbst sehen.
+
 ## Pausenmenü
 Im Pausemenü kann der Spieler das Spiel fortsetzen, die aktuelle Spielsitzung neustarten oder ins Hauptmenü zurück gehen. Durch das betätigen der Start-Taste am Controller öffnet sich das Pausemenü und die Zeit im Spiel wird durch die *OnEnable* Methode eingefroren.
 ```csharp
