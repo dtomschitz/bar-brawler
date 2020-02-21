@@ -171,15 +171,15 @@ Die Ausdauer wird verwendet, wenn der jeweilige Entity einen Angriff mit der Blo
 ```csharp
 public void AddMana(float amount)
 {
-CurrentMana += amount;
-CurrentMana = Mathf.Clamp(CurrentMana, 0f, maxMana);
-OnManaAdded?.Invoke();
+    CurrentMana += amount;
+    CurrentMana = Mathf.Clamp(CurrentMana, 0f, maxMana);
+    OnManaAdded?.Invoke();
 }
 
 public void UseMana(float amount = 1f)
 {
-	CurrentMana -= amount;
-	OnManaUsed?.Invoke();
+    CurrentMana -= amount;
+    OnManaUsed?.Invoke();
 }
 ```
 Mit der Zeit wird die Ausdauer automatisch mithilfe der Parameter *manaRegenerationSpeed* und *manaRegenerationAmount*  wieder aufgefüllt. Dies geschieht in der Update-Methode:
@@ -216,20 +216,20 @@ Die Methode *UseSecondary* hingegen wird genutzt die Zweitaktion des Items auszu
 ```csharp
 public void UsePrimary()
 {
-	if (... && currentEquipment is Weapon)
-	{
-		currentItem.OnSecondary();
-	}
+    if (... && currentEquipment is Weapon)
+    {
+        currentItem.OnSecondary();
+    }
 }
 ```
 Damit der Spieler mit dem aktuell ausgerüstete Item nicht nur angriffe, sondern diese auch benutzten und verbrauchen kann, gibt es die *UseSecondary* Methode. Sie kann nur ausgeführt werden, wenn es sich bei dem Gegenstand um ein Getränk handelt und callt für dieses die *OnPrimary* Methode. 
 ```csharp
 public void UseConsumable()
 {
-	if (... && currentEquipment is Drink)
-	{
-		currentItem.OnPrimary();
-	}
+    if (... && currentEquipment is Drink)
+    {
+        currentItem.OnPrimary();
+    }
 }
 ```
 
@@ -249,20 +249,41 @@ Um dem Spieler einen erfolgreichen Treffer visuell besser dar zustellen bzw. im 
 ```csharp
 public virtual void OnHit(int id)
 {
-	animator.SetInteger("HitAnimation", id);
-	animator.SetTrigger("Hit");
+    animator.SetInteger("HitAnimation", id);
+    animator.SetTrigger("Hit");
 }
 ```
 Damit sich die jeweilige Entität auch bewegen kann bzw. damit eine Bewegung zu sehen ist, gibt es die Methoden *Move*, *SetForward* und *SetStrafe*. Die letzteren sind dabei die Keymethoden, welche die Vorwärts- und Seitwärtsgeschwindigkeit dem *Animator* übergeben. Basierend auf den Parametern versucht der Animator dann, die verschiedenen Bewegungs-Animationen miteinander zu verschmischen, damit letztendlich eine flüssige und für den Nutzer nachfolziehbare Beweung ensteht.
 ```csharp
 public virtual void Move(float forward, float strafe)
 {
-	SetForward(forward);
-	SetStrafe(strafe);
+    SetForward(forward);
+    SetStrafe(strafe);
 }
 
 public void SetForward(float forward) => animator.SetFloat("Forward", forward);
 public void SetStrafe(float strafe) => animator.SetFloat("Strafe", strafe);
 ```
 Alle Methoden in der Klasse sind als *virtual* gekenzeichnet, damit sie von erbenden Klassen überschrieben werden können. Dies ist beispielsweise bei der Methode *Move* wichtig, welche die Parameter für die Bewegungs-Animation setzt, da sich Spieler und Gegner mit verschiedenen Mechaniken fortbewegen. 
+
+## Player
+### PlayerAnimator
+### PlayerCombat
+### PlayerStats
+### PlayerEquipment
+### Inventory
+
+## Enemy
+
+## Barkeeper
+
+## Wave-System
+### WaveSpawner
+### WaveConfig
+### SpawnPoint
+## Items
+## UI
+### UIManag
+### Shop
+### Hotbar
 
