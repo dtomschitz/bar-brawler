@@ -266,12 +266,145 @@ public void SetStrafe(float strafe) => animator.SetFloat("Strafe", strafe);
 ```
 Alle Methoden in der Klasse sind als *virtual* gekennzeichnet, damit sie von erbenden Klassen überschrieben werden können. Dies ist beispielsweise bei der Methode *Move* wichtig, welche die Parameter für die Bewegungs-Animation setzt, da sich Spieler und Gegner mit verschiedenen Mechaniken fortbewegen. 
 
-## Player
-### PlayerAnimator
-### PlayerCombat
-### PlayerStats
-### PlayerEquipment
-### Inventory
+## Player Klasse
+Die Player Klasse erbt von der Basisklasse [Entity](#Entity) und implementiert so alle notwendigen Methoden damit der Spieler als Entität gehandhabt werden kann um beispielsweise schaden zu erleiden oder Angriffe zu tätigen. Die Klasse wird außerdem durch die Methoden *AddMoney* und *RemoveMoney* erweitert. Diese dienen dazu dem Spieler Geld durch beispielsweise erfolgreiche Tötungen zu geben oder durch Investitionen zu nehmen. Die jeweiligen Methoden feuern zusätzlich noch die dazugehörigen Events, damit unter anderem die Anzeigen im Hud aktuell sind und der Spieler im Shop nur die Items erwerben kann, welche sein Budget nicht überschreiten. Des Weiteren wurde die Methode *OnDeath* aus der [Entity](#Entity)  Klasse überschrieben, um für alle noch lebenden Gegner die Erfolgs-Animation abzuspielen und den [GameState](#GameState) zu aktualisieren. Dies führt letztendlich dann dazu, dass das GameOver-Menü angezeigt wird.
+```csharp
+public class Player : Entity
+{
+    public delegate void MoneyRecived(int amount, int currentBalance);
+    public delegate void MoneySpend(int amount, int currentBalance);
+    public event MoneyRecived OnMoneyReceived;
+    public event MoneySpend OnMoneySpend;
+
+    [Header("Player specific")]
+    public PlayerControls controls;
+    public Inventory inventory;
+
+    public int CurrentBalance { get; set; } = 300;
+
+    public override void OnDeath()
+    {
+        base.OnDeath();
+        
+        Enemy[] enemies = FindObjectsOfType<Enemy>();
+        if (enemies != null)
+        {
+            foreach (Enemy enemy in enemies) enemy.animator.OnVictory();
+        }
+        
+        GameState.instance.SetState(GameStateType.GameOver);
+    }
+    
+    public void AddMoney(int amount)
+    {
+        CurrentBalance += amount;
+        OnMoneyReceived?.Invoke(amount, CurrentBalance);
+        AudioManager.instance.PlaySound(Sound.ReceiveMoney);
+    }
+    
+    public void RemoveMoney(int amount)
+    {
+        CurrentBalance -= amount;
+        OnMoneySpend?.Invoke(amount, CurrentBalance);
+    }
+}
+```
+
+### PlayerAnimator Klasse
+Diese Klasse überschreibt ausschließlich die *Move* Methode aus der Basisklasse [EntityAnimator](#EntityAnimator), um die Bewegungs-Animation für den Spieler basierend auf den beiden Parametern *forward* und *strafe* zu erstellen.
+```csharp
+public class PlayerAnimator : EntityAnimator
+{
+    public override void Move(float forward, float strafe)
+    {
+        base.Move(forward, strafe);
+    }
+}
+```
+
+### PlayerCombat Klasse
+Die Klasse *PlayerCombat* implementiert die Klasse  [EntityCombat](#EntityCombat) und fügt zusätzliche Methoden hinzu, die genutzt werden, um die Angriffe verschiedener Gegner besser zu managen. Um einen besseren Spielfluss zu kreieren ist es möglich in der Klasse vorab zu definieren, wie viele Angreifer gleichzeitig den Spieler attackieren können. Die beiden Methoden *OnRequestAttack* und *OnCancelAttack* verwalten dieses beschriebe Szenario. *OnRequestAttack* wird dabei genutzt um die Anfrage eines einzelnen Gegners zu validieren.  Dies geschieht in dem überprüft wird, wie viele Attackierer es aktuell gibt und wie groß die maximale Anzahl sein darf. Ist der Angriff eines weiteren Gegners möglich, wird dieser in die Liste mit aufgenommen und hat ab dann das Recht den Spieler jeder Zeit anzugreifen.
+```csharp
+public void OnRequestAttack(GameObject enemy)
+{
+	attackers.RemoveAll(attacker => attacker == null);
+	if (attackers.Count < simultaneousAttackers)
+	{
+		if (!attackers.Contains(enemy)) attackers.Add(enemy);
+		enemy.SendMessage("OnAllowAttack", gameObject);
+	}
+}
+```
+Die Methode *OnCancelAttack* hingegen wird genutzt, um einen aktuell zugelassenen Gegner wieder von der Liste zu entfernen, wenn dieser z.B. gestorben ist und somit den Spieler nicht mehr angreifen kann.
+```csharp
+public void OnCancelAttack(GameObject enemy) => attackers.Remove(enemy);
+```
+
+### PlayerStats Klasse
+Die Klasse *PlayerStats* implementiert die Klasse  [EntityStats](#EntityStats) und fügt zusätzliche Methoden hinzu, die genutzt werden um den Schaden, den der Spieler bei einer erfolgreichen Attacke verteilen kann, basierend auf einem neu ausgerüsteten Gegenständen zu aktualisieren. Die *OnItemEquipped* Methode erledigt den zu vor beschrieben Fall in dem sie das *OnItemEquipped* Event der EntityEquipment Klasse abonniert.
+```csharp
+protected override void Start()
+{
+	... 
+	equipment = GetComponent<PlayerEquipment>();
+	equipment.OnItemEquipped += OnItemEquipped;
+}
+
+public void OnItemEquipped(Equipment newItem, Equipment oldItem)
+{
+	if (newItem != null && newItem is Weapon)
+	{
+		damage = (newItem as Weapon).damage;
+	}
+}
+```
+Es wird außerdem die Methode *Damage* überschrieben, um den Spieler ein haptisches Feedback zu geben, wenn er Schaden durch einen Gegner erlitten hat. Dafür wird eine Coroutine gestartet, welche das Gamepad für einen kurzen Moment vibrieren lässt. Die stärke, der Vibration hängt dabei von der Größe des erlittenen Schadens ab.
+```csharp
+public override void Damage(float damage, Equipment item = null)
+{
+	base.Damage(damage, item);
+	StopAllCoroutines();
+	StartCoroutine(StartGamePadVibration(damage));
+}
+private IEnumerator StartGamePadVibration(float damage)
+{
+	Gamepad.current.SetMotorSpeeds(damage / 100, damage / 100);
+	yield return new WaitForSeconds(.5f);
+	Gamepad.current.SetMotorSpeeds(0, 0);
+}
+```
+### PlayerEquipment Klasse
+Die Klasse PlayerEquipment  erbt von der [EntityEquipment](#EntityEquipment) Klasse und überschreibt die *Start* Methode, um die Events *OnItemRemoved* und *OnItemSelected* zu abonnieren. Das Event *OnItemSelected*  spielt dabei die wichtigste Rolle, da dieses gefeuert wird, wenn der Spieler einen neuen Gegenstand in seinem Inventar ausgewählt hat. Da der Spieler im Vergleich zu den Gegner zwischen seinen Items variieren kann, muss deshalb die Methode *EquipItem* welche in der Basisklasse [EntityEquipment](#EntityEquipment)  implementiert wurde dieses Event abonnieren. 
+```csharp
+protected override void Start()
+{
+	base.Start();
+	inventory = Player.instance.inventory;
+	inventory.OnItemRemoved += OnItemRemoved;
+
+	hotbar = FindObjectOfType<Hotbar>();
+	hotbar.OnItemSelected += EquipItem;
+}
+```
+Die Methode *OnItemRemoved* wird gecallt, wenn ein Gegenstand aus dem Inventar des Spielers entfernt wurde. Sollte das entfernte Item, dem des aktuell ausgerüsteten entsprechen, wird die in der Basisklasse [EntityEquipment](#EntityEquipment) implementierte Methode  *Unequip* aufgerufen.
+```csharp
+private void OnItemRemoved(object sender, InventoryEvent e)
+{
+	if (e.item == currentEquipment) Unequip();
+}
+```
+Die *PlayerEquipment* Klasse speichert außerdem die Standardgegenstände, die der Spieler zum Beginn des Spiels erhält. Um dabei den ersten Gegenstand dieser Liste auszurüsten, damit es zum Beginn keine Fehler gibt und der Spieler automatisch seine Faust ausgerüstet hat gibt es die Methode *EquipFirstItem*.
+```csharp
+public void EquipFirstItem()
+{
+	if (defaultItems.Length != 0)
+	{
+		EquipItem(defaultItems[0] as Equipment);
+	}
+}
+```
+### Inventory Klasse
+
 
 ## Enemy
 
