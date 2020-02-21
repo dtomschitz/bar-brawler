@@ -110,15 +110,15 @@ Die Ausdauer wird verwendet, wenn der jeweilige Entity einen Angriff mit der Blo
 ```csharp
 public void AddMana(float amount)
 {
-	CurrentMana += amount;
-	CurrentMana = Mathf.Clamp(CurrentMana, 0f, maxMana);
-	OnManaAdded?.Invoke();
+    CurrentMana += amount;
+    CurrentMana = Mathf.Clamp(CurrentMana, 0f, maxMana);
+    OnManaAdded?.Invoke();
 }
 
 public void UseMana(float amount = 1f)
 {
-	CurrentMana -= amount;
-	OnManaUsed?.Invoke();
+    CurrentMana -= amount;
+    OnManaUsed?.Invoke();
 }
 ```
 Mit der Zeit wird die Ausdauer automatisch mithilfe der Parameter *manaRegenerationSpeed* und *manaRegenerationAmount*  wieder aufgefüllt. Dies geschieht in der Update-Methode:
