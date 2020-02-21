@@ -1,4 +1,3 @@
-
 # Technische Dokumentation
 
 # Übersicht
@@ -39,8 +38,18 @@ Für das Spiel wurden verschiedene Komponenten, die von dritten entwickelt wurde
 ## Spielfluss
 Das Spiel beginnt im Hauptmenü, von wo aus der Nutzer entweder ein neues Spiel starten kann oder das gesamte Spiel beendet. Startet der Nutzer ein neues Spiel, wird durch eine Fade-Animation das Hauptmenü durch das Level ersetzt. Ist das Level geladen, findet sich der Spieler in einem Saloon der als Arena dient wieder. Der Nutzer sieht dann das Hud, in welchem die Hotbar, die Lebensanzeige, die Außdaueranzeige, die Munitionsanzeige, die Geldanzeige sowie der Countdown für die nächste Runde zu sehen ist. Der genannte Countdown zählt zu Beginn von 30 Rückwärts und soll den Spieler vor den kommenden Gegner warnen. Dieser Countdown kann jeder Zeit durch das Betätigen der B-Taste übersprungen werden. Ist der Countdown abgelaufen werden die ersten Gegner an verschiedenen Punkten im Level gespawnt und werden von nun an versuchen den Spieler zu verletzten, bis dieser keine Lebenspunkte mehr besitzt. Der Spieler kann sich mittels seiner Fäuste, welche er immer zur Verfügung hat, gegen die zahlreichen Gegner verteidigen. Für jeden erfolgreichen Kill, bekommt der Spieler je nach Spielfortschritt einen gewissen Betrag an Geld, mit dem er im Shop während einer Pause neue Gegenstände erwerben kann. Diese Gegenstände können dem Spieler im Verlauf gegen die immer stärker und vor allem zahlreicher werdenden Gegner helfen. Sollte der Spieler sterben, gelangt er automatisch nach einer kurzen Animation in das GameOver-Menu von wo aus er entweder ein neues Spiel starten oder zum Hauptmenü zurückkehren kann. Wurde die jeweilige Runde überlebt, beginnt der Countdown erneut. In dieser Art "Pause" kann der Spieler mit seinem verdienten Geld neue Gegenstände im Shop erwerben, welchen er beim Barkeeper öffnen kann. Nach jeder Welle bzw. nach gewissen Rundenzahlen werden verschiedene Gegnertypen gespawnt. Diese unterscheiden sich Hauptsächlich durch verschiedene Waffen und Lebenspunkte. Der Vorgang, von Erledigen der Gegner und kaufen neuer Gegenstände, wiederholt sich immer wieder bis der Spieler sterben sollte oder er das Spiel beendet.
 
-## Grafik
 ## Models
+Die Erstellung der Models erfolgte in Blender. Die Models sollten einem Comic Stil entsprechend einfach gehalten sein. Als Referenzen wurden Bilder verwendet.
+
+## Texturen
+Für das Erstellen der Textur Dateien wurden die Models in Blender mit dem SmartUVProject unwrapped. Dabei wurde darauf geachtet, dass zwischen den einzelnen Flächen ein Abstand vorhanden ist. Zudem mussten wir darauf achten, dass Flächen, welche eine höhere Auflösung besitzen sollen, auch eine größere Fläche im UV-Grid zugewiesen bekommen. Nach dem Bemalen der Texture Ebene wurde das UV-Grid wieder entfernt, um Schwarze Linien in der Texture.png Datei zu verhindern. Die Auflösung der Texturen beträgt 1024x1024 Pixeln. Eine höhere Auflösung wird für dieses Projekt nicht benötigt, da die Grafik im Comic Stil gehalten wird.Dementsprechend werden häufig für große Flächen einzelne Farben genutzt oder allgemein wenig detaillierte Texturen erstellt wurden.
+
+Für manche Models wurden nach der Erstellung des UV-Grids in Photoshop die einzelnen Parts mit Farbe bemalt, hierbei wurde das UV-Grid in Photoshop importiert, um die Flächen im Texture.png der jeweiligen UV-Grid-Flächen zuzuordnen.
+
+Für weitere Models wurden direkt in Blende Farben durch verschiedene Materials zu bestimmten Faces zugeordnet. Schließlich wurde das Model mit der Render Engine Cycles und dem Bake Type Diffuse gebaket, wodurch man eine erste Textur Datei erhält und exportieren kann. Diese Dateien wurden anschließend mit Gimp oder Photoshop überarbeitet.
+
+Für einen Teil der gezeichneten Texturen wurde die TexturePaint Funktion in Blender genutzt. Die gezeichneten und einfarbigen Texturen für die Flächen eines Models wurden nachfolgend auch in Gimp und Photoshop zu einer Texture Datei zusammengefügt.
+
 ## Audio
 Wie bereits erwähnt,  wurden alle Sounds die im Spiel zu höheren sind, von [Freesounds](https://freesound.org/)  erworben. Während dem gesamten Spielverlauf wird eine Hintergrundmelodie abgespielt, welche auch im Hauptmenü sowie in dem Pausenmenü, GameOver-Menü und dem Shop zu hören sind. Für jede Aktion die der Spieler ausführt, wie z.B. das Angreifen oder das Drücken eines UI-Buttons, werden entsprechend Sounds abgespielt. Auch für den erfolgreichen Treffer gibt es verschiedene Sounds, welche je nach Waffentyp abgespielt werden.
 
