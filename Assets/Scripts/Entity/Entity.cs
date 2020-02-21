@@ -45,10 +45,7 @@ public class Entity : MonoBehaviour
     public virtual void OnHit(Entity offender, Equipment item)
     {
         if (stats.IsDead) return;
-        
         offender.combat.Attack(stats, item);
-        //combat.SetState(CombatState.Stunned);
-
         animator.OnHit(0);
     }
 

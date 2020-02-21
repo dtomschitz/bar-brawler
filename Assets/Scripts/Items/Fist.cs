@@ -6,7 +6,7 @@
         {
             if (owner.combat.IsAttacking) return;
             base.OnSecondary();
-            owner.combat.SetState(CombatState.Fist_Block);
+            owner.combat.SetState(CombatState.FistBlock);
             owner.combat.UseMana(20f);
         }
 

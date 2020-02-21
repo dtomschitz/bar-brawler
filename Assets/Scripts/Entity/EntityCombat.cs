@@ -3,6 +3,18 @@ using UnityEngine;
 using Items;
 using System.Collections;
 
+public enum CombatState
+{
+    Idle,
+    FistBlock,
+    FistAttack,
+    BottleAttack,
+    KnifeAttack,
+    RevolverAttack,
+    Stunned,
+    Drinking
+}
+
 /// <summary>
 /// Class <c>EntityCombat</c> is the base class which handels combat relatet
 /// stuff such as changing the combat state and so the behvaior of the entity or
@@ -54,7 +66,6 @@ public class EntityCombat : MonoBehaviour
     public void Attack(EntityStats stats, Equipment item)
     {
         stats.Damage(this.stats.damage, item);
-        //OnAttack?.Invoke();
     }
 
     /// <summary>
@@ -91,16 +102,16 @@ public class EntityCombat : MonoBehaviour
         switch (item.type)
         {
             case ItemType.Fist:
-                newState = CombatState.Fist_Attack;
+                newState = CombatState.FistAttack;
                 break;
             case ItemType.Bottle:
-                newState = CombatState.Bottle_Attack;
+                newState = CombatState.BottleAttack;
                 break;
             case ItemType.Knife:
-                newState = CombatState.Knife_Attack;
+                newState = CombatState.KnifeAttack;
                 break;
             case ItemType.Revolver:
-                newState = CombatState.Revolver_Attack;
+                newState = CombatState.RevolverAttack;
                 break;
             case ItemType.Whiskey:
             case ItemType.Beer:
@@ -124,11 +135,6 @@ public class EntityCombat : MonoBehaviour
     {
         if (newState == State || !GameState.instance.IsInGame) return;
         State = newState; 
-
-        /*if (newState == CombatState.Stunned)
-        {
-            StartCoroutine(StunnedRountine());
-        }*/
     }
 
     /// <summary>
@@ -154,24 +160,24 @@ public class EntityCombat : MonoBehaviour
     /// <summary>
     /// This method checks if the entity is currently attacking or not.
     /// </summary>
-    /// <returns>True if the combat state is set to <see cref="CombatState.Fist_Attack"/>,
-    /// <see cref="CombatState.Knife_Attack"/> or <see cref="CombatState.Revolver_Attack"/>;
+    /// <returns>True if the combat state is set to <see cref="CombatState.FistAttack"/>,
+    /// <see cref="CombatState.KnifeAttack"/> or <see cref="CombatState.RevolverAttack"/>;
     /// otherwise, false.
     /// </returns>
     public bool IsAttacking
     {
-        get { return State == CombatState.Fist_Attack || State == CombatState.Bottle_Attack || State == CombatState.Knife_Attack || State == CombatState.Revolver_Attack; }
+        get { return State == CombatState.FistAttack || State == CombatState.BottleAttack || State == CombatState.KnifeAttack || State == CombatState.RevolverAttack; }
     }
 
     /// <summary>
     /// This method checks if the entity is currently blocking attacks.
     /// </summary>
-    /// <returns>True if the combat state is set to <see cref="CombatState.Fist_Block"/>;
+    /// <returns>True if the combat state is set to <see cref="CombatState.FistBlock"/>;
     /// otherwise, false.
     /// </returns>
     public bool IsBlocking
     {
-        get { return State == CombatState.Fist_Block; }
+        get { return State == CombatState.FistBlock; }
     }
 
     /// <summary>
@@ -201,16 +207,4 @@ public class EntityCombat : MonoBehaviour
         yield return new WaitForSeconds(maxStunnedTime);
         SetState(CombatState.Idle);
     }
-}
-
-public enum CombatState
-{
-    Idle,
-    Fist_Block,
-    Fist_Attack,
-    Bottle_Attack,
-    Knife_Attack,
-    Revolver_Attack,
-    Stunned,
-    Drinking
 }
