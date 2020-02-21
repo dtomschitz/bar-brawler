@@ -1,3 +1,4 @@
+
 # Technische Dokumentation
 
 # Übersicht
@@ -7,6 +8,26 @@ Das Spiel wurde ausschließlich für den Computer entwickelt, sollte jedoch für
 
 # Entwicklung
 ## Team
+[Christof Schwarzenberger](https://gitlab.mi.hdm-stuttgart.de/cs267)
+
+Zuständig für Modellierung des Raumes, Designer für Grafiken wie Plakate, Shop.
+
+[David Tomschitz](https://gitlab.mi.hdm-stuttgart.de/dt035)
+
+Fokus auf die Gameplay Programmierung. Movement und Combat, Entity Systeme.
+
+[Duane Englert](https://gitlab.mi.hdm-stuttgart.de/de030)
+
+Gameplay Programmierung und Game Designer. Fokus auf Wave System und Overlay Erstellung.
+
+[Florian Rapp](https://gitlab.mi.hdm-stuttgart.de/fr061)
+
+Modellierung der Details im Raum, sowie erstellen der Texturen.
+
+[Sundar Arz](https://gitlab.mi.hdm-stuttgart.de/sa070)
+
+Erstellen der Charaktere, seine Outfits und Raumdetails 
+
 ## Genutzte Hardware
 ## Genutzte Werkzeuge und Engine
 ## Externe Komponenten
@@ -31,8 +52,34 @@ Die Power-UPs sowie die Flasche, welche der Spieler im Shop erwerben könnte, wu
 ## HUD
 ## Shop
 ## Hauptmenü
+Im Hauptmenü kann der Spieler das Spiel starten oder beenden. 
 ## Pausenmenü
+Im Pausemenü kann der Spieler das Spiel fortsetzen, die aktuelle Spielsitzung neustarten oder ins Hauptmenü zurück gehen. Durch das betätigen der Start-Taste am Controller öffnet sich das Pausemenü und die Zeit im Spiel wird durch die *OnEnable* Methode eingefroren.
+```csharp
+    public void OnEnable()
+    {
+        Time.timeScale = 0f;
+    }
+
+    public void OnDisable()
+    {
+        Time.timeScale = 1f;
+    }
+```
+Sämtliche anderen Overlays werden deaktiviert, sowie auch das Movement des Charakters
+```csharp
+    void TogglePauseMenu()
+    {
+        Player.instance.controls.IsMovementEnabled = false;
+        DisableTargetAcquisition();
+
+        UIManager.instance.SetHUDActive(false, false);
+        UIManager.instance.SetShopActive(false);
+        UIManager.instance.SetGameOverMenuActive(false);
+        UIManager.instance.SetPauseMenuActive(true);
+```
 ## GameOver-Menü
+Das Game Over Overlay wird aufgerufen, wenn der Spieler stirbt. Wie im Pausemenü werden sämtliche anderen Overlays deaktiviert. Das Menü wird durch eine Animation auf den Bildschirm gebracht. Im Game Over Menü kann der Spieler Statistiken einsehen, die aus einer Runde gesammelt wurden.
 
 # Implementierung
 ## Entity
