@@ -124,7 +124,7 @@ public class Entity : MonoBehaviour
 }
 ```
 
-### EntityStats
+### EntityStats Klasse
 Die *EntityStats* Klasse fungiert, als Basisklasse für alle Dinge die mit den Lebenspunkten des Entites zu tun hat. Sie implementiert beispielsweise die Methoden *Damage* und *Heal*. Erstere fügt dem Spieler den angegebenen Schaden hinzu, in dem dieser von der aktuellen Anzahl an Lebenspunkten subtrahiert wird. Zusätzlich wird das Event *OnDamaged* gefeuert,
 welches die Information für andere Klassen wie z.B. der [HealthBar](#HealthBar) Klasse anbieten soll. Sollt außerdem der Spieler nach Abzug der angebenden Lebenspunkte keine mehr besitzen, wird das Event *OnDeath* gecallt, welches beispielsweise dafür sorgt, dass die Todesanimation gestartet und das GameOver-Menü angezeigt wird.
 ```csharp
@@ -147,7 +147,7 @@ public virtual void Heal(float amount)
 }
 ```
 
-### EntityCombat
+### EntityCombat Klasse
 Die *EntityCombat* Klasse ist ebenfalls eine Unterklasse und wird als Basisklasse für alle Kampf relevanten Dingen genutzt. Dazu gehört das Verwalten des Combat States der jeweiligen Entität sowie das der Mana Regeneration. 
 #### Combat State
 Der Combat State definiert den aktuellen allgemeinen Zustand der Entität. Je nachdem in welchem Zustand sich der jeweilige Entity befindet, kann dieser verschiedene Aktionen ausführen oder nicht. Ist der aktuelle Combat State beispielsweise auf *Drinking* gesetzt, kann der Spieler keine Angriffe mehr ausführen. Der Combat State kann dabei die folgenden Enum-Werte annehmen: 
@@ -171,15 +171,15 @@ Die Ausdauer wird verwendet, wenn der jeweilige Entity einen Angriff mit der Blo
 ```csharp
 public void AddMana(float amount)
 {
-    CurrentMana += amount;
-    CurrentMana = Mathf.Clamp(CurrentMana, 0f, maxMana);
-    OnManaAdded?.Invoke();
+CurrentMana += amount;
+CurrentMana = Mathf.Clamp(CurrentMana, 0f, maxMana);
+OnManaAdded?.Invoke();
 }
 
 public void UseMana(float amount = 1f)
 {
-    CurrentMana -= amount;
-    OnManaUsed?.Invoke();
+	CurrentMana -= amount;
+	OnManaUsed?.Invoke();
 }
 ```
 Mit der Zeit wird die Ausdauer automatisch mithilfe der Parameter *manaRegenerationSpeed* und *manaRegenerationAmount*  wieder aufgefüllt. Dies geschieht in der Update-Methode:
@@ -193,7 +193,7 @@ protected virtual void Update()
 }
 ```
 
-### EntityEquipment
+### EntityEquipment Klasse
 Auch diese Klasse ist eine Unterklasse der [Entity](#Entity) Klasse und wird als Basisklasse für das Verwalten der Ausrüstung der jeweiligen Entität genutzt und speichert den jeweils ausgerüsteten Gegenstand zwischen. Außerdem kann durch ´die Methoden *UsePrimary*, *UseSecondary* und *UseConsumable* die definierten Aktionen der jeweiligen Gegenstände ausgeführt werden. Die *UsePrimary* dient dazu die Hauptaktion auszuführen und kann nur getriggert werden, wenn es sich bei dem Item um eine Waffe handelt.  Sie wählt außerdem eine zufällige Animation, aus die für das benutzten der Waffe abgespielt werden soll und aktualisiert die Handposition des Items. 
 ```csharp
 public void UsePrimary()
@@ -216,24 +216,24 @@ Die Methode *UseSecondary* hingegen wird genutzt die Zweitaktion des Items auszu
 ```csharp
 public void UsePrimary()
 {
-    if (... && currentEquipment is Weapon)
-    {
-        currentItem.OnSecondary();
-    }
+	if (... && currentEquipment is Weapon)
+	{
+		currentItem.OnSecondary();
+	}
 }
 ```
 Damit der Spieler mit dem aktuell ausgerüstete Item nicht nur angriffe, sondern diese auch benutzten und verbrauchen kann, gibt es die *UseSecondary* Methode. Sie kann nur ausgeführt werden, wenn es sich bei dem Gegenstand um ein Getränk handelt und callt für dieses die *OnPrimary* Methode. 
 ```csharp
 public void UseConsumable()
 {
-    if (... && currentEquipment is Drink)
-    {
-        currentItem.OnPrimary();
-    }
+	if (... && currentEquipment is Drink)
+	{
+		currentItem.OnPrimary();
+	}
 }
 ```
 
-### EntityAnimator
+### EntityAnimator Klasse
 Die EntityAnimator Klasse ist wie alle vorherigen Klassen, eine Unterklasse der [Entity](#Entity) Klasse und dient als Basisklasse dazu jegliche Animationen für Entites zu verwalten. Um dies zu gewährleisten implementiert die Klasse für alle möglichen Animationen verschiedene Methoden um diese zu triggern, zu aktiveren oder zu deaktivieren. Die Methode *OnPrimary* dient hier beispielsweise um die aktuell ausgewählte und zu einem bestimmten Item zugehörige Animation abzuspielen, wenn die primäre Aktion ausgeführt wurde.  Für die sekundäre Attacke gibt es die äquivalente *OnSecondary* Methode, welche aufgerufen wird, wenn der Nutzer die sekundäre Aktion des aktuell ausgerüsteten Items getriggert hat.
 ```csharp
 public virtual void OnPrimary() => animator.SetTrigger("Primary");
@@ -245,26 +245,26 @@ Sollte der Spieler eine weitere Runde überlebt haben wird die Methode *OnVictor
 public virtual void OnDeath() => animator.SetTrigger("Death");
 public virtual void OnVictory() => animator.SetTrigger("Victory");
 ```
-Um dem Spieler einen erfolgreichen Treffer visuell besser dar zustellen bzw. im auch Umgekehrt zu zeigen, wann er getroffen wurde, gibt es die Methode *OnHit* welche basierend auf der gegeben ID die jeweilige Hit-Animation abspielt.
+Um dem Spieler einen erfolgreichen Treffer visuell besser darzustellen bzw. im auch Umgekehrt zu zeigen, wann er getroffen wurde, gibt es die Methode *OnHit* welche basierend auf der gegeben ID die jeweilige Hit-Animation abspielt.
 ```csharp
 public virtual void OnHit(int id)
 {
-    animator.SetInteger("HitAnimation", id);
-    animator.SetTrigger("Hit");
+	animator.SetInteger("HitAnimation", id);
+	animator.SetTrigger("Hit");
 }
 ```
-Damit sich die jeweilige Entität auch bewegen kann bzw. damit eine Bewegung zu sehen ist, gibt es die Methoden *Move*, *SetForward* und *SetStrafe*. Die letzteren sind dabei die Keymethoden, welche die Vorwärts- und Seitwärtsgeschwindigkeit dem *Animator* übergeben. Basierend auf den Parametern versucht der Animator dann, die verschiedenen Bewegungs-Animationen miteinander zu verschmischen, damit letztendlich eine flüssige und für den Nutzer nachfolziehbare Beweung ensteht.
+Damit sich die jeweilige Entität auch bewegen kann bzw. damit eine Bewegung zu sehen ist, gibt es die Methoden *Move*, *SetForward* und *SetStrafe*. Die letzteren sind dabei die Key-Methoden, welche die Vorwärts und Seitwärts-Geschwindigkeit dem *Animator* übergeben. Basierend auf den Parametern versucht der Animator dann, die verschiedenen Bewegungs-Animationen miteinander zu vermischen, damit letztendlich eine flüssige und für den Nutzer nachvollziehbare Bewegung entsteht.
 ```csharp
 public virtual void Move(float forward, float strafe)
 {
-    SetForward(forward);
-    SetStrafe(strafe);
+	SetForward(forward);
+	SetStrafe(strafe);
 }
 
 public void SetForward(float forward) => animator.SetFloat("Forward", forward);
 public void SetStrafe(float strafe) => animator.SetFloat("Strafe", strafe);
 ```
-Alle Methoden in der Klasse sind als *virtual* gekenzeichnet, damit sie von erbenden Klassen überschrieben werden können. Dies ist beispielsweise bei der Methode *Move* wichtig, welche die Parameter für die Bewegungs-Animation setzt, da sich Spieler und Gegner mit verschiedenen Mechaniken fortbewegen. 
+Alle Methoden in der Klasse sind als *virtual* gekennzeichnet, damit sie von erbenden Klassen überschrieben werden können. Dies ist beispielsweise bei der Methode *Move* wichtig, welche die Parameter für die Bewegungs-Animation setzt, da sich Spieler und Gegner mit verschiedenen Mechaniken fortbewegen. 
 
 ## Player
 ### PlayerAnimator
