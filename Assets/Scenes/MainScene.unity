@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 112000000, guid: e6d0c374a9d809e4a9e635bdd47885ea,
     type: 2}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1793,7 +1793,6 @@ MonoBehaviour:
   shopCanvas: {fileID: 140689663}
   gameOverCanvas: {fileID: 1123749036}
   pauseMenu: {fileID: 1937628923}
-  gameOverUI: {fileID: 1196435167}
 --- !u!1 &232864845
 GameObject:
   m_ObjectHideFlags: 0
@@ -1988,7 +1987,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e065c4c72eadea04fa58e06710791fa2, type: 2}
   - {fileID: 11400000, guid: be64a6ae73e080e47a386a33f7619094, type: 2}
   - {fileID: 11400000, guid: 4f79b3d7de46e17438bc59b1f9e3a509, type: 2}
-  stateOfGameText: {fileID: 896722174}
 --- !u!114 &247322028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5140,18 +5138,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 875080194}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &896722174 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4498888811057729053, guid: 77ba59c64d4dcc041972b79fa5fc8e86,
-    type: 3}
-  m_PrefabInstance: {fileID: 4498888811381631715}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &910053432
 PrefabInstance:
   m_ObjectHideFlags: 0

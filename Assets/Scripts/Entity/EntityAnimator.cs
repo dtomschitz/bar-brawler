@@ -30,19 +30,22 @@ public class EntityAnimator : MonoBehaviour
     /// <summary>
     /// This method will start playing the current primary animation.
     /// </summary>
-    public virtual void OnPrimary()
-    {
-        animator.SetTrigger("Primary");
-    }
+    public virtual void OnPrimary() => animator.SetTrigger("Primary");
 
     /// <summary>
     /// This method will start playing the current secondary animation.
     /// </summary>
-    public virtual void OnSecondary()
-    {
-        animator.SetTrigger("Secondary");
-    }
+    public virtual void OnSecondary() => animator.SetTrigger("Secondary");
 
+    /// <summary>
+    /// This method will start playing the death animation.
+    /// </summary>
+    public virtual void OnDeath() => animator.SetTrigger("Death");
+
+    /// <summary>
+    /// This method will start playing the victory animation.
+    /// </summary>
+    public virtual void OnVictory() => animator.SetTrigger("Victory");
 
     /// <summary>
     /// This method will start playing the hit animation based on the given id.
@@ -52,22 +55,6 @@ public class EntityAnimator : MonoBehaviour
     {
         animator.SetInteger("HitAnimation", id);
         animator.SetTrigger("Hit");
-    }
-
-    /// <summary>
-    /// This method will start playing the death animation.
-    /// </summary>
-    public virtual void OnDeath()
-    {
-        animator.SetTrigger("Death");
-    }
-
-    /// <summary>
-    /// This method will start playing the victory animation.
-    /// </summary>
-    public virtual void OnVictory()
-    {
-        animator.SetTrigger("Victory");
     }
 
     /// <summary>
@@ -82,28 +69,19 @@ public class EntityAnimator : MonoBehaviour
         SetStrafe(strafe);
     }
 
-    public void SetIsGrounded(bool isGrounded)
-    {
-        animator.SetBool("IsGrounded", isGrounded);
-    }
-
     /// <summary>
     /// Sets the forward velocity.
     /// </summary>
     /// <param name="forward">The forward velocity</param>
-    public void SetForward(float forward)
-    {
-        animator.SetFloat("Forward", forward);
-    }
+    public void SetForward(float forward) => animator.SetFloat("Forward", forward);
 
     /// <summary>
     /// Sets the strafe velocity.
     /// </summary>
     /// <param name="strafe">The strafe velocity</param>
-    private void SetStrafe(float strafe)
-    {
-        animator.SetFloat("Strafe", strafe);
-    }
+    public void SetStrafe(float strafe) => animator.SetFloat("Strafe", strafe);
+
+    public void SetIsGrounded(bool isGrounded) =>  animator.SetBool("IsGrounded", isGrounded);
 
     /// <summary>
     /// Updates the item animation id based on the given item.

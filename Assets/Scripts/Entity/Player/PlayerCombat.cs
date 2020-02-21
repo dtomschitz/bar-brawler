@@ -42,10 +42,7 @@ public class PlayerCombat : EntityCombat
     /// requests the given enemy will be removed from the attacker list.
     /// </summary>
     /// <param name="enemy">The enemy who attacked the player</param>
-    public void OnCancelAttack(GameObject enemy)
-    {
-        attackers.Remove(enemy);
-    }
+    public void OnCancelAttack(GameObject enemy) => attackers.Remove(enemy);
 
     private void OnDrawGizmos()
     {

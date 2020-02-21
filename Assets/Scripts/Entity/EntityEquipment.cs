@@ -98,29 +98,6 @@ public class EntityEquipment : MonoBehaviour
     }
 
     /// <summary>
-    /// Sets the equipped item into the hand from the given <see cref="EquipmentAnimation"/>
-    /// which contains an overriden hand position.
-    /// </summary>
-    /// <param name="animation">The equipment animation with the new hand position.</param>
-    public void UpdateItemPosition(EquipmentAnimation animation)
-    {
-        UpdateItemPosition(animation.hand, animation.specificPosition, animation.specificRotation);
-    }
-
-    /// <summary>
-    /// Sets the equipped item into the given hand and updates the item position
-    /// and rotation.
-    /// </summary>
-    /// <param name="hand">The new hand</param>
-    /// <param name="position">The position of the item in the hand</param>
-    /// <param name="rotation">The rotation of the item in the hand</param>
-    public void UpdateItemPosition(Hand hand, Vector3 position, Vector3 rotation)
-    {
-        currentHand = GetHandGameObject(hand);
-        SetItemPosition(currentItemGameObject, currentHand.transform, position, rotation);
-    }
-
-    /// <summary>
     /// Sets the given game object into the hand of the default hand of the equipment item.
     /// </summary>
     /// <param name="gameObject">The game object of the equipped item.</param>
@@ -146,6 +123,28 @@ public class EntityEquipment : MonoBehaviour
         gameObject.transform.localEulerAngles = rotation;
     }
 
+    /// <summary>
+    /// Sets the equipped item into the hand from the given <see cref="EquipmentAnimation"/>
+    /// which contains an overriden hand position.
+    /// </summary>
+    /// <param name="animation">The equipment animation with the new hand position.</param>
+    public void UpdateItemPosition(EquipmentAnimation animation)
+    {
+        UpdateItemPosition(animation.hand, animation.specificPosition, animation.specificRotation);
+    }
+
+    /// <summary>
+    /// Sets the equipped item into the given hand and updates the item position
+    /// and rotation.
+    /// </summary>
+    /// <param name="hand">The new hand</param>
+    /// <param name="position">The position of the item in the hand</param>
+    /// <param name="rotation">The rotation of the item in the hand</param>
+    public void UpdateItemPosition(Hand hand, Vector3 position, Vector3 rotation)
+    {
+        currentHand = GetHandGameObject(hand);
+        SetItemPosition(currentItemGameObject, currentHand.transform, position, rotation);
+    }
 
     /// <summary>
     /// Unequips the current item, resets all settings to the default and

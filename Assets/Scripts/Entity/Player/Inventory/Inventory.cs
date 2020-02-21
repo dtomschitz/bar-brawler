@@ -24,9 +24,12 @@ public class Inventory : MonoBehaviour
     public delegate void MunitionUpdate(int currentAmount);
     public event MunitionUpdate OnMunitionUpdate;
 
-    public event EventHandler<InventoryEvent> OnItemAdded;
-    public event EventHandler<InventoryEvent> OnItemRemoved;
-    public event EventHandler<InventoryEvent> OnItemUsed;
+    public delegate void InventoryUpdate(Item item);
+
+
+    public event InventoryUpdate OnItemAdded;
+    public event InventoryUpdate OnItemRemoved;
+    public event InventoryUpdate OnItemUsed;
 
     void Start()
     {
@@ -54,7 +57,7 @@ public class Inventory : MonoBehaviour
             if (freeSlot != null)
             {
                 freeSlot.Add(item);
-                OnItemAdded?.Invoke(this, new InventoryEvent(item));
+                OnItemAdded?.Invoke(item);
             }
         }
     }
@@ -72,7 +75,7 @@ public class Inventory : MonoBehaviour
         {
             if (slot.Remove(item))
             {
-                OnItemRemoved?.Invoke(this, new InventoryEvent(item));
+                OnItemRemoved?.Invoke(item);
                 break;
             }
         }
@@ -84,7 +87,7 @@ public class Inventory : MonoBehaviour
     /// <param name="item"></param>
     public void UseItem(Item item)
     {
-        OnItemUsed?.Invoke(this, new InventoryEvent(item));
+        OnItemUsed?.Invoke(item);
         RemoveItem(item);
     }
 

@@ -191,7 +191,7 @@ public class PlayerControls : MonoBehaviour
     /// </summary> 
     private void RotatePlayer()
     {
-        if (GameState.instance.IsInTargetAcquisition && TargetAcquisition.instance.CurrentEnemy != null)
+        if (TargetAcquisition.instance.CurrentEnemy != null)
         {
             TurnPlayerToEnemy();
             return;

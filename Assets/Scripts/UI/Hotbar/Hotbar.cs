@@ -65,8 +65,6 @@ public class Hotbar : MonoBehaviour
 
         inventory.OnItemAdded += OnItemAdded;
         inventory.OnItemRemoved += OnItemRemoved;
-
-        AddDefaultItems();
     }
 
     /// <summary>
@@ -175,14 +173,14 @@ public class Hotbar : MonoBehaviour
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void OnItemAdded(object sender, InventoryEvent e)
+    private void OnItemAdded(Item item)
     {
-        HotbarSlot slot = FindHotbarSlot(e.item);
+        HotbarSlot slot = FindHotbarSlot(item);
         if (slot == null) slot = FindEmptyHotbarSlot();
 
-        if (slot != null && e.item is Equipment)
+        if (slot != null && item is Equipment)
         {
-            slot.Add(e.item as Equipment);
+            slot.Add(item as Equipment);
         }
 
         if (currentItemIndex == -1)
@@ -201,13 +199,13 @@ public class Hotbar : MonoBehaviour
     /// </summary>in 
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void OnItemRemoved(object sender, InventoryEvent e)
+    private void OnItemRemoved(Item item)
     {
         for (int i = 0; i < slots.Length; i++)
         {
-            if (i == e.item.slot.Id)
+            if (i == item.slot.Id)
             {
-                int itemCount = e.item.slot.Count;
+                int itemCount = item.slot.Count;
                 slots[i].UpdateCount(itemCount);
 
                 if (itemCount == 0)
@@ -246,19 +244,6 @@ public class Hotbar : MonoBehaviour
                 }
             }
         }
-    }
-
-
-    /// <summary>
-    /// Adds all default items to the inventory and the hotbar itself. 
-    /// </summary>
-    private void AddDefaultItems()
-    {
-        foreach (Item item in equipment.defaultItems)
-        {
-            inventory.AddItem(item);
-        }
-        equipment.EquipFirstItem();
     }
 
     /// <summary>
