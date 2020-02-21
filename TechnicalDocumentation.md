@@ -154,7 +154,7 @@ Der Combat State definiert den aktuellen allgemeinen Zustand der Entität. Je na
 ```csharp
 public enum CombatState
 {
-    Idle,
+	Idle,
     FistBlock,
     FistAttack,
     BottleAttack,
@@ -171,15 +171,15 @@ Die Ausdauer wird verwendet, wenn der jeweilige Entity einen Angriff mit der Blo
 ```csharp
 public void AddMana(float amount)
 {
-    CurrentMana += amount;
-    CurrentMana = Mathf.Clamp(CurrentMana, 0f, maxMana);
-    OnManaAdded?.Invoke();
+CurrentMana += amount;
+CurrentMana = Mathf.Clamp(CurrentMana, 0f, maxMana);
+OnManaAdded?.Invoke();
 }
 
 public void UseMana(float amount = 1f)
 {
-    CurrentMana -= amount;
-    OnManaUsed?.Invoke();
+	CurrentMana -= amount;
+	OnManaUsed?.Invoke();
 }
 ```
 Mit der Zeit wird die Ausdauer automatisch mithilfe der Parameter *manaRegenerationSpeed* und *manaRegenerationAmount*  wieder aufgefüllt. Dies geschieht in der Update-Methode:
@@ -232,24 +232,37 @@ public void UseConsumable()
 	}
 }
 ```
+
 ### EntityAnimator
+Die EntityAnimator Klasse ist wie alle vorherigen Klassen, eine Unterklasse der [Entity](#Entity) Klasse und dient als Basisklasse dazu jegliche Animationen für Entites zu verwalten. Um dies zu gewährleisten implementiert die Klasse für alle möglichen Animationen verschiedene Methoden um diese zu triggern, zu aktiveren oder zu deaktivieren. Die Methode *OnPrimary* dient hier beispielsweise um die aktuell ausgewählte und zu einem bestimmten Item zugehörige Animation abzuspielen, wenn die primäre Aktion ausgeführt wurde.  Für die sekundäre Attacke gibt es die äquivalente *OnSecondary* Methode, welche aufgerufen wird, wenn der Nutzer die sekundäre Aktion des aktuell ausgerüsteten Items getriggert hat.
+```csharp
+public virtual void OnPrimary() => animator.SetTrigger("Primary");
+public virtual void OnSecondary() => animator.SetTrigger("Secondary");
+```
+Sollte der Spieler eine weitere Runde überlebt haben wird die Methode *OnVictory* aufgerufen, um die Jubel-Animation abzuspielen. Diese wird auch verwendet, wenn der Spieler sterben sollte, jedoch für die Gegner. Um eine Todes-Animation abzuspielen wird die *OnDeath* Methode aufgerufen, welche für alle Entities gleich ist. 
 
-## Player
-### PlayerAnimator
-### PlayerCombat
-### PlayerStats
-### PlayerEquipment
-### Inventory
+```csharp
+public virtual void OnDeath() => animator.SetTrigger("Death");
+public virtual void OnVictory() => animator.SetTrigger("Victory");
+```
+Um dem Spieler einen erfolgreichen Treffer visuell besser dar zustellen bzw. im auch Umgekehrt zu zeigen, wann er getroffen wurde, gibt es die Methode *OnHit* welche basierend auf der gegeben ID die jeweilige Hit-Animation abspielt.
+```csharp
+public virtual void OnHit(int id)
+{
+	animator.SetInteger("HitAnimation", id);
+	animator.SetTrigger("Hit");
+}
+```
+Damit sich die jeweilige Entität auch bewegen kann bzw. damit eine Bewegung zu sehen ist, gibt es die Methoden *Move*, *SetForward* und *SetStrafe*. Die letzteren sind dabei die Keymethoden, welche die Vorwärts- und Seitwärtsgeschwindigkeit dem *Animator* übergeben. Basierend auf den Parametern versucht der Animator dann, die verschiedenen Bewegungs-Animationen miteinander zu verschmischen, damit letztendlich eine flüssige und für den Nutzer nachfolziehbare Beweung ensteht.
+```csharp
+public virtual void Move(float forward, float strafe)
+{
+	SetForward(forward);
+	SetStrafe(strafe);
+}
 
-## Enemy
+public void SetForward(float forward) => animator.SetFloat("Forward", forward);
+public void SetStrafe(float strafe) => animator.SetFloat("Strafe", strafe);
+```
+Alle Methoden in der Klasse sind als *virtual* gekenzeichnet, damit sie von erbenden Klassen überschrieben werden können. Dies ist beispielsweise bei der Methode *Move* wichtig, welche die Parameter für die Bewegungs-Animation setzt, da sich Spieler und Gegner mit verschiedenen Mechaniken fortbewegen. 
 
-## Barkeeper
-
-## Wave-System
-### WaveSpawner
-### WaveConfig
-### SpawnPoint
-## Items
-## UI
-### Shop
-### Hotbar
