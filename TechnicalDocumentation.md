@@ -1,7 +1,9 @@
 # Technische Dokumentation
+
 # Übersicht
 ## Zusammenfassung
 ## Plattform
+Das Spiel wurde ausschließlich für den Computer entwickelt, sollte jedoch für einen angenehmeren Spielfluss unbedingt mit dem Controller gespielt werden.
 
 # Entwicklung
 ## Team
@@ -34,7 +36,7 @@ Die Power-UPs sowie die Flasche, welche der Spieler im Shop erwerben könnte, wu
 
 # Implementierung
 ## Entity
-Die *Entity* Klasse, ist die Hauptklasse für die Gegner, den Spieler und den Barkeeper. Sie implementiert die wichtigsten übergreifenden Methoden. Zu diesen gehören zum einen die *OnHit* und *OnDamaged* sowie die *OnDeath* Methode. Die letzten zwei Methoden stellen dabei die Brücke zwischen der [EntityStats](#EntityStats) Klasse und dieser Klasse, welche als Hauptklasse fungiert dar. Sie abonnieren die Events aus der  [EntityStats](#EntityStats) Klasse und werden aufgerufen, sobald diese gefeuert wurden. Die Methode *OnHit* hingegen muss an der Stelle wo ein Kollisionstreffer erkannt wurde gecallt werden. Alle Methoden in der Klasse sind außerdem als virtual gegenzeichnet damit sie von den erbenden Klassen überschrieben werden können. 
+Die *Entity* Klasse, ist die Hauptklasse für die Gegner, den Spieler und den Barkeeper. Sie implementiert die wichtigsten übergreifenden Methoden. Zu diesen gehören zum einen die *OnHit* und *OnDamaged* sowie die *OnDeath* Methode. Die letzten zwei Methoden stellen dabei die Brücke zwischen der [EntityStats](#EntityStats) Klasse und dieser Klasse, welche als Hauptklasse fungiert dar. Sie abonnieren die Events aus der  [EntityStats](#EntityStats) Klasse und werden aufgerufen, sobald diese gefeuert wurden. Die Methode *OnHit* hingegen muss an der Stelle wo ein Kollisionstreffer erkannt wurde gecallt werden. Alle Methoden in der Klasse sind außerdem als virtual gegenzeichnet damit sie von den erbenden Klassen überschrieben werden können. Damit diese Hauptklasse nicht zu voll wurde, sind die einzelnen Parts wie die Verwaltung der Lebenspunkte oder des Combat States in verschiedene Klasse unterteilt, welche in den folgenden Abschnitten näher erläutert werden.
 ```csharp
 public class Entity : MonoBehaviour
 {
@@ -62,53 +64,126 @@ public class Entity : MonoBehaviour
 ```
 
 ### EntityStats
-Die *EntityStats* Klasse fungiert, als Basisklasse für alle Dinge die mit den Lebenspunkten des Entites zu tun hat. Sie implementiert beispielsweise die Methoden *Damage* und *Heal*, welche genutzt werden, um den jeweiligen Entity zu heilen oder schaden hinzuzufügen. Werden diese Hauptmethoden aufgerufen, werden außerdem die Events *OnDamaged* und *OnHealed* gefeuert, welche in verschiedene Klassen wie z.B. der [Entity](#Entity) oder der [HealthBar](#HealthBar) Klasse abgefangen werden.  
+Die *EntityStats* Klasse fungiert, als Basisklasse für alle Dinge die mit den Lebenspunkten des Entites zu tun hat. Sie implementiert beispielsweise die Methoden *Damage* und *Heal*. Erstere fügt dem Spieler den angegebenen Schaden hinzu, in dem dieser von der aktuellen Anzahl an Lebenspunkten subtrahiert wird. Zusätzlich wird das Event *OnDamaged* gefeuert,
+welches die Information für andere Klassen wie z.B. der [HealthBar](#HealthBar) Klasse anbieten soll. Sollt außerdem der Spieler nach Abzug der angebenden Lebenspunkte keine mehr besitzen, wird das Event *OnDeath* gecallt, welches beispielsweise dafür sorgt, dass die Todesanimation gestartet und das GameOver-Menü angezeigt wird.
 ```csharp
-public class EntityStats : MonoBehaviour
+public virtual void Damage(float damage, Equipment item = null)
 {
-    public float maxHealth;
-    public float damage;
+	damage = Mathf.Clamp(damage, 0, maxHealth);
+	CurrentHealth -= damage;
+	OnDamaged?.Invoke(damage, item);
 
-    public float CurrentHealth { get; set; }
-    public event System.Action OnDeath;
-
-    public delegate void Damaged(float damage, Equipment item = null);
-    public event Damaged OnDamaged;
-
-    public delegate void Healed(float amount);
-    public event Healed OnHealed;
-    
-    public virtual void Damage(float damage, Equipment item = null)
-    {
-        damage = Mathf.Clamp(damage, 0, maxHealth);
-        CurrentHealth -= damage;
-        OnDamaged?.Invoke(damage, item);
-
-        if (IsDead) OnDeath?.Invoke();
-    }
-    
-    public virtual void Heal(float amount)
-    {
-        CurrentHealth += amount;
-        CurrentHealth = Mathf.Clamp(CurrentHealth, 0, maxHealth);
-
-        OnHealed?.Invoke(amount);
-    }
-	
-	...
+	if (IsDead) OnDeath?.Invoke();
+}
+```
+Die Methode *Heal* hingegen heilt den Spieler um die angegeben Lebenspunkte. Sie ruft außerdem das Event *OnHeal* auf um die Information über die neu hinzugefügten Lebenspunkte verschiedenen Klassen zur verfügung zustellen.
+```csharp
+public virtual void Heal(float amount)
+{
+	CurrentHealth += amount;
+	CurrentHealth = Mathf.Clamp(CurrentHealth, 0, maxHealth);
+	OnHealed?.Invoke(amount);
+}
 ```
 
 ### EntityCombat
+Die *EntityCombat* Klasse ist ebenfalls eine Unterklasse und wird als Basisklasse für alle Kampf relevanten Dingen genutzt. Dazu gehört das Verwalten des Combat States der jeweiligen Entität sowie das der Mana Regeneration. 
+#### Combat State
+Der Combat State definiert den aktuellen allgemeinen Zustand der Entität. Je nachdem in welchem Zustand sich der jeweilige Entity befindet, kann dieser verschiedene Aktionen ausführen oder nicht. Ist der aktuelle Combat State beispielsweise auf *Drinking* gesetzt, kann der Spieler keine Angriffe mehr ausführen. Der Combat State kann dabei die folgenden Enum-Werte annehmen: 
+```csharp
+public enum CombatState
+{
+    Idle,
+    FistBlock,
+    FistAttack,
+    BottleAttack,
+    KnifeAttack,
+    RevolverAttack,
+    Stunned,
+    Drinking
+}
+```
+
+#### Ausdauer
+Die Ausdauer wird verwendet, wenn der jeweilige Entity einen Angriff mit der Blocken-Taste abwehrt. Für jeden erfolgreich abgewehrten Angriff verliert die Entität Ausdauer. Durch die Methoden *AddMana* und *UseMana* kann Ausdauer hinzugefügt oder entfernt werden. Jedes Mal wird außerdem das entsprechende Event gefeuert, um über die Aktualisierung zu informieren.
+
+```csharp
+public void AddMana(float amount)
+{
+	CurrentMana += amount;
+	CurrentMana = Mathf.Clamp(CurrentMana, 0f, maxMana);
+	OnManaAdded?.Invoke();
+}
+
+public void UseMana(float amount = 1f)
+{
+	CurrentMana -= amount;
+	OnManaUsed?.Invoke();
+}
+```
+Mit der Zeit wird die Ausdauer automatisch mithilfe der Parameter *manaRegenerationSpeed* und *manaRegenerationAmount*  wieder aufgefüllt. Dies geschieht in der Update-Methode:
+```csharp
+protected virtual void Update()
+{
+	if (!IsBlocking)
+	{
+		AddMana(manaRegenerationAmount * Time.deltaTime / manaRegenerationSpeed);
+	}
+}
+```
+
 ### EntityEquipment
+Auch diese Klasse ist eine Unterklasse der [Entity](#Entity) Klasse und wird als Basisklasse für das Verwalten der Ausrüstung der jeweiligen Entität genutzt und speichert den jeweils ausgerüsteten Gegenstand zwischen. Außerdem kann durch ´die Methoden *UsePrimary*, *UseSecondary* und *UseConsumable* die definierten Aktionen der jeweiligen Gegenstände ausgeführt werden. Die *UsePrimary* dient dazu die Hauptaktion auszuführen und kann nur getriggert werden, wenn es sich bei dem Item um eine Waffe handelt.  Sie wählt außerdem eine zufällige Animation, aus die für das benutzten der Waffe abgespielt werden soll und aktualisiert die Handposition des Items. 
+```csharp
+public void UsePrimary()
+{
+	if (... && currentEquipment is Weapon)
+	{
+		EquipmentAnimation[] animations = currentEquipment.equipmentAnimations;
+		if (animations.Length != 0)
+		{
+			EquipmentAnimation animation = 
+				currentEquipment.equipmentAnimations[Random.Range(0, animations.Length)];
+			UpdateItemPosition(animation);
+			GetComponent<EntityAnimator>().SetEquipmentAnimation(animation);
+		}
+		currentItem.OnPrimary();
+	}
+}
+```
+Die Methode *UseSecondary* hingegen wird genutzt die Zweitaktion des Items auszuführen. Auch hier kann diese nur ausgeführt werden, wenn es sich bei dem Item um eine Waffe handelt. 
+```csharp
+public void UsePrimary()
+{
+	if (... && currentEquipment is Weapon)
+	{
+		currentItem.OnSecondary();
+	}
+}
+```
+Damit der Spieler mit dem aktuell ausgerüstete Item nicht nur angriffe, sondern diese auch benutzten und verbrauchen kann, gibt es die *UseSecondary* Methode. Sie kann nur ausgeführt werden, wenn es sich bei dem Gegenstand um ein Getränk handelt und callt für dieses die *OnPrimary* Methode. 
+```csharp
+public void UseConsumable()
+{
+	if (... && currentEquipment is Drink)
+	{
+		currentItem.OnPrimary();
+	}
+}
+```
 ### EntityAnimator
+
 ## Player
 ### PlayerAnimator
 ### PlayerCombat
 ### PlayerStats
 ### PlayerEquipment
 ### Inventory
+
 ## Enemy
+
 ## Barkeeper
+
 ## Wave-System
 ### WaveSpawner
 ### WaveConfig
