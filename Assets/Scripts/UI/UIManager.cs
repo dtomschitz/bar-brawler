@@ -36,20 +36,14 @@ public class UIManager : MonoBehaviour
     /// Sets the Hud active or not based on the given value.
     /// </summary>
     /// <param name="active">True if the the hud should be displayed; otherwise false.</param>
-    public void SetHUDActive(bool active)
-    {
-        SetHUDActive(active, true, true, true, true, true);
-    }
+    public void SetHUDActive(bool active) => SetHUDActive(active, true, true, true, true, true);
 
     /// <summary>
     /// Sets the Hud active or not based on the given value.
     /// </summary>
     /// <param name="active">True if the the hud should be displayed; otherwise false.</param>
     /// <param name="showHelp">True if the the help should be displayed; otherwise false.</param>
-    public void SetHUDActive(bool active, bool showHelp)
-    {
-        SetHUDActive(active, true, true, showHelp);
-    }
+    public void SetHUDActive(bool active, bool showHelp) => SetHUDActive(active, true, true, showHelp);
 
     /// <summary>
     /// Sets the Hud active or not based on the given value.
@@ -89,26 +83,17 @@ public class UIManager : MonoBehaviour
     /// Sets the Shop active or not based on the given value.
     /// </summary>
     /// <param name="active">True if the the shop should be displayed; otherwise false.</param>
-    public void SetShopActive(bool active)
-    {
-        shopCanvas.gameObject.SetActive(active);
-    }
+    public void SetShopActive(bool active) => shopCanvas.gameObject.SetActive(active);
 
     /// <summary>
     /// Sets the pause menu active or not based on the given value.
     /// </summary>
     /// <param name="active">True if the the pause menu should be displayed; otherwise false.</param>
-    public void SetPauseMenuActive(bool active)
-    {
-        pauseMenu.gameObject.SetActive(active);
-    }
+    public void SetPauseMenuActive(bool active) => pauseMenu.gameObject.SetActive(active);
 
     /// <summary>
     /// Sets the GameOver menu active or not based on the given value.
     /// </summary>
     /// <param name="active">True if the the game over menu should be displayed; otherwise false.</param>
-    public void SetGameOverMenuActive(bool active)
-    {
-        gameOverCanvas.gameObject.SetActive(active);
-    }
+    public void SetGameOverMenuActive(bool active) => gameOverCanvas.gameObject.SetActive(active);
 }

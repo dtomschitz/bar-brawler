@@ -30,44 +30,29 @@ public class HUDManager : MonoBehaviour
     /// Displays or hides the hotbar in the Hud.
     /// </summary>
     /// <param name="active"></param>
-    public void DisplayHotbar(bool active)
-    {
-        hotbar.gameObject.SetActive(active);
-    }
+    public void DisplayHotbar(bool active) =>  hotbar.gameObject.SetActive(active);
 
     /// <summary>
     /// Displays or hides the health bar in the Hud.
     /// </summary>
     /// <param name="active"></param>
-    public void DisplayHealthBar(bool active)
-    {
-        healthBar.gameObject.SetActive(active);
-    }
+    public void DisplayHealthBar(bool active) => healthBar.gameObject.SetActive(active);
 
     /// <summary>
     /// Displays or hides the mana bar in the Hud.
     /// </summary>
     /// <param name="active"></param>
-    public void DisplayManaBar(bool active)
-    {
-        manaBar.gameObject.SetActive(active);
-    }
+    public void DisplayManaBar(bool active) => manaBar.gameObject.SetActive(active);
 
     /// <summary>
     /// Displays or hides the wave informationen in the Hud
     /// </summary>
     /// <param name="active"></param>
-    public void DisplayWaveInfo(bool active)
-    {
-        waveInfo.gameObject.SetActive(active);
-    }
+    public void DisplayWaveInfo(bool active) => waveInfo.gameObject.SetActive(active);
 
     /// <summary>
     /// Displays or hides the interactions hints in the Hud.
     /// </summary>
     /// <param name="active"></param>
-    public void DisplayInteractionHint(bool active)
-    {
-        interactionHint.gameObject.SetActive(active);
-    }
+    public void DisplayInteractionHint(bool active) => interactionHint.gameObject.SetActive(active);
 }
