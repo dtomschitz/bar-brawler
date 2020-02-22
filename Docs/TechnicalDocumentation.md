@@ -618,6 +618,131 @@ public void UseMunition()
 }
 ```
 
+### PlayerControls Klasse
+Die *PlayerControls* Klasse ist wohl mit die wichtigste im gesamten Spiel. Mit ihr kann der Nutzer die Spielfigur im Level bewegen und die verschiedenen Aktionen ausführen, die ihm geboten werden. Die Tastenbelegung wurde mithilfe des neuen Input-Systems von Unity realisiert, automatisch erstellt und in der Klasse *PlayerInputActions* gespeichert. Diese erzeugten Events werden dann in der *Awake* Methode des Skripts abonniert, um im Verlauf des Spiels diese verarbeiten zu können. Diese abonnierten Methoden stellen die Hauptfunktionen des Spiels dar. Andere Kontrollfunktionen werden in den jeweiligen Klassen deklariert.
+```csharp
+void Awake()
+{
+	inputActions = new PlayerInputActions();
+	inputActions.PlayerControls.Move.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
+	inputActions.PlayerControls.Rotation.performed += ctx => lookPosition = ctx.ReadValue<Vector2>();
+
+	inputActions.PlayerControls.Primary.performed += UsePrimary;
+	inputActions.PlayerControls.Secondary.performed += UseSecondary;
+	inputActions.PlayerControls.UseItem.performed += UseItem;
+	inputActions.PlayerControls.Pause.performed += PauseGame;
+}
+```
+Die Methoden *UsePrimary*, *UseSecondary* und *UseItem* werden aufgerufen, wenn der Nutzer die dazugehörige Taste betätigt hat. Sie triggern die primär oder sekundäre Aktion des aktuell ausgerüsteten Items mithilfe der [EntityEquipment](#EntityEquipment) Klasse. 
+```csharp
+public void UsePrimary(CallbackContext ctx)
+{
+	if (GameState.instance.IsInTargetAcquisition) return;
+	equipment.UsePrimary();
+}
+
+public void UseSecondary(CallbackContext ctx)
+{
+	if (GameState.instance.IsInTargetAcquisition) return;
+	equipment.UseSecondary();
+}
+
+public void UseItem(CallbackContext ctx)
+{
+	if (GameState.instance.IsInTargetAcquisition) return;
+	equipment.UseConsumable();
+}
+```
+In dieser Klasse wird außerdem die Funktion implementiert das Spiel zu pausieren. Dies geschieht mit der folgenden Methode.
+```csharp
+public void PauseGame(CallbackContext ctx)
+{
+	GameState.instance.SetState(GameStateType.GamePaused);
+}
+```
+Damit sich der Spieler jedoch letztendlich bewegen und rotieren kann wurde eine eigens dafür angepasste Steuerung implementiert. Die Bewegung des Spielers wird mittels der Input-Werte der Joysticks eines Gamepads oder der Pfeiltasten sowie der Bewegungsrichtung der Kamera kalkuliert. Diese Logik befindet sich in der *Update* Methode in welcher die Variable *desiredDirection* letztendlich für jeden Update-Zyklus neu ermittelt wird. Dieser Richtungsvektor gibt an, in welche Richtung sich der Spieler Bewegen soll und wie die Bewegungs-Animation durch den *Animator* erzeugt werden soll.
+```csharp
+void Update()
+{
+	if (IsMovementEnabled)
+	{
+		float h = movementInput.x;
+		float v = movementInput.y;
+
+		Vector3 input = new Vector3(h, 0f, v);
+		inputDirection = Vector3.Lerp(inputDirection, input, Time.deltaTime * 10f);
+
+		Vector3 cameraForward = mainCamera.transform.forward;
+		Vector3 cameraRight = mainCamera.transform.right;
+
+		cameraForward.y = 0f;
+		cameraRight.y = 0f;
+
+		Vector3 desiredDirection = cameraForward * inputDirection.z + cameraRight * inputDirection.x;
+
+		MovePlayer(desiredDirection);
+		RotatePlayer();
+		AnimatePlayerMovement(desiredDirection);
+	}
+}
+```
+Mithilfe der *MovePlayer* Methode wird das Spieler-Model basierend auf dem übergebenen Parameter bewegt. Dieser wird auf der x- und z-Achse mit der vorab definierten Geschwindigkeit, der delta Zeit und sich selbst multipliziert. Dieser dadurch entstanden Bewegungsvektor wird dann an den *CharacterController*, welcher von Unity zur Verfügung gestellt wird, übergeben. Des Weiteren wird auf der y-Achse noch die Gravität errechnet, damit der Spieler von einer erhöhten Ebene herunterfallen und nicht in der Luft laufen kann.
+```csharp
+private void MovePlayer(Vector3 desiredDirection)
+{
+	movement.Set(desiredDirection.x, movement.y, desiredDirection.z);
+	movement = movement * speed * Time.deltaTime;
+
+	character.Move(movement);
+
+	movement.y += (Physics.gravity.y * gravityScale * Time.deltaTime * 0.6f);
+}
+```
+Mittels der gewünschten Bewegungsrichtung wird außerdem durch die [EntityAnimator](#EntityAnimator) Klasse eine Bewegungs-Animation "gebaut", welche zuvor in einem Blend-Tree definiert wurde. 
+```csharp
+private void AnimatePlayerMovement(Vector3 desiredDirection)
+{
+	if (!playerAnimator) return;
+
+	Vector3 movement = new Vector3(desiredDirection.x, 0f, desiredDirection.z);
+	float forward = Vector3.Dot(movement, playerModel.transform.forward);
+	float strafe = Vector3.Dot(movement, playerModel.transform.right);
+	playerAnimator.Move(forward, strafe);
+}
+```
+Damit sich das Spieler-Model auch rotieren lässt, gibt es die *RotatePlayer* Methode. Sie errechnet anhand der Kamerarichtung die Rotationsbewegung des Spielers. Sollte der Spieler jedoch zuvor im Zielerfassungsmodus einen Gegner ausgewählt haben, rotiert sich der Spieler nur noch in die Richtung des ausgewählten Gegners.
+```csharp
+private void RotatePlayer()
+{
+	if (TargetAcquisition.instance.CurrentEnemy != null)
+	{
+		TurnPlayerToEnemy();
+		return;
+	}
+
+	Vector2 input = lookPosition;
+	Vector3 lookDirection = new Vector3(input.x, 0, input.y);
+
+	Vector3 lookRotation = mainCamera.transform.TransformDirection(lookDirection);
+	lookRotation = Vector3.ProjectOnPlane(lookRotation, Vector3.up);
+
+	if (lookRotation != Vector3.zero)
+	{
+		Quaternion newRotation = Quaternion.LookRotation(lookRotation);
+		playerModel.transform.rotation = Quaternion.Lerp(playerModel.transform.rotation, newRotation, Time.deltaTime * 8f);
+	}
+}
+
+private void TurnPlayerToEnemy()
+{
+	Enemy enemy = TargetAcquisition.instance.CurrentEnemy;
+	Vector3 lookDirection = (enemy.transform.position - playerModel.transform.position).normalized;
+	Quaternion lookRotation = Quaternion.LookRotation(new Vector3(lookDirection.x, 0, lookDirection.z));
+	playerModel.transform.rotation = Quaternion.Lerp(playerModel.transform.rotation, lookRotation, Time.deltaTime * 10000f);
+}
+```
+### TargetAcquisition Klasse
+
 
 ## Enemy
 
