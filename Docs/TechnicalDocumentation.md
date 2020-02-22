@@ -1,4 +1,3 @@
-
 # Technische Dokumentation
 
 # Übersicht
@@ -626,7 +625,8 @@ public void UseMunition()
 
 ## Enemy
 
-## Barkeeper
+## Barkeeper Klasse
+Die Barkeeper Klasse wird genutzt damit der Spieler mit diesem an der Bar interagieren kann, um somit den [Shop](#Shop) zu schließen oder zu öffnen. Dies wird erreicht in dem in der Klasse gespeichert wird, ob sich der Spieler in Reichweite befindet oder nicht. Außerdem Spielt der aktuelle [GameState](#GameState) eine wichtige Rolle. Ist dieser nämlich auf *GameStateType.GamePaused* oder *GameStateType.GameOver* kann der Shop nicht geöffnet werden. Auch wenn sich der Spieler aktuell in einer Runde befindet, kann nicht mehr mit dem Barkeeper interagiert werden. Die Klasse hat somit ausschließlich den Zweck den Shop zu öffnen und zu schließen.
 
 ## Wave-System
 ### WaveSpawner
