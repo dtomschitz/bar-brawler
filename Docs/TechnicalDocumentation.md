@@ -1058,7 +1058,33 @@ public class WaveConfig : ScriptableObject
     }
    ```
 ### SpawnPoint
+*SpawnPoint* beschreibt, ob die Türen geöffnet werden müssen, wenn Gegner hindurch gehen.
+ ```csharp
+ public class SpawnPoint : MonoBehaviour
+    {
+        public Door door;
 
+        public void OpenDoor()
+        {
+            if (door) door.OpenDoor();
+        }
+
+        public void CloseDoor()
+        {
+            if (door) door.CloseDoor();
+        }
+
+        public Vector3 Position
+        {
+            get { return transform.position; }
+        }
+
+        public Quaternion Rotation
+        {
+            get { return transform.rotation; }
+        }
+    }
+ ```
 ## UI
 ### UIManag
 ### Shop
