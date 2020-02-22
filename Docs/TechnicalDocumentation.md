@@ -1,3 +1,4 @@
+
 # Technische Dokumentation
 
 # Übersicht
@@ -71,32 +72,10 @@ Der Shop kann nach jeder runde vom Spieler geöffnet werden, wenn dieser an der 
 Das Hauptmenü beinhaltet den Titel des Spiels sowie die Buttons um das Spiel zu starten und zu beenden. Im Hintergrund kann der Nutzer den Saloon mit dem Barkeeper, einem Pianist und dem Spieler selbst sehen.
 
 ## Pausenmenü
-Im Pausemenü kann der Spieler das Spiel fortsetzen, die aktuelle Spielsitzung neustarten oder ins Hauptmenü zurück gehen. Durch das betätigen der Start-Taste am Controller öffnet sich das Pausemenü und die Zeit im Spiel wird durch die *OnEnable* Methode eingefroren.
-```csharp
-    public void OnEnable()
-    {
-        Time.timeScale = 0f;
-    }
+Im Pausemenü kann der Spieler das Spiel fortsetzen, die aktuelle Spielsitzung neustarten oder ins Hauptmenü zurück gehen. Durch das betätigen der Start-Taste am Controller öffnet sich das Pausemenü. Das Spiel wird während dessen pausiert.
 
-    public void OnDisable()
-    {
-        Time.timeScale = 1f;
-    }
-```
-Sämtliche anderen Overlays werden durch *TogglePauseMenu* deaktiviert, sowie auch das Movement des Charakters
-```csharp
-    void TogglePauseMenu()
-    {
-        Player.instance.controls.IsMovementEnabled = false;
-        DisableTargetAcquisition();
-
-        UIManager.instance.SetHUDActive(false, false);
-        UIManager.instance.SetShopActive(false);
-        UIManager.instance.SetGameOverMenuActive(false);
-        UIManager.instance.SetPauseMenuActive(true);
-```
 ## GameOver-Menü
-Das Game Over Overlay wird aufgerufen, wenn der Spieler stirbt. Wie im Pausemenü werden sämtliche anderen Overlays durch *ToggleGameOver* deaktiviert. Das Menü wird durch eine Animation auf den Bildschirm gebracht. Im Game Over Menü kann der Spieler Statistiken einsehen, die aus einer Runde gesammelt wurden.
+Das Game Over Overlay wird aufgerufen, wenn der Spieler stirbt. Das Menü wird durch eine Animation auf den Bildschirm gebracht. Im Game Over Menü kann der Spieler Statistiken einsehen, die aus einer Runde gesammelt wurden. Der Spieler hat hier zwei Auswahlmöglichkeiten. Er kann das Spiel neustarten oder zurück zum Hauptmenü gehen.
 
 # Implementierung
 ## Entity
