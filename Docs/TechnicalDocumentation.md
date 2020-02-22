@@ -1086,7 +1086,162 @@ public class WaveConfig : ScriptableObject
     }
  ```
 ## UI
-### UIManag
+### UIManager und HUDManager
+Die Klassen UIManager und HUDManager, sind wie der Name schon sagt ausschließlich für die Verwaltung der verschiedenen UI-Elemente zuständig. Deshalb beinhalten beide Klassen Referenzen zu den jeweiligen Game-Objekten, da die meisten Elemente eigene Verwaltungsklassen besitzen.
+
+Die *UIManager* Klasse hat beispielsweise die Aufgabe die verschiedenen Menüs ein- und auszublenden oder das HUD zu aktivieren/deaktivieren. Außerdem wurde die Klasse als Singelton implementiert, damit ihre Variablen von überall aus erreicht werden können und es garantiert werden kann, dass es immer nur eine Instanz dieser Klasse gibt.
+```csharp
+public class UIManager : MonoBehaviour
+{
+    Singelton
+
+    public HUDManager hud;
+    public Canvas shopCanvas;
+    public Canvas gameOverCanvas;
+    public PauseMenu pauseMenu;
+
+	...
+
+    public void SetHUDActive(...) => SetHUDActive(...);
+    public void SetShopActive(bool active) => shopCanvas.gameObject.SetActive(active);
+    public void SetPauseMenuActive(bool active) => pauseMenu.gameObject.SetActive(active);
+    public void SetGameOverMenuActive(bool active) => gameOverCanvas.gameObject.SetActive(active);
+}
+```
+Die HUDManager Klasse hingegen, ist speziell für das HUD zuständig und besitzt Zugriff auf alle Elemente, die sich in ihm befinden. Neben den Methoden zur Aktivierung oder Deaktivierung diverser Anzeigen, können so auch die einzelnen Verwaltungsklassen aufgerufen werden. 
+
+```csharp
+public class HUDManager : MonoBehaviour
+{
+    public Hotbar hotbar;
+    public HealthBar healthBar;
+    public ManaBar manaBar;
+    public MoneyInfo moneyInfo;
+    public WaveInfo waveInfo;
+    public InteractionHint interactionHint;
+    public HelpInfo helpInfo;
+   
+	...
+	
+    public void DisplayHotbar(bool active) =>  hotbar.gameObject.SetActive(active);
+    public void DisplayHealthBar(bool active) => healthBar.gameObject.SetActive(active);
+    public void DisplayManaBar(bool active) => manaBar.gameObject.SetActive(active);
+    public void DisplayWaveInfo(bool active) => waveInfo.gameObject.SetActive(active);
+    public void DisplayInteractionHint(bool active) => interactionHint.gameObject.SetActive(active);
+}
+```
+### HUD
+
+
 ### Shop
+Die *Shop* Klasse wird verwendet, um im Spiel den Shop zu öffnen, zu schließen und die Inhalte semi-dynamisch zu laden. Damit der Shop ordnungsgemäß funktioniert, müssen durch den Editor die verschiedenen Kategorien(*CategoryButton*) und Shop-Seiten(*ShopPage*) erstellt und übergeben werden. Der Nutzer kann so dann später zwischen den Kategorien und den dafür vorgesehen Shop-Seiten navigieren. Dies kann durch die Methode *OnPageSelected* erzielt werden, welche im Editor zwingend vorab an das OnClick-Event des jeweiligen Buttons gebindet werden muss. Die Methode fungiert letztendlich hauptsächlich "Austauschmethode". Sie deaktiviert die zuletzt geöffnete Shop-Seite, wenn bis zu diesem Zeitpunkt schon eine geöffnet wurde und aktiviert die neue Seite basierend auf der gegebenen ID.
+```csharp
+public void OnPageSelected(int id)
+{
+	UpdateCategoryHighlight(id);
+
+	if (currentPage != null)
+	{
+		ShopPage newPage = shopPages[id];
+		currentPage.SetActive(false);
+		newPage.SetActive(true);
+		currentPage = newPage;
+		return;
+	}
+
+	currentPage = shopPages[id];
+	currentPage.SetActive(true);
+}
+```
+Die Klasse ShopPage, welche die einzelnen Seiten verwaltet implementiert die Methode *OnItemSelected*, welche benötigt wird, um die Informationen für das aktuell ausgewählte Item zu aktualisieren. Sie wird aufgerufen, wenn der Nutzer einen Button auf der linken Seite des Shops ausgewählt hat.
+```csharp
+public class ShopPage : MonoBehaviour
+{
+	public ItemInfo itemInfo;
+
+	public void OnItemSelected(ShopItem item)
+	{
+		itemInfo.SetItem(item);
+	}
+	
+	...
+}
+```
+Für das Überschreiben der letzten Informationen ist die Klasse *ItemInfo* mit der Methode *SetItem* zuständig. 
+```csharp
+public void SetItem(ShopItem shopItem)
+{
+	gameObject.SetActive(true);
+	title.text = shopItem.item.name.ToUpper();
+	price.text = "$" + shopItem.price.ToString();
+	info.text = shopItem.infoText.ToUpper();
+	image.sprite = shopItem.item.icon;
+}
+```
+Die dafür benötigten Parameter bekommt werden durch die Klasse *ShopItem* übergeben, welches eine Referenz du dem jeweiligen Item, den dazugehörigen Preis und einen kurzen Text zur Beschreibung des Items beinhaltet. Die Klasse implementiert außerdem die *OnItemBought* Methode welche aufgerufen wird, wenn der Spieler dieses Item erwerben will. Sie fügt das gewünschte Item letztendlich dem Inventar des Spielers hinzu, zieht ihm den Preis von seinem aktuellen Budget ab und aktualisiert die Statistiken. 
+Für das Munitions-Item gibt es für diesen Vorgang noch eine eigene Klasse in welcher diese Methode überschrieben wird, da Munition nicht direkt in einem der [InventorySlot](#InventorySlot)'s gespeichert, sondern einfach nur auf einen Counter addiert wird.
+```csharp
+[CreateAssetMenu(fileName = "ShopItem", menuName = "Shop/Item")]
+public class ShopItem : ScriptableObject
+{
+	public Item item;
+	public string infoText;
+	public int price;
+
+	public virtual void OnItemBought()
+	{
+		Player.instance.inventory.AddItem(item);
+		Player.instance.RemoveMoney(price);
+
+		Statistics.instance.AddMoney(price);
+	}
+}
+```
+Gegenstände kann der Spieler erwerben, in dem er einen der Buttons auf der linken Seite der jeweiligen Shop-Seite drückt. Durch diese Aktion wird die Methode *OnClick* getriggert, welche dann überprüft, ob der Spieler genug Geld für den Kauf hat, sein Inventar genug Platz bietet oder ob er das Item schon zu oft besitzt. Treffen diese Fälle zu, wird er durch einen kurzen Text unterhalb der Shop-UI informiert. Sollte jedoch keiner dieser Fälle zutreffen, wird der endgültige Kauf durch die Methode *ShopItem.OnItemBought*, welche zuvor schon näher beschrieben wurde, in die Wege geleitet.
+```csharp
+public void OnClick()
+{
+	StopAllCoroutines();
+	eventText.text = "";
+	eventText.color = Color.white;
+
+	FadeIn(eventText, .5f);
+	PlayerInventory inventory = Player.instance.inventory;
+	if (inventory != null)
+	{
+		if (Player.instance.CurrentBalance < shopItem.price)
+		{
+			eventText.text = "Du hast nicht genug Geld!".ToUpper();
+			StartCoroutine(HideEventText());
+			return;
+		}
+		if (!(shopItem is Munition))
+		{
+			if (!inventory.HasItem(shopItem.item) && inventory.FindStackableSlot(shopItem.item) == null && inventory.FindNextEmptySlot() == null)
+			{
+				eventText.text = "Dein Inventar ist voll!".ToUpper();
+				StartCoroutine(HideEventText());
+				return;
+			}
+
+			if (inventory.HasItem(shopItem.item) && inventory.FindStackableSlot(shopItem.item) == null)
+			{
+				eventText.text = "Du hast schon zu viele Items dieser Art".ToUpper();
+				StartCoroutine(HideEventText());
+				return;
+			}
+		}
+		shopItem.OnItemBought();
+	}
+}
+
+private IEnumerator HideEventText()
+{
+	yield return new WaitForSeconds(2f);
+	FadeOut(eventText, .5f);
+	yield return new WaitForSeconds(.5f);
+	eventText.text = "";
+}
+```
 ### Hotbar
 
