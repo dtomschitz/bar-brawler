@@ -24,7 +24,7 @@ public class Player : Entity
 
     [Header("Player specific")]
     public PlayerControls controls;
-    public Inventory inventory;
+    public PlayerInventory inventory;
 
     public int CurrentBalance { get; set; } = 300;
 

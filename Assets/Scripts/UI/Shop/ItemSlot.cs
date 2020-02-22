@@ -34,7 +34,7 @@ namespace Shop
 
             FadeIn(eventText, .5f);
 
-            Inventory inventory = Player.instance.inventory;
+            PlayerInventory inventory = Player.instance.inventory;
             if (inventory != null)
             {
                 if (Player.instance.CurrentBalance < shopItem.price)

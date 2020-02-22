@@ -54,17 +54,13 @@ namespace Items
         public virtual void OnHit(Entity entity)
         {
             if (entity.combat.IsBlocking && owner.equipment.CurrentEquipment.type == ItemType.Fist) return;
-
-            entity.OnHit(owner, item);
             if (entity is Enemy && owner is Player && item.hasDuration)
             {
-                item.UseItem();
-                if (item.CurrentDuration <= 0)
-                {
-                    Player.instance.inventory.RemoveItem(item);
-                    return;
-                }
+                bool isDestroyed = item.UseItem();
+                if (isDestroyed) return;
             }
+
+            entity.OnHit(owner, item);
         }
 
         public override void OnPrimary()
@@ -76,7 +72,6 @@ namespace Items
             {
                 primaryCooldown = 1f / primaryAttackRate;
                 owner.animator.OnPrimary();
-                //if (attacks != null && attacks.Length != 0) hits[Random.Range(0, attacks.Length)].Play();
             }
         }
 

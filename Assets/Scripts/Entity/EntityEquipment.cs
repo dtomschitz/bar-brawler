@@ -15,9 +15,7 @@ public class EntityEquipment : MonoBehaviour
     public GameObject rightHand;
     public GameObject leftHand;
 
-    protected GameObject currentItemGameObject;
     protected GameObject currentHand;
-
     protected Equippable currentItem;
     protected Equipment currentEquipment;
 
@@ -89,9 +87,8 @@ public class EntityEquipment : MonoBehaviour
             equippable.OnEquip();
 
             if (currentItem != null) Unequip();
-            Equip(prefabCopy, item);
+            Equip(equippable, item);
 
-            currentItemGameObject = prefabCopy;
             currentItem = equippable;
             currentEquipment = item;
         }
@@ -102,25 +99,10 @@ public class EntityEquipment : MonoBehaviour
     /// </summary>
     /// <param name="gameObject">The game object of the equipped item.</param>
     /// <param name="item">The equipment item.</param>
-    protected void Equip(GameObject gameObject, Equipment item)
+    protected void Equip(Equippable equippable, Equipment item)
     {
         currentHand = GetHandGameObject(item.defaultHand);
-        SetItemPosition(gameObject, currentHand.transform, item.defaultPosition, item.defaultRotation);
-    }
-
-    /// <summary>
-    /// Updates the parent, position and rotation of the created equipment prefab to the given parameters. 
-    /// </summary>
-    /// <param name="gameObject">The game object of the equipped item.</param>
-    /// <param name="hand">The transform of the current <see cref="Hand"/></param>
-    /// <param name="position">The new poisition of the given game object</param>
-    /// <param name="rotation">The new rotation of the given game object</param>
-    protected void SetItemPosition(GameObject gameObject, Transform hand, Vector3 position, Vector3 rotation)
-    {
-        //prefab.SetActive(true);
-        gameObject.transform.parent = hand;
-        gameObject.transform.localPosition = position;
-        gameObject.transform.localEulerAngles = rotation;
+        SetItemPosition(equippable, currentHand.transform, item.defaultPosition, item.defaultRotation);
     }
 
     /// <summary>
@@ -143,7 +125,21 @@ public class EntityEquipment : MonoBehaviour
     public void UpdateItemPosition(Hand hand, Vector3 position, Vector3 rotation)
     {
         currentHand = GetHandGameObject(hand);
-        SetItemPosition(currentItemGameObject, currentHand.transform, position, rotation);
+        SetItemPosition(currentItem, currentHand.transform, position, rotation);
+    }
+
+    /// <summary>
+    /// Updates the parent, position and rotation of the created equipment prefab to the given parameters. 
+    /// </summary>
+    /// <param name="gameObject">The game object of the equipped item.</param>
+    /// <param name="hand">The transform of the current <see cref="Hand"/></param>
+    /// <param name="position">The new poisition of the given game object</param>
+    /// <param name="rotation">The new rotation of the given game object</param>
+    protected void SetItemPosition(Equippable equippable, Transform hand, Vector3 position, Vector3 rotation)
+    {
+        equippable.transform.parent = hand;
+        equippable.transform.localPosition = position;
+        equippable.transform.localEulerAngles = rotation;
     }
 
     /// <summary>
@@ -152,7 +148,7 @@ public class EntityEquipment : MonoBehaviour
     /// </summary>
     protected void Unequip()
     {
-        Destroy(currentItemGameObject, 10f);
+        Destroy(currentItem, 10f);
 
         CurrentItem.gameObject.SetActive(false);
         currentItem = null;

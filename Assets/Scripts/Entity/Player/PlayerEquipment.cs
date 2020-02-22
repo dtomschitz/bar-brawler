@@ -9,7 +9,7 @@ public class PlayerEquipment : EntityEquipment
 {
     public Item[] defaultItems;
 
-    private Inventory inventory;
+    private PlayerInventory inventory;
     private Hotbar hotbar;
 
     private bool defaultItemsAdded = false;

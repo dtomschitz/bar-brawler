@@ -12,7 +12,7 @@ public class MunitionInfo : MonoBehaviour
 
     void Start()
     {
-        Inventory inventory = Player.instance.inventory;
+        PlayerInventory inventory = Player.instance.inventory;
         if (inventory == null) throw new ArgumentNullException("The player inventory cannot be null!");
 
         inventory.OnMunitionUpdate += OnMunitionUpdate;

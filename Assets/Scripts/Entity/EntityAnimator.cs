@@ -84,7 +84,7 @@ public class EntityAnimator : MonoBehaviour
     public void SetIsGrounded(bool isGrounded) =>  animator.SetBool("IsGrounded", isGrounded);
 
     /// <summary>
-    /// Updates the item animation id based on the given item.
+    /// Updates the item id based on the given item.
     /// </summary>
     /// <param name="item">The new item.</param>
     public void SetEquipment(Equipment item)
@@ -93,18 +93,14 @@ public class EntityAnimator : MonoBehaviour
         int type = (int)item.type;
 
         if (currentType == type) return;
-        if (item.IsMeleeWeapon) 
-        {
-            animator.SetFloat("MeleeIdle", type);
-        }
 
         animator.SetInteger("Item", type);
     }
 
     /// <summary>
-    /// 
+    /// Updates the item animation id based on the given equipment animation.
     /// </summary>
-    /// <param name="animation"></param>
+    /// <param name="animation">The new animation</param>
     public void SetEquipmentAnimation(EquipmentAnimation animation)
     {
         if (animator.GetInteger("ItemAnimation") == animation.index) return;

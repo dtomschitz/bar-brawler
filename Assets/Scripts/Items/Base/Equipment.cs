@@ -30,10 +30,18 @@ namespace Items
             currentDuration = duration;
         }
 
-        public void UseItem()
+        public bool UseItem()
         {
             currentDuration--;
             OnDurationUpdate?.Invoke(NormalizedDuration);
+
+            if (currentDuration <= 0)
+            {
+                Player.instance.inventory.RemoveItem(this);
+                return true;
+            }
+
+            return false;
         }
 
         public float NormalizedDuration

@@ -254,9 +254,6 @@ public class Enemy : Entity
             {
                 if (trackSpeed > 0.0f && combat.IsAttacking && !combat.IsStunned)
                 {
-                    //Vector3 lookVec = player.transform.position - transform.position;
-                    //dude.Look(lookVec, trackSpeed);
-
                     TurnEnemyToPlayer();
                 }
                 lastReact = Time.fixedTime;
@@ -358,7 +355,7 @@ public class Enemy : Entity
 
         Statistics.instance.AddKill();
 
-        Destroy(gameObject, 2f);
+        Destroy(gameObject, 5f);
     }
 
     private void UpdateDistance()

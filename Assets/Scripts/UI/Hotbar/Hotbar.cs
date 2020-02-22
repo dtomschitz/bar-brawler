@@ -27,7 +27,7 @@ public class Hotbar : MonoBehaviour
     public GameObject leftBumper;
     public GameObject rightBumper;
 
-    private Inventory inventory;
+    private PlayerInventory inventory;
     private PlayerEquipment equipment;
     private PlayerInputActions inputActions;
     private HotbarSlot[] slots;
