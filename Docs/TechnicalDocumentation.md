@@ -146,7 +146,7 @@ Der Combat State definiert den aktuellen allgemeinen Zustand der Entität. Je na
 ```csharp
 public enum CombatState
 {
-	Idle,
+    Idle,
     FistBlock,
     FistAttack,
     BottleAttack,
