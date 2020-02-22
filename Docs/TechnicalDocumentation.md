@@ -1,4 +1,3 @@
-
 # Technische Dokumentation
 
 # Übersicht
@@ -1045,6 +1044,19 @@ public bool IsWaveRunning
         }
 ```
 ### WaveConfig
+Die *WaveConfig* Klasse inkludiert die aktuelle Rundenanzahl, ihre Schwierigkeit und das *EnemyPrefab*. Ist der aktuelle Rundenwert gleich dem Wert wie in der *WaveConfig*, wird eine bestimmte Konfiguration geladen, die unterschiedliche Einstellungen zu den Wellen bzw. Gegnern haben. So können Gegner nach gewissen Runden mit einer höheren Wahrscheinlichkeit mit Waffen oder mehr Leben auftauchen.
+
+```csharp
+public class WaveConfig : ScriptableObject
+    {
+        public int round;
+        public Difficulty difficulty;
+        public GameObject enemy;
+
+        [Header("Enemy Config")]
+        public EnemyConfig enemyConfig;
+    }
+   ```
 ### SpawnPoint
 
 ## UI
