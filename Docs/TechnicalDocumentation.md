@@ -2,6 +2,9 @@
 
 # Übersicht
 ## Zusammenfassung
+Bar Brawler ist ein rundenbasierter Brawler, bei dem Sie in die Rolle eines Gesetzlosen schlüpfen und gegen andere feindselige Gesetzlosen sich durchsetzen müssen. 
+Umso mehr Wellen Sie vollständig schlagen, desto schwieriger werden die Nächsten. Die Gegner haben mehr Leben und können auch Waffen mit sich tragen, die mehr Schaden anrichten. Aber nicht nur das, auch die Anzahl der Gegner steigt pro Runde.
+Um sich gegen die stärkeren Wellen zu wehren, bekommen sie pro besiegtem Gegner Geld, dass Sie beim Barkeeper für neue Items ausgeben können. Darunter finden sich unter anderem Waffen, wie ein Messer oder eine Pistole, deren Aufgabe es ist mehr Schaden anzurichten, aber auch Getränke, die ihr verlorenes Leben wieder auffüllen. 
 ## Plattform
 Das Spiel wurde ausschließlich für den Computer entwickelt, sollte jedoch für einen angenehmeren Spielfluss unbedingt mit dem Controller gespielt werden.
 
