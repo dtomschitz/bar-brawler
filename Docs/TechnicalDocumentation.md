@@ -1245,3 +1245,22 @@ private IEnumerator HideEventText()
 ```
 ### Hotbar
 
+## Statistics Klasse
+Die Statistics hat den Zweck, während des gesamten Spiels verschiedene Aktionen und Erfolge des Spielers zu speichern, damit diese am Ende des Spiels, wenn der Nutzer sterben sollte angezeigt werden können. Gespeichert werden die überlebten Runden, die Kill's, der Schaden, den der Spieler verursacht und das Geld das er beim Barkeeper ausgegeben hat. Damit die Klasse nur einmalig initialisiert werden kann, wurde auch hier ein Singelton-Mechanismus implementiert. So kann die Klasse außerdem von jeglichen anderen Scripten und Klassen verwendet werden.
+```csharp
+public class Statistics : MonoBehaviour
+{
+    Singelton
+    
+    public int SurvivedRounds { get; protected set; }
+    public int Kills { get; protected set; }
+    public float DamageCaused { get; protected set; }
+    public int SpendMoney { get; protected set; }
+
+    public void AddRound() => SurvivedRounds++;
+    public void AddKill() => Kills++;
+    public void AddDamage(float damage) => DamageCaused += damage;
+    public void AddMoney(int amount) => SpendMoney += amount;
+}
+```
+
