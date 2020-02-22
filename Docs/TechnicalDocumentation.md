@@ -32,7 +32,7 @@ Erstellen der Charaktere, seine Outfits und Raumdetails
 
 ## Genutzte Hardware
 ## Genutzte Werkzeuge und Engine
-Das Spiel wurde mit der Game Engine Unity in der Sprache C# entwickelt. Alle Modellierungen wurden in Blender erstellt und deren Texturen mit Photoshop oder Gimp. Die Versions-Kontrolle erfolgte über das GitLab der Hochschule der Medien.
+Das Spiel wurde mit der Game Engine Unity in der Sprache C# entwickelt. Alle Models wurden in Blender erzeugt und die dazugehörigen Texturen mit Photoshop und Gimp erstellt. Die Versions-Kontrolle erfolgte über das GitLab der HdM.
 
 
 ## Externe Komponenten
