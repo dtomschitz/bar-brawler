@@ -873,6 +873,40 @@ public override void OnSecondary()
 }
 ```
 
+## GameState Klasse
+Die *GameState* Klasse speichert den aktuellen State des Spieles, was notwendig ist damit gewisse Aktionen blockiert werden können. So kann beispielsweise verhindert werden, dass der Spieler den Shop öffnen kann, obwohl er sich gerade im Pausenmenü befindet. Außerdem werden durch das Aktualisieren des Game States, mithilfe der *SetState* Methode, auch verschiedene UI-Element ein- und ausgeblendet. Dies geschieht durch die jeweiligen Toggel-Methoden und durch die [UIManager](#UIManager) Klasse, welche Zugriff auf alle UI-Elemente im Spiel hat.
+```csharp
+public void SetState(GameStateType newState)
+{
+	if (State == newState) return;
+	State = newState;
+
+	switch(newState)
+	{
+		case GameStateType.GamePaused:
+			TogglePauseMenu();
+			break;
+
+		case GameStateType.GameOver:
+			ToggleGameOver();
+			break;
+
+		case GameStateType.InGame:
+			ToggleIngame();
+			break;
+
+		case GameStateType.InShop:
+			ToggleShop();
+			break;
+
+		case GameStateType.TargetAcquisition:
+			ToggleTargetAcquisition();
+			break;
+	}
+}
+```
+
+
 ## Wave-System
 ### WaveSpawner
 ### WaveConfig
