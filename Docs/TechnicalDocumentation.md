@@ -1,3 +1,4 @@
+
 # Technische Dokumentation
 
 # Übersicht
@@ -909,6 +910,140 @@ public void SetState(GameStateType newState)
 
 ## Wave-System
 ### WaveSpawner
+Die WaveSpawner Klasse ist wohl die wichtigste Klasse für die Wellen Konfiguration. Zu erst haben wir zwei Enumerationen erstellt, die den aktuellen *WaveState* und ihre *Difficulty* wiedergibt. 
+Ist der *WaveState* auf "Spawning", werden aktuell Gegner erzeugt. Ist er auf "Counting", ist der WaveSpawner pausiert und zählt hinab, bis die nächste Welle erzeugt wird. Steht er auf "Running", werden keine neuen Gegner hervorgebracht, aber es leben noch Gegner der aktuellen Welle.
+```csharp
+   public enum WaveState { 
+        Spawning, 
+        Counting,
+        Running 
+    }
+```
+```csharp
+    public enum Difficulty {
+        Easy, 
+        Medium, 
+        Hard 
+    }
+```
+In der *SkipWaveCountdown* Methode wird erfasst, ob der Spieler den Countdown überspringen möchte. Ist er  dabei im Shop oder in der Bullet Time, kann er denn Countdown nicht überspringen.
+
+
+```csharp
+public void SkipWaveCountdown(CallbackContext ctx)
+        {
+            if (GameState.instance.IsInTargetAcquisition 
+            || GameState.instance.IsInShop || waveCountdown <= 4f) 
+            return;
+            waveCountdown = 4f;
+        }
+```
+Diese Methode startet die folgende Welle. Die *Rounds* werden um eins erhöht und die zugehörige *WaveConfig* geladen, die zu der Runde gehört und spezielle Einstellung über die aktuelle Runde enthält.
+```csharp
+ private void StartNextWave()
+        {
+            WaveConfig nextConfig = GetNextWaveConfig();
+            if (nextConfig != null)
+            {
+                SetConfig(nextConfig);
+            }
+
+            Rounds++;
+            Debug.LogFormat("Spawning Wave (num: {0}, difficulty: {1})", 
+            Rounds, CurrentDifficulty);
+
+            StartCoroutine(SpawnRoutine());
+            Statistics.instance.AddRound();
+        }
+```
+*GetNextWaveConfig* bestimmt, welche Konfiguration für die nächste Runde geladen werden muss.
+```csharp
+private WaveConfig GetNextWaveConfig()
+        {
+            foreach (WaveConfig config in configs)
+            {
+                if (config.round == Rounds) return config;
+            }
+            return null;
+        }
+```
+Die Methode *SpawnRoutine* lässt die Gegner erzeugen. Zwischen jeden neuen Gegners wird durch *WaitForSeconds(1f)* eine Sekunde gewartet, bis der nächste auftauchen kann. Sobald alle Gegner erzeugt wurden, wird der *WaveState* auf *Running* gesetzt. 
+```csharp
+        private IEnumerator SpawnRoutine()
+        {
+            SetState(WaveState.Spawning);
+
+            for (int i = 0; i < Rounds * 1.25; i++)
+            {
+                SpawnPoint spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
+
+
+                Enemy enemy = Instantiate(CurrentConfig.enemy, spawnPoint.Position, 
+                spawnPoint.Rotation).GetComponent<Enemy>();
+                if (enemy != null) enemy.Init(CurrentConfig.enemyConfig);
+
+                yield return new WaitForSeconds(1f);
+            }
+            SetState(WaveState.Running);
+            yield break;
+        }
+```
+*SetState* setzt den aktuellen Status als neuen und lässt das Event * OnWaveStateUpdate* entstehen, dass dann an den Shop oder an bestimmte UI Elemente geschickt wird.
+```csharp
+        private void SetState(WaveState newState)
+        {
+            switch (newState)
+            {
+                case WaveState.Counting:
+                    break;
+
+                case WaveState.Running:
+                    break;
+
+                case WaveState.Spawning:
+                    break;
+            }
+
+            State = newState;
+            OnWaveStateUpdate?.Invoke(State, Rounds);
+        }
+```
+Die Methode *SetConfig* setzt die aktuelle Wellenkonfiguration zur neuen und lädt die neue *CurrentDifficulty*.
+```csharp
+        private void SetConfig(WaveConfig config)
+        {
+            Debug.LogFormat("Update wave config {0} (round: {1}, difficulty: {2}, enemy: {3}",
+             config, config.round, config.difficulty, config.enemy.name);
+            CurrentConfig = config;
+            CurrentDifficulty = config.difficulty;
+        }
+```
+*IsEnemyAlive* sucht jede Sekunde im Spiel nach Gegner mit dem *Enemy* Tag. Sind Gegner da, beginnt die Suche von vorne. Sind keine da, wird *true* zurückgegeben und wir kehren in die *Update* Methode zurück, wodurch der Countdown von vorne startet.
+```csharp
+        private bool IsEnemyAlive
+        {
+            get
+            {
+                searchCountdown -= Time.deltaTime;
+                if (searchCountdown <= 0f)
+                {
+                    searchCountdown = 1f;
+                    if (GameObject.FindGameObjectWithTag("Enemy") == null)
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+```
+Hier wird bestimmt, ob eine Welche sich im *Running* Status befindet. Eine Welle ist im *Running* Modus, wenn Gegner gerade erzeugt werden oder noch nicht alle besiegt sind.
+```csharp
+public bool IsWaveRunning
+        {
+            get { return State == WaveState.Running || State == WaveState.Spawning; }
+        }
+```
 ### WaveConfig
 ### SpawnPoint
 
