@@ -1,4 +1,4 @@
-![Screen](/Screenshots/Screen.png)
+![Screen](/Docs/Screenshots/Screen.png)
 
 # Bar Brawler
 1898 - Amerika
