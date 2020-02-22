@@ -32,8 +32,11 @@ Erstellen der Charaktere, seine Outfits und Raumdetails
 
 ## Genutzte Hardware
 ## Genutzte Werkzeuge und Engine
+Das Spiel wurde mit der Game Engine Unity in der Sprache C# entwickelt. Alle Modellierungen wurden in Blender erstellt und deren Texturen mit Photoshop oder Gimp. Die Versions-Kontrolle erfolgte über das GitLab der Hochschule der Medien.
+
+
 ## Externe Komponenten
-Für das Spiel wurden verschiedene Komponenten, die von dritten entwickelt wurden genutzt. Dazu gehören beispielsweise die gesamten Animationen, welche bei [Mixamo](https://www.mixamo.com/#/) frei erhältlich sind. Diese sind professionell entwickelt worden und wurden teilweise sogar mit dem Motion Capture Verfahren erstellt. Des Weiteren sind alle Sounds, welche im Spiel genutzt wurden, von [Freesounds](https://freesound.org/) erworben. 
+Für das Spiel wurden verschiedene Komponenten genutzt, die von dritten entwickelt wurden. Dazu gehören beispielsweise die gesamten Animationen, welche bei [Mixamo](https://www.mixamo.com/#/) frei erhältlich sind. Diese sind professionell entwickelt worden und wurden teilweise sogar mit dem Motion Capture Verfahren erstellt. Des Weiteren sind alle Sounds, welche im Spiel genutzt wurden, von [Freesounds](https://freesound.org/) erworben. 
 
 # Spielmechaniken
 ## Technische Hauptanforderungen
@@ -71,32 +74,10 @@ Der Shop kann nach jeder runde vom Spieler geöffnet werden, wenn dieser an der 
 Das Hauptmenü beinhaltet den Titel des Spiels sowie die Buttons um das Spiel zu starten und zu beenden. Im Hintergrund kann der Nutzer den Saloon mit dem Barkeeper, einem Pianist und dem Spieler selbst sehen.
 
 ## Pausenmenü
-Im Pausemenü kann der Spieler das Spiel fortsetzen, die aktuelle Spielsitzung neustarten oder ins Hauptmenü zurück gehen. Durch das betätigen der Start-Taste am Controller öffnet sich das Pausemenü und die Zeit im Spiel wird durch die *OnEnable* Methode eingefroren.
-```csharp
-    public void OnEnable()
-    {
-        Time.timeScale = 0f;
-    }
+Im Pausemenü kann der Spieler das Spiel fortsetzen, die aktuelle Spielsitzung neustarten oder ins Hauptmenü zurück gehen. Durch das betätigen der Start-Taste am Controller öffnet sich das Pausemenü. Das Spiel wird während dessen pausiert.
 
-    public void OnDisable()
-    {
-        Time.timeScale = 1f;
-    }
-```
-Sämtliche anderen Overlays werden durch *TogglePauseMenu* deaktiviert, sowie auch das Movement des Charakters
-```csharp
-    void TogglePauseMenu()
-    {
-        Player.instance.controls.IsMovementEnabled = false;
-        DisableTargetAcquisition();
-
-        UIManager.instance.SetHUDActive(false, false);
-        UIManager.instance.SetShopActive(false);
-        UIManager.instance.SetGameOverMenuActive(false);
-        UIManager.instance.SetPauseMenuActive(true);
-```
 ## GameOver-Menü
-Das Game Over Overlay wird aufgerufen, wenn der Spieler stirbt. Wie im Pausemenü werden sämtliche anderen Overlays durch *ToggleGameOver* deaktiviert. Das Menü wird durch eine Animation auf den Bildschirm gebracht. Im Game Over Menü kann der Spieler Statistiken einsehen, die aus einer Runde gesammelt wurden.
+Das Game Over Overlay wird aufgerufen, wenn der Spieler stirbt. Das Menü wird durch eine Animation auf den Bildschirm gebracht. Im Game Over Menü kann der Spieler Statistiken einsehen, die aus einer Runde gesammelt wurden. Der Spieler hat hier zwei Auswahlmöglichkeiten. Er kann das Spiel neustarten oder zurück zum Hauptmenü gehen.
 
 # Implementierung
 ## Entity
@@ -644,13 +625,124 @@ public void UseMunition()
 
 ## Enemy
 
-## Barkeeper
+## Barkeeper Klasse
+Die Barkeeper Klasse wird genutzt damit der Spieler mit diesem an der Bar interagieren kann, um somit den [Shop](#Shop) zu schließen oder zu öffnen. Dies wird erreicht in dem in der Klasse gespeichert wird, ob sich der Spieler in Reichweite befindet oder nicht. Außerdem Spielt der aktuelle [GameState](#GameState) eine wichtige Rolle. Ist dieser nämlich auf *GameStateType.GamePaused* oder *GameStateType.GameOver* kann der Shop nicht geöffnet werden. Auch wenn sich der Spieler aktuell in einer Runde befindet, kann nicht mehr mit dem Barkeeper interagiert werden. Die Klasse hat somit ausschließlich den Zweck den Shop zu öffnen und zu schließen.
+
+## Items
+### Base Items
+Da die verschiedenen Items auch unterschiedliche Parameter speicher müssen, wurden anhand der verschiedenen Itemtypen, die es im Spiel gibt, verschiedene Basisklassen implementiert. Die hauptsächliche Aufgabe dieser Klassen besteht also darin, die verschiedenen Parameter des Gegenstands und das Prefab zu speichern. Zu diesen Parameter gehören z.B. die initiale Position in der Hand, die maximale Stapel Größe,  eine Referenz auf das Icon sowie der Name. 
+
+#### Item
+Die Item Klasse ist die zentrale Basisklasse, von der alle anderen Item Klassen erben. Sie deklariert die wichtigsten Parameter wie z.B. den Namen, Itemtyp oder die Referenz zum Icon. Des Weiteren implementiert sie die Methode *OnCollection* welche aufgerufen wird, wenn der Spieler ein Item eingesammelt hat. Durch diese wird der Gegenstand dann zum Inventar hinzugefügt, wenn dies aktiviert ist.
+```csharp
+[CreateAssetMenu(fileName = "New Item", menuName = "Items/Item")]
+public class Item : ScriptableObject
+{
+	new public string name; // Der Name des Gegenstands, welcher im Shop sowie in der Hotbar genutzt wird.
+	public Sprite icon; // Eine Referenz zu dem Icon des Gegenstands, welches in der Hotbar und im Shop genutzt wird.
+	public ItemKind kind; // Der Typ des Items. Dieser kann entweder ItemKind.Consumable oder ItemKind.Weapon sein. 
+
+	public bool addToInventory = true; // Für die Entscheidung ob das Item dem Inventar hinzugefügt werden kann oder nicht.
+	public bool isStackable = true; // Für die Entscheidung ob das Item stapelbar ist oder nicht.
+	public int maxStackSize = 1; // Die maximal größe des Stapels
+	public InventorySlot slot; // Eine Referenz zum InventorySlot in welchem das Item gespeichert wurde.
+
+	public virtual void OnCollection()
+	{
+		Player.instance.inventory.AddItem(this);
+	}
+}
+```
+
+#### Money Item
+Die Money Klasse wird um die [Item](#Item) Basisklasse erweitert und fügt lediglich die Variable *amount*
+Hinzu, welche Später den Geldbetrag des Money-Items beinhalten soll. 
+```csharp
+[CreateAssetMenu(fileName = "New Money Item", menuName = "Items/Money")]
+public class Money : Item
+{
+	public int amount;
+}
+```
+#### Munition Item
+Wie auch beim Money-Item, wird beim Munition-Item die Klasse [Item](#Item) implementiert und ebenfalls durch den Parameter *amount* erweitert, welcher später die Anzahl der Patronen beinhaltet, die der Spieler erhalten soll, wenn er das Item erworben hat.
+```csharp
+[CreateAssetMenu(fileName = "New Munition", menuName = "Items/Munition")]
+public class Munition: Item
+{
+	public int amount;
+}
+```
+#### Equipment Item
+Die *Equipment* Item Klasse erbt ebenfalls wie die vorherigen Klassen von der [Item](#Item) Klasse, jedoch erweitert sie diese durch viele neue Funktionen und Variablen, die benötigt werden damit diese Art von Item durch die Klasse [EntityEquipment](#EntityEquipment) ausgerüstet werden kann.  Dazugehören die Variablen *prefab*, *defaultHand*, *defaultPosition*, *defaultRotation* und *defaultDropRotation*. Erstere speichert eine Referenz zu dem GameObject das die eigentliche Funktionsweise implementiert und das Model des Gegenstands beinhaltet. Die anderen Parameter dienen dazu die Standardposition und Standardrotation zu speichern. Diese werden benötigt, wenn das Item zum ersten Mal durch die Klasse [EntityEquipment](#EntityEquipment) ausgerüstet wurde.
+
+Des Weiteren implementiert die *Equipment* Klasse die Funktionsweise der Abnutzung für alle Gegenstände dieser Art. Jedes Item kann sich nämlich mit der Zeit z.B. bei erfolgreichen Treffern abnutzen, bis es irgendwann kaputtgeht. Diese Haltbarkeit wird durch die Variablen *hasDuration*, *duration* und *currentDuration* verwaltet und kann mit der Methode *UseItem* aktualisiert werden. 
+```csharp
+[CreateAssetMenu(fileName = "New Equipment", menuName = "Items/Equipment")]
+public class Equipment : Item
+{
+	public delegate void DurationUpdate(float normalizedDuration);
+	public event DurationUpdate OnDurationUpdate;
+
+	public ItemType type; 
+	public GameObject prefab;
+
+	public Hand defaultHand;
+	public Vector3 defaultPosition;
+	public Vector3 defaultRotation;
+	public Vector3 defaultDropRotation;
+
+	public EquipmentAnimation[] equipmentAnimations;
+
+	public bool hasDuration;
+	public float duration;
+	private float currentDuration;
+
+	...
+
+	public bool UseItem()
+	{
+		currentDuration--;
+		OnDurationUpdate?.Invoke(NormalizedDuration);
+
+		if (currentDuration <= 0)
+		{
+			Player.instance.inventory.RemoveItem(this);
+			return true;
+		}
+
+		return false;
+	}
+	
+	...
+}
+```
+Zusätzlich werden in dieser Klasse auch die möglichen Animationen, durch die Hilfsklasse *EquipmentAnimation* gespeichert. Sie implementiert die Variablen,  *index*, *hand*, *specificPosition* und *specificRotation*. Diese Variablen werden genutzt um zum einen Festzustellen, welche Animation durch den  [EntityAnimator](#EntityAnimator)  abgespielt werden soll. Zum anderen werden sie benötigt um für die jeweilige Animation, den Gegenstand zwischen den Händen gegeben Falls zu tauschen und die Position und Rotation zu überschreiben. Damit diese Werte aber auch durch die [EntityEquipment](#EntityEquipment)  Klasse überschrieben werden, muss dies durch die Variablen *useSpecifcPosition* und *useSpecificRotation* aktiviert werden.
+```csharp
+public class EquipmentAnimation
+{
+	public int index;
+	public Hand hand;
+	
+	public bool useSpecifcPosition;
+	public bool useSpecificRotation;
+	public Vector3 specificPosition;
+	public Vector3 specificRotation;
+}
+```
+
+#### Drink Item
+#### Weapon
+### Collectable Item Klasse
+### Consumable Item Klasse
+### Equippabe Item Klasse
+### Waffen
 
 ## Wave-System
 ### WaveSpawner
 ### WaveConfig
 ### SpawnPoint
-## Items
+
 ## UI
 ### UIManag
 ### Shop
