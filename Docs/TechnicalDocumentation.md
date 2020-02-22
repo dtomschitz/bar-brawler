@@ -1,12 +1,8 @@
 # Technische Dokumentation
-
-# Übersicht
 ## Zusammenfassung
 Bar Brawler ist ein rundenbasierter Brawler, bei dem Sie in die Rolle eines Gesetzlosen schlüpfen und gegen andere feindselige Gesetzlosen sich durchsetzen müssen. 
 Umso mehr Wellen Sie vollständig schlagen, desto schwieriger werden die Nächsten. Die Gegner haben mehr Leben und können auch Waffen mit sich tragen, die mehr Schaden anrichten. Aber nicht nur das, auch die Anzahl der Gegner steigt pro Runde.
 Um sich gegen die stärkeren Wellen zu wehren, bekommen sie pro besiegtem Gegner Geld, dass Sie beim Barkeeper für neue Items ausgeben können. Darunter finden sich unter anderem Waffen, wie ein Messer oder eine Pistole, deren Aufgabe es ist mehr Schaden anzurichten, aber auch Getränke, die ihr verlorenes Leben wieder auffüllen. 
-## Plattform
-Das Spiel wurde ausschließlich für den Computer entwickelt, sollte jedoch für einen angenehmeren Spielfluss unbedingt mit dem Controller gespielt werden.
 
 # Entwicklung
 ## Team
@@ -15,29 +11,26 @@ Das Spiel wurde ausschließlich für den Computer entwickelt, sollte jedoch für
 Zuständig für Modellierung des Raumes, Designer für Grafiken wie Plakate, Shop.
 
 [David Tomschitz](https://gitlab.mi.hdm-stuttgart.de/dt035)
-
-Fokus auf die Gameplay Programmierung. Movement und Combat, Entity Systeme.
+Gameplay Entwicklung. Entity-, Item- und Shop-System, Spielmechaniken
 
 [Duane Englert](https://gitlab.mi.hdm-stuttgart.de/de030)
-
-Gameplay Programmierung und Game Designer. Fokus auf Wave System und Overlay Erstellung.
+Gameplay Entwicklungund Game Designer. Fokus auf Wave System und Overlay Erstellung.
 
 [Florian Rapp](https://gitlab.mi.hdm-stuttgart.de/fr061)
-
 Modellierung der Details im Raum, sowie erstellen der Texturen.
 
 [Sundar Arz](https://gitlab.mi.hdm-stuttgart.de/sa070)
-
 Erstellen der Charaktere, seine Outfits und Raumdetails 
 
 ## Genutzte Hardware
 ## Genutzte Werkzeuge und Engine
 Das Spiel wurde mit der Game Engine Unity in der Sprache C# entwickelt. Alle Models wurden in Blender erzeugt und die dazugehörigen Texturen mit Photoshop und Gimp erstellt. Die Versions-Kontrolle erfolgte über das GitLab der HdM.
 
+## Zielplattform
+Das Spiel wurde ausschließlich für Windows und Mac OS entwickelt und sollte größten Teils ausschließlich durch einen Controller gespielt werden, da nur so alle Mechaniken des Spiels vollständig funktionsfähig sind.
 
 ## Externe Komponenten
 Für das Spiel wurden verschiedene Komponenten genutzt, die von dritten entwickelt wurden. Dazu gehören beispielsweise die gesamten Animationen, welche bei [Mixamo](https://www.mixamo.com/#/) frei erhältlich sind. Diese sind professionell entwickelt worden und wurden teilweise sogar mit dem Motion Capture Verfahren erstellt. Des Weiteren sind alle Sounds, welche im Spiel genutzt wurden, von [Freesounds](https://freesound.org/) erworben. 
-
 # Spielmechaniken
 ## Technische Hauptanforderungen
 ## Architektur
