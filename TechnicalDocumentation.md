@@ -137,7 +137,7 @@ public virtual void Damage(float damage, Equipment item = null)
 	if (IsDead) OnDeath?.Invoke();
 }
 ```
-Die Methode *Heal* hingegen heilt den Spieler um die angegeben Lebenspunkte. Sie ruft außerdem das Event *OnHeal* auf um die Information über die neu hinzugefügten Lebenspunkte verschiedenen Klassen zur verfügung zustellen.
+Die Methode *Heal* hingegen heilt den Spieler um die angegeben Lebenspunkte. Sie ruft außerdem das Event *OnHeal* auf um die Information über die neu hinzugefügten Lebenspunkte verschiedenen Klassen zur Verfügung zustellen.
 ```csharp
 public virtual void Heal(float amount)
 {
@@ -194,7 +194,7 @@ protected virtual void Update()
 ```
 
 ### EntityEquipment Klasse
-Auch diese Klasse ist eine Unterklasse der [Entity](#Entity) Klasse und wird als Basisklasse für das Verwalten der Ausrüstung der jeweiligen Entität genutzt und speichert den jeweils ausgerüsteten Gegenstand zwischen. Außerdem kann durch ´die Methoden *UsePrimary*, *UseSecondary* und *UseConsumable* die definierten Aktionen der jeweiligen Gegenstände ausgeführt werden. Die *UsePrimary* dient dazu die Hauptaktion auszuführen und kann nur getriggert werden, wenn es sich bei dem Item um eine Waffe handelt.  Sie wählt außerdem eine zufällige Animation, aus die für das benutzten der Waffe abgespielt werden soll und aktualisiert die Handposition des Items. 
+Auch diese Klasse ist eine Unterklasse der [Entity](##Entity) Klasse und wird als Basisklasse für das Verwalten der Ausrüstung der jeweiligen Entität genutzt und speichert den jeweils ausgerüsteten Gegenstand zwischen. Außerdem kann durch ´die Methoden *UsePrimary*, *UseSecondary* und *UseConsumable* die definierten Aktionen der jeweiligen Gegenstände ausgeführt werden. Die *UsePrimary* dient dazu die Hauptaktion auszuführen und kann nur getriggert werden, wenn es sich bei dem Item um eine Waffe handelt.  Sie wählt außerdem eine zufällige Animation, aus die für das benutzten der Waffe abgespielt werden soll und aktualisiert die Handposition des Items. 
 ```csharp
 public void UsePrimary()
 {
@@ -232,6 +232,80 @@ public void UseConsumable()
 	}
 }
 ```
+Damit jeder Zeit neue Items ausgerüstet werden können, gibt es die Methode *EquipItem*. Diese erstellt eine Kopie aus dem Prefab des gegebenen Items. Ist das erstellte GameObject valide kann es ausgerüstet werden. Damit auch beispielsweise die [Entity](#Entity) diese Information bekommt, wird das Event *OnItemEquipped* gefeuert. Sollte der Spieler schon einen Gegenstand ausgerüstet haben, wird dieser mit der Methode *Unequip* abgelegt und das erstellte GameObject zerstört. Das Item bleibt weiterhin im Inventar des Spielers bestehen. Schlussendlich wird das neue Item ausgerüstet und in den dazugehörigen Parametern zwischen gespeichert. Der Parameter *currentItem* speichert in diesem Fall das erstellte GameObject und *currentEquipment* das eigentliche Item aus dem Inventar.
+```csharp
+public void EquipItem(Equipment item)
+{
+	GameObject prefabCopy = Instantiate(item.prefab);
+	Equippable equippable = prefabCopy.GetComponent<Equippable>();
+
+	 if (equippable != null)
+	 {
+		 OnItemEquipped?.Invoke(item, currentEquipment);
+		 equippable.OnEquip();
+		 
+		 if (currentItem != null) Unequip();
+		 Equip(prefabCopy, item);
+		 
+		 currentItem = equippable;
+		 currentEquipment = item;
+	 }
+ }
+```
+Der eigentliche Prozess wird jedoch durch verschiedene Hilfsmethoden übernommen. Wird ein Gegenstand beispielsweise ausgerüstet, wird nach dem die Methode *EquipItem* aufgerufen wurde, die Methode *Equip* gecallt. Sie 
+Sucht mittels der gegebenen Standardhand, die richtige Position des Items und gibt das Item dem Entity schlussendlich in die Hand.
+```csharp
+protected void Equip(Equippable equippable, Equipment item)
+{
+	currentHand = GetHandGameObject(item.defaultHand);
+	SetItemPosition(
+		equippable,
+		currentHand.transform,
+		item.defaultPosition,
+		item.defaultRotation
+	);
+}
+```
+Die richtige Hand, in welcher das Item später vom Spieler gehalten werden soll, wird mit der Methode *GetHandGameObject* herausgefunden. Sie gibt jeweils das vorab definierte GameObject der jeweiligen Hand des Entity-Models zurück. 
+```csharp
+private GameObject GetHandGameObject(Hand hand)
+{
+	if (hand == Hand.Left) return leftHand;
+	else return rightHand;
+}
+```
+Um für die verschiedenen Gegenstände auch unterschiedliche Positionen verwenden zu können, gibt es die Methode *SetItemPosition*, welche wie der Name schon sagt, die Position und Rotation des Items in der Entity-Hand überschreibt. Die hierfür notwendigen Parameter werden in dem [Equipment](#Equipment) Item gespeichert.
+```csharp
+protected void SetItemPosition(Equippable e, Transform hand, Vector3 position, Vector3 rotation)
+{
+	e.transform.parent = hand;
+	e.transform.localPosition = position;
+	e.transform.localEulerAngles = rotation;
+}
+```
+Die zu Beginn gesetzte Position und Rotation des Gegenstands kann im Nachhinein mit *UpdateItemPosition* noch verändert werden. Dies ist zwingend notwendig, da beispielsweise Waffen verschiedene Animationen besitzen. Dies hat zur Folge, dass die unterschiedlichen Gegenstände unter anderem zwischen den beiden Händen getauscht werden müssen und gegeben Falls die Position und die Rotation neu angepasst werden. Diese Parameter sind in dem jeweiligen [Equipment](#Equipment) Item gespeichert mittels der [EquipmentAnimation](#EquipmentAnimation) gespeichert.
+```csharp
+public void UpdateItemPosition(EquipmentAnimation animation)
+{
+	UpdateItemPosition(animation.hand, animation.specificPosition, animation.specificRotation);
+}
+
+public void UpdateItemPosition(Hand hand, Vector3 position, Vector3 rotation)
+{
+	currentHand = GetHandGameObject(hand);
+	SetItemPosition(currentItem, currentHand.transform, position, rotation);
+}
+```
+Um einen Gegenstand letztendlich auch wirklich aus der Hand der Entität zu entfernen, damit ein neuer ausgerüstet werden kann, gibt es die Methode *Unequip*. Diese gibt die Parameter wieder frei, versteckt den Gegenstand in dem dieser Inaktiv gestellt wird und löscht den Gegenstand nach kurzer Zeit vollständig.
+```csharp
+protected void Unequip()
+{
+	Destroy(currentItem, 10f);
+	currentItem.gameObject.SetActive(false);
+	currentItem = null;
+	currentHand = null;
+}
+```
 
 ### EntityAnimator Klasse
 Die EntityAnimator Klasse ist wie alle vorherigen Klassen, eine Unterklasse der [Entity](#Entity) Klasse und dient als Basisklasse dazu jegliche Animationen für Entites zu verwalten. Um dies zu gewährleisten implementiert die Klasse für alle möglichen Animationen verschiedene Methoden um diese zu triggern, zu aktiveren oder zu deaktivieren. Die Methode *OnPrimary* dient hier beispielsweise um die aktuell ausgewählte und zu einem bestimmten Item zugehörige Animation abzuspielen, wenn die primäre Aktion ausgeführt wurde.  Für die sekundäre Attacke gibt es die äquivalente *OnSecondary* Methode, welche aufgerufen wird, wenn der Nutzer die sekundäre Aktion des aktuell ausgerüsteten Items getriggert hat.
@@ -264,8 +338,24 @@ public virtual void Move(float forward, float strafe)
 public void SetForward(float forward) => animator.SetFloat("Forward", forward);
 public void SetStrafe(float strafe) => animator.SetFloat("Strafe", strafe);
 ```
-Alle Methoden in der Klasse sind als *virtual* gekennzeichnet, damit sie von erbenden Klassen überschrieben werden können. Dies ist beispielsweise bei der Methode *Move* wichtig, welche die Parameter für die Bewegungs-Animation setzt, da sich Spieler und Gegner mit verschiedenen Mechaniken fortbewegen. 
+Da die Entität verschiedenen Items in den Händen halten kann und diese auch unterschiedliche Animationen besitzen, gibt es die Methoden *SetEquipment* und *SetEquipmentAnimation*. Erstere aktualisiert die Item ID im *Animator*, damit dort die richtigen Transitions aktiviert werden und *SetEquipmentAnimation* hingegen die Animations-ID 
+```csharp
+public void SetEquipment(Equipment item)
+{
+	int currentType = animator.GetInteger("Item");
+	int type = (int)item.type;
 
+	if (currentType == type) return;
+	animator.SetInteger("Item", type);
+}
+
+public void SetEquipmentAnimation(EquipmentAnimation animation)
+{
+	if (animator.GetInteger("ItemAnimation") == animation.index) return;
+	animator.SetInteger("ItemAnimation", animation.index);
+}
+```
+Die meisten Methoden in der Klasse sind als *virtual* gekennzeichnet, damit sie von erbenden Klassen überschrieben werden können. Dies ist beispielsweise bei der Methode *Move* wichtig, welche die Parameter für die Bewegungs-Animation setzt, da sich Spieler und Gegner mit verschiedenen Mechaniken fortbewegen. 
 ## Player Klasse
 Die Player Klasse erbt von der Basisklasse [Entity](#Entity) und implementiert so alle notwendigen Methoden damit der Spieler als Entität gehandhabt werden kann um beispielsweise schaden zu erleiden oder Angriffe zu tätigen. Die Klasse wird außerdem durch die Methoden *AddMoney* und *RemoveMoney* erweitert. Diese dienen dazu dem Spieler Geld durch beispielsweise erfolgreiche Tötungen zu geben oder durch Investitionen zu nehmen. Die jeweiligen Methoden feuern zusätzlich noch die dazugehörigen Events, damit unter anderem die Anzeigen im Hud aktuell sind und der Spieler im Shop nur die Items erwerben kann, welche sein Budget nicht überschreiten. Des Weiteren wurde die Methode *OnDeath* aus der [Entity](#Entity)  Klasse überschrieben, um für alle noch lebenden Gegner die Erfolgs-Animation abzuspielen und den [GameState](#GameState) zu aktualisieren. Dies führt letztendlich dann dazu, dass das GameOver-Menü angezeigt wird.
 ```csharp
