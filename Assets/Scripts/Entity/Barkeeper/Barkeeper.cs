@@ -34,7 +34,7 @@ public class Barkeeper : MonoBehaviour
     void Start()
     {
         waveSpawner = WaveSpawner.instance;
-        waveSpawner.OnWaveStateUpdate += OnWaveUpdate;
+        waveSpawner.OnWaveStateUpdate += OnWaveStateUpdate;
     }
 
     void OnEnable()
@@ -47,6 +47,11 @@ public class Barkeeper : MonoBehaviour
         inputActions.Disable();
     }
 
+    /// <summary>
+    /// Gets triggerd if the player enters the interaction zone of the barkeeper and will update the
+    /// isPlayerInReach parameter so the player can open the shop.
+    /// </summary>
+    /// <param name="other"></param>
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
@@ -55,6 +60,11 @@ public class Barkeeper : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Gets triggerd if the player exits the interaction zone of the barkeeper and will update the
+    /// isPlayerInReach parameter so the player can not open the shop anymore.
+    /// </summary>
+    /// <param name="other"></param>
     void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "Player")
@@ -64,7 +74,10 @@ public class Barkeeper : MonoBehaviour
         }
     }
 
-    public void OnWaveUpdate(WaveState state, int rounds) 
+    /// <summary>
+    /// Gets called if the <see cref="WaveSpawner.OnWaveStateUpdate"/> event gets fired and will close or open the shop
+    /// </summary>
+    public void OnWaveStateUpdate(WaveState state, int rounds) 
     {
         if (WaveSpawner.instance.IsWaveRunning)
         {
@@ -76,6 +89,10 @@ public class Barkeeper : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Gets triggerd if the user pressed the A-Button while he is in the interaction zone and the game state is not set to <see cref="GameStateType.GamePaused"/> or <see cref="GameStateType.GameOver"/>
+    /// </summary>
+    /// <param name="ctx"></param>
     public void Select(CallbackContext ctx)
     {
         if (isPlayerInReach && GameState.instance.State != GameStateType.GamePaused && GameState.instance.State != GameStateType.GameOver)
