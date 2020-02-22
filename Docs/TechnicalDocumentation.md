@@ -65,19 +65,15 @@ Die Power-UPs sowie die Flasche, welche der Spieler im Shop erwerben könnte, wu
 
 # User Interface
 ## HUD
-Das Hud besteht aus verschiedenen Anzeigeflächen die dem Spieler visuell darstellen sollen in welchem Zustand sich das Spiel aktuell befindet. Zu diesen gehört die Hotbar, die Lebens- und Ausdaueranzeige, die Munitionsinfo und eine Info über den gesamt Betrag des gesammelten Geldes. In der Hotbar kann der Spieler zu jeder Zeit sehen welche Items er erworben hat und auch benutzen kann. Des Weiteren ist es möglich ein Damage-Overlay für einen kurzen Zeitraum im Hud anzuzeigen, wenn der Spieler von einer Attacke getroffen wurde.
-
+Das HUD besteht aus verschiedenen Anzeigeflächen, die dem Spieler visuell darstellen, sollen in welchem Zustand sich das Spiel aktuell befindet. Zu diesen gehört die Hotbar, die Lebens- und Ausdauer-Anzeige, die Munitions-Info und eine Information über den gesamten Betrag des gesammelten Geldes. In der Hotbar kann der Spieler zu jeder Zeit sehen welche Items er erworben hat und auch benutzen kann. Des Weiteren ist es möglich ein Damage-Overlay für einen kurzen Zeitraum im HUD anzuzeigen, wenn der Spieler von einer Attacke getroffen wurde.
 ## Shop
-Der Shop kann nach jeder runde vom Spieler geöffnet werden, wenn dieser an der Bar steht. Durch den Shop kann der Spieler sein erworbenes Geld für neue Waffen und Getränke ausgeben, welche ihm im fortlaufenden Spiel helfen sollten.
-
+Der Shop kann nach jeder runde vom Spieler geöffnet werden, wenn dieser an der Bar steht. Durch den Shop kann der Spieler sein erworbenes Geld für neue Waffen und Getränke ausgeben, welche ihm im fortlaufenden Spiel helfen sollten. Der Shop ist durch in den beiden Item Kategorien Waffen und Getränke unterteilt, von denen aus die jeweiligen Hauptübersichten erreicht werden können. Wurde eine Kategorie angewählt, sieht der Spieler auf der linken Seite alle Gegenstände die erworben werden können und auf der rechten eine detaillierte Beschreibung des Items, sowie den Titel, ein Bild und Preis. Durch Betätigen des Buttons auf der linken Seite, können Gegenstände erworben werden. Ist es zu einem Fehler gekommen, wird dieser unter dem Inventar in Form eines kurzen Textes angezeigt.
 ## Hauptmenü
-Das Hauptmenü beinhaltet den Titel des Spiels sowie die Buttons um das Spiel zu starten und zu beenden. Im Hintergrund kann der Nutzer den Saloon mit dem Barkeeper, einem Pianist und dem Spieler selbst sehen.
-
+Das Hauptmenü beinhaltet den Titel des Spiels sowie die Buttons, um das Spiel zu starten und zu beenden. Im Hintergrund kann der Nutzer den Saloon mit dem Barkeeper, ein Pianist und dem Spieler selbst sehen.
 ## Pausenmenü
-Im Pausemenü kann der Spieler das Spiel fortsetzen, die aktuelle Spielsitzung neustarten oder ins Hauptmenü zurück gehen. Durch das betätigen der Start-Taste am Controller öffnet sich das Pausemenü. Das Spiel wird während dessen pausiert.
-
+Im Pausemenü kann der Spieler das Spiel fortsetzen, die aktuelle Spielsitzung Neustarten oder ins Hauptmenü zurückgehen. Durch das Betätigen der Start-Taste am Controller öffnet sich das Pausemenü. Das Spiel wird während dessen pausiert.
 ## GameOver-Menü
-Das Game Over Overlay wird aufgerufen, wenn der Spieler stirbt. Das Menü wird durch eine Animation auf den Bildschirm gebracht. Im Game Over Menü kann der Spieler Statistiken einsehen, die aus einer Runde gesammelt wurden. Der Spieler hat hier zwei Auswahlmöglichkeiten. Er kann das Spiel neustarten oder zurück zum Hauptmenü gehen.
+Das GameOver-Overlay wird aufgerufen, wenn der Spieler stirbt. Das Menü wird durch eine Animation auf den Bildschirm gebracht. Im GameOver-Menü kann der Spieler Statistiken einsehen, die aus einer Runde gesammelt wurden. Der Spieler hat hier zwei Auswahlmöglichkeiten. Er kann das Spiel Neustarten oder zurück zum Hauptmenü gehen.
 
 # Implementierung
 ## Entity
