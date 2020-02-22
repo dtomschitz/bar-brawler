@@ -1245,6 +1245,125 @@ private IEnumerator HideEventText()
 ```
 ### Hotbar
 
+## AudioManager Klasse
+Die *AudioManager* Klasse wird genutzt, um verschiedene vorab definierte Sounds abzuspielen. Hierfür wird die Methode *PlaySound* genutzt. Diese überladene Methode kann entweder einen Sound an einer Stelle oder allgemein abspielen. Dies ist notwendig, damit beispielsweise der Bewegungs-Sound oder der Sound für eine erfolgreiche Attacke nicht zu monoton wirken, sondern sich dynamisch an die Szene anpassen. 
+
+Wie schon erwähnt, wurden alle Sounds vorab definiert und in der Klasse als ein *SoundClip*-Array gespeichert. Die Klasse *SoundClip* ist nur als allgemeiner Speicherort für einen Sound genutzt und beinhaltet verschiedene Konfigurationsparameter, sowie die eigentliche AudioSource und den dazugehörigen Sound. Des Weiteren kann auch der Parameter *maxTimer* gesetzt werden, welcher später genutzt wird um zu überprüfen, ob der Sound erneut abgespielt werden kann oder nicht. Dies soll verhindern das *Sounds* doppelt oder zu schnell wieder abgespielt werden.
+```csharp
+[System.Serializable]
+public class SoundClip
+{
+    public Sound sound;
+    public AudioClip clip;
+    public float maxTimer;
+
+    [Range(0f, 1f)]
+    public float volume;
+    [Range(0.1f, 3f)]
+    public float pitch;
+
+    public bool loop;
+
+    [Range(0, 1)]
+    public float spatialBlend = 1f;
+    public float maxDistance = 100f;
+}
+```
+
+Um  den Effekt zu erreichen, dass der Sound an einer speziellen Position abgespielt wird, gibt es die *PlaySound* Methode mit den Parametertypen *Sound* und *Vector3*. Sie erstellt ein GameObject an der gegebenen Position und fügt diesem die *AudioSource* Komponente hinzu.  Danach wird der richtige *SoundClip* anhand des gegebenen *Sound*'s ermittelt und dem *AudioSource* Script mithilfe der Methode *SetAudioSourceConfig* übergeben. Das erzeugte GameObject wird automatisch zerstört, wenn der *AudioClip* zu Ende gespielt wurde.
+```csharp
+public void PlaySound(Sound sound, Vector3 position)
+{
+	if (CanPlay(sound))
+	{
+		GameObject soundGameObject = new GameObject("Sound");
+		soundGameObject.transform.position = position;
+
+		AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
+		SoundClip soundClip = GetSoundClip(sound);
+
+		SetAudioSourceConfig(audioSource, soundClip);
+		audioSource.Play();
+
+		Destroy(soundGameObject, audioSource.clip.length);
+	}
+}
+```
+Die zweite Methode nimmt nur einen *Sound* als Übergabeparameter entgegen. Sie unterscheidet sich zu ersten Methode nur dadurch, dass ein allgemeines GameObject ohne Position verwendet wurde.
+```csharp
+public void PlaySound(Sound sound)
+{
+	if (CanPlay(sound))
+	{
+		if (oneShotGameObject == null)
+		{
+			oneShotGameObject = new GameObject("One Shot Sound");
+			oneShotAudioSource = oneShotGameObject.AddComponent<AudioSource>();
+		}
+		SoundClip soundClip = GetSoundClip(sound);
+		SetAudioSourceConfig(oneShotAudioSource, soundClip);
+		oneShotAudioSource.PlayOneShot(oneShotAudioSource.clip);
+	}
+}
+```
+Bevor jedoch die zuvor beschrieben Vorgänge durchgeführt werden können, wird überprüft, ob der Sound aktuell überhaupt abgespielt werden kann. Hierfür wird die Variable *maxTimer* aus der SoundClip Klasse verwendet. Mithilfe dieser Zahl wird geschaut, wie lange es her ist das der Sound abgespielt wurde und ob es jetzt wieder möglich ist. Sollte diese der Fall sein, wird der aktuelle Zeitstempel in Verbindung mit dem jeweiligen Sound dem soundTimer Dictionary hinzugefügt und der AudioClip abgespielt. Sollte der zu überprüfende Sound vorab nicht in dem *soundTimer* Dictionary hinzugefügt worden sein, wird der Überprüfungsvorgang übersprungen.
+```csharp
+private Dictionary<Sound, float> soundTimer;
+
+void Start()
+{
+	soundTimer = new Dictionary<Sound, float>();
+	soundTimer[Sound.PlayerMove] = 0f;
+}
+
+...
+
+private bool CanPlay(Sound sound)
+{
+	foreach (KeyValuePair<Sound, float> soundTime in soundTimer)
+	{
+		if (soundTime.Key == sound)
+		{
+			float lastTimePlayed = soundTimer[sound];
+			float maxTimer = GetSoundClip(sound).maxTimer;
+			                 
+			if (lastTimePlayed + maxTimer < Time.time)
+			{
+				soundTimer[sound] = Time.time;
+				return true;
+			}
+			return false;
+		}
+	}
+	return true;
+}
+```
+In den vorherigen Methoden wurden unter anderem die Funktionen *SetAudioSourceConfig* und *GetSoundClip* genutzt, welche nun für ein besseres Verständnis aufgezeigt werden.
+```csharp
+private void SetAudioSourceConfig(AudioSource audioSource, SoundClip soundClip)
+{
+	audioSource.clip = soundClip.clip;
+	audioSource.volume = soundClip.volume;
+	audioSource.maxDistance = soundClip.maxDistance;
+	audioSource.spatialBlend = soundClip.spatialBlend;
+	audioSource.rolloffMode = AudioRolloffMode.Linear;
+	audioSource.dopplerLevel = 0f;
+}
+
+private SoundClip GetSoundClip(Sound sound)
+{
+	foreach (SoundClip soundClip in soundClips)
+	{
+		if (soundClip.sound == sound)
+		{
+			return soundClip;
+		}
+	}
+
+	return null;
+}
+```
+
 ## Statistics Klasse
 Die Statistics hat den Zweck, während des gesamten Spiels verschiedene Aktionen und Erfolge des Spielers zu speichern, damit diese am Ende des Spiels, wenn der Nutzer sterben sollte angezeigt werden können. Gespeichert werden die überlebten Runden, die Kill's, der Schaden, den der Spieler verursacht und das Geld das er beim Barkeeper ausgegeben hat. Damit die Klasse nur einmalig initialisiert werden kann, wurde auch hier ein Singelton-Mechanismus implementiert. So kann die Klasse außerdem von jeglichen anderen Scripten und Klassen verwendet werden.
 ```csharp
