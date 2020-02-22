@@ -754,7 +754,73 @@ private void TurnPlayerToEnemy()
 }
 ```
 ### TargetAcquisition Klasse
+Die *TargetAcquisition* wurde implementiert um dem Nutzer die Möglichkeit zu bieten einzelne Gegner besser anzuvisieren bzw. anzugreifen. Dies geschieht in einem Zeitlupen-Modus, in welchem der Spieler dann durch die dafür vorgesehenen Tasten, die einzelnen Gegner anwählen kann und den Zielerfassungsmodus schlussendlich verlässt. Um diesen zu aktiveren gibt es die *Toggle* Methode.  Sie aktiviert oder deaktiviert den Zeitlupen-Modus und aktualisiert den GameState entsprechend. Sollte der Zielerfassungsmodus zum ersten Mal aktiviert werden, wird außerdem automatisch der erste Gegner in der Nähe des Spielers mittels der *SelectClosestEnemy* Methode ausgewählt
+```csharp
+public void Toggle()
+{
+	if (!GameState.instance.IsInGame) return;
+	
+	IsEnabled = !IsEnabled;
+	Time.timeScale = IsEnabled ? 0.2f : 1.0f;
+	GameState.instance.SetState(IsEnabled ? GameStateType.TargetAcquisition : GameStateType.InGame);
+	
+	if (IsEnabled && CurrentEnemy == null)
+	{
+		SelectClosestEnemy();
+	}
+}
 
+public void SelectClosestEnemy()
+{
+	SelectEnemy(FindClosestEnemy());
+}
+```
+Das Auswählen eines einzelnen Gegners geschieht durch die *SelectEnemy* Methode, welche den aktuell ausgewählten Gegner durch den neuen ersetzt. Außerdem wird das Crosshair, was unter dem ausgewählten Gegner zusehen ist jenachdem de- und aktivert.
+```csharp
+public void SelectEnemy(Enemy enemy) =>  SetCurrentEnemy(enemy);
+
+private void SetCurrentEnemy(Enemy enemy)
+{
+	if (CurrentEnemy != null) CurrentEnemy.SetCrosshairActive(false);
+
+	currentIndex = enemy == null ? -1 : enemies.IndexOf(enemy);
+	CurrentEnemy = enemy;
+
+	if (CurrentEnemy != null) CurrentEnemy.SetCrosshairActive(true);
+}
+```
+Um beispielsweiße einen ausgewählten Gegner nicht mehr als solch einen Anzuzeigen, weil dieser beispielsweise gestorben ist, gibt es die Methode *UnselectCurrentEnemy*. Ihr kann auch der Übergabeparameter autoSelect übergeben werden, welcher standardmäßig auf *false* gesetzt ist. Ist er jedoch *true*, wir nach dem "abwählen" ein neuer Gegner ausgwählt und mit dem roten Crosshair angezeigt.
+
+Um wie am Anfang den nähsten Gegner zu finden bzw. allgemein zwischen den Gegner hin und her wechseln zu können gibt es die Methoden *UpdateEnemies* und *FindClosestEnemy*. Die UpdateEnemies Methode dient hierbei dazu eine Liste an lebenden Gegner immer aktuell zuhalten, solang sich der Spieler im TargetAcquisition-Modus befindet. Nur so ist es auch möglich, das der Nutzer mittels der dafür vorgesehenen Tasten zwischen den lebenden Gegnern hin und her wählen kann. 
+```csharp
+private void UpdateEnemies()
+{
+	enemies.Clear();
+	foreach (Enemy enemy in FindObjectsOfType<Enemy>())
+	{
+		if (enemy.stats.IsDead) continue;
+		enemies.Add(enemy);
+	}
+}
+```
+Mit der vorher angesprochenen Methode *FindClosestEnemy* kann der näheste Gegner zum Spieler ermittelt werden. Sie wird vorallem bei der aktiverung des Moduses genutzt um den ersten Gegner zu markieren. Dies wird durch das errechnen der Distanzen zwischen dem Spieler und dem jeweiligen Gegner erreicht. Wurde der nähste Gegner ermittelt, gibt ihn die Methode zurück.
+```csharp
+private Enemy FindClosestEnemy()
+{
+	Enemy enemy = null;
+	UpdateEnemies();
+	if (enemies != null && enemies.Count != 0)
+	{
+		Vector3 playerPositon = Player.instance.gameObject.transform.position;
+		for (int i = 0; i < enemies.Count; i++)
+		{
+			float distance = Vector3.Distance(enemies[i].transform.position, playerPositon);
+			if (distance < minDistance) enemy = enemies[i];
+		}
+	}
+	return enemy;
+}
+```
 
 ## Enemy
 
