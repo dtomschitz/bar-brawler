@@ -356,11 +356,15 @@ public void SetEquipmentAnimation(EquipmentAnimation animation)
 }
 ```
 Die meisten Methoden in der Klasse sind als *virtual* gekennzeichnet, damit sie von erbenden Klassen überschrieben werden können. Dies ist beispielsweise bei der Methode *Move* wichtig, welche die Parameter für die Bewegungs-Animation setzt, da sich Spieler und Gegner mit verschiedenen Mechaniken fortbewegen. 
+
 ## Player Klasse
-Die Player Klasse erbt von der Basisklasse [Entity](#Entity) und implementiert so alle notwendigen Methoden damit der Spieler als Entität gehandhabt werden kann um beispielsweise schaden zu erleiden oder Angriffe zu tätigen. Die Klasse wird außerdem durch die Methoden *AddMoney* und *RemoveMoney* erweitert. Diese dienen dazu dem Spieler Geld durch beispielsweise erfolgreiche Tötungen zu geben oder durch Investitionen zu nehmen. Die jeweiligen Methoden feuern zusätzlich noch die dazugehörigen Events, damit unter anderem die Anzeigen im Hud aktuell sind und der Spieler im Shop nur die Items erwerben kann, welche sein Budget nicht überschreiten. Des Weiteren wurde die Methode *OnDeath* aus der [Entity](#Entity)  Klasse überschrieben, um für alle noch lebenden Gegner die Erfolgs-Animation abzuspielen und den [GameState](#GameState) zu aktualisieren. Dies führt letztendlich dann dazu, dass das GameOver-Menü angezeigt wird.
+Die Player Klasse erbt von der Basisklasse [Entity](#Entity), wird als *Singelton* genutzt und implementiert alle notwendigen Methoden damit der Spieler als Entität gehandhabt werden kann um beispielsweise schaden zu erleiden oder Angriffe zu tätigen.
+ Die Klasse wird außerdem durch die Methoden *AddMoney* und *RemoveMoney* erweitert. Diese dienen dazu dem Spieler Geld durch beispielsweise erfolgreiche Tötungen zu geben oder durch Investitionen zu nehmen. Die jeweiligen Methoden feuern zusätzlich noch die dazugehörigen Events, damit unter anderem die Anzeigen im Hud aktuell sind und der Spieler im Shop nur die Items erwerben kann, welche sein Budget nicht überschreiten. Des Weiteren wurde die Methode *OnDeath* aus der [Entity](#Entity)  Klasse überschrieben, um für alle noch lebenden Gegner die Erfolgs-Animation abzuspielen und den [GameState](#GameState) zu aktualisieren. Dies führt letztendlich dann dazu, dass das GameOver-Menü angezeigt wird.
 ```csharp
 public class Player : Entity
 {
+	Singleton
+
     public delegate void MoneyRecived(int amount, int currentBalance);
     public delegate void MoneySpend(int amount, int currentBalance);
     public event MoneyRecived OnMoneyReceived;
@@ -413,7 +417,8 @@ public class PlayerAnimator : EntityAnimator
 ```
 
 ### PlayerCombat Klasse
-Die Klasse *PlayerCombat* implementiert die Klasse  [EntityCombat](#EntityCombat) und fügt zusätzliche Methoden hinzu, die genutzt werden, um die Angriffe verschiedener Gegner besser zu managen. Um einen besseren Spielfluss zu kreieren ist es möglich in der Klasse vorab zu definieren, wie viele Angreifer gleichzeitig den Spieler attackieren können. Die beiden Methoden *OnRequestAttack* und *OnCancelAttack* verwalten dieses beschriebe Szenario. *OnRequestAttack* wird dabei genutzt um die Anfrage eines einzelnen Gegners zu validieren.  Dies geschieht in dem überprüft wird, wie viele Attackierer es aktuell gibt und wie groß die maximale Anzahl sein darf. Ist der Angriff eines weiteren Gegners möglich, wird dieser in die Liste mit aufgenommen und hat ab dann das Recht den Spieler jeder Zeit anzugreifen.
+Die Klasse *PlayerCombat* implementiert die Klasse  [EntityCombat](#EntityCombat) und fügt zusätzliche Methoden hinzu, die genutzt werden, um die Angriffe verschiedener Gegner besser zu managen. 
+Um einen besseren Spielfluss zu kreieren ist es möglich in der Klasse vorab zu definieren, wie viele Angreifer gleichzeitig den Spieler attackieren können. Die beiden Methoden *OnRequestAttack* und *OnCancelAttack* verwalten dieses beschriebe Szenario. *OnRequestAttack* wird dabei genutzt um die Anfrage eines einzelnen Gegners zu validieren.  Dies geschieht in dem überprüft wird, wie viele Attackierer es aktuell gibt und wie groß die maximale Anzahl sein darf. Ist der Angriff eines weiteren Gegners möglich, wird dieser in die Liste mit aufgenommen und hat ab dann das Recht den Spieler jeder Zeit anzugreifen.
 ```csharp
 public void OnRequestAttack(GameObject enemy)
 {
@@ -493,7 +498,145 @@ public void EquipFirstItem()
 	}
 }
 ```
-### Inventory Klasse
+### PlayerInventory Klasse
+Die PlayerInventory Klasse wird verwendet, um erworbene Gegenstände aus dem Shop zu speichern, damit der Nutzer diese z.B. durch Interaktion mit der [Hotbar](#Hotbar) nutzen kann. 
+
+Das Inventar besteht aus insgesamt 5 *InventorySlots*, wobei der erste Slot durch das nicht stapelbare Faust Item von Beginn an des Spiels belegt ist. Jeder andere Slot kann jegliche Items aufnehmen, solang der Slot nicht die maximale Größe des jeweiligen Itemtyps überschritten hat. Die InventorySlot Klasse implementiert hierfür die Methoden *Add*, *Remove* und andere Hilfsmethoden wie z.B. *IsStackable*, welche überprüft, ob noch Platz im Stack ist.
+```csharp
+public class InventorySlot
+{
+    private int id = 0;
+    private Stack<Item> stack;
+
+    public InventorySlot(int id)
+    {
+        this.id = id;
+        stack = new Stack<Item>();
+    }
+
+    public void Add(Item item)
+    {
+        item.slot = this;
+        stack.Push(item);
+    }
+
+    public bool Remove(Item item)
+    {
+        if (IsEmpty) return false;
+
+        Item first = stack.Peek();
+        if (first.name == item.name)
+        {
+            stack.Pop();
+            return true;
+        }
+        return false;
+    }
+
+    public bool IsStackable(Item item)
+    {
+        if (IsEmpty || !item.isStackable) return false;
+
+        Item first = stack.Peek();
+        if (first.name == item.name && stack.Count < item.maxStackSize) return true;
+
+        return false;
+    }
+    
+    public Item FirstItem
+    {
+        get
+        {
+            if (IsEmpty) return null;
+            return stack.Peek();
+        }
+    }
+
+    public bool IsFull
+    {
+        get { return FirstItem != null && Count == FirstItem.maxStackSize; }
+    }
+    
+    public bool IsEmpty
+    {
+        get { return Count == 0; }
+    }
+
+    public int Count
+    {
+        get { return stack.Count; }
+    }
+
+    public int Id
+    {
+        get { return id; }
+    }
+}
+```
+
+Um Items hinzuzufügen oder zu entfernen gibt es die Methoden *AddItem* und *RemoveItem*. Erstere fügt Items dem Inventar hinzu, wenn dies in dem jeweiligen Item aktiviert ist. Sollte das Item dem Inventar hinzugefügt werden können, wird ein *InventorySlot* gesucht der Items beinhaltet die vom selben Itemtyp sind und noch genug Platz für einen weiteren Gegenstand hat. Sollte kein Slot gefunden worden sein, wird ein komplett leerer Item Slot gesucht. Wurde einer gefunden, wird das Item diesem *InventorySlot* hinzugefügt, und das Event *OnItemAdded* wird gecallt, damit beispielsweise die [Hotbar](#Hotbar) aktualisiert werden kann.
+```csharp
+public void AddItem(Item item)
+{
+	if (item == null) return;
+	if (item.addToInventory)
+	{
+		InventorySlot freeSlot = FindStackableSlot(item);
+		if (freeSlot == null) freeSlot = FindNextEmptySlot();
+		if (freeSlot != null)
+		{
+			freeSlot.Add(item);
+			OnItemAdded?.Invoke(item);
+		}
+	}
+}
+public InventorySlot FindStackableSlot(Item item)
+{
+	foreach (InventorySlot slot in Slots)
+	{
+		if (slot.IsStackable(item)) return slot;
+	}
+	return null;
+}
+
+public InventorySlot FindNextEmptySlot()
+{
+	foreach (InventorySlot slot in Slots)
+	{
+		if (slot.IsEmpty) return slot;
+	}
+	return null;
+}
+```
+Um Items zu entfernen, die sich im Inventar befinden, wenn diese z.B. verbraucht oder gelöscht wurden, kann die Methode *RemoveItem* genutzt werden. Sie sucht den gegebenen Gegenstand in den *InventorySlot*'s. Wurde das Item in einem Slot gefunden, wird es aus diesem entfernt und das Event *OnItemRemoved* um unter anderem die [Hotbar](#Hotbar) zu aktualisieren.
+```csharp
+public void RemoveItem(Item item)
+{
+	if (item == null) return;
+	foreach (InventorySlot slot in Slots)
+	{
+		if (slot.Remove(item))
+		{
+			OnItemRemoved?.Invoke(item);
+			break;
+		}
+	}
+}
+```
+Außerdem sind im Inventar die Methoden *AddMunition* und *UseMunition* implementiert um den Munitionsstand des Spielers zu verwalten. Des Weiteren wird auch hier ein entsprechendes Event gecallt, damit die UI-Elemente im HUD aktuell bleiben.
+```csharp
+public void AddMunition(int ammount)
+{
+	currentMunition += ammount;
+	OnMunitionUpdate?.Invoke(currentMunition);
+}
+
+public void UseMunition()
+{
+	currentMunition--;
+	OnMunitionUpdate?.Invoke(currentMunition);
+}
+```
 
 
 ## Enemy
