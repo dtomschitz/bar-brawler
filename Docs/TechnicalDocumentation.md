@@ -7,7 +7,6 @@ Um sich gegen die stärkeren Wellen zu wehren, bekommen sie pro besiegtem Gegner
 # Entwicklung
 ## Team
 [Christof Schwarzenberger](https://gitlab.mi.hdm-stuttgart.de/cs267)
-
 Zuständig für Modellierung des Raumes, Designer für Grafiken wie Plakate, Shop.
 
 [David Tomschitz](https://gitlab.mi.hdm-stuttgart.de/dt035)
