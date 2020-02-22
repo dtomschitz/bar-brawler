@@ -69,7 +69,6 @@ namespace Items
 
         public Vector3 specificPosition;
         public Vector3 specificRotation;
-        public Vector3 specificDropRotation;
     }
 
     public enum Hand

@@ -11,15 +11,10 @@ namespace Items
         public float primaryManaRequired = 0f;
         public float secondaryManaRequired = 0f;
 
-        public float knockbackForce = 10f;
-
         private float primaryCooldown = 0f;
         private float secondaryCooldown = 0f;
 
-        private bool collided = false;
-
-        private Coroutine primaryRoutine;
-        private Coroutine secondaryRoutine;
+        private bool hasCollided = false;
 
         void Update()
         {
@@ -29,7 +24,7 @@ namespace Items
 
         void OnTriggerEnter(Collider other)
         {
-            if (collided) return;
+            if (hasCollided) return;
             if (owner != null && other.gameObject != owner.gameObject && (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Player"))
             {
                 if (owner.combat.IsAttacking)
@@ -37,17 +32,17 @@ namespace Items
                     Entity entity = other.gameObject.GetComponent<Entity>();
                     if (entity != null) OnHit(entity);
 
-                    collided = true;
+                    hasCollided = true;
                 }
             }
         }
 
         void OnTriggerExit(Collider other)
         {
-            if (!collided) return;
+            if (!hasCollided) return;
             if (owner != null && other.gameObject != owner.gameObject && (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Player"))
             {
-                collided = false;
+                hasCollided = false;
             }
         }
 
@@ -84,24 +79,6 @@ namespace Items
             {
                 secondaryCooldown = 1f / secondaryAttackRate;
                 owner.animator.OnSecondary();
-            }
-        }
-
-        public virtual void StartPrimaryRoutine(IEnumerator routine)
-        {
-            if (primaryRoutine != null)
-            {
-                StopCoroutine(primaryRoutine);
-                primaryRoutine = null;
-            }
-        }
-
-        public virtual void StartSecondaryRoutine(IEnumerator routine)
-        {
-            if (secondaryRoutine != null)
-            {
-                StopCoroutine(secondaryRoutine);
-                secondaryRoutine = null;
             }
         }
     }

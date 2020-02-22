@@ -10,17 +10,6 @@ namespace Items
         private float healingSpeed;
         private bool drunk = false;
 
-        void Update()
-        {
-          /*  if (drunk)
-            {
-                if (owner.stats.CurrentHealth < newHealth)
-                {
-                    owner.stats.Heal(healingSpeed * Time.deltaTime);
-                }
-            }*/
-        }
-
         public override void OnPrimary()
         {
             base.OnPrimary();

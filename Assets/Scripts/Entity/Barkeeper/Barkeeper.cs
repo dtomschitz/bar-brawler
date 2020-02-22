@@ -25,7 +25,7 @@ public class Barkeeper : MonoBehaviour
 
     #endregion;
 
-    public ItemShop shop;
+    public Shop.Shop shop;
     public Animator animatior;
     private WaveSpawner waveSpawner;
 

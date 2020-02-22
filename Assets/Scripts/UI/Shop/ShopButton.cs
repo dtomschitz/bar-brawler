@@ -7,7 +7,7 @@ using Utils;
 
 namespace Shop
 {
-    public class ItemSlot : FadeGraphic, ISelectHandler
+    public class ShopButton : FadeGraphic, ISelectHandler
     {
         public Text title;
         public Button button;

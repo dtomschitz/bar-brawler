@@ -2,7 +2,7 @@
 
 namespace Shop
 {
-    public class ItemShop : FadeCanvasGroup
+    public class Shop : FadeCanvasGroup
     {
         public CategoryButton[] categoryButtons;
         public ShopPage[] shopPages;
