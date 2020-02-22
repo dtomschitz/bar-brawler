@@ -629,6 +629,7 @@ public void UseMunition()
 Die Barkeeper Klasse wird genutzt damit der Spieler mit diesem an der Bar interagieren kann, um somit den [Shop](#Shop) zu schließen oder zu öffnen. Dies wird erreicht in dem in der Klasse gespeichert wird, ob sich der Spieler in Reichweite befindet oder nicht. Außerdem Spielt der aktuelle [GameState](#GameState) eine wichtige Rolle. Ist dieser nämlich auf *GameStateType.GamePaused* oder *GameStateType.GameOver* kann der Shop nicht geöffnet werden. Auch wenn sich der Spieler aktuell in einer Runde befindet, kann nicht mehr mit dem Barkeeper interagiert werden. Die Klasse hat somit ausschließlich den Zweck den Shop zu öffnen und zu schließen.
 
 ## Items
+
 ### Base Items
 Da die verschiedenen Items auch unterschiedliche Parameter speicher müssen, wurden anhand der verschiedenen Itemtypen, die es im Spiel gibt, verschiedene Basisklassen implementiert. Die hauptsächliche Aufgabe dieser Klassen besteht also darin, die verschiedenen Parameter des Gegenstands und das Prefab zu speichern. Zu diesen Parameter gehören z.B. die initiale Position in der Hand, die maximale Stapel Größe,  eine Referenz auf das Icon sowie der Name. 
 
@@ -676,7 +677,7 @@ public class Munition: Item
 #### Equipment Item
 Die *Equipment* Item Klasse erbt ebenfalls wie die vorherigen Klassen von der [Item](#Item) Klasse, jedoch erweitert sie diese durch viele neue Funktionen und Variablen, die benötigt werden damit diese Art von Item durch die Klasse [EntityEquipment](#EntityEquipment) ausgerüstet werden kann.  Dazugehören die Variablen *prefab*, *defaultHand*, *defaultPosition*, *defaultRotation* und *defaultDropRotation*. Erstere speichert eine Referenz zu dem GameObject das die eigentliche Funktionsweise implementiert und das Model des Gegenstands beinhaltet. Die anderen Parameter dienen dazu die Standardposition und Standardrotation zu speichern. Diese werden benötigt, wenn das Item zum ersten Mal durch die Klasse [EntityEquipment](#EntityEquipment) ausgerüstet wurde.
 
-Des Weiteren implementiert die *Equipment* Klasse die Funktionsweise der Abnutzung für alle Gegenstände dieser Art. Jedes Item kann sich nämlich mit der Zeit z.B. bei erfolgreichen Treffern abnutzen, bis es irgendwann kaputtgeht. Diese Haltbarkeit wird durch die Variablen *hasDuration*, *duration* und *currentDuration* verwaltet und kann mit der Methode *UseItem* aktualisiert werden. 
+Des Weiteren implementiert die *Equipment* Klasse die Funktionsweise der Abnutzung für alle Gegenstände dieser Art. Jedes Item kann sich nämlich mit der Zeit z.B. bei erfolgreichen Treffern abnutzen, bis es irgendwann kaputtgeht. Diese Haltbarkeit wird durch die Variablen *hasDuration*, *duration* und *currentDuration* verwaltet und kann mit der Methode *UseItem* aktualisiert werden.  Damit auch in der [Hotbar](#Hotbar) immer die richtige Haltbarkeit des jeweiligen Items angezeigt wird, gibt es das Event *OnDurationUpdate*.
 ```csharp
 [CreateAssetMenu(fileName = "New Equipment", menuName = "Items/Equipment")]
 public class Equipment : Item
@@ -732,11 +733,149 @@ public class EquipmentAnimation
 ```
 
 #### Drink Item
-#### Weapon
+Die *Drink* Klasse dient als Speicherklasse für alle konsumierbaren Items und erbt von der [Equipment](#Equipment) Klasse und erweitert diese durch die Variablen *healingAmount*, *healingSpeed* und *healingDelay*. Diese werden in den Klassen verwendet, in welchen die eigentliche Logik der Getränke implementiert ist. 
+```csharp
+[CreateAssetMenu(fileName = "New Drink", menuName = "Items/Drink")]
+public class Drink : Equipment
+{
+	public int healingAmount;
+	public float healingSpeed;
+	public float healingDelay;
+}
+```
+#### Weapon Item
+Die Weapon Klasse erbt ebenfalls von der [Equipment](#Equipment) Klasse und erweitert diese durch die einzige Variable *damage*, welche den Standardschaden der Waffe speichern soll.
+```csharp
+[CreateAssetMenu(fileName = "New Weapon", menuName = "Items/Weapon")]
+public class Weapon : Equipment
+{
+	public float damage;
+}
+```
 ### Collectable Item Klasse
+Die *Collectable* Klasse dient dazu, das grundsätzliche Verhalten zu implementieren, wenn der Spieler einen neuen Gegenstand vom Boden aufnimmt. Dies wird erreicht durch das benutzten von Kollisions-Boxen, welche dann die Methode *OnTriggerEnter* callt. Sollte es sich bei dem Verursacher um einen Spieler handeln, wird wie Methode *OnCollection* der [Item](#Item) Klasse aufgerufen, welche in der unveränderten Variante dieses dann dem Inventar hinzufügt.
+```csharp
+public class Collectable : MonoBehaviour
+{
+	public Equipment item;
+	public bool isCollected = false;
+
+	 private void OnTriggerEnter(Collider other)
+	 {
+		 if (other.CompareTag("Player") && !isCollected)
+		 {
+			 isCollected = true;
+			 item.OnCollection();
+			 OnCollection();
+		 }
+	 }
+	 
+	 public virtual void OnCollection()
+	 {
+		 Destroy(gameObject);
+	 }
+ }
+```
 ### Consumable Item Klasse
-### Equippabe Item Klasse
-### Waffen
+### Equippable Item Klasse
+Mithilfe der Klasse *Equippabe*,  können Gegenstände primär und sekundär Aktionen ausführen, solang diese durch die Variablen *isPrimaryEnabled* und *isSecondaryEnabled* aktiviert sind. Die Methoden sind deshalb auch alle als virtual gekennzeichnet, damit sie durch die erbenden Klassen erweitert werden können. Aufgerufen werden diese hauptsächlich durch die [EntityEquipment](#EntityEquipment) Klasse.
+```csharp
+public class Equippable : Collectable
+{
+	public bool isPrimaryEnabled = true;
+	public bool isSecondaryEnabled = false;
+
+	protected Entity owner;
+
+	protected virtual void Start()
+	{
+		owner = GetComponentInParent<Entity>();
+		if (owner == null) throw new ArgumentException("The item owner can't be null!");
+	}
+
+	public virtual void OnPrimary()
+	{
+		if (!isPrimaryEnabled) return;
+	}
+
+	public virtual void OnSecondary()
+	{
+		if (!isSecondaryEnabled) return;
+	}
+
+	public virtual void OnEquip()
+	{
+		isCollected = true;
+	}
+}
+```
+### Weapon Item Klasse
+Die *WeaponItem* Klasse erbt von der [Equippable](#Equippable) Klasse und erweitert die Funktionsweise der primär und sekundär Attacke durch einen Cooldown. Außerdem wird die Methode *OnHit* hinzugefügt, welche gecallt wird, wenn der Spieler einen erfolgreichen Treffer mit seiner Waffe gelandet hat. Mithilfe dieser Methode ist es möglich dem Gegner schaden hinzuzufügen und den Abnutzungsprozess zu starten. Damit *OnHit* jedoch überhaupt aufgerufen wird, werden auch hier Kollisions-Boxen verwendet und deren Trigger-Methoden verwendet. 
+
+Trifft der Besitzer des Items beispielsweise einen Gegner, wird geschaut, ob dieser aktuell wirklich einen Angriff ausführt oder nicht. Sollte dies der Fall sein wird versucht die gegnerische Seite zu ermitteln, um dieser dann unter anderem Schaden hinzuzufügen. Außerdem wird eine Art Block-Mechanismus aktiviert, damit doppelte Kollisionen ausgeschlossen werden können.
+```csharp
+void OnTriggerEnter(Collider other)
+{
+	if (hasCollided) return;
+	if (... && (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Player"))
+	{
+		if (owner.combat.IsAttacking)
+		{
+			Entity entity = other.gameObject.GetComponent<Entity>();
+			if (entity != null) OnHit(entity);
+
+			hasCollided = true;
+		}
+	}
+}
+
+void OnTriggerExit(Collider other)
+{
+	if (!hasCollided) return;
+	if (... && (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Player"))
+	{
+		hasCollided = false;
+	}
+}
+```
+Wurde eine Entität erfolgreich getroffen und die Methode OnHit gecallt, werden die weiteren Prozesse gestartet. Zu diesen gehört die Abnutzung des benutzen Gegenstands und der Aufruf der *OnHit* Methode aus der [Entity](#Entity) Klasse.
+```csharp
+public virtual void OnHit(Entity entity)
+{
+	if (entity.combat.IsBlocking && owner.equipment.CurrentEquipment.type == ItemType.Fist) return;
+	if (entity is Enemy && owner is Player && item.hasDuration)
+	{
+		bool isDestroyed = item.UseItem();
+		if (isDestroyed) return;
+	}
+	entity.OnHit(owner, item);
+}
+```
+Damit jede Waffe auch einen Cooldown besitzt und nur dann die Aktionen ausgeführt werden können, wenn der Cooldown abgelaufen ist, wurden die Methoden *OnPrimary* und *OnSecondary* mit dieser Funktionalität erweitert.
+```csharp
+public override void OnPrimary()
+{
+	base.OnPrimary();
+
+	if (...&& (owner.combat.IsDrinking || owner.combat.IsAttacking || owner.combat.IsStunned)) return;
+	if (primaryCooldown <= 0f)
+	{
+		primaryCooldown = 1f / primaryAttackRate;
+		owner.animator.OnPrimary();
+	}
+}
+
+public override void OnSecondary()
+{
+	base.OnSecondary();
+	if (...&& (owner.combat.IsDrinking || owner.combat.IsAttacking || owner.combat.IsStunned)) return;
+	if (secondaryCooldown <= 0f && owner.combat.CurrentMana >= secondaryManaRequired)
+	{
+		secondaryCooldown = 1f / secondaryAttackRate;
+		owner.animator.OnSecondary();
+	}
+}
+```
 
 ## Wave-System
 ### WaveSpawner
