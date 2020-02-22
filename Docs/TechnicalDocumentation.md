@@ -633,7 +633,7 @@ Die Barkeeper Klasse wird genutzt damit der Spieler mit diesem an der Bar intera
 ### Base Items
 Da die verschiedenen Items auch unterschiedliche Parameter speicher müssen, wurden anhand der verschiedenen Itemtypen, die es im Spiel gibt, verschiedene Basisklassen implementiert. Die hauptsächliche Aufgabe dieser Klassen besteht also darin, die verschiedenen Parameter des Gegenstands und das Prefab zu speichern. Zu diesen Parameter gehören z.B. die initiale Position in der Hand, die maximale Stapel Größe,  eine Referenz auf das Icon sowie der Name. 
 
-#### Item
+#### Item Klasse
 Die Item Klasse ist die zentrale Basisklasse, von der alle anderen Item Klassen erben. Sie deklariert die wichtigsten Parameter wie z.B. den Namen, Itemtyp oder die Referenz zum Icon. Des Weiteren implementiert sie die Methode *OnCollection* welche aufgerufen wird, wenn der Spieler ein Item eingesammelt hat. Durch diese wird der Gegenstand dann zum Inventar hinzugefügt, wenn dies aktiviert ist.
 ```csharp
 [CreateAssetMenu(fileName = "New Item", menuName = "Items/Item")]
@@ -655,7 +655,7 @@ public class Item : ScriptableObject
 }
 ```
 
-#### Money Item
+#### Money Item Klasse
 Die Money Klasse wird um die [Item](#Item) Basisklasse erweitert und fügt lediglich die Variable *amount*
 Hinzu, welche Später den Geldbetrag des Money-Items beinhalten soll. 
 ```csharp
@@ -665,7 +665,7 @@ public class Money : Item
 	public int amount;
 }
 ```
-#### Munition Item
+#### Munition Item Klasse
 Wie auch beim Money-Item, wird beim Munition-Item die Klasse [Item](#Item) implementiert und ebenfalls durch den Parameter *amount* erweitert, welcher später die Anzahl der Patronen beinhaltet, die der Spieler erhalten soll, wenn er das Item erworben hat.
 ```csharp
 [CreateAssetMenu(fileName = "New Munition", menuName = "Items/Munition")]
@@ -674,7 +674,7 @@ public class Munition: Item
 	public int amount;
 }
 ```
-#### Equipment Item
+#### Equipment Item Klasse
 Die *Equipment* Item Klasse erbt ebenfalls wie die vorherigen Klassen von der [Item](#Item) Klasse, jedoch erweitert sie diese durch viele neue Funktionen und Variablen, die benötigt werden damit diese Art von Item durch die Klasse [EntityEquipment](#EntityEquipment) ausgerüstet werden kann.  Dazugehören die Variablen *prefab*, *defaultHand*, *defaultPosition*, *defaultRotation* und *defaultDropRotation*. Erstere speichert eine Referenz zu dem GameObject das die eigentliche Funktionsweise implementiert und das Model des Gegenstands beinhaltet. Die anderen Parameter dienen dazu die Standardposition und Standardrotation zu speichern. Diese werden benötigt, wenn das Item zum ersten Mal durch die Klasse [EntityEquipment](#EntityEquipment) ausgerüstet wurde.
 
 Des Weiteren implementiert die *Equipment* Klasse die Funktionsweise der Abnutzung für alle Gegenstände dieser Art. Jedes Item kann sich nämlich mit der Zeit z.B. bei erfolgreichen Treffern abnutzen, bis es irgendwann kaputtgeht. Diese Haltbarkeit wird durch die Variablen *hasDuration*, *duration* und *currentDuration* verwaltet und kann mit der Methode *UseItem* aktualisiert werden.  Damit auch in der [Hotbar](#Hotbar) immer die richtige Haltbarkeit des jeweiligen Items angezeigt wird, gibt es das Event *OnDurationUpdate*.
@@ -732,7 +732,7 @@ public class EquipmentAnimation
 }
 ```
 
-#### Drink Item
+#### Drink Item Klasse
 Die *Drink* Klasse dient als Speicherklasse für alle konsumierbaren Items und erbt von der [Equipment](#Equipment) Klasse und erweitert diese durch die Variablen *healingAmount*, *healingSpeed* und *healingDelay*. Diese werden in den Klassen verwendet, in welchen die eigentliche Logik der Getränke implementiert ist. 
 ```csharp
 [CreateAssetMenu(fileName = "New Drink", menuName = "Items/Drink")]
@@ -743,7 +743,7 @@ public class Drink : Equipment
 	public float healingDelay;
 }
 ```
-#### Weapon Item
+#### Weapon Item Klasse 
 Die Weapon Klasse erbt ebenfalls von der [Equipment](#Equipment) Klasse und erweitert diese durch die einzige Variable *damage*, welche den Standardschaden der Waffe speichern soll.
 ```csharp
 [CreateAssetMenu(fileName = "New Weapon", menuName = "Items/Weapon")]
