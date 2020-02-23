@@ -29,7 +29,7 @@ Das Spiel wurde mit der Unity-Engine entwickelt. Für die verschiedenen Skripte 
 Das Spiel wurde ausschließlich für Windows und Mac OS entwickelt und sollte ausschließlich mit Controller gespielt werden, da nur so alle Mechaniken des Spiels vollständig funktionsfähig sind.
 
 ## Externe Komponenten
-Für das Spiel wurden verschiedene Komponenten genutzt, die von Drittanbietern entwickelt wurden. Dazu gehören die gesamten Animationen, welche bei [Mixamo](https://www.mixamo.com/#/) frei erhältlich sind. Diese sind professionell entwickelt worden und wurden teilweise sogar mit dem Motion Capture Verfahren erstellt. Des Weiteren sind alle Sounds, welche im Spiel genutzt wurden, von [Freesounds](https://freesound.org/). Alle anderen Spielbestandteile sind ausnahmslos Eigenkomponenten.
+Für das Spiel wurden verschiedene Komponenten genutzt, die von Drittanbietern entwickelt wurden. Dazu gehören die gesamten Animationen, welche bei [Mixamo](https://www.mixamo.com/#/) frei erhältlich sind. Diese sind professionell entwickelt worden und wurden teilweise sogar mit dem Motion Capture Verfahren erstellt. Des Weiteren sind alle Sounds, welche im Spiel genutzt wurden, von [Freesounds](https://freesound.org/). Auch das vom Revolver erzeugte Mündungsfeuer sowie die Grundfunktionalität der KI wurde nicht selbst erstellt bzw. implementiert. AußerdemAlle anderen Spielbestandteile sind ausnahmslos Eigenkomponenten.
 
 # Spielmechaniken, Gameplay und Komponenten
 ## Spielablauf
@@ -871,7 +871,193 @@ private Enemy FindClosestEnemy()
 }
 ```
 
-## Enemy
+## Enemy Klasse
+Die *Enemy* Klasse erbt ebenso wie die *Player* Klasse von der Basisklasse *Entity* und implementiert/erweitert alle wichtigen Methoden. Erweitert wird beispielsweise die *OnDeath* Methode, damit dem Spieler bei einem erfolgreichen Kill, Geld gegeben wird, sich die Statistik aktualisiert und letztendlich das GameObject des Gegners zerstört wird. Wie viel Geld der Spieler erhalten kann, wird vorab durch das *moneyDrops* Array definiert. Aus diesem wird ein Wert zufällig ausgewählt. Außerdem wird der *NavMeshAgent* und die Kollision-Box deaktiviert, damit der Gegner nicht mehr den Spieler verfolgt und dieser auch nicht mehr mit dem toten Gegner kollidieren kann.
+```csharp
+public override void OnDeath()
+{
+    base.OnDeath();
+
+    agent.enabled = false;
+    GetComponent<CapsuleCollider>().enabled = false;
+    animator.OnDeath();
+
+    Player.instance.combat.AddMana(10f);
+    if (moneyDrops != null) Player.instance.AddMoney(moneyDrops[Random.Range(0, moneyDrops.Length)]);
+    if (TargetAcquisition.instance.CurrentEnemy == this) TargetAcquisition.instance.UnselectCurrentEnemy(true);
+
+    Statistics.instance.AddKill();
+    Destroy(gameObject, 5f);
+}
+```
+Damit der Gegner für jede Runde neu konfiguriert werden kann, gibt es die Methode *Init*, welche in der *WaveSpawner* Klasse  aufgerufen wird.  Sie übergibt alle wichtigen Parameter an die dafür vorgesehen Skripte und Variablen. Außerdem wird das Startitem mittels des deklarierten und initialisierten Arrays *EnemyConfig.items* zufällig ausgewählt. Hierfür wird die Methode *GetRandomItem* genutzt, welche das Array in einen *WeightedRandomizer* lädt und aus diesem einen Gegenstand auswählt. Die Klasse *WeightedRandomizer* ist eine von dritten erstelle Klasse ([https://wiki.unity3d.com/index.php/WeightedRandomizer](https://wiki.unity3d.com/index.php/WeightedRandomizer)).
+```csharp
+public void Init(EnemyConfig config)
+{
+    (stats as EnemyStats).Init(config.stats);
+    (combat as EnemyCombat).Init(config.combat);
+
+    moneyDrops = config.moneyDrops;
+
+    RandomItem[] items = config.items;
+    if (items != null)
+    {
+        RandomItem randomItem = GetRandomItem(items);
+        Equipment item = randomItem.item;
+
+        float damageOverride = randomItem.damageOverride;
+        float healthOverride = randomItem.healthOverride;
+
+        equipment.EquipItem(item);
+        animator.SetEquipment(item);
+
+        if (damageOverride > 0) stats.damage = damageOverride;
+        if (healthOverride > 0)
+        {
+            stats.maxHealth = healthOverride;
+            stats.CurrentHealth = healthOverride;
+        }
+    }
+}
+
+private RandomItem GetRandomItem(RandomItem[] items)
+{
+    Dictionary<RandomItem, int> weights = new Dictionary<RandomItem, int>();
+    foreach (RandomItem item in items) weights.Add(item, item.percentage);
+
+    return WeightedRandomizer.From(weights).TakeOne();
+}
+
+public static class WeightedRandomizer
+{
+    public static WeightedRandomizer<R> From<R>(Dictionary<R, int> spawnRate)
+    {
+        return new WeightedRandomizer<R>(spawnRate);
+    }
+}
+
+public class WeightedRandomizer<T>
+{
+    private static Random random = new Random();
+    private Dictionary<T, int> weights;
+
+    public WeightedRandomizer(Dictionary<T, int> weights)
+    {
+        this.weights = weights;
+    }
+
+    public T TakeOne()
+    {
+        var sortedSpawnRate = Sort(weights);
+        int sum = 0;
+        foreach (var spawn in weights)
+        {
+            sum += spawn.Value;
+        }
+
+        int roll = random.Next(0, sum);
+        T selected = sortedSpawnRate[sortedSpawnRate.Count - 1].Key;
+
+        foreach (var spawn in sortedSpawnRate)
+        {
+            if (roll < spawn.Value)
+            {
+                selected = spawn.Key;
+                break;
+            }
+            roll -= spawn.Value;
+        }
+
+        return selected;
+    }
+
+    private List<KeyValuePair<T, int>> Sort(Dictionary<T, int> weights)
+    {
+        var list = new List<KeyValuePair<T, int>>(weights);
+        list.Sort(delegate (KeyValuePair<T, int> firstPair, KeyValuePair<T, int> nextPair)
+        {
+            return firstPair.Value.CompareTo(nextPair.Value);
+        });
+
+        return list;
+    }
+}
+```
+Die implementierte "KI" wurde größtenteils von dem GitHub-Repository [https://github.com/tutsplus/battle-circle-ai](https://github.com/tutsplus/battle-circle-ai) kopiert und übernommen und ist leider nur teilweise funktionsfähig.
+
+### EnemyStats Klasse
+Die EnemyStats Klasse implementiert die EntityStats Klasse, überschreibt die Methode *Damage* und fügt eine weitere notwendige Methode hinzu. Die Damage Methode wird überschrieben, damit der Spieler auf zwei verschiedene Art und Weißen sehen kann, ob er den Gegner erfolgreich getroffen hat oder nicht. Zum einen wird bei einem Treffer die HealtBar über dem Kopf des Gegners aktualisiert und zum anderen werden Damage-Popups neben dem jeweiligen Gegner gezeigt. Des Weiteren werden die Statistiken für den Spieler geupdated.
+```csharp
+public override void Damage(float damage, Equipment item = null)
+{
+    base.Damage(damage, item);
+
+    if (IsDead)
+    {
+        healthBar.gameObject.SetActive(false);
+        return;
+    }
+
+    healthBar.fillAmount = CurrentHealth / maxHealth;
+    if (damagePopup) ShowDamagePopup(damage);
+    Statistics.instance.AddDamage(damage);
+}
+
+public void ShowDamagePopup(double damage)
+{
+    GameObject popup = Instantiate(damagePopup, transform.position, Quaternion.identity, transform);
+    popup.GetComponent<TextMesh>().text = damage.ToString();
+}
+```
+Damit basierend auf den verschiedenen Runden die Gegner auch unterschiedliche Lebens- und Damagepunkte haben können gibt es die *EnemyStatsConfig* welche in einem späteren Kapitel näher erläutert wird. Mittels der *Init* Methode können die deklarierten Variablen aus der *EnemyStatsConfig* in die *EnemyStats* Klasse geladen werden.
+```csharp
+public void Init(EnemyStatsConfig config)
+{
+    if (config != null)
+    {
+        if (config.minHealth > 0f && config.maxHealth > 0f)
+        {
+            float health = Random.Range(config.minHealth, config.maxHealth);
+            maxHealth = health;
+            CurrentHealth = health;
+        }
+
+        if (config.damage > 0f) damage = config.damage;
+    }
+}
+```
+### EnemyCombat Klasse
+Die *EnemyCombat* Klasse erbt von der *EntityCombat* Klasse und erweitert diese ebenso wie die *EnemyStats* Klasse durch die Methode *Init*. In diesem fall, lädt diese jedoch eine *EnemyCombatConfig*
+```csharp
+public void Init(EnemyCombatConfig config)
+{
+    if (config != null)
+    {
+        if (config.manaRegenerationAmount >= 0f) manaRegenerationAmount = config.manaRegenerationAmount;
+        if (config.manaRegenerationSpeed >= 0f) manaRegenerationSpeed = config.manaRegenerationSpeed;
+    }
+}
+```
+### EnemyAnimator
+Wie alle vorherigen Klassen erbt auch die *EnemyAnimator* Klasse von einer der Entity-Basisklassen. In diesem Fall ist es die *EntityAnimator* Klasse, welch nur durch die Funktion für die Bewegungs-Animation erweitert wird.  In jedem Update-Zyklus wird die aktuelle vorwärts Geschwindigkeit ermittelt und diese an die Basisklasse übergeben. So kann schlussendlich die Bewegungs-Animation durch den *Animator* erstellt werden.
+```csharp
+public class EnemyAnimator : EntityAnimator
+{
+    private NavMeshAgent navMeshAgent;
+
+    protected override void Start()
+    {
+        base.Start();
+        navMeshAgent = GetComponent<NavMeshAgent>();
+    }
+
+    void Update()
+    {
+        float forward = Vector3.Dot(navMeshAgent.velocity.normalized, gameObject.transform.forward);
+        SetForward(forward);
+    }
+}
+```
 
 ## Barkeeper Klasse
 Die Barkeeper Klasse wird genutzt damit der Spieler mit diesem an der Bar interagieren kann, um somit den [Shop](#Shop) zu schließen oder zu öffnen. Dies wird erreicht in dem in der Klasse gespeichert wird, ob sich der Spieler in Reichweite befindet oder nicht. Außerdem Spielt der aktuelle [GameState](#GameState) eine wichtige Rolle. Ist dieser nämlich auf *GameStateType.GamePaused* oder *GameStateType.GameOver* kann der Shop nicht geöffnet werden. Auch wenn sich der Spieler aktuell in einer Runde befindet, kann nicht mehr mit dem Barkeeper interagiert werden. Die Klasse hat somit ausschließlich den Zweck den Shop zu öffnen und zu schließen.
