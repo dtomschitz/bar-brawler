@@ -1146,6 +1146,106 @@ public override void OnSecondary()
 }
 ```
 
+#### Fist Weapon Klasse
+Die *Fist* Klasse erbt von der Weapon Item Klasse und erweitert die *OnSecondary*, damit es dem Spieler möglich ist, angriffe zu blockieren. Jeder geblockte Angriff kostet den Spieler Ausdauer. Sollte er keine mehr besitzen wird er auch wieder Schaden durch die Gegner nehmen. Außerdem wird die Methode OnHit überschrieben damit bei einem erfolgreichen Treffer der dazugehörige Sound abgespielt wird.
+```csharp
+public class Fist : WeaponItem
+{
+    public override void OnSecondary()
+    {
+        if (owner.combat.IsAttacking) return;
+        base.OnSecondary();
+        owner.combat.SetState(CombatState.FistBlock);
+        owner.combat.UseMana(20f);
+    }
+
+    public override void OnHit(Entity entity)
+    {
+        base.OnHit(entity);
+        AudioManager.instance.PlaySound(Sound.FistHit, entity.transform.position);
+    }
+}
+```
+#### Knife Weapon Klasse
+Auch die *Knife* Klasse implementiert die *WeaponItem* Klasse überschreibt jedoch nur die *OnHit* Methode. Das Messer hat nämlich die spezielle Fähigkeit den Gegner nach einem erfolgreichen Treffer noch weiter ausbluten zu lassen. Um diese Mechanik zu implementieren wird in der *OnHit* Methode eine Coroutine gestartet, welche dem Geschadeten über einen vordefinierten Zeitraum weiter Schaden hinzufügt.
+```csharp
+public class Knife : WeaponItem
+{
+    public float bleedOutDamage = 2f;
+    public float bleedOutTime = 10f;
+    public float timeBetweenDamage = 1f;
+
+    public override void OnHit(Entity entity)
+    {
+        base.OnHit(entity);
+        AudioManager.instance.PlaySound(Sound.KnifeHit, entity.transform.position);
+        StartCoroutine(KnifeBleedOut(entity));
+    }
+
+    private IEnumerator KnifeBleedOut(Entity entity)
+    {
+        var pastTime = 0f;
+        while (pastTime < bleedOutTime)
+        {
+            if (entity.stats.IsDead) yield break;
+
+            entity.stats.Damage(bleedOutDamage);
+            AudioManager.instance.PlaySound(Sound.FistHit, entity.transform.position);
+
+            pastTime++;
+            yield return new WaitForSeconds(timeBetweenDamage);
+        }
+    }
+}
+```
+#### Revolver Weapon Klasse
+Die *Revolver* Klasse implementiert die grundsätzlichen Funktionen des Revolvers, welchen der Spieler im Shop erwerben kann. Da der Revolver keine eigene Schuss-Animation besitzt und somit nicht der *CombatState* des jeweiligen Entities aktualisiert werden kann, wird ein eigener Cooldown implementiert. So kann verhindert werden, dass zu früh bzw. zu schnell geschossen werden kann. 
+Hat der Spieler außerdem einen Gegner durch den Zielerfassungsmodus ausgewählt, wird dieser direkt anvisiert und mit einem Schuss getötet. Ansonsten muss der Spieler versuchen selbst zu Zielen 
+```csharp
+public class Revolver : WeaponItem
+{
+    public Bullet bullet;
+    public Transform muzzle;
+    public MuzzleFlash muzzleFlash;
+    public float bulletSpeed;
+    public float fireRate = 1f;
+
+    private float cooldown = 0f;
+
+    void Update()
+    {
+        cooldown -= Time.deltaTime;
+    }
+
+    public override void OnPrimary()
+    {
+        if (Player.instance.inventory.HasMunition && cooldown <= 0f)
+        {
+            cooldown = 1f / fireRate;
+
+            AudioManager.instance.PlaySound(Sound.RevolverShoot);
+            muzzleFlash.Play();
+
+            Bullet newBullet = Instantiate(bullet, muzzle.position, muzzle.rotation) as Bullet;
+            newBullet.speed = bulletSpeed;
+            bullet.OnHit += OnHit;
+
+            if (TargetAcquisition.instance.CurrentEnemy != null)
+            {
+                Enemy enemy = TargetAcquisition.instance.CurrentEnemy;
+                Vector3 bulletDirection = enemy.transform.position - muzzle.position;
+
+                newBullet.transform.rotation = Quaternion.LookRotation(bulletDirection, Vector3.up);
+
+                OnHit(TargetAcquisition.instance.CurrentEnemy);
+            }
+
+            Player.instance.inventory.UseMunition();
+        }
+    }
+}
+```
+
 ## GameState Klasse
 Die *GameState* Klasse speichert den aktuellen State des Spieles, was notwendig ist damit gewisse Aktionen blockiert werden können. So kann beispielsweise verhindert werden, dass der Spieler den Shop öffnen kann, obwohl er sich gerade im Pausenmenü befindet. Außerdem werden durch das Aktualisieren des Game States, mithilfe der *SetState* Methode, auch verschiedene UI-Element ein- und ausgeblendet. Dies geschieht durch die jeweiligen Toggel-Methoden und durch die [UIManager](#UIManager) Klasse, welche Zugriff auf alle UI-Elemente im Spiel hat.
 ```csharp
