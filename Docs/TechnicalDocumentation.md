@@ -868,19 +868,36 @@ Die Item Klasse ist die zentrale Basisklasse, von der alle anderen Item Klassen 
 [CreateAssetMenu(fileName = "New Item", menuName = "Items/Item")]
 public class Item : ScriptableObject
 {
-	new public string name; // Der Name des Gegenstands, welcher im Shop sowie in der Hotbar genutzt wird.
-	public Sprite icon; // Eine Referenz zu dem Icon des Gegenstands, welches in der Hotbar und im Shop genutzt wird.
-	public ItemKind kind; // Der Typ des Items. Dieser kann entweder ItemKind.Consumable oder ItemKind.Weapon sein. 
+    new public string name;
+    public Sprite icon;
+    public ItemKind kind;
 
-	public bool addToInventory = true; // Für die Entscheidung ob das Item dem Inventar hinzugefügt werden kann oder nicht.
-	public bool isStackable = true; // Für die Entscheidung ob das Item stapelbar ist oder nicht.
-	public int maxStackSize = 1; // Die maximal größe des Stapels
-	public InventorySlot slot; // Eine Referenz zum InventorySlot in welchem das Item gespeichert wurde.
+    public bool addToInventory = true;
+    public bool isStackable = true;
+    public int maxStackSize = 1;
+    public InventorySlot slot;
 
-	public virtual void OnCollection()
-	{
-		Player.instance.inventory.AddItem(this);
-	}
+    public virtual void OnCollection()
+    {
+        Player.instance.inventory.AddItem(this);
+    }
+}
+
+public enum ItemKind
+{
+    Consumable,
+    Weapon
+}
+
+public enum ItemType
+{
+    Fist,
+    Revolver,
+    Bottle,
+    Knife,
+    Whiskey,
+    Beer,
+    Feuersaft
 }
 ```
 
@@ -891,16 +908,16 @@ Hinzu, welche Später den Geldbetrag des Money-Items beinhalten soll.
 [CreateAssetMenu(fileName = "New Money Item", menuName = "Items/Money")]
 public class Money : Item
 {
-	public int amount;
+    public int amount;
 }
 ```
 #### Munition Item Klasse
 Wie auch beim Money-Item, wird beim Munition-Item die Klasse [Item](#Item) implementiert und ebenfalls durch den Parameter *amount* erweitert, welcher später die Anzahl der Patronen beinhaltet, die der Spieler erhalten soll, wenn er das Item erworben hat.
 ```csharp
 [CreateAssetMenu(fileName = "New Munition", menuName = "Items/Munition")]
-public class Munition: Item
+public class Munition : Item
 {
-	public int amount;
+    public int amount;
 }
 ```
 #### Equipment Item Klasse
@@ -911,53 +928,55 @@ Des Weiteren implementiert die *Equipment* Klasse die Funktionsweise der Abnutzu
 [CreateAssetMenu(fileName = "New Equipment", menuName = "Items/Equipment")]
 public class Equipment : Item
 {
-	public delegate void DurationUpdate(float normalizedDuration);
-	public event DurationUpdate OnDurationUpdate;
+    public delegate void DurationUpdate(float normalizedDuration);
+    public event DurationUpdate OnDurationUpdate;
 
-	public ItemType type; 
-	public GameObject prefab;
+    public ItemType type;
+    public GameObject prefab;
 
-	public Hand defaultHand;
-	public Vector3 defaultPosition;
-	public Vector3 defaultRotation;
-	public Vector3 defaultDropRotation;
+    public bool hasDuration;
+    public float duration;
+    private float currentDuration;
 
-	public EquipmentAnimation[] equipmentAnimations;
+    public Hand defaultHand;
+    public Vector3 defaultPosition;
+    public Vector3 defaultRotation;
+    public Vector3 defaultDropRotation;
 
-	public bool hasDuration;
-	public float duration;
-	private float currentDuration;
+    public EquipmentAnimation[] equipmentAnimations;
 
-	...
+    ...
 
-	public bool UseItem()
-	{
-		currentDuration--;
-		OnDurationUpdate?.Invoke(NormalizedDuration);
+    public bool UseItem()
+    {
+        currentDuration--;
+        OnDurationUpdate?.Invoke(NormalizedDuration);
 
-		if (currentDuration <= 0)
-		{
-			Player.instance.inventory.RemoveItem(this);
-			return true;
-		}
+        if (currentDuration <= 0)
+        {
+            Player.instance.inventory.RemoveItem(this);
+            return true;
+        }
 
-		return false;
-	}
-	
-	...
+        return false;
+    }
+
+    ..
 }
 ```
 Zusätzlich werden in dieser Klasse auch die möglichen Animationen, durch die Hilfsklasse *EquipmentAnimation* gespeichert. Sie implementiert die Variablen,  *index*, *hand*, *specificPosition* und *specificRotation*. Diese Variablen werden genutzt um zum einen Festzustellen, welche Animation durch den  [EntityAnimator](#EntityAnimator)  abgespielt werden soll. Zum anderen werden sie benötigt um für die jeweilige Animation, den Gegenstand zwischen den Händen gegeben Falls zu tauschen und die Position und Rotation zu überschreiben. Damit diese Werte aber auch durch die [EntityEquipment](#EntityEquipment)  Klasse überschrieben werden, muss dies durch die Variablen *useSpecifcPosition* und *useSpecificRotation* aktiviert werden.
 ```csharp
+[System.Serializable]
 public class EquipmentAnimation
 {
-	public int index;
-	public Hand hand;
-	
-	public bool useSpecifcPosition;
-	public bool useSpecificRotation;
-	public Vector3 specificPosition;
-	public Vector3 specificRotation;
+    public int index;
+    public Hand hand;
+
+    public bool useSpecifcPosition;
+    public bool useSpecificRotation;
+
+    public Vector3 specificPosition;
+    public Vector3 specificRotation;
 }
 ```
 
@@ -967,9 +986,8 @@ Die *Drink* Klasse dient als Speicherklasse für alle konsumierbaren Items und e
 [CreateAssetMenu(fileName = "New Drink", menuName = "Items/Drink")]
 public class Drink : Equipment
 {
-	public int healingAmount;
-	public float healingSpeed;
-	public float healingDelay;
+    public int healingAmount;
+    public float healingDelay;
 }
 ```
 #### Weapon Item Klasse 
@@ -978,7 +996,7 @@ Die Weapon Klasse erbt ebenfalls von der [Equipment](#Equipment) Klasse und erwe
 [CreateAssetMenu(fileName = "New Weapon", menuName = "Items/Weapon")]
 public class Weapon : Equipment
 {
-	public float damage;
+    public float damage;
 }
 ```
 ### Collectable Item Klasse
@@ -1006,6 +1024,28 @@ public class Collectable : MonoBehaviour
  }
 ```
 ### Consumable Item Klasse
+Die Consumable Klasse implementiert das Verhalten der Getränke, welches durch die Parameter *healingAmount*, *healingSpeed* und *healingDelay* der *Drink* Basisklasse modifiziert werden kann. Da es sich bei konsumierbaren Gegenständen auch um Items handelt, die vom Spieler ausgerüstet werden können und müssen, erbt die Klasse von der *Equippable* Klasse diese Funktionalität. So ist es möglich das der Spieler die verschiedenen Getränke konsumieren kann, um seine Lebenspunkte wieder zu regenerieren.
+```csharp
+public class Consumable : Equippable
+{
+    public override void OnPrimary()
+    {
+        base.OnPrimary();
+        if (owner.combat.IsAttacking || owner.combat.IsBlocking || owner.combat.IsDrinking || owner.stats.HasFullLife) return;
+
+        owner.animator.OnPrimary();
+        StartCoroutine(StartHealing(item as Drink));
+    }
+
+    private IEnumerator StartHealing(Drink drink)
+    {
+        yield return new WaitForSeconds(drink.healingDelay);
+        owner.stats.Heal(drink.healingAmount);
+
+        Player.instance.inventory.RemoveItem(item);
+    }
+}
+```
 ### Equippable Item Klasse
 Mithilfe der Klasse *Equippabe*,  können Gegenstände primär und sekundär Aktionen ausführen, solang diese durch die Variablen *isPrimaryEnabled* und *isSecondaryEnabled* aktiviert sind. Die Methoden sind deshalb auch alle als virtual gekennzeichnet, damit sie durch die erbenden Klassen erweitert werden können. Aufgerufen werden diese hauptsächlich durch die [EntityEquipment](#EntityEquipment) Klasse.
 ```csharp
