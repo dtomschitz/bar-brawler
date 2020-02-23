@@ -23,14 +23,13 @@ Erstellen der Charaktere, seine Outfits und Raumdetails
 
 ## Genutzte Hardware
 ## Genutzte Werkzeuge und Engine
-Das Spiel wurde mit der Game Engine Unity in der Sprache C# entwickelt. Alle Models wurden in Blender erzeugt und die dazugehörigen Texturen mit Photoshop und Gimp erstellt. Die Versions-Kontrolle erfolgte über das GitLab der HdM.
+Das Spiel wurde mit der Unity-Engine entwickelt. Für die verschiedenen Skripte wurde die von Unity vorgesehene Programmiersprache C# verwendet.  Alle Models wurden in Blender erzeugt und die dazugehörigen Texturen mit Photoshop und Gimp erstellt. Die Versions-Kontrolle erfolgte über das GitLab der HdM.
 
 ## Zielplattform
 Das Spiel wurde ausschließlich für Windows und Mac OS entwickelt und sollte größten Teils ausschließlich durch einen Controller gespielt werden, da nur so alle Mechaniken des Spiels vollständig funktionsfähig sind.
 
 ## Externe Komponenten
 Für das Spiel wurden verschiedene Komponenten genutzt, die von dritten entwickelt wurden. Dazu gehören beispielsweise die gesamten Animationen, welche bei [Mixamo](https://www.mixamo.com/#/) frei erhältlich sind. Diese sind professionell entwickelt worden und wurden teilweise sogar mit dem Motion Capture Verfahren erstellt. Des Weiteren sind alle Sounds, welche im Spiel genutzt wurden, von [Freesounds](https://freesound.org/) erworben. 
-
 
 # Spielmechaniken, Gameplay und Komponenten
 ## Spielablauf
