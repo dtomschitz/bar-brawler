@@ -41,7 +41,7 @@ Das Spiel beginnt im Hauptmenü, von wo aus der Nutzer entweder ein neues Spiel 
 Die Models wurden in der 3D Objektmodellierungssoftware Blender 2.8 gefertigt. Es wurden verschiedene Formen, wie Kugeln, Quader, Ringe und Zylinder deformiert, bis das gewünschte Ergebnis ersichtlich war. Alle Objekte wurden einzeln gespeichert und später in einer Blender File (room.blend) zusammen gebaut. So konnten Wände, Elemente und Größen aufeinander abgestimmt werden, um ein realistisches Ergebnis zu erhalten. Jedoch war so eine effiziente Nachbearbeitung ebenfalls möglich, da einzelne Objekte in der Room Datei den gleichen Platz im Koordinatensystem bekommen haben, wie in ihrer eigenen Datei. Das hat den Vorteil, dass das Objekt nach einer Bearbeitung zum richtigen Punkt im Koordinatensystem importiert werden kann. Es handelt sich bei allen Modellen um Eigenkomponenten.
 
 **Stil**
-Die Objekte wurden aus mehreren Gründen so einfach wie möglich gehalten. Umso detaillierter ein Objekt gestaltet wird, desto mehr Speicherplatz erfordert dies. Da viele Objekte mehrmals im Spiel verwendet wird, verursacht eine zu detaillierte Flasche oder zu rundes Stuhlbein ein sehr hohen Speicherbedarf. Außerdem sollte das Spiel im Comic Stil gehalten sein, worauf bereits die Texturen hinweisen.
+Die Objekte wurden aus mehreren Gründen so einfach wie möglich gehalten. Umso detaillierter ein Objekt gestaltet wird, desto mehr Speicherplatz erfordert dies. Da viele Objekte mehrmals im Spiel verwendet wird, verursacht eine zu detaillierte Flasche oder zu rundes Stuhlbein einen sehr hohen Speicherbedarf. Außerdem sollte das Spiel im Comic Stil gehalten sein, worauf bereits die Texturen hinweisen.
 Der Stil der einzelnen Objekte ist durch „Lucky Luke“ Comics und dem Spiel „Read Dead Redemption 2“ inspiriert worden. Dort wurde auf das Aussehen der gängigen Möbel und Gegenstände geachtet, um ein authentisches Spielerlebnis zu schaffen.
 
 **Vorbereitung für Unity**
@@ -49,13 +49,13 @@ Um die Models für Unity importieren zu können, musste geprüft werden, ob alle
 
 
 ## Texturen
-Für das Erstellen der Textur Dateien wurden die Models in Blender mit dem SmartUVProject unwrapped. Dabei wurde darauf geachtet, dass zwischen den einzelnen Flächen ein Abstand vorhanden ist. Zudem mussten wir darauf achten, dass Flächen, welche eine höhere Auflösung besitzen sollen, auch eine größere Fläche im UV-Grid zugewiesen bekommen. Nach dem Bemalen der Texture Ebene wurde das UV-Grid wieder entfernt, um Schwarze Linien in der Texture.png Datei zu verhindern. Die Auflösung der Texturen beträgt 1024x1024 Pixeln. Eine höhere Auflösung wird für dieses Projekt nicht benötigt, da die Grafik im Comic Stil gehalten wird.Dementsprechend werden häufig für große Flächen einzelne Farben genutzt oder allgemein wenig detaillierte Texturen erstellt wurden.
+Für das Erstellen der Textur Dateien wurden die Models in Blender mit dem SmartUVProject unwrapped. Dabei wurde darauf geachtet, dass zwischen den einzelnen Flächen ein Abstand vorhanden ist. Zudem mussten wir darauf achten, dass Flächen, welche eine höhere Auflösung besitzen sollen, auch eine größere Fläche im UV-Grid zugewiesen bekommen. Die Auflösung der Texturen beträgt 1024x1024 Pixeln. Eine höhere Auflösung wird für dieses Projekt nicht benötigt, da die Grafik im Comic Stil gehalten wird.Dementsprechend werden häufig für große Flächen einzelne Farben genutzt oder allgemein wenig detaillierte Texturen erstellt wurden.
 
-Für manche Models wurden nach der Erstellung des UV-Grids in Photoshop die einzelnen Parts mit Farbe bemalt, hierbei wurde das UV-Grid in Photoshop importiert, um die Flächen im Texture.png der jeweiligen UV-Grid-Flächen zuzuordnen.
+Für manche Models wurden nach der Erstellung des UV-Grids die einzelnen Parts in Photoshop mit Farbe bemalt, hierbei wurde das UV-Grid in Photoshop importiert, um die Flächen im Texture.png der jeweiligen UV-Grid-Flächen zuzuordnen. Nach dem Bemalen der Texture Ebene wurde das UV-Grid wieder entfernt, um Schwarze Linien in der Texture.png Datei zu verhindern.
 
-Für weitere Models wurden direkt in Blende Farben durch verschiedene Materials zu bestimmten Faces zugeordnet. Schließlich wurde das Model mit der Render Engine Cycles und dem Bake Type Diffuse gebaket, wodurch man eine erste Textur Datei erhält und exportieren kann. Diese Dateien wurden anschließend mit Gimp oder Photoshop überarbeitet.
+Für weitere Models wurden direkt in Blender Farben durch verschiedene Materials zu bestimmten Faces zugeordnet. Schließlich wurde das Model mit der Render Engine Cycles, dem Bake Type Diffuse und dem Influence Color gebaket, wodurch man eine erste png Datei für die Textur erhält und diese exportieren kann. Diese Dateien wurden anschließend mit Gimp oder Photoshop überarbeitet.
 
-Für einen Teil der gezeichneten Texturen wurde die TexturePaint Funktion in Blender genutzt. Die gezeichneten und einfarbigen Texturen für die Flächen eines Models wurden nachfolgend auch in Gimp und Photoshop zu einer Texture Datei zusammengefügt.
+Für einen Teil der gezeichneten Texturen wurde die TexturePaint Funktion in Blender genutzt. Die gezeichneten und einfarbigen Texturen für die Flächen eines Models wurden nachfolgend auch in Gimp und Photoshop zu einer Textur Datei zusammengefügt.
 
 ## Audio
 Wie bereits erwähnt,  wurden alle Sounds die im Spiel zu höheren sind, von [Freesounds](https://freesound.org/)  erworben. Während dem gesamten Spielverlauf wird eine Hintergrundmelodie abgespielt, welche auch im Hauptmenü sowie in dem Pausenmenü, GameOver-Menü und dem Shop zu hören sind. Für jede Aktion die der Spieler ausführt, wie z.B. das Angreifen oder das Drücken eines UI-Buttons, werden entsprechend Sounds abgespielt. Auch für den erfolgreichen Treffer gibt es verschiedene Sounds, welche je nach Waffentyp abgespielt werden.
@@ -338,6 +338,34 @@ public void SetEquipmentAnimation(EquipmentAnimation animation)
 }
 ```
 Die meisten Methoden in der Klasse sind als *virtual* gekennzeichnet, damit sie von erbenden Klassen überschrieben werden können. Dies ist beispielsweise bei der Methode *Move* wichtig, welche die Parameter für die Bewegungs-Animation setzt, da sich Spieler und Gegner mit verschiedenen Mechaniken fortbewegen. 
+
+### EntityCombatBehaviour Klasse
+Die *EntityCombatBehaviour* Klasse wird als StateMachine verwendet und wird für die meisten Animationen, die der Spieler triggern kann genutzt. Die primäre Aufgabe dieser Klasse ist es, den *CombatState* der jeweiligen Entität zu aktualisieren, was durch die *Entity.combat.SetState* Methode erreicht wird. Dieser wird der aktuell ausgerüstete Gegenstand der Entität übergeben, 
+```csharp
+public class EntityCombatBehaviour : StateMachineBehaviour
+{
+   public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        Entity entity = animator.GetComponentInParent<Entity>();
+        if (entity != null && entity.equipment.CurrentEquipment != null && !entity.combat.IsBlocking)
+        {
+            entity.combat.SetState(entity.equipment.CurrentEquipment);
+            ...
+        }
+    }
+
+    public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+
+        Entity entity = animator.GetComponentInParent<Entity>();
+        if (entity != null && entity.equipment.CurrentEquipment != null)
+        {
+            entity.combat.SetState(CombatState.Idle);
+            ...
+        }
+    }
+}
+```
 
 ## Player Klasse
 Die Player Klasse erbt von der Basisklasse [Entity](#Entity), wird als *Singelton* genutzt und implementiert alle notwendigen Methoden damit der Spieler als Entität gehandhabt werden kann um beispielsweise schaden zu erleiden oder Angriffe zu tätigen.
@@ -1103,7 +1131,7 @@ public void SetState(GameStateType newState)
 Das Wave-System ist neben den anderen Spielmechaniken, wie das Kämpfen oder Bewegen des Spielers essenziell. Um dieses System so modular wie möglich zu gestalten, wurde die eigentliche Logik für die Verwaltung der Schwierigkeitsstufen aus der *WaveSpawner* Klasse heraus genommen und in der *WaveConfig*  Klasse implementiert. So ist es möglich jeder Zeit für verschiedene Abschnitten im Spielverlauf, verschiedene Konfigurationen zu benutzten, um dadurch letztendlich die Schwierigkeit dynamisch anzupassen. 
 
 ### WaveConfig Klasse
-Die *WaveConfig* wird genutzt um das Wave-System modular und dynamischer zu gestalten. Sie speichert wichtige Informationen, wie die Rundenzahl, in der die Config geladen werden soll, die dazugehörige Schwierigkeitsstufe, das Enemy-Prefab was zur Instantiierung notwendig ist und die für diese Runde vorgesehene *EnemyConfig*. Wird eine *WaveConfig* aktiviert, werden die zuvor aufgezählten Parameter an den *WaveSpawner* weiter gegeben.
+Die *WaveConfig* wird genutzt um das Wave-System modular und dynamischer zu gestalten. Sie speichert wichtige Informationen, wie die Rundenzahl, in der die Config geladen werden soll, die dazugehörige Schwierigkeitsstufe, das Enemy-Prefab was zur Instantiierung notwendig ist und die für diese Runde vorgesehene *EnemyConfig*. Wird eine *WaveConfig* aktiviert, werden die zuvor aufgezählten Parameter an den *WaveSpawner* weiter gegeben, welcher dann letztendlich auch die *EnemyConfig* der aktuellen *WaveConfig* an die erzeugten Gegner übergibt.
 ```csharp
 public class WaveConfig : ScriptableObject
 {
@@ -1115,7 +1143,37 @@ public class WaveConfig : ScriptableObject
 }
 ```
 #### EnemyConfig Klasse
+In der *EnemyConfig* Klasse können neben der Referenz zu einer *EnemyStatsConfig* auch die möglichen Money-Drops sowie die verschiedenen Waffen definiert werden, die der Gegner eventuell bekommen kann. Das *moneyDrops* wird also beispielsweise genutzt, wenn der Gegner gestorben ist. Der Spieler erhält für den Kill dann einen gewissen Betrag an Geld, welcher zufällig aus dieser List entnommen wurde. 
+```csharp
+public class EnemyConfig : ScriptableObject
+{
+    public EnemyStatsConfig stats;
+
+    public int[] moneyDrops;
+    public RandomItem[] items;
+}
+```
+Damit die Gegner wie schon zuvor erwähnt auch mit verschiedenen Waffen spawnen, gibt es das Array *items*. In diesem können vorab alle Items gespeichert werden, die der Gegner eventuell ausrüsten können sollte. Damit letztendlich bei der Erzeugung ein zufälliges Item aus der Liste gezogen wird, wurde die Klasse *RandomItem* implementiert. Diese speichert neben der eigentlichen Wahrscheinlichkeit für das Item auch eine Referenz für das Item selbst, sowie die Variablen *damageOverride* und *healthOverride*. Die letzten beiden Variablen können dafür genutzt werden, den Standardschaden oder die Standardlebenspunkte zu überschreiben, was teilweise notwendig ist, da der Gegner erst im Verlauf des Spiels mit diversen Waffen mehr Schaden machen darf.
+```csharp
+public class RandomItem
+{
+    public int percentage;
+    public Equipment item;
+    public int damageOverride;
+    public int healthOverride;
+}
+```
+
 #### EnemyStatsConfig
+Die *EnemyStatsConfig* speichert die Standardlebenspunkte die Gegner bekommen soll und den Schaden den er verursacht. Diese Werte können jedoch durch die *EnemyConfig* Klasse überschrieben werden.
+```csharp
+public class EnemyStatsConfig : ScriptableObject
+{
+    public float maxHealth;
+    public float minHealth;
+    public float damage;
+}
+```
 
 ### WaveSpawner Klasse
 Die WaveSpawner Klasse implementiert die eigentliche Logik des Erstellens der Wellen und der dazugehörigen Gegner. Um immer klar definieren zu können in welchem Zustand sich der WaveSpawner aktuell befindet und um so vorzubeugen, dass der Spieler durch etwaige Bugs beispielsweise die Runde vorzeitig überspringen könnte oder zu viele Gegner gespawnt werden, wurde das Enum WaveState implementiert. Der WaveSpawner kann immer nur einen dieser definierten Zustände annehmen. 
@@ -1200,7 +1258,7 @@ private void SetConfig(WaveConfig config)
 	CurrentDifficulty = config.difficulty;
 }
 ```
-Erstellt werden die einzelnen Gegner letztendlich durch die Methode *SpawnRoutine*. Damit die Gegner an verschiedenen Positionen gespawnt werden, wird für jeden eine neue zufällige Position aus der Liste der  [SpawnPoint](#Spawnpoint)'s gewählt. Außerdem bekommt jeder Gegner bei der Initialisierung die *EnemyConfig* übergeben die in der aktuellen WaveConfig definiert ist. So ist garantiert, dass für die meisten Runden unterschiedliche Gegnertypen den Spieler angreifen.
+Erstellt werden die einzelnen Gegner letztendlich durch die Methode *SpawnRoutine*. Damit die Gegner an verschiedenen Positionen gespawnt werden, wird für jeden eine neue zufällige Position aus der Liste der  [SpawnPoint](#Spawnpoint)'s gewählt. Außerdem bekommt jeder Gegner bei der Initialisierung die *EnemyConfig* übergeben, welche in der aktuellen WaveConfig definiert ist. So ist garantiert, dass für die meisten Runden unterschiedliche Gegnertypen den Spieler angreifen.
 ```csharp
 private IEnumerator SpawnRoutine()
 {
@@ -1221,8 +1279,7 @@ private IEnumerator SpawnRoutine()
 }
 ```
 ### Spawnpoint Klasse
-Die Spawnpoint Klasse wird ausschließlich genutzt, um die Position für den Punkt zu definieren. So konnte ein Prefab erstellt werden, das im Level platziert und dem WaveSpawner hinzugefügt werden konnte.
-```csharp
+Die Spawnpoint Klasse wird ausschließlich genutzt, um die Position für den Punkt zu definieren. So konnte ein Prefab erstellt werden, das man einfach im Level platziert kann und dem WaveSpawner übergibt.```csharp
 public class SpawnPoint : MonoBehaviour
 {
 	public Vector3 Position
