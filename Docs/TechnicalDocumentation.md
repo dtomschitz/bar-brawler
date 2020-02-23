@@ -1251,8 +1251,7 @@ private IEnumerator SpawnRoutine()
 }
 ```
 ### Spawnpoint Klasse
-Die Spawnpoint Klasse wird ausschließlich genutzt, um die Position für den Punkt zu definieren. So konnte ein Prefab erstellt werden, das im Level platziert und dem WaveSpawner hinzugefügt werden konnte.
-```csharp
+Die Spawnpoint Klasse wird ausschließlich genutzt, um die Position für den Punkt zu definieren. So konnte ein Prefab erstellt werden, das man einfach im Level platziert kann und dem WaveSpawner übergibt.```csharp
 public class SpawnPoint : MonoBehaviour
 {
 	public Vector3 Position
