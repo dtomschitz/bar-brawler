@@ -1,3 +1,4 @@
+
 # Technische Dokumentation
 ## Zusammenfassung
 Bar Brawler ist ein rundenbasierter Brawler, bei dem der Spieler in die Rolle eines Gesetzlosen schlüpfen und sich gegen andere feindselige Gesetzlosen durchsetzen müssen. 
@@ -1463,7 +1464,508 @@ private IEnumerator HideEventText()
 	eventText.text = "";
 }
 ```
+
+## UI
+### UIManager und HUDManager
+Die Klassen UIManager und HUDManager, sind wie der Name schon sagt ausschließlich für die Verwaltung der verschiedenen UI-Elemente zuständig. Deshalb beinhalten beide Klassen Referenzen zu den jeweiligen Game-Objekten, da die meisten Elemente eigene Verwaltungsklassen besitzen.
+
+Die *UIManager* Klasse hat beispielsweise die Aufgabe die verschiedenen Menüs ein- und auszublenden oder das HUD zu aktivieren/deaktivieren. Außerdem wurde die Klasse als Singelton implementiert, damit ihre Variablen von überall aus erreicht werden können und es garantiert werden kann, dass es immer nur eine Instanz dieser Klasse gibt.
+```csharp
+public class UIManager : MonoBehaviour
+{
+    Singelton
+
+    public HUDManager hud;
+    public Canvas shopCanvas;
+    public Canvas gameOverCanvas;
+    public PauseMenu pauseMenu;
+
+	...
+
+    public void SetHUDActive(...) => SetHUDActive(...);
+    public void SetShopActive(bool active) => shopCanvas.gameObject.SetActive(active);
+    public void SetPauseMenuActive(bool active) => pauseMenu.gameObject.SetActive(active);
+    public void SetGameOverMenuActive(bool active) => gameOverCanvas.gameObject.SetActive(active);
+}
+```
+Die HUDManager Klasse hingegen, ist speziell für das HUD zuständig und besitzt Zugriff auf alle Elemente, die sich in ihm befinden. Neben den Methoden zur Aktivierung oder Deaktivierung diverser Anzeigen, können so auch die einzelnen Verwaltungsklassen aufgerufen werden. 
+
+```csharp
+public class HUDManager : MonoBehaviour
+{
+    public Hotbar hotbar;
+    public HealthBar healthBar;
+    public ManaBar manaBar;
+    public MoneyInfo moneyInfo;
+    public WaveInfo waveInfo;
+    public InteractionHint interactionHint;
+    public HelpInfo helpInfo;
+   
+	...
+	
+    public void DisplayHotbar(bool active) =>  hotbar.gameObject.SetActive(active);
+    public void DisplayHealthBar(bool active) => healthBar.gameObject.SetActive(active);
+    public void DisplayManaBar(bool active) => manaBar.gameObject.SetActive(active);
+    public void DisplayWaveInfo(bool active) => waveInfo.gameObject.SetActive(active);
+    public void DisplayInteractionHint(bool active) => interactionHint.gameObject.SetActive(active);
+}
+```
+### HUD Elemente
+Das HUD besteht aus insgesamt 6 Elementen, von denen die meisten durchgehend für den Spieler zu sehen sind. Alle UI-Elemente bzw. deren Verwaltungsklassen können über den *HUDManager* erreicht werden.
+#### DamageOverlay Klasse
+Die DamageOverlay Klasse wird verwendet, um für einen kurzen Moment ein Overlay anzuzeigen, welches dem Spieler signalisieren soll, dass er von einem gegnerischen Angriff getroffen wurde. Hierfür wird ein vorgefertigtes GameObject durch eine Animation auf der Canvas angezeigt und nach einer bestimmten Zeit wieder ausgeblendet.
+```csharp
+public class DamageOverlay : MonoBehaviour
+{
+    public float time = 1f;
+    private EntityStats stats;
+    private Animator animator;
+
+    void Start()
+    {
+        animator = GetComponent<Animator>();
+        stats = Player.instance.stats;
+        stats.OnDamaged += OnTakeDamage;
+    }
+    
+    void OnTakeDamage(float damage, Equipment item)
+    {
+        if (GameState.instance.IsInGame)
+        {
+            StopAllCoroutines();
+            StartCoroutine(ShowDamgeOverlay());
+        }
+    }
+    
+    IEnumerator ShowDamgeOverlay()
+    {
+        animator.SetBool("damage", true);
+        yield return new WaitForSeconds(time);
+        animator.SetBool("damage", false);
+    }
+}
+```
+#### HealthBar und ManaBar Klasse
+Die HealthBar zeigt dem Spieler an, wie viele Lebenspunkte er noch besitzt. Hierfür werden die Events OnDamaged und OnHealed abonniert, welche dafür Zuständig sind das Healthbar-Image entsprechend anzuzeigen. Wie in dem Code Beispiel zu sehen ist, erbt die HealthBar Klasse von der *ShrinkBar* Klasse. Diese Klasse implementiert die grundsätzlich notwendigen Funktionen um eine Bar dynamisch zu füllen oder zu verkleinern.
+```csharp
+public class HealthBar : ShrinkBar
+{
+    private EntityStats stats;
+
+    void Start()
+    {
+        stats = Player.instance.stats;
+        stats.OnDamaged += OnDamaged;
+        stats.OnHealed += OnHealed;
+    }
+
+    void OnHealed(float amount)
+    {
+        SetBarFillAmount(stats.HealthNormalized);
+        AlignBars();
+    }
+
+    void OnDamaged(float damage, Equipment item)
+    {
+        ResetShrinkTimer();
+        SetBarFillAmount(stats.HealthNormalized);
+    }
+}
+
+public class ShrinkBar : MonoBehaviour
+{
+	public Image barImage;
+	public Image shrinkBarImage;
+	public float maxShrinkTimer = 0.6f;
+	private float shrinkTimer;
+
+	void Update()
+	{
+		shrinkTimer -= Time.deltaTime;
+		if (shrinkTimer < 0)
+		{
+			if (barImage.fillAmount < shrinkBarImage.fillAmount)
+			{
+				float shrinkSpeed = 1f;
+				shrinkBarImage.fillAmount -= shrinkSpeed * Time.deltaTime;
+			}
+		}
+	}
+	
+	protected void AlignBars()
+	{
+		shrinkBarImage.fillAmount = barImage.fillAmount;
+	}
+	
+	protected void ResetShrinkTimer()
+	{
+		shrinkTimer = maxShrinkTimer;
+	}
+
+	protected void SetBarFillAmount(float amount)
+	{
+		barImage.fillAmount = amount;
+	}
+}
+```
+Die *ManaBar* Klasse, welche die Ausdauer des Spielers anzeigt, ist im Vergleich zur *HealthBar* so gut wie identisch. Der einzige unterschied liegt darin, dass anstatt den Events der EntityStats Klasse, die Events *OnManaAdded* und *OnManaUsed* der *EntityCombat* Klasse genutzt werden.
+
+#### MoneyInfo Klasse
+Die Klasse *MoneyInfo* wird während dem Spiel genutzt, um die Anzeige für das gesammelte Geld zu verwalten. Dies geschieht durch das Abonnieren der *OnMoneyReceived* und *OnMoneySpend*  Events. Damit der Nutzer ein besseres visuelles Feedback bekommt, ob er Geld verdient oder ausgegeben hat, wurden für die jeweiligen Szenarien Prefabs erstellt. Diese besitzen einen Text mit dem jeweiligen Betrag und der entsprechenden Farbe (rot für Verlust, grün für Gewinn), sowie einer Animation die das GameObject ein- und ausblenden lässt.
+```csharp
+public class MoneyInfo : MonoBehaviour
+{
+    public GameObject moneyRecived;
+    public GameObject moneySpend;
+    public float destroyText;
+    private Text currentBalanceText;
+
+    void Start()
+    {
+        currentBalanceText = GetComponent<Text>();
+        Player.instance.OnMoneyReceived += OnMoneyReceived;    
+        Player.instance.OnMoneySpend += OnMoneySpend;    
+    }
+
+    public void OnMoneyReceived(int amount, int currentBalance)
+    {
+        InstantiateMoneyText(moneyRecived, amount, "+");
+        StartCoroutine(MoneyUpdateRoutine(currentBalance, .7f));
+    }
+    
+    public void OnMoneySpend(int amount, int currentBalance)
+    {
+        InstantiateMoneyText(moneySpend, amount, "-");
+        StartCoroutine(MoneyUpdateRoutine(currentBalance, .1f));
+    }
+
+    private void InstantiateMoneyText(GameObject gameObject, int amount, string a)
+    {
+        GameObject popup = Instantiate(gameObject, transform);
+        popup.GetComponent<Text>().text = a + amount + "$";
+        Destroy(popup, destroyText);
+    }
+
+    private IEnumerator MoneyUpdateRoutine(int currentBalance, float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        currentBalanceText.text = "$ " + currentBalance;
+
+    }
+}
+```
+#### MunitionInfo Klasse
+Die MunitionInfo Klasse, ist teilweise ähnlich strukturiert wie die MoneyInfo Klasse, zeigt jedoch nur den aktuellen Munitionsstand des Spielers ohne weitere Animation oder jeglichem anderen Feedback an.
+```csharp
+public class MunitionInfo : MonoBehaviour
+{
+    public Text currentMunition;
+
+    void Start()
+    {
+        PlayerInventory inventory = Player.instance.inventory;
+        inventory.OnMunitionUpdate += OnMunitionUpdate;
+    }
+
+    public void OnMunitionUpdate(int currentAmount)
+    {
+        currentMunition.text = currentAmount.ToString();
+    }
+}
+```
+#### WaveInfo Klasse
+Die WaveInfo Klasse, wird verwendet um die erspielte Rundenzahl, den Countdown für die nächste Welle und die Skip-Info anzuzeigen. Hierfür wird auf die Events OnWaveStateUpdate und OnWaveCountdownUpdate gehört, welche von der *WaveSpawner* Klasse gefeuert werden. Ersteres der beiden Events, wird genutzt, um die aktuelle Rundenzahl sowie die Skip-Info für den eventuell laufenden Countdown anzuzeigen. Das Event *OnWaveCountdownUpdate* hingegen wird wie der Name schon sagt für die Darstellung des Countdowns genutzt. 
+```csharp
+public class WaveInfo : MonoBehaviour
+{
+    public Text stateOfGameText;
+    public Text skipCountdownText;
+
+    public Color defaultColor;
+    public Color warningColor;
+    public float nextRoundWarning;
+
+    void Start()
+    {
+        WaveSpawner waveSpawner = WaveSpawner.instance;
+        if (waveSpawner == null) throw new ArgumentNullException("WaveSpawner class cannot be null!");
+
+        waveSpawner.OnWaveStateUpdate += OnWaveStateUpdate;
+        waveSpawner.OnWaveCountdownUpdate += OnWaveCountdownUpdate;
+    }
+
+    public void OnWaveStateUpdate(WaveState state, int rounds)
+    {
+        if (state == WaveState.Counting)
+        {
+            skipCountdownText.gameObject.SetActive(true);
+        }
+
+        if (WaveSpawner.instance.IsWaveRunning)
+        {
+            skipCountdownText.gameObject.SetActive(false);
+
+            stateOfGameText.color = defaultColor;
+            stateOfGameText.text = string.Format("RUNDE {0}", rounds.ToString());
+        }
+    }
+
+    public void OnWaveCountdownUpdate(float countdown)
+    {
+        if (countdown <= nextRoundWarning)
+        {
+            skipCountdownText.gameObject.SetActive(false);
+            stateOfGameText.color = warningColor;
+        } else
+        {
+            stateOfGameText.color = defaultColor;
+        }
+
+        stateOfGameText.text = string.Format("NÄCHSTE RUNDE IN {0}s", Mathf.Floor(countdown).ToString());
+    }
+}
+```
+
+### Shop
+Die *Shop* Klasse wird verwendet, um im Spiel den Shop zu öffnen, zu schließen und die Inhalte semi-dynamisch zu laden. Damit der Shop ordnungsgemäß funktioniert, müssen durch den Editor die verschiedenen Kategorien(*CategoryButton*) und Shop-Seiten(*ShopPage*) erstellt und übergeben werden. Der Nutzer kann so dann später zwischen den Kategorien und den dafür vorgesehen Shop-Seiten navigieren. Dies kann durch die Methode *OnPageSelected* erzielt werden, welche im Editor zwingend vorab an das OnClick-Event des jeweiligen Buttons gebindet werden muss. Die Methode fungiert letztendlich hauptsächlich "Austauschmethode". Sie deaktiviert die zuletzt geöffnete Shop-Seite, wenn bis zu diesem Zeitpunkt schon eine geöffnet wurde und aktiviert die neue Seite basierend auf der gegebenen ID.
+```csharp
+public void OnPageSelected(int id)
+{
+	UpdateCategoryHighlight(id);
+
+	if (currentPage != null)
+	{
+		ShopPage newPage = shopPages[id];
+		currentPage.SetActive(false);
+		newPage.SetActive(true);
+		currentPage = newPage;
+		return;
+	}
+
+	currentPage = shopPages[id];
+	currentPage.SetActive(true);
+}
+```
+Die Klasse ShopPage, welche die einzelnen Seiten verwaltet implementiert die Methode *OnItemSelected*, welche benötigt wird, um die Informationen für das aktuell ausgewählte Item zu aktualisieren. Sie wird aufgerufen, wenn der Nutzer einen Button auf der linken Seite des Shops ausgewählt hat.
+```csharp
+public class ShopPage : MonoBehaviour
+{
+	public ItemInfo itemInfo;
+
+	public void OnItemSelected(ShopItem item)
+	{
+		itemInfo.SetItem(item);
+	}
+	
+	...
+}
+```
+Für das Überschreiben der letzten Informationen ist die Klasse *ItemInfo* mit der Methode *SetItem* zuständig. 
+```csharp
+public void SetItem(ShopItem shopItem)
+{
+	gameObject.SetActive(true);
+	title.text = shopItem.item.name.ToUpper();
+	price.text = "$" + shopItem.price.ToString();
+	info.text = shopItem.infoText.ToUpper();
+	image.sprite = shopItem.item.icon;
+}
+```
+Die dafür benötigten Parameter bekommt werden durch die Klasse *ShopItem* übergeben, welches eine Referenz du dem jeweiligen Item, den dazugehörigen Preis und einen kurzen Text zur Beschreibung des Items beinhaltet. Die Klasse implementiert außerdem die *OnItemBought* Methode welche aufgerufen wird, wenn der Spieler dieses Item erwerben will. Sie fügt das gewünschte Item letztendlich dem Inventar des Spielers hinzu, zieht ihm den Preis von seinem aktuellen Budget ab und aktualisiert die Statistiken. 
+Für das Munitions-Item gibt es für diesen Vorgang noch eine eigene Klasse in welcher diese Methode überschrieben wird, da Munition nicht direkt in einem der [InventorySlot](#InventorySlot)'s gespeichert, sondern einfach nur auf einen Counter addiert wird.
+```csharp
+[CreateAssetMenu(fileName = "ShopItem", menuName = "Shop/Item")]
+public class ShopItem : ScriptableObject
+{
+	public Item item;
+	public string infoText;
+	public int price;
+
+	public virtual void OnItemBought()
+	{
+		Player.instance.inventory.AddItem(item);
+		Player.instance.RemoveMoney(price);
+
+		Statistics.instance.AddMoney(price);
+	}
+}
+```
+Gegenstände kann der Spieler erwerben, in dem er einen der Buttons auf der linken Seite der jeweiligen Shop-Seite drückt. Durch diese Aktion wird die Methode *OnClick* getriggert, welche dann überprüft, ob der Spieler genug Geld für den Kauf hat, sein Inventar genug Platz bietet oder ob er das Item schon zu oft besitzt. Treffen diese Fälle zu, wird er durch einen kurzen Text unterhalb der Shop-UI informiert. Sollte jedoch keiner dieser Fälle zutreffen, wird der endgültige Kauf durch die Methode *ShopItem.OnItemBought*, welche zuvor schon näher beschrieben wurde, in die Wege geleitet.
+```csharp
+public void OnClick()
+{
+	StopAllCoroutines();
+	eventText.text = "";
+	eventText.color = Color.white;
+
+	FadeIn(eventText, .5f);
+	PlayerInventory inventory = Player.instance.inventory;
+	if (inventory != null)
+	{
+		if (Player.instance.CurrentBalance < shopItem.price)
+		{
+			eventText.text = "Du hast nicht genug Geld!".ToUpper();
+			StartCoroutine(HideEventText());
+			return;
+		}
+		if (!(shopItem is Munition))
+		{
+			if (!inventory.HasItem(shopItem.item) && inventory.FindStackableSlot(shopItem.item) == null && inventory.FindNextEmptySlot() == null)
+			{
+				eventText.text = "Dein Inventar ist voll!".ToUpper();
+				StartCoroutine(HideEventText());
+				return;
+			}
+
+			if (inventory.HasItem(shopItem.item) && inventory.FindStackableSlot(shopItem.item) == null)
+			{
+				eventText.text = "Du hast schon zu viele Items dieser Art".ToUpper();
+				StartCoroutine(HideEventText());
+				return;
+			}
+		}
+		shopItem.OnItemBought();
+	}
+}
+
+private IEnumerator HideEventText()
+{
+	yield return new WaitForSeconds(2f);
+	FadeOut(eventText, .5f);
+	yield return new WaitForSeconds(.5f);
+	eventText.text = "";
+}
+```
+
 ### Hotbar
+Die Hotbar Klasse wird verwendet, um dem Spieler unter anderem visuell darzustellen, welche Items er besitzt und welchen er davon zurzeit ausgerüstet hat. Die Items werden wie im Inventar durch einzelne Slots verwaltet. Diese Hotbarslots werden  durch die Events *OnItemAdded* und *OnItemRemoved* aus der PlayerInventory Klasse aktuell gehalten.
+
+Damit dieses Verhalten realisiert werden konnte, besitzt die*HotbarSlot* Klasse, die Methoden *Add* und *Clear*.  Die Add Methode dient ausschließlich dazu, zu Beginn ein Item dem Slot hinzuzufügen. Durch das hinzufügen, wird das Icon des Slots, der Stackcount sowie die Haltbarkeit angezeigt. Die zuvor angesprochene Haltbarkeit wird durch das Event OnDurationUpdate der [Equipment](#Equipment) Klasse aktuell gehalten. Damit der Slot für neue Items freigegeben werden kann, muss zuvor die Methode *Clear* aufgerufen worden sein.
+```csharp
+
+public class HotbarSlot : MonoBehaviour
+{
+    public Image background;
+    public Sprite selectedSprite;
+    public Sprite defaultSprite;
+
+    public Equipment item;
+    public Image icon;
+    public Sprite iconPlaceholder;
+    public Text count;
+    public GameObject durationPanel;
+    public Image durationImage;
+
+    public void Add(Equipment item)
+    {
+        this.item = item;
+
+        icon.sprite = item.icon;
+        icon.color = Color.white;
+        icon.enabled = true;
+
+        if (item.isStackable)
+        {
+            count.gameObject.SetActive(true);
+            count.text = item.slot.Count.ToString();
+        }
+
+        if (item.hasDuration)
+        {
+            durationPanel.SetActive(true);
+            durationImage.fillAmount = 1;
+            item.OnDurationUpdate += OnDurationUpdate;
+        }
+    }
+    
+    public void Clear()
+    {
+        ...
+    }
+    
+    public void UpdateCount(int currenCount) => count.text = currenCount.ToString();
+    
+    public void OnDurationUpdate(float normalizedDuration) => durationImage.fillAmount = normalizedDuration;
+}
+
+```
+
+Um der Hotbar neue Gegenstände hinzuzufügen, wird die Methode *OnItemAdded* genutzt, welche automatisch aufgerufen wird, wenn das Event *PlayerInventory.OnItemAdded* gefeuert wurde. Diese Methode sucht dann für das neue Item einen Slot, in welchem sich schon Items vom gleichen Typ befinden. Sollte hierbei jedoch kein *HotbarSlot* gefunden werden, wird versucht einen noch nicht befüllten zu finden. Nur wenn letztendlich auch ein HotbarSlot gefunden wurde, wird der Gegenstand diesem hinzugefügt. 
+```csharp
+
+    private void OnItemAdded(Item item)
+    {
+        HotbarSlot slot = FindHotbarSlot(item);
+        if (slot == null) slot = FindEmptyHotbarSlot();
+
+        if (slot != null && item is Equipment)
+        {
+            slot.Add(item as Equipment);
+        }
+    }
+    
+	private HotbarSlot FindHotbarSlot(Item item)
+    {
+        foreach (HotbarSlot slot in slots)
+        {
+            if (slot.item != null && slot.item.name == item.name) return slot;
+        }
+        return null;
+    }
+
+    private HotbarSlot FindEmptyHotbarSlot()
+    {
+        foreach (HotbarSlot slot in slots) if (slot.item == null) return slot;
+        return null;
+    }
+	
+```
+Damit auch Items aus der Hotbar entfernt werden können, wird die Methode *OnItemRemoved* genutzt, welche durch das gleichnamige Event aufgerufen wird.  Sie versucht das Item in der Hotbar zu finden und zuerst den Stack-Count zu aktualisieren. Sollte der Spieler keinen Gegenstand von dem jeweiligen Itemtyp besitzen, wird er vollständig aus der Hotbar verschwinden. Danach wird automatisch die gesamte Hotbar durch die *UpdateItems* Methode geleert und anschließend wieder befüllt um zwischen drin leere Hotbarslots zu vermeiden.
+```csharp
+    
+    private void OnItemRemoved(Item item)
+    {
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (i == item.slot.Id)
+            {
+                int itemCount = item.slot.Count;
+                slots[i].UpdateCount(itemCount);
+
+                if (itemCount == 0)
+                {
+                    slots[i].Clear();
+                    UpdateItems();
+                    SelectLastItem();
+                }
+
+                if (itemCount > 0) SelectItem(currentItemIndex);
+                break;
+            }
+        }
+    }
+
+    private void UpdateItems()
+    {
+        for (int i = 0; i < slots.Length; i++) slots[i].Clear();
+
+        List<InventorySlot> inventorySlots = new List<InventorySlot>(inventory.Slots);
+        inventorySlots.RemoveAll(slot => slot.Count == 0);
+
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (List.InBounds(i, inventorySlots.Count))
+            {
+                Item item = inventorySlots[i].FirstItem;
+                if (item != null && item is Equipment)
+                {
+                    slots[i].Add(item as Equipment);
+                }
+            }
+        }
+    }
+    
+```
 
 ## AudioManager Klasse
 Die *AudioManager* Klasse wird genutzt, um verschiedene vorab definierte Sounds abzuspielen. Hierfür wird die Methode *PlaySound* genutzt. Diese überladene Methode kann entweder einen Sound an einer Stelle oder allgemein abspielen. Dies ist notwendig, damit beispielsweise der Bewegungs-Sound oder der Sound für eine erfolgreiche Attacke nicht zu monoton wirken, sondern sich dynamisch an die Szene anpassen. 
