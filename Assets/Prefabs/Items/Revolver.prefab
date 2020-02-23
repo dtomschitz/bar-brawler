@@ -127,16 +127,14 @@ MonoBehaviour:
   isCollected: 0
   isPrimaryEnabled: 1
   isSecondaryEnabled: 0
-  primaryAttackRate: 20
-  secondaryAttackRate: 20
+  primaryAttackRate: 0.5
+  secondaryAttackRate: 0
   primaryManaRequired: 0
   secondaryManaRequired: 0
-  knockbackForce: 10
   bullet: {fileID: 126788699177342265, guid: 59a3ab67120ce894da4dd0cd47c7d09e, type: 3}
   muzzle: {fileID: 5980294922217801762}
   muzzleFlash: {fileID: 6424925393506459088}
   bulletSpeed: 30
-  fireRate: 2
 --- !u!1 &5714682365174051810
 GameObject:
   m_ObjectHideFlags: 0
@@ -175,14 +173,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5980294922217801762}
     m_Modifications:
-    - target: {fileID: 100006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
-      propertyPath: m_Name
-      value: MuzzleFlash
-      objectReference: {fileID: 0}
-    - target: {fileID: 100006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
@@ -226,6 +216,14 @@ PrefabInstance:
     - target: {fileID: 400006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
+      propertyPath: m_Name
+      value: MuzzleFlash
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 19800006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
       propertyPath: looping
