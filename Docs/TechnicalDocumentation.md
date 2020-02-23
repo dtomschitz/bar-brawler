@@ -1099,185 +1099,144 @@ public void SetState(GameStateType newState)
 }
 ```
 
-
 ## Wave-System
-### WaveSpawner
-Die WaveSpawner Klasse ist wohl die wichtigste Klasse für die Wellen Konfiguration. Zu erst haben wir zwei Enumerationen erstellt, die den aktuellen *WaveState* und ihre *Difficulty* wiedergibt. 
-Ist der *WaveState* auf "Spawning", werden aktuell Gegner erzeugt. Ist er auf "Counting", ist der WaveSpawner pausiert und zählt hinab, bis die nächste Welle erzeugt wird. Steht er auf "Running", werden keine neuen Gegner hervorgebracht, aber es leben noch Gegner der aktuellen Welle.
-```csharp
-   public enum WaveState { 
-        Spawning, 
-        Counting,
-        Running 
-    }
-```
-```csharp
-    public enum Difficulty {
-        Easy, 
-        Medium, 
-        Hard 
-    }
-```
-In der *SkipWaveCountdown* Methode wird erfasst, ob der Spieler den Countdown überspringen möchte. Ist er  dabei im Shop oder in der Bullet Time, kann er denn Countdown nicht überspringen.
+Das Wave-System ist neben den anderen Spielmechaniken, wie das Kämpfen oder Bewegen des Spielers essenziell. Um dieses System so modular wie möglich zu gestalten, wurde die eigentliche Logik für die Verwaltung der Schwierigkeitsstufen aus der *WaveSpawner* Klasse heraus genommen und in der *WaveConfig*  Klasse implementiert. So ist es möglich jeder Zeit für verschiedene Abschnitten im Spielverlauf, verschiedene Konfigurationen zu benutzten, um dadurch letztendlich die Schwierigkeit dynamisch anzupassen. 
 
-
-```csharp
-public void SkipWaveCountdown(CallbackContext ctx)
-        {
-            if (GameState.instance.IsInTargetAcquisition 
-            || GameState.instance.IsInShop || waveCountdown <= 4f) 
-            return;
-            waveCountdown = 4f;
-        }
-```
-Diese Methode startet die folgende Welle. Die *Rounds* werden um eins erhöht und die zugehörige *WaveConfig* geladen, die zu der Runde gehört und spezielle Einstellung über die aktuelle Runde enthält.
-```csharp
- private void StartNextWave()
-        {
-            WaveConfig nextConfig = GetNextWaveConfig();
-            if (nextConfig != null)
-            {
-                SetConfig(nextConfig);
-            }
-
-            Rounds++;
-            Debug.LogFormat("Spawning Wave (num: {0}, difficulty: {1})", 
-            Rounds, CurrentDifficulty);
-
-            StartCoroutine(SpawnRoutine());
-            Statistics.instance.AddRound();
-        }
-```
-*GetNextWaveConfig* bestimmt, welche Konfiguration für die nächste Runde geladen werden muss.
-```csharp
-private WaveConfig GetNextWaveConfig()
-        {
-            foreach (WaveConfig config in configs)
-            {
-                if (config.round == Rounds) return config;
-            }
-            return null;
-        }
-```
-Die Methode *SpawnRoutine* lässt die Gegner erzeugen. Zwischen jeden neuen Gegners wird durch *WaitForSeconds(1f)* eine Sekunde gewartet, bis der nächste auftauchen kann. Sobald alle Gegner erzeugt wurden, wird der *WaveState* auf *Running* gesetzt. 
-```csharp
-        private IEnumerator SpawnRoutine()
-        {
-            SetState(WaveState.Spawning);
-
-            for (int i = 0; i < Rounds * 1.25; i++)
-            {
-                SpawnPoint spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
-
-
-                Enemy enemy = Instantiate(CurrentConfig.enemy, spawnPoint.Position, 
-                spawnPoint.Rotation).GetComponent<Enemy>();
-                if (enemy != null) enemy.Init(CurrentConfig.enemyConfig);
-
-                yield return new WaitForSeconds(1f);
-            }
-            SetState(WaveState.Running);
-            yield break;
-        }
-```
-*SetState* setzt den aktuellen Status als neuen und lässt das Event * OnWaveStateUpdate* entstehen, dass dann an den Shop oder an bestimmte UI Elemente geschickt wird.
-```csharp
-        private void SetState(WaveState newState)
-        {
-            switch (newState)
-            {
-                case WaveState.Counting:
-                    break;
-
-                case WaveState.Running:
-                    break;
-
-                case WaveState.Spawning:
-                    break;
-            }
-
-            State = newState;
-            OnWaveStateUpdate?.Invoke(State, Rounds);
-        }
-```
-Die Methode *SetConfig* setzt die aktuelle Wellenkonfiguration zur neuen und lädt die neue *CurrentDifficulty*.
-```csharp
-        private void SetConfig(WaveConfig config)
-        {
-            Debug.LogFormat("Update wave config {0} (round: {1}, difficulty: {2}, enemy: {3}",
-             config, config.round, config.difficulty, config.enemy.name);
-            CurrentConfig = config;
-            CurrentDifficulty = config.difficulty;
-        }
-```
-*IsEnemyAlive* sucht jede Sekunde im Spiel nach Gegner mit dem *Enemy* Tag. Sind Gegner da, beginnt die Suche von vorne. Sind keine da, wird *true* zurückgegeben und wir kehren in die *Update* Methode zurück, wodurch der Countdown von vorne startet.
-```csharp
-        private bool IsEnemyAlive
-        {
-            get
-            {
-                searchCountdown -= Time.deltaTime;
-                if (searchCountdown <= 0f)
-                {
-                    searchCountdown = 1f;
-                    if (GameObject.FindGameObjectWithTag("Enemy") == null)
-                    {
-                        return false;
-                    }
-                }
-                return true;
-            }
-        }
-```
-Hier wird bestimmt, ob eine Welche sich im *Running* Status befindet. Eine Welle ist im *Running* Modus, wenn Gegner gerade erzeugt werden oder noch nicht alle besiegt sind.
-```csharp
-public bool IsWaveRunning
-        {
-            get { return State == WaveState.Running || State == WaveState.Spawning; }
-        }
-```
-### WaveConfig
-Die *WaveConfig* Klasse inkludiert die aktuelle Rundenanzahl, ihre Schwierigkeit und das *EnemyPrefab*. Ist der aktuelle Rundenwert gleich dem Wert wie in der *WaveConfig*, wird eine bestimmte Konfiguration geladen, die unterschiedliche Einstellungen zu den Wellen bzw. Gegnern haben. So können Gegner nach gewissen Runden mit einer höheren Wahrscheinlichkeit mit Waffen oder mehr Leben auftauchen.
-
+### WaveConfig Klasse
+Die *WaveConfig* wird genutzt um das Wave-System modular und dynamischer zu gestalten. Sie speichert wichtige Informationen, wie die Rundenzahl, in der die Config geladen werden soll, die dazugehörige Schwierigkeitsstufe, das Enemy-Prefab was zur Instantiierung notwendig ist und die für diese Runde vorgesehene *EnemyConfig*. Wird eine *WaveConfig* aktiviert, werden die zuvor aufgezählten Parameter an den *WaveSpawner* weiter gegeben.
 ```csharp
 public class WaveConfig : ScriptableObject
-    {
-        public int round;
-        public Difficulty difficulty;
-        public GameObject enemy;
+{
+	public int round;
+	public Difficulty difficulty;
+	public GameObject enemy;
 
-        [Header("Enemy Config")]
-        public EnemyConfig enemyConfig;
-    }
-   ```
-### SpawnPoint
-*SpawnPoint* beschreibt, ob die Türen geöffnet werden müssen, wenn Gegner hindurch gehen.
- ```csharp
- public class SpawnPoint : MonoBehaviour
-    {
-        public Door door;
+	public EnemyConfig enemyConfig;
+}
+```
+#### EnemyConfig Klasse
+#### EnemyStatsConfig
 
-        public void OpenDoor()
-        {
-            if (door) door.OpenDoor();
-        }
+### WaveSpawner Klasse
+Die WaveSpawner Klasse implementiert die eigentliche Logik des Erstellens der Wellen und der dazugehörigen Gegner. Um immer klar definieren zu können in welchem Zustand sich der WaveSpawner aktuell befindet und um so vorzubeugen, dass der Spieler durch etwaige Bugs beispielsweise die Runde vorzeitig überspringen könnte oder zu viele Gegner gespawnt werden, wurde das Enum WaveState implementiert. Der WaveSpawner kann immer nur einen dieser definierten Zustände annehmen. 
+```csharp
+public enum WaveState { 
+	Spawning, // Ist gesetzt, wenn der WaveSpawner in diesem Moment Gegner spawnen lässt.
+	Counting, // Ist gesetzt, wenn der WaveSpawner pausiert ist und den Countdown für die nächste Runde anzeigt.
+	Running // Ist gesetzt, wenn der WaveSpawner pausiert ist, da die aktuelle Runde noch läuft.
+}
+```
+Mittels der *Update* Methode wird zwischen den verschiedenen States gewechselt. In ihr wird also entweder eine neue Runde gestartet oder der Countdown für die kommende Runde angezeigt und verwaltet. 
+```csharp
+void Update()
+{
+	if (enableWaveSpawner && (GameState.instance.State != GameStateType.GameOver || GameState.instance.State != GameStateType.GamePaused))
+	{
+		if (State == WaveState.Running)
+		{
+			if (IsEnemyAlive) return;
+			Player.instance.animator.OnVictory();
+			ResetWaveSpawner();
+		} 
+		
+		if(waveCountdown <= 0f)
+		{
+			 waveCountdown = 0f;
+			 if (State != WaveState.Spawning) StartNextWave();
+			 return;
+		 }
+		 
+		 waveCountdown -= Time.deltaTime;
+		 if (waveCountdown > 0f) OnWaveCountdownUpdate?.Invoke(waveCountdown);
+	 }
+ }
 
-        public void CloseDoor()
-        {
-            if (door) door.CloseDoor();
-        }
+private void ResetWaveSpawner()
+{
+	SetState(WaveState.Counting);
+	waveCountdown = timeBetweenWaves;
+}
+```
+Ist aktuell eine Runde gestartet und die Gegner wurden erfolgreich erzeugt, muss immer wieder überprüft werden, ob von diesen Gegnern noch welche am Leben sind oder nicht. Hierfür wird die Methode *IsEnemyAlive* genutzt, welche im letzten Codebeispiel zu sehen war. Sie überprüft in kurzen Intervallen mithilfe der *GameObject.FindGameObjectWithTag* Funktion, ob noch Gegner leben oder nicht.
+```csharp
+private bool IsEnemyAlive
+{
+	get
+	{
+		searchCountdown -= Time.deltaTime;
+		if (searchCountdown <= 0f)
+		{
+			searchCountdown = 1f;
+			if (GameObject.FindGameObjectWithTag("Enemy") == null) return false;
+		}
+		return true;
+	}
+}
+```
+Um eine neue Runde zu starten und die Welle an Gegner zu erzeugen, wird die Methode *StartNextWave* genutzt. Sie lädt die aktuelle [WaveConfig](#WaveConfig), und starte eine Coroutine, welche dann die einzelnen Gegner an zufällig ausgewählten Spawnpoints erstellt. Um für jede Runde auch die richtige *WaveConfig* zu laden, wird jede einzelne in dem vorab definierten Array *configs*, basierend auf der jeweiligen Rundenzahl der Config mit der aktuellen verglichen. Sollte die Rundenzahl der speziellen WaveConfig mit der erspielten Rundenzahl übereinstimmen, wird diese Config von nun an verwendet. So ist gewährleistet, dass die Config's immer weiter ausgetauscht werden, solang es in dem Array welche gibt, die im Vergleich zur aktuellen Rundenzahl eine höher definierte besitzen.
+```csharp
+private void StartNextWave()
+{
+	WaveConfig nextConfig = GetNextWaveConfig();
+	if (nextConfig != null) SetConfig(nextConfig);
+	
+	Rounds++;
+	StartCoroutine(SpawnRoutine());
+	Statistics.instance.AddRound();
+}
 
-        public Vector3 Position
-        {
-            get { return transform.position; }
-        }
+private WaveConfig GetNextWaveConfig()
+{
+	foreach (WaveConfig config in configs)
+	{
+		if (config.round == Rounds) return config;
+	}
+	return null;
+}
 
-        public Quaternion Rotation
-        {
-            get { return transform.rotation; }
-        }
-    }
- ```
+private void SetConfig(WaveConfig config)
+{
+	CurrentConfig = config;
+	CurrentDifficulty = config.difficulty;
+}
+```
+Erstellt werden die einzelnen Gegner letztendlich durch die Methode *SpawnRoutine*. Damit die Gegner an verschiedenen Positionen gespawnt werden, wird für jeden eine neue zufällige Position aus der Liste der  [SpawnPoint](#Spawnpoint)'s gewählt. Außerdem bekommt jeder Gegner bei der Initialisierung die *EnemyConfig* übergeben die in der aktuellen WaveConfig definiert ist. So ist garantiert, dass für die meisten Runden unterschiedliche Gegnertypen den Spieler angreifen.
+```csharp
+private IEnumerator SpawnRoutine()
+{
+	SetState(WaveState.Spawning);
+	
+	for (int i = 0; i < Rounds * 1.25; i++)
+	{
+		SpawnPoint spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+		Enemy enemy = Instantiate(CurrentConfig.enemy, spawnPoint.Position, spawnPoint.Rotation).GetComponent<Enemy>();
+		
+		if (enemy != null) enemy.Init(CurrentConfig.enemyConfig);
+		
+		yield return new WaitForSeconds(1f);
+	}
+	
+	SetState(WaveState.Running);
+	yield break;
+}
+```
+### Spawnpoint Klasse
+Die Spawnpoint Klasse wird ausschließlich genutzt, um die Position für den Punkt zu definieren. So konnte ein Prefab erstellt werden, das im Level platziert und dem WaveSpawner hinzugefügt werden konnte.
+```csharp
+public class SpawnPoint : MonoBehaviour
+{
+	public Vector3 Position
+	{
+		get { return transform.position; }
+	}
+
+	public Quaternion Rotation
+	{
+		get { return transform.rotation; }
+	}
+}
+```
+
 ## UI
 ### UIManager und HUDManager
 Die Klassen UIManager und HUDManager, sind wie der Name schon sagt ausschließlich für die Verwaltung der verschiedenen UI-Elemente zuständig. Deshalb beinhalten beide Klassen Referenzen zu den jeweiligen Game-Objekten, da die meisten Elemente eigene Verwaltungsklassen besitzen.
