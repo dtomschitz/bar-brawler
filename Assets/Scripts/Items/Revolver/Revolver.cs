@@ -41,6 +41,7 @@ namespace Items
                 }
 
                 Player.instance.inventory.UseMunition();
+                // animator.OnPrimary();
             }
         }
     }

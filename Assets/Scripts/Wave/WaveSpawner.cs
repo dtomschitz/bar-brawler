@@ -1,10 +1,9 @@
-﻿namespace Wave
-{
-    using System.Collections;
-    using System.Collections.Generic;
-    using UnityEngine;
-    using static UnityEngine.InputSystem.InputAction;
+﻿using System.Collections;
+using UnityEngine;
+using static UnityEngine.InputSystem.InputAction;
 
+namespace Wave
+{
     /// <summary>
     /// Enum <c>WaveState</c> is used to set the current state of the wave spawner.
     /// If the current wave state is set to <see cref="WaveState.Spawning"/> the wave spawner is the currently summoning new enemies.
