@@ -1,4 +1,3 @@
-
 # Technische Dokumentation
 ## Zusammenfassung
 Bar Brawler ist ein rundenbasierter Brawler, bei dem der Spieler in die Rolle eines Gesetzlosen schlüpfen und sich gegen andere feindselige Gesetzlosen durchsetzen müssen. 
@@ -124,20 +123,21 @@ welches die Information für andere Klassen wie z.B. der [HealthBar](#HealthBar)
 ```csharp
 public virtual void Damage(float damage, Equipment item = null)
 {
-	damage = Mathf.Clamp(damage, 0, maxHealth);
-	CurrentHealth -= damage;
-	OnDamaged?.Invoke(damage, item);
+    damage = Mathf.Clamp(damage, 0, maxHealth);
+    CurrentHealth -= damage;
+    OnDamaged?.Invoke(damage, item);
 
-	if (IsDead) OnDeath?.Invoke();
+    if (IsDead) OnDeath?.Invoke();
 }
 ```
 Die Methode *Heal* hingegen heilt den Spieler um die angegeben Lebenspunkte. Sie ruft außerdem das Event *OnHeal* auf um die Information über die neu hinzugefügten Lebenspunkte verschiedenen Klassen zur Verfügung zustellen.
 ```csharp
 public virtual void Heal(float amount)
 {
-	CurrentHealth += amount;
-	CurrentHealth = Mathf.Clamp(CurrentHealth, 0, maxHealth);
-	OnHealed?.Invoke(amount);
+    CurrentHealth += amount;
+    CurrentHealth = Mathf.Clamp(CurrentHealth, 0, maxHealth);
+
+    OnHealed?.Invoke(amount);
 }
 ```
 
@@ -165,25 +165,25 @@ Die Ausdauer wird verwendet, wenn der jeweilige Entity einen Angriff mit der Blo
 ```csharp
 public void AddMana(float amount)
 {
-CurrentMana += amount;
-CurrentMana = Mathf.Clamp(CurrentMana, 0f, maxMana);
-OnManaAdded?.Invoke();
+    CurrentMana += amount;
+    CurrentMana = Mathf.Clamp(CurrentMana, 0f, maxMana);
+    OnManaAdded?.Invoke();
 }
 
 public void UseMana(float amount = 1f)
 {
-	CurrentMana -= amount;
-	OnManaUsed?.Invoke();
+    CurrentMana -= amount;
+    OnManaUsed?.Invoke();
 }
 ```
 Mit der Zeit wird die Ausdauer automatisch mithilfe der Parameter *manaRegenerationSpeed* und *manaRegenerationAmount*  wieder aufgefüllt. Dies geschieht in der Update-Methode:
 ```csharp
 protected virtual void Update()
 {
-	if (!IsBlocking)
-	{
-		AddMana(manaRegenerationAmount * Time.deltaTime / manaRegenerationSpeed);
-	}
+    if (!IsBlocking)
+    {
+        AddMana(manaRegenerationAmount * Time.deltaTime / manaRegenerationSpeed);
+    }
 }
 ```
 
@@ -192,112 +192,108 @@ Auch diese Klasse ist eine Unterklasse der [Entity](##Entity) Klasse und wird al
 ```csharp
 public void UsePrimary()
 {
-	if (... && currentEquipment is Weapon)
-	{
-		EquipmentAnimation[] animations = currentEquipment.equipmentAnimations;
-		if (animations.Length != 0)
-		{
-			EquipmentAnimation animation = 
-				currentEquipment.equipmentAnimations[Random.Range(0, animations.Length)];
-			UpdateItemPosition(animation);
-			GetComponent<EntityAnimator>().SetEquipmentAnimation(animation);
-		}
-		currentItem.OnPrimary();
-	}
+    if (... && currentEquipment is Weapon)
+    {
+        EquipmentAnimation[] animations = currentEquipment.equipmentAnimations;
+        if (animations.Length != 0)
+        {
+            EquipmentAnimation animation = currentEquipment.equipmentAnimations[Random.Range(0, animations.Length)];
+            UpdateItemPosition(animation);
+            GetComponent<EntityAnimator>().SetEquipmentAnimation(animation);
+        }
+        currentItem.OnPrimary();
+    }
 }
 ```
 Die Methode *UseSecondary* hingegen wird genutzt die Zweitaktion des Items auszuführen. Auch hier kann diese nur ausgeführt werden, wenn es sich bei dem Item um eine Waffe handelt. 
 ```csharp
-public void UsePrimary()
+public void UseSecondary()
 {
-	if (... && currentEquipment is Weapon)
-	{
-		currentItem.OnSecondary();
-	}
+    if (... && currentEquipment is Weapon)
+    {
+        currentItem.OnSecondary();
+    }
 }
 ```
 Damit der Spieler mit dem aktuell ausgerüstete Item nicht nur angriffe, sondern diese auch benutzten und verbrauchen kann, gibt es die *UseSecondary* Methode. Sie kann nur ausgeführt werden, wenn es sich bei dem Gegenstand um ein Getränk handelt und callt für dieses die *OnPrimary* Methode. 
 ```csharp
 public void UseConsumable()
 {
-	if (... && currentEquipment is Drink)
-	{
-		currentItem.OnPrimary();
-	}
+    if (currentItem != null && currentItem is Consumable && currentEquipment != null && currentEquipment is Drink)
+    {
+        currentItem.OnPrimary();
+    }
 }
 ```
 Damit jeder Zeit neue Items ausgerüstet werden können, gibt es die Methode *EquipItem*. Diese erstellt eine Kopie aus dem Prefab des gegebenen Items. Ist das erstellte GameObject valide kann es ausgerüstet werden. Damit auch beispielsweise die [Entity](#Entity) diese Information bekommt, wird das Event *OnItemEquipped* gefeuert. Sollte der Spieler schon einen Gegenstand ausgerüstet haben, wird dieser mit der Methode *Unequip* abgelegt und das erstellte GameObject zerstört. Das Item bleibt weiterhin im Inventar des Spielers bestehen. Schlussendlich wird das neue Item ausgerüstet und in den dazugehörigen Parametern zwischen gespeichert. Der Parameter *currentItem* speichert in diesem Fall das erstellte GameObject und *currentEquipment* das eigentliche Item aus dem Inventar.
 ```csharp
 public void EquipItem(Equipment item)
 {
-	GameObject prefabCopy = Instantiate(item.prefab);
-	Equippable equippable = prefabCopy.GetComponent<Equippable>();
+    GameObject prefabCopy = Instantiate(item.prefab);
+    Equippable equippable = prefabCopy.GetComponent<Equippable>();
 
-	 if (equippable != null)
-	 {
-		 OnItemEquipped?.Invoke(item, currentEquipment);
-		 equippable.OnEquip();
-		 
-		 if (currentItem != null) Unequip();
-		 Equip(prefabCopy, item);
-		 
-		 currentItem = equippable;
-		 currentEquipment = item;
-	 }
- }
+    if (equippable != null)
+    {
+        OnItemEquipped?.Invoke(item, currentEquipment);
+        equippable.OnEquip();
+
+        if (currentItem != null) Unequip();
+        Equip(equippable, item);
+
+        currentItem = equippable;
+        currentEquipment = item;
+    }
+}
 ```
 Der eigentliche Prozess wird jedoch durch verschiedene Hilfsmethoden übernommen. Wird ein Gegenstand beispielsweise ausgerüstet, wird nach dem die Methode *EquipItem* aufgerufen wurde, die Methode *Equip* gecallt. Sie 
 Sucht mittels der gegebenen Standardhand, die richtige Position des Items und gibt das Item dem Entity schlussendlich in die Hand.
 ```csharp
 protected void Equip(Equippable equippable, Equipment item)
 {
-	currentHand = GetHandGameObject(item.defaultHand);
-	SetItemPosition(
-		equippable,
-		currentHand.transform,
-		item.defaultPosition,
-		item.defaultRotation
-	);
+    currentHand = GetHandGameObject(item.defaultHand);
+    SetItemPosition(equippable, currentHand.transform, item.defaultPosition, item.defaultRotation);
 }
 ```
 Die richtige Hand, in welcher das Item später vom Spieler gehalten werden soll, wird mit der Methode *GetHandGameObject* herausgefunden. Sie gibt jeweils das vorab definierte GameObject der jeweiligen Hand des Entity-Models zurück. 
 ```csharp
 private GameObject GetHandGameObject(Hand hand)
 {
-	if (hand == Hand.Left) return leftHand;
-	else return rightHand;
+    if (hand == Hand.Left) return leftHand;
+    else return rightHand;
 }
 ```
 Um für die verschiedenen Gegenstände auch unterschiedliche Positionen verwenden zu können, gibt es die Methode *SetItemPosition*, welche wie der Name schon sagt, die Position und Rotation des Items in der Entity-Hand überschreibt. Die hierfür notwendigen Parameter werden in dem [Equipment](#Equipment) Item gespeichert.
 ```csharp
-protected void SetItemPosition(Equippable e, Transform hand, Vector3 position, Vector3 rotation)
+protected void SetItemPosition(Equippable equippable, Transform hand, Vector3 position, Vector3 rotation)
 {
-	e.transform.parent = hand;
-	e.transform.localPosition = position;
-	e.transform.localEulerAngles = rotation;
+    equippable.transform.parent = hand;
+    equippable.transform.localPosition = position;
+    equippable.transform.localEulerAngles = rotation;
 }
 ```
 Die zu Beginn gesetzte Position und Rotation des Gegenstands kann im Nachhinein mit *UpdateItemPosition* noch verändert werden. Dies ist zwingend notwendig, da beispielsweise Waffen verschiedene Animationen besitzen. Dies hat zur Folge, dass die unterschiedlichen Gegenstände unter anderem zwischen den beiden Händen getauscht werden müssen und gegeben Falls die Position und die Rotation neu angepasst werden. Diese Parameter sind in dem jeweiligen [Equipment](#Equipment) Item gespeichert mittels der [EquipmentAnimation](#EquipmentAnimation) gespeichert.
 ```csharp
 public void UpdateItemPosition(EquipmentAnimation animation)
 {
-	UpdateItemPosition(animation.hand, animation.specificPosition, animation.specificRotation);
+    UpdateItemPosition(animation.hand, animation.specificPosition, animation.specificRotation);
 }
 
 public void UpdateItemPosition(Hand hand, Vector3 position, Vector3 rotation)
 {
-	currentHand = GetHandGameObject(hand);
-	SetItemPosition(currentItem, currentHand.transform, position, rotation);
+    currentHand = GetHandGameObject(hand);
+    SetItemPosition(currentItem, currentHand.transform, position, rotation);
 }
 ```
 Um einen Gegenstand letztendlich auch wirklich aus der Hand der Entität zu entfernen, damit ein neuer ausgerüstet werden kann, gibt es die Methode *Unequip*. Diese gibt die Parameter wieder frei, versteckt den Gegenstand in dem dieser Inaktiv gestellt wird und löscht den Gegenstand nach kurzer Zeit vollständig.
 ```csharp
 protected void Unequip()
 {
-	Destroy(currentItem, 10f);
-	currentItem.gameObject.SetActive(false);
-	currentItem = null;
-	currentHand = null;
+    Destroy(currentItem, 10f);
+
+    CurrentItem.gameObject.SetActive(false);
+    currentItem = null;
+    currentEquipment = null;
+    currentHand = null;
 }
 ```
 
@@ -317,17 +313,18 @@ Um dem Spieler einen erfolgreichen Treffer visuell besser darzustellen bzw. im a
 ```csharp
 public virtual void OnHit(int id)
 {
-	animator.SetInteger("HitAnimation", id);
-	animator.SetTrigger("Hit");
+    animator.SetInteger("HitAnimation", id);
+    animator.SetTrigger("Hit");
 }
 ```
 Damit sich die jeweilige Entität auch bewegen kann bzw. damit eine Bewegung zu sehen ist, gibt es die Methoden *Move*, *SetForward* und *SetStrafe*. Die letzteren sind dabei die Key-Methoden, welche die Vorwärts und Seitwärts-Geschwindigkeit dem *Animator* übergeben. Basierend auf den Parametern versucht der Animator dann, die verschiedenen Bewegungs-Animationen miteinander zu vermischen, damit letztendlich eine flüssige und für den Nutzer nachvollziehbare Bewegung entsteht.
 ```csharp
 public virtual void Move(float forward, float strafe)
 {
-	SetForward(forward);
-	SetStrafe(strafe);
+    SetForward(forward);
+    SetStrafe(strafe);
 }
+
 
 public void SetForward(float forward) => animator.SetFloat("Forward", forward);
 public void SetStrafe(float strafe) => animator.SetFloat("Strafe", strafe);
@@ -336,17 +333,18 @@ Da die Entität verschiedenen Items in den Händen halten kann und diese auch un
 ```csharp
 public void SetEquipment(Equipment item)
 {
-	int currentType = animator.GetInteger("Item");
-	int type = (int)item.type;
+    int currentType = animator.GetInteger("Item");
+    int type = (int)item.type;
 
-	if (currentType == type) return;
-	animator.SetInteger("Item", type);
+    if (currentType == type) return;
+
+    animator.SetInteger("Item", type);
 }
 
 public void SetEquipmentAnimation(EquipmentAnimation animation)
 {
-	if (animator.GetInteger("ItemAnimation") == animation.index) return;
-	animator.SetInteger("ItemAnimation", animation.index);
+    if (animator.GetInteger("ItemAnimation") == animation.index) return;
+    animator.SetInteger("ItemAnimation", animation.index);
 }
 ```
 Die meisten Methoden in der Klasse sind als *virtual* gekennzeichnet, damit sie von erbenden Klassen überschrieben werden können. Dies ist beispielsweise bei der Methode *Move* wichtig, welche die Parameter für die Bewegungs-Animation setzt, da sich Spieler und Gegner mit verschiedenen Mechaniken fortbewegen. 
@@ -444,12 +442,13 @@ Um einen besseren Spielfluss zu kreieren ist es möglich in der Klasse vorab zu 
 ```csharp
 public void OnRequestAttack(GameObject enemy)
 {
-	attackers.RemoveAll(attacker => attacker == null);
-	if (attackers.Count < simultaneousAttackers)
-	{
-		if (!attackers.Contains(enemy)) attackers.Add(enemy);
-		enemy.SendMessage("OnAllowAttack", gameObject);
-	}
+    attackers.RemoveAll(attacker => attacker == null);
+
+    if (attackers.Count < simultaneousAttackers)
+    {
+        if (!attackers.Contains(enemy)) attackers.Add(enemy);
+        enemy.SendMessage("OnAllowAttack", gameObject);
+    }
 }
 ```
 Die Methode *OnCancelAttack* hingegen wird genutzt, um einen aktuell zugelassenen Gegner wieder von der Liste zu entfernen, wenn dieser z.B. gestorben ist und somit den Spieler nicht mehr angreifen kann.
@@ -462,32 +461,36 @@ Die Klasse *PlayerStats* implementiert die Klasse  [EntityStats](#EntityStats) u
 ```csharp
 protected override void Start()
 {
-	... 
-	equipment = GetComponent<PlayerEquipment>();
-	equipment.OnItemEquipped += OnItemEquipped;
+    base.Start();
+
+    CurrentHealth = maxHealth;
+
+    equipment = GetComponent<PlayerEquipment>();
+    equipment.OnItemEquipped += OnItemEquipped;
 }
 
 public void OnItemEquipped(Equipment newItem, Equipment oldItem)
 {
-	if (newItem != null && newItem is Weapon)
-	{
-		damage = (newItem as Weapon).damage;
-	}
+    if (newItem != null && newItem is Weapon)
+    {
+        damage = (newItem as Weapon).damage;
+    }
 }
 ```
 Es wird außerdem die Methode *Damage* überschrieben, um den Spieler ein haptisches Feedback zu geben, wenn er Schaden durch einen Gegner erlitten hat. Dafür wird eine Coroutine gestartet, welche das Gamepad für einen kurzen Moment vibrieren lässt. Die stärke, der Vibration hängt dabei von der Größe des erlittenen Schadens ab.
 ```csharp
 public override void Damage(float damage, Equipment item = null)
 {
-	base.Damage(damage, item);
-	StopAllCoroutines();
-	StartCoroutine(StartGamePadVibration(damage));
+    base.Damage(damage, item);
+    StopAllCoroutines();
+    StartCoroutine(StartGamePadVibration(damage));
 }
+
 private IEnumerator StartGamePadVibration(float damage)
 {
-	Gamepad.current.SetMotorSpeeds(damage / 100, damage / 100);
-	yield return new WaitForSeconds(.5f);
-	Gamepad.current.SetMotorSpeeds(0, 0);
+    Gamepad.current.SetMotorSpeeds(damage / 100, damage / 100);
+    yield return new WaitForSeconds(.5f);
+    Gamepad.current.SetMotorSpeeds(0, 0);
 }
 ```
 ### PlayerEquipment Klasse
@@ -495,29 +498,32 @@ Die Klasse PlayerEquipment  erbt von der [EntityEquipment](#EntityEquipment) Kla
 ```csharp
 protected override void Start()
 {
-	base.Start();
-	inventory = Player.instance.inventory;
-	inventory.OnItemRemoved += OnItemRemoved;
+    base.Start();
 
-	hotbar = FindObjectOfType<Hotbar>();
-	hotbar.OnItemSelected += EquipItem;
+    inventory = Player.instance.inventory;
+    if (inventory == null) throw new NullReferenceException("Player inventory cannot be null");
+    inventory.OnItemRemoved += OnItemRemoved;
+
+    hotbar = FindObjectOfType<Hotbar>();
+    if (hotbar == null) throw new NullReferenceException("Hotbar cannot be null");
+    hotbar.OnItemSelected += EquipItem;
 }
 ```
 Die Methode *OnItemRemoved* wird gecallt, wenn ein Gegenstand aus dem Inventar des Spielers entfernt wurde. Sollte das entfernte Item, dem des aktuell ausgerüsteten entsprechen, wird die in der Basisklasse [EntityEquipment](#EntityEquipment) implementierte Methode  *Unequip* aufgerufen.
 ```csharp
-private void OnItemRemoved(object sender, InventoryEvent e)
+private void OnItemRemoved(Item item)
 {
-	if (e.item == currentEquipment) Unequip();
+    if (item == currentEquipment) Unequip();
 }
 ```
 Die *PlayerEquipment* Klasse speichert außerdem die Standardgegenstände, die der Spieler zum Beginn des Spiels erhält. Um dabei den ersten Gegenstand dieser Liste auszurüsten, damit es zum Beginn keine Fehler gibt und der Spieler automatisch seine Faust ausgerüstet hat gibt es die Methode *EquipFirstItem*.
 ```csharp
-public void EquipFirstItem()
+private void EquipFirstItem()
 {
-	if (defaultItems.Length != 0)
-	{
-		EquipItem(defaultItems[0] as Equipment);
-	}
+    if (defaultItems.Length != 0)
+    {
+        EquipItem(defaultItems[0] as Equipment);
+    }
 }
 ```
 ### PlayerInventory Klasse
