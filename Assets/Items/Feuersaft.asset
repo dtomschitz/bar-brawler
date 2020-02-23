@@ -28,5 +28,4 @@ MonoBehaviour:
   defaultDropRotation: {x: 0, y: 0, z: 0}
   equipmentAnimations: []
   healingAmount: 300
-  healingSpeed: 150
-  healingDelay: 1.5
+  healingDelay: 2

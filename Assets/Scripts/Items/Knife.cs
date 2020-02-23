@@ -22,7 +22,11 @@ namespace Items
             var pastTime = 0f;
             while (pastTime < bleedOutTime)
             {
+                if (entity.stats.IsDead) yield break;
+
                 entity.stats.Damage(bleedOutDamage);
+                AudioManager.instance.PlaySound(Sound.FistHit, entity.transform.position);
+
                 pastTime++;
                 yield return new WaitForSeconds(timeBetweenDamage);
             }

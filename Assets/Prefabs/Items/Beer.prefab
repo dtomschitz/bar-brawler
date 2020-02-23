@@ -89,7 +89,6 @@ GameObject:
   - component: {fileID: 3097511939980343489}
   - component: {fileID: 1008433152808922856}
   - component: {fileID: 4785873523387595290}
-  - component: {fileID: 7470140091100652153}
   m_Layer: 0
   m_Name: Liquid
   m_TagString: Untagged
@@ -157,22 +156,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &7470140091100652153
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 821689096379639377}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f517c3d3d054bb4097abb6041fa4af5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: c445bb7c6aca4344cb625dac757352d3, type: 2}
-  isCollected: 0
-  isPrimaryEnabled: 1
-  isSecondaryEnabled: 0
 --- !u!1 &1480182086663551858
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,7 +199,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1480182086663551858}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f517c3d3d054bb4097abb6041fa4af5, type: 3}
+  m_Script: {fileID: 11500000, guid: 63828e3013af9a34f986d212e6d9ca8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: c445bb7c6aca4344cb625dac757352d3, type: 2}

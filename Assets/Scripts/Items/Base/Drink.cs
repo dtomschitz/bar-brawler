@@ -7,7 +7,6 @@ namespace Items
     {
         [Header("Drink")]
         public int healingAmount;
-        public float healingSpeed;
         public float healingDelay;
     }
 }

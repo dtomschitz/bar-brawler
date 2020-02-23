@@ -63,5 +63,6 @@ public class Entity : MonoBehaviour
     /// </summary>
     public virtual void OnDeath()
     {
+        if (stats.IsDead) return;
     }
 }

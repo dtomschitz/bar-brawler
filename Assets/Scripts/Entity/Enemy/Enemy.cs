@@ -210,7 +210,6 @@ public class Enemy : Entity
         base.OnDeath();
 
         agent.enabled = false;
-        (stats as EnemyStats).healthBar.gameObject.SetActive(false);
         GetComponent<CapsuleCollider>().enabled = false;
         animator.OnDeath();
 
@@ -219,7 +218,6 @@ public class Enemy : Entity
         if (TargetAcquisition.instance.CurrentEnemy == this) TargetAcquisition.instance.UnselectCurrentEnemy(true);
 
         Statistics.instance.AddKill();
-
         Destroy(gameObject, 5f);
     }
 

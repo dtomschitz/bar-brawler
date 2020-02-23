@@ -11,11 +11,14 @@ public class EnemyStats : EntityStats
     {
         base.Damage(damage, item);
 
-        if (IsDead) return;
+        if (IsDead)
+        {
+            healthBar.gameObject.SetActive(false);
+            return;
+        }
+
         healthBar.fillAmount = CurrentHealth / maxHealth;
-
         if (damagePopup) ShowDamagePopup(damage);
-
         Statistics.instance.AddDamage(damage);
     }
 

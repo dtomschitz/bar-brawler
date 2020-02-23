@@ -8,7 +8,6 @@ public class MainMenu : MonoBehaviour
 {
 
     public string levelToLoad = "MainScene";
-
     public SceneFader sceneFader;
 
     /// <summary>
