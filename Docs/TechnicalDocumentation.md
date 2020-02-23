@@ -339,6 +339,34 @@ public void SetEquipmentAnimation(EquipmentAnimation animation)
 ```
 Die meisten Methoden in der Klasse sind als *virtual* gekennzeichnet, damit sie von erbenden Klassen überschrieben werden können. Dies ist beispielsweise bei der Methode *Move* wichtig, welche die Parameter für die Bewegungs-Animation setzt, da sich Spieler und Gegner mit verschiedenen Mechaniken fortbewegen. 
 
+### EntityCombatBehaviour Klasse
+Die *EntityCombatBehaviour* Klasse wird als StateMachine verwendet und wird für die meisten Animationen, die der Spieler triggern kann genutzt. Die primäre Aufgabe dieser Klasse ist es, den *CombatState* der jeweiligen Entität zu aktualisieren, was durch die *Entity.combat.SetState* Methode erreicht wird. Dieser wird der aktuell ausgerüstete Gegenstand der Entität übergeben, 
+```csharp
+public class EntityCombatBehaviour : StateMachineBehaviour
+{
+   public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        Entity entity = animator.GetComponentInParent<Entity>();
+        if (entity != null && entity.equipment.CurrentEquipment != null && !entity.combat.IsBlocking)
+        {
+            entity.combat.SetState(entity.equipment.CurrentEquipment);
+            ...
+        }
+    }
+
+    public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+
+        Entity entity = animator.GetComponentInParent<Entity>();
+        if (entity != null && entity.equipment.CurrentEquipment != null)
+        {
+            entity.combat.SetState(CombatState.Idle);
+            ...
+        }
+    }
+}
+```
+
 ## Player Klasse
 Die Player Klasse erbt von der Basisklasse [Entity](#Entity), wird als *Singelton* genutzt und implementiert alle notwendigen Methoden damit der Spieler als Entität gehandhabt werden kann um beispielsweise schaden zu erleiden oder Angriffe zu tätigen.
  Die Klasse wird außerdem durch die Methoden *AddMoney* und *RemoveMoney* erweitert. Diese dienen dazu dem Spieler Geld durch beispielsweise erfolgreiche Tötungen zu geben oder durch Investitionen zu nehmen. Die jeweiligen Methoden feuern zusätzlich noch die dazugehörigen Events, damit unter anderem die Anzeigen im Hud aktuell sind und der Spieler im Shop nur die Items erwerben kann, welche sein Budget nicht überschreiten. Des Weiteren wurde die Methode *OnDeath* aus der [Entity](#Entity)  Klasse überschrieben, um für alle noch lebenden Gegner die Erfolgs-Animation abzuspielen und den [GameState](#GameState) zu aktualisieren. Dies führt letztendlich dann dazu, dass das GameOver-Menü angezeigt wird.
