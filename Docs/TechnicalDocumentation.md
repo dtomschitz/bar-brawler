@@ -1203,7 +1203,7 @@ public class Weapon : Equipment
 }
 ```
 ### Collectable Item Klasse
-Die *Collectable* Klasse dient dazu, das grundsätzliche Verhalten zu implementieren, wenn der Spieler einen neuen Gegenstand vom Boden aufnimmt. Dies wird erreicht durch das benutzten von Kollisions-Boxen, welche dann die Methode *OnTriggerEnter* callt. Sollte es sich bei dem Verursacher um einen Spieler handeln, wird wie Methode *OnCollection* der [Item](#Item) Klasse aufgerufen, welche in der unveränderten Variante dieses dann dem Inventar hinzufügt.
+Die *Collectable* Klasse dient dazu, das grundsätzliche Verhalten zu implementieren, wenn der Spieler einen neuen Gegenstand vom Boden aufnimmt. Dies wird erreicht durch das Benutzten von Kollisions-Boxen, die dann die Methode *OnTriggerEnter* aufruft. Sollte es sich bei dem Verursacher um einen Spieler handeln, wird die Methode *OnCollection* der [Item](#Item) Klasse aufgerufen, welche in der unveränderten Variante dieses dann dem Inventar hinzufügt.
 ```csharp
 public class Collectable : MonoBehaviour
 {
@@ -1228,7 +1228,7 @@ public class Collectable : MonoBehaviour
 
 ```
 ### Consumable Item Klasse
-Die Consumable Klasse implementiert das Verhalten der Getränke, welches durch die Parameter *healingAmount*, *healingSpeed* und *healingDelay* der *Drink* Basisklasse modifiziert werden kann. Da es sich bei konsumierbaren Gegenständen auch um Items handelt, die vom Spieler ausgerüstet werden können und müssen, erbt die Klasse von der *Equippable* Klasse diese Funktionalität. So ist es möglich das der Spieler die verschiedenen Getränke konsumieren kann, um seine Lebenspunkte wieder zu regenerieren.
+Die Consumable Klasse implementiert das Verhalten der Getränke, das durch die Parameter *healingAmount*, *healingSpeed* und *healingDelay* der *Drink* Basisklasse modifiziert werden kann. Da es sich bei konsumierbaren Gegenständen auch um Items handelt, die vom Spieler ausgerüstet werden können und müssen, erbt die Klasse von der *Equippable* Klasse diese Funktionalität. So ist es möglich, dass der Spieler die verschiedenen Getränke konsumieren kann, um seine Lebenspunkte wieder zu regenerieren.
 ```csharp
 public class Consumable : Equippable
 {
@@ -1283,9 +1283,9 @@ public class Equippable : Collectable
 }
 ```
 ### Weapon Item Klasse
-Die *WeaponItem* Klasse erbt von der [Equippable](#Equippable) Klasse und erweitert die Funktionsweise der primär und sekundär Attacke durch einen Cooldown. Außerdem wird die Methode *OnHit* hinzugefügt, welche gecallt wird, wenn der Spieler einen erfolgreichen Treffer mit seiner Waffe gelandet hat. Mithilfe dieser Methode ist es möglich dem Gegner schaden hinzuzufügen und den Abnutzungsprozess zu starten. Damit *OnHit* jedoch überhaupt aufgerufen wird, werden auch hier Kollisions-Boxen verwendet und deren Trigger-Methoden verwendet. 
+Die *WeaponItem* Klasse erbt von der [Equippable](#Equippable) Klasse und erweitert die Funktionsweise der primären und sekundären Attacke durch einen Cooldown. Außerdem wird die Methode *OnHit* hinzugefügt, welche aufgerufen wird, wenn der Spieler einen erfolgreichen Treffer mit seiner Waffe gelandet hat. Mithilfe dieser Methode ist es möglich dem Gegner schaden hinzuzufügen und den Abnutzungsprozess zu starten. Damit *OnHit* jedoch überhaupt aufgerufen wird, werden auch hier Kollisions-Boxen verwendet und deren Trigger-Methoden verwendet. 
 
-Trifft der Besitzer des Items beispielsweise einen Gegner, wird geschaut, ob dieser aktuell wirklich einen Angriff ausführt oder nicht. Sollte dies der Fall sein wird versucht die gegnerische Seite zu ermitteln, um dieser dann unter anderem Schaden hinzuzufügen. Außerdem wird eine Art Block-Mechanismus aktiviert, damit doppelte Kollisionen ausgeschlossen werden können.
+Trifft der Besitzer des Items beispielsweise einen Gegner, wird geschaut, ob dieser aktuell wirklich einen Angriff ausführt oder nicht. Sollte dies der Fall sein, wird versucht die gegnerische Seite zu ermitteln, um dieser dann unter anderem Schaden hinzuzufügen. Außerdem wird eine Art Block-Mechanismus aktiviert, damit doppelte Kollisionen ausgeschlossen werden können.
 ```csharp
 void OnTriggerEnter(Collider other)
 {
@@ -1311,7 +1311,7 @@ void OnTriggerExit(Collider other)
     }
 }
 ```
-Wurde eine Entität erfolgreich getroffen und die Methode OnHit gecallt, werden die weiteren Prozesse gestartet. Zu diesen gehört die Abnutzung des benutzen Gegenstands und der Aufruf der *OnHit* Methode aus der [Entity](#Entity) Klasse.
+Wurde eine Entität erfolgreich getroffen und die Methode OnHit aufgerufen, werden die weiteren Prozesse gestartet. Zu diesen gehört die Abnutzung des benutzen Gegenstands und der Aufruf der *OnHit* Methode aus der [Entity](#Entity) Klasse.
 ```csharp
 public virtual void OnHit(Entity entity)
 {
@@ -1353,7 +1353,7 @@ public override void OnSecondary()
 ```
 
 #### Fist Weapon Klasse
-Die *Fist* Klasse erbt von der Weapon Item Klasse und erweitert die *OnSecondary*, damit es dem Spieler möglich ist, angriffe zu blockieren. Jeder geblockte Angriff kostet den Spieler Ausdauer. Sollte er keine mehr besitzen wird er auch wieder Schaden durch die Gegner nehmen. Außerdem wird die Methode OnHit überschrieben damit bei einem erfolgreichen Treffer der dazugehörige Sound abgespielt wird.
+Die *Fist* Klasse erbt von der Weapon Item Klasse und erweitert die *OnSecondary*, damit es dem Spieler möglich ist, Angriffe zu blockieren. Jeder geblockte Angriff kostet den Spieler Ausdauer. Sollte er keine Ausdauer mehr besitzen, wird er auch wieder Schaden durch die Gegner nehmen. Außerdem wird die Methode OnHit überschrieben, damit bei einem erfolgreichen Treffer der dazugehörige Sound abgespielt wird.
 ```csharp
 public class Fist : WeaponItem
 {
@@ -1373,7 +1373,7 @@ public class Fist : WeaponItem
 }
 ```
 #### Knife Weapon Klasse
-Auch die *Knife* Klasse implementiert die *WeaponItem* Klasse überschreibt jedoch nur die *OnHit* Methode. Das Messer hat nämlich die spezielle Fähigkeit den Gegner nach einem erfolgreichen Treffer noch weiter ausbluten zu lassen. Um diese Mechanik zu implementieren wird in der *OnHit* Methode eine Coroutine gestartet, welche dem Geschadeten über einen vordefinierten Zeitraum weiter Schaden hinzufügt.
+Auch die *Knife* Klasse implementiert die *WeaponItem* Klasse, überschreibt jedoch nur die *OnHit* Methode. Das Messer hat die spezielle Fähigkeit, den Gegner nach einem erfolgreichen Treffer noch weiter ausbluten zu lassen. Um diese Mechanik zu implementieren, wird in der *OnHit* Methode eine Coroutine gestartet, welche dem Geschadeten über einen vordefinierten Zeitraum weiter Schaden hinzufügt.
 ```csharp
 public class Knife : WeaponItem
 {
@@ -1487,10 +1487,10 @@ public void SetState(GameStateType newState)
 ```
 
 ## Wave-System
-Das Wave-System ist neben den anderen Spielmechaniken, wie das Kämpfen oder Bewegen des Spielers essenziell. Um dieses System so modular wie möglich zu gestalten, wurde die eigentliche Logik für die Verwaltung der Schwierigkeitsstufen aus der *WaveSpawner* Klasse heraus genommen und in der *WaveConfig*  Klasse implementiert. So ist es möglich jeder Zeit für verschiedene Abschnitten im Spielverlauf, verschiedene Konfigurationen zu benutzten, um dadurch letztendlich die Schwierigkeit dynamisch anzupassen. 
+Das Wave-System ist neben den anderen Spielmechaniken, wie das Kämpfen oder Bewegen des Spielers essenziell. Um dieses System so modular wie möglich zu gestalten, wurde die eigentliche Logik für die Verwaltung der Schwierigkeitsstufen aus der *WaveSpawner* Klasse herausgenommen und in der *WaveConfig*  Klasse implementiert. So ist es möglich jeder Zeit für verschiedene Abschnitten im Spielverlauf, verschiedene Konfigurationen zu benutzten, um dadurch die Schwierigkeit dynamisch anzupassen.
 
 ### WaveConfig Klasse
-Die *WaveConfig* wird genutzt um das Wave-System modular und dynamischer zu gestalten. Sie speichert wichtige Informationen, wie die Rundenzahl, in der die Config geladen werden soll, die dazugehörige Schwierigkeitsstufe, das Enemy-Prefab was zur Instantiierung notwendig ist und die für diese Runde vorgesehene *EnemyConfig*. Wird eine *WaveConfig* aktiviert, werden die zuvor aufgezählten Parameter an den *WaveSpawner* weiter gegeben, welcher dann letztendlich auch die *EnemyConfig* der aktuellen *WaveConfig* an die erzeugten Gegner übergibt.
+Die *WaveConfig* wird genutzt, um das Wave-System modular und dynamischer zu gestalten. Sie speichert wichtige Informationen, wie die Rundenzahl, in der die Config geladen werden soll, die dazugehörige Schwierigkeitsstufe, das Enemy-Prefab, was zur Instanziierung notwendig ist und die für diese Runde vorgesehene *EnemyConfig*. Wird eine *WaveConfig* aktiviert, werden die zuvor aufgezählten Parameter an den *WaveSpawner* weiter gegeben, welcher dann letztendlich auch die *EnemyConfig* der aktuellen *WaveConfig* an die erzeugten Gegner übergibt.
 ```csharp
 [CreateAssetMenu(fileName = "New Wave Config", menuName = "Configs/Wave Config")]
 public class WaveConfig : ScriptableObject
@@ -1504,7 +1504,8 @@ public class WaveConfig : ScriptableObject
 }
 ```
 #### EnemyConfig Klasse
-In der *EnemyConfig* Klasse können neben der Referenz zu einer *EnemyStatsConfig* auch die möglichen Money-Drops sowie die verschiedenen Waffen definiert werden, die der Gegner eventuell bekommen kann. Das *moneyDrops* wird also beispielsweise genutzt, wenn der Gegner gestorben ist. Der Spieler erhält für den Kill dann einen gewissen Betrag an Geld, welcher zufällig aus dieser List entnommen wurde. 
+In der *EnemyConfig* Klasse können neben der Referenz zu einer *EnemyStatsConfig* auch die möglichen Money-Drops, sowie die verschiedenen Waffen definiert werden, die der Gegner eventuell bekommen kann. Das *moneyDrops* wird also beispielsweise genutzt, wenn der Gegner gestorben ist. Der Spieler erhält für den Kill dann einen gewissen Betrag an Geld, welcher zufällig aus dieser List entnommen wurde. 
+
 ```csharp
 public class EnemyConfig : ScriptableObject
 {
@@ -1514,7 +1515,7 @@ public class EnemyConfig : ScriptableObject
     public RandomItem[] items;
 }
 ```
-Damit die Gegner wie schon zuvor erwähnt auch mit verschiedenen Waffen spawnen, gibt es das Array *items*. In diesem können vorab alle Items gespeichert werden, die der Gegner eventuell ausrüsten können sollte. Damit letztendlich bei der Erzeugung ein zufälliges Item aus der Liste gezogen wird, wurde die Klasse *RandomItem* implementiert. Diese speichert neben der eigentlichen Wahrscheinlichkeit für das Item auch eine Referenz für das Item selbst, sowie die Variablen *damageOverride* und *healthOverride*. Die letzten beiden Variablen können dafür genutzt werden, den Standardschaden oder die Standardlebenspunkte zu überschreiben, was teilweise notwendig ist, da der Gegner erst im Verlauf des Spiels mit diversen Waffen mehr Schaden machen darf.
+Damit die Gegner wie schon zuvor erwähnt auch mit verschiedenen Waffen spawnen, gibt es das Array *items*. In diesem können vorab alle Items gespeichert werden, die der Gegner eventuell ausrüsten können sollte. Damit bei der Erzeugung ein zufälliges Item aus der Liste gezogen wird, wurde die Klasse *RandomItem* implementiert. Diese speichert neben der eigentlichen Wahrscheinlichkeit für das Item auch eine Referenz für das Item selbst, sowie die Variablen *damageOverride* und *healthOverride*. Die letzten beiden Variablen können dafür genutzt werden, den Standardschaden oder die Standardlebenspunkte zu überschreiben, was teilweise notwendig ist, da der Gegner erst im Verlauf des Spiels mit diversen Waffen mehr Schaden machen darf.
 ```csharp
 public class RandomItem
 {
@@ -1526,7 +1527,7 @@ public class RandomItem
 ```
 
 #### EnemyStatsConfig
-Die *EnemyStatsConfig* speichert die Standardlebenspunkte die Gegner bekommen soll und den Schaden den er verursacht. Diese Werte können jedoch durch die *EnemyConfig* Klasse überschrieben werden.
+Die *EnemyStatsConfig* speichert die Standardlebenspunkte, die ein Gegner bekommen soll und den Schaden den er verursacht. Diese Werte können jedoch durch die *EnemyConfig* Klasse überschrieben werden.
 ```csharp
 public class EnemyStatsConfig : ScriptableObject
 {
@@ -1594,7 +1595,7 @@ private bool IsEnemyAlive
 }
 
 ```
-Um eine neue Runde zu starten und die Welle an Gegner zu erzeugen, wird die Methode *StartNextWave* genutzt. Sie lädt die aktuelle [WaveConfig](#WaveConfig), und starte eine Coroutine, welche dann die einzelnen Gegner an zufällig ausgewählten Spawnpoints erstellt. Um für jede Runde auch die richtige *WaveConfig* zu laden, wird jede einzelne in dem vorab definierten Array *configs*, basierend auf der jeweiligen Rundenzahl der Config mit der aktuellen verglichen. Sollte die Rundenzahl der speziellen WaveConfig mit der erspielten Rundenzahl übereinstimmen, wird diese Config von nun an verwendet. So ist gewährleistet, dass die Config's immer weiter ausgetauscht werden, solang es in dem Array welche gibt, die im Vergleich zur aktuellen Rundenzahl eine höher definierte besitzen.
+Um eine neue Runde zu starten und die Welle an Gegner zu erzeugen, wird die Methode *StartNextWave* genutzt. Sie lädt die aktuelle [WaveConfig](#WaveConfig) und startet eine Coroutine, welche dann die einzelnen Gegner an zufällig ausgewählten Spawnpoints erstellt. Um für jede Runde auch die richtige *WaveConfig* zu laden, wird jede einzelne in dem vorab definierten Array *configs*, basierend auf der jeweiligen Rundenzahl der Config mit der aktuellen verglichen. Sollte die Rundenzahl der speziellen WaveConfig mit der erspielten Rundenzahl übereinstimmen, wird diese Config von nun an verwendet. So ist gewährleistet, dass die Config's immer weiter ausgetauscht werden, solang es in dem Array welche gibt, die im Vergleich zur aktuellen Rundenzahl eine höher definierte besitzen.
 ```csharp
 private void StartNextWave()
 {
@@ -1742,7 +1743,7 @@ public class DamageOverlay : MonoBehaviour
 }
 ```
 #### HealthBar und ManaBar Klasse
-Die HealthBar zeigt dem Spieler an, wie viele Lebenspunkte er noch besitzt. Hierfür werden die Events OnDamaged und OnHealed abonniert, welche dafür Zuständig sind das Healthbar-Image entsprechend anzuzeigen. Wie in dem Code Beispiel zu sehen ist, erbt die HealthBar Klasse von der *ShrinkBar* Klasse. Diese Klasse implementiert die grundsätzlich notwendigen Funktionen um eine Bar dynamisch zu füllen oder zu verkleinern.
+Die HealthBar zeigt dem Spieler an, wie viele Lebenspunkte er noch besitzt. Hierfür werden die Events OnDamaged und OnHealed abonniert, welche dafür zuständig sind, das Healthbar-Image entsprechend anzuzeigen. Wie in dem Code Beispiel zu sehen ist, erbt die HealthBar Klasse von der *ShrinkBar* Klasse. Diese Klasse implementiert die grundsätzlich notwendigen Funktionen, um eine Bar dynamisch zu füllen oder zu verkleinern.
 ```csharp
 public class HealthBar : ShrinkBar
 {
@@ -1805,7 +1806,7 @@ public class ShrinkBar : MonoBehaviour
     }
 }
 ```
-Die *ManaBar* Klasse, welche die Ausdauer des Spielers anzeigt, ist im Vergleich zur *HealthBar* so gut wie identisch. Der einzige unterschied liegt darin, dass anstatt den Events der EntityStats Klasse, die Events *OnManaAdded* und *OnManaUsed* der *EntityCombat* Klasse genutzt werden.
+Die *ManaBar* Klasse, welche die Ausdauer des Spielers anzeigt, ist im Vergleich zur *HealthBar* so gut wie identisch. Der einzige Unterschied liegt darin, dass anstatt den Events der EntityStats Klasse, die Events *OnManaAdded* und *OnManaUsed* der *EntityCombat* Klasse genutzt werden.
 
 #### MoneyInfo Klasse
 Die Klasse *MoneyInfo* wird während dem Spiel genutzt, um die Anzeige für das gesammelte Geld zu verwalten. Dies geschieht durch das Abonnieren der *OnMoneyReceived* und *OnMoneySpend*  Events. Damit der Nutzer ein besseres visuelles Feedback bekommt, ob er Geld verdient oder ausgegeben hat, wurden für die jeweiligen Szenarien Prefabs erstellt. Diese besitzen einen Text mit dem jeweiligen Betrag und der entsprechenden Farbe (rot für Verlust, grün für Gewinn), sowie einer Animation die das GameObject ein- und ausblenden lässt.
@@ -1852,7 +1853,7 @@ public class MoneyInfo : MonoBehaviour
 }
 ```
 #### MunitionInfo Klasse
-Die MunitionInfo Klasse, ist teilweise ähnlich strukturiert wie die MoneyInfo Klasse, zeigt jedoch nur den aktuellen Munitionsstand des Spielers ohne weitere Animation oder jeglichem anderen Feedback an.
+Die MunitionInfo Klasse ist teilweise ähnlich strukturiert wie die MoneyInfo Klasse, zeigt jedoch nur den aktuellen Munitionsstand des Spielers ohne weitere Animation oder jeglichem anderen Feedback an.
 ```csharp
 public class MunitionInfo : MonoBehaviour
 {
@@ -1871,7 +1872,7 @@ public class MunitionInfo : MonoBehaviour
 }
 ```
 #### WaveInfo Klasse
-Die WaveInfo Klasse, wird verwendet um die erspielte Rundenzahl, den Countdown für die nächste Welle und die Skip-Info anzuzeigen. Hierfür wird auf die Events OnWaveStateUpdate und OnWaveCountdownUpdate gehört, welche von der *WaveSpawner* Klasse gefeuert werden. Ersteres der beiden Events, wird genutzt, um die aktuelle Rundenzahl sowie die Skip-Info für den eventuell laufenden Countdown anzuzeigen. Das Event *OnWaveCountdownUpdate* hingegen wird wie der Name schon sagt für die Darstellung des Countdowns genutzt. 
+Die WaveInfo Klasse wird verwendet, um die erspielte Rundenzahl, den Countdown für die nächste Welle und die Skip-Info anzuzeigen. Hierfür wird auf die Events OnWaveStateUpdate und OnWaveCountdownUpdate gehört, welche von der *WaveSpawner* Klasse gefeuert werden. Ersteres der beiden Events wird genutzt, um die aktuelle Rundenzahl, sowie die Skip-Info für den eventuell laufenden Countdown anzuzeigen. Das Event *OnWaveCountdownUpdate* wird hingegen, wie der Name schon sagt, für die Darstellung des Countdowns genutzt. 
 ```csharp
 public class WaveInfo : MonoBehaviour
 {
@@ -1923,7 +1924,7 @@ public class WaveInfo : MonoBehaviour
 }
 ```
 ### Shop
-Die *Shop* Klasse wird verwendet, um im Spiel den Shop zu öffnen, zu schließen und die Inhalte semi-dynamisch zu laden. Damit der Shop ordnungsgemäß funktioniert, müssen durch den Editor die verschiedenen Kategorien(*CategoryButton*) und Shop-Seiten(*ShopPage*) erstellt und übergeben werden. Der Nutzer kann so dann später zwischen den Kategorien und den dafür vorgesehen Shop-Seiten navigieren. Dies kann durch die Methode *OnPageSelected* erzielt werden, welche im Editor zwingend vorab an das OnClick-Event des jeweiligen Buttons gebindet werden muss. Die Methode fungiert letztendlich hauptsächlich "Austauschmethode". Sie deaktiviert die zuletzt geöffnete Shop-Seite, wenn bis zu diesem Zeitpunkt schon eine geöffnet wurde und aktiviert die neue Seite basierend auf der gegebenen ID.
+Die *Shop* Klasse wird verwendet, um im Spiel den Shop zu öffnen, zu schließen und die Inhalte semi-dynamisch zu laden. Damit der Shop ordnungsgemäß funktioniert, müssen durch den Editor die verschiedenen Kategorien(*CategoryButton*) und Shop-Seiten(*ShopPage*) erstellt und übergeben werden. Der Nutzer kann so dann später zwischen den Kategorien und den dafür vorgesehen Shop-Seiten navigieren. Dies kann durch die Methode *OnPageSelected* erzielt werden, welche im Editor zwingend vorab an das OnClick-Event des jeweiligen Buttons gebunden werden muss. Die Methode fungiert hauptsächlich als "Austauschmethode". Sie deaktiviert die zuletzt geöffnete Shop-Seite, wenn bis zu diesem Zeitpunkt schon eine geöffnet wurde und aktiviert die neue Seite basierend auf der gegebenen ID.
 ```csharp
 public void OnPageSelected(int id)
 {
@@ -1942,7 +1943,7 @@ public void OnPageSelected(int id)
     currentPage.SetActive(true);
 }
 ```
-Die Klasse ShopPage, welche die einzelnen Seiten verwaltet implementiert die Methode *OnItemSelected*, welche benötigt wird, um die Informationen für das aktuell ausgewählte Item zu aktualisieren. Sie wird aufgerufen, wenn der Nutzer einen Button auf der linken Seite des Shops ausgewählt hat.
+Die Klasse ShopPage, die die einzelnen Seiten verwaltet, implementiert die Methode *OnItemSelected*, die benötigt wird, um die Informationen für das aktuell ausgewählte Item zu aktualisieren. Sie wird aufgerufen, wenn der Nutzer einen Button auf der linken Seite des Shops ausgewählt hat.
 ```csharp
 public class ShopPage : MonoBehaviour
 {
@@ -1969,8 +1970,8 @@ public void SetItem(ShopItem shopItem)
     image.sprite = shopItem.item.icon;
 }
 ```
-Die dafür benötigten Parameter bekommt werden durch die Klasse *ShopItem* übergeben, welches eine Referenz du dem jeweiligen Item, den dazugehörigen Preis und einen kurzen Text zur Beschreibung des Items beinhaltet. Die Klasse implementiert außerdem die *OnItemBought* Methode welche aufgerufen wird, wenn der Spieler dieses Item erwerben will. Sie fügt das gewünschte Item letztendlich dem Inventar des Spielers hinzu, zieht ihm den Preis von seinem aktuellen Budget ab und aktualisiert die Statistiken. 
-Für das Munitions-Item gibt es für diesen Vorgang noch eine eigene Klasse in welcher diese Methode überschrieben wird, da Munition nicht direkt in einem der [InventorySlot](#InventorySlot)'s gespeichert, sondern einfach nur auf einen Counter addiert wird.
+Die dafür benötigten Parameter werden durch die Klasse *ShopItem* übergeben, das eine Referenz zu dem jeweiligen Item, den dazugehörigen Preis und einen kurzen Text zur Beschreibung des Items beinhaltet. Die Klasse implementiert außerdem die *OnItemBought* Methode welche aufgerufen wird, wenn der Spieler dieses Item erwerben will. Sie fügt das gewünschte Item dem Inventar des Spielers hinzu, zieht ihm den Preis von seinem aktuellen Budget ab und aktualisiert die Statistiken. 
+Für das Munitions-Item gibt es für diesen Vorgang noch eine eigene Klasse, in der diese Methode überschrieben wird, da Munition nicht direkt in einem der [InventorySlot](#InventorySlot)'s gespeichert, sondern einfach nur auf einen Counter addiert wird.
 ```csharp
 [CreateAssetMenu(fileName = "ShopItem", menuName = "Shop/Item")]
 public class ShopItem : ScriptableObject
@@ -1988,7 +1989,7 @@ public class ShopItem : ScriptableObject
     }
 }
 ```
-Gegenstände kann der Spieler erwerben, in dem er einen der Buttons auf der linken Seite der jeweiligen Shop-Seite drückt. Durch diese Aktion wird die Methode *OnClick* getriggert, welche dann überprüft, ob der Spieler genug Geld für den Kauf hat, sein Inventar genug Platz bietet oder ob er das Item schon zu oft besitzt. Treffen diese Fälle zu, wird er durch einen kurzen Text unterhalb der Shop-UI informiert. Sollte jedoch keiner dieser Fälle zutreffen, wird der endgültige Kauf durch die Methode *ShopItem.OnItemBought*, welche zuvor schon näher beschrieben wurde, in die Wege geleitet.
+Gegenstände kann der Spieler erwerben, indem er einen der Buttons auf der linken Seite der jeweiligen Shop-Seite drückt. Durch diese Aktion wird die Methode *OnClick* getriggert, welche dann überprüft, ob der Spieler genug Geld für den Kauf hat, sein Inventar genug Platz bietet oder ob er das Item schon zu oft besitzt. Treffen diese Fälle zu, wird er durch einen kurzen Text unterhalb der Shop-UI informiert. Sollte jedoch keiner dieser Fälle zutreffen, wird der endgültige Kauf durch die Methode *ShopItem.OnItemBought*, welche zuvor schon näher beschrieben wurde, in die Wege geleitet.
 ```csharp
 public void OnClick()
 {
@@ -2040,7 +2041,7 @@ private IEnumerator HideEventText()
 ```
 
 ### Hotbar
-Die Hotbar Klasse wird verwendet, um dem Spieler unter anderem visuell darzustellen, welche Items er besitzt und welchen er davon zurzeit ausgerüstet hat. Die Items werden wie im Inventar durch einzelne Slots verwaltet. Diese Hotbarslots werden  durch die Events *OnItemAdded* und *OnItemRemoved* aus der PlayerInventory Klasse aktuell gehalten.
+Die Hotbar Klasse wird verwendet, um dem Spieler unter anderem visuell darzustellen, welche Items er besitzt und welche er davon zurzeit ausgerüstet hat. Die Items werden wie im Inventar durch einzelne Slots verwaltet. Diese Hotbarslots werden  durch die Events *OnItemAdded* und *OnItemRemoved* aus der PlayerInventory Klasse aktuell gehalten.
 
 Damit dieses Verhalten realisiert werden konnte, besitzt die*HotbarSlot* Klasse, die Methoden *Add* und *Clear*.  Die Add Methode dient ausschließlich dazu, zu Beginn ein Item dem Slot hinzuzufügen. Durch das hinzufügen, wird das Icon des Slots, der Stackcount sowie die Haltbarkeit angezeigt. Die zuvor angesprochene Haltbarkeit wird durch das Event OnDurationUpdate der [Equipment](#Equipment) Klasse aktuell gehalten. Damit der Slot für neue Items freigegeben werden kann, muss zuvor die Methode *Clear* aufgerufen worden sein.
 ```csharp
@@ -2092,7 +2093,7 @@ public class HotbarSlot : MonoBehaviour
 
 ```
 
-Um der Hotbar neue Gegenstände hinzuzufügen, wird die Methode *OnItemAdded* genutzt, welche automatisch aufgerufen wird, wenn das Event *PlayerInventory.OnItemAdded* gefeuert wurde. Diese Methode sucht dann für das neue Item einen Slot, in welchem sich schon Items vom gleichen Typ befinden. Sollte hierbei jedoch kein *HotbarSlot* gefunden werden, wird versucht einen noch nicht befüllten zu finden. Nur wenn letztendlich auch ein HotbarSlot gefunden wurde, wird der Gegenstand diesem hinzugefügt. 
+Um der Hotbar neue Gegenstände hinzuzufügen, wird die Methode *OnItemAdded* genutzt, die automatisch aufgerufen wird, wenn das Event *PlayerInventory.OnItemAdded* gefeuert wurde. Diese Methode sucht dann für das neue Item einen Slot, in welchem sich schon Items vom gleichen Typ befinden. Sollte hierbei jedoch kein *HotbarSlot* gefunden werden, wird versucht einen noch nicht befüllten zu finden. Nur wenn letztendlich auch ein HotbarSlot gefunden wurde, wird der Gegenstand diesem hinzugefügt. 
 ```csharp
 
     private void OnItemAdded(Item item)
@@ -2172,7 +2173,7 @@ Damit auch Items aus der Hotbar entfernt werden können, wird die Methode *OnIte
 ## AudioManager Klasse
 Die *AudioManager* Klasse wird genutzt, um verschiedene vorab definierte Sounds abzuspielen. Hierfür wird die Methode *PlaySound* genutzt. Diese überladene Methode kann entweder einen Sound an einer Stelle oder allgemein abspielen. Dies ist notwendig, damit beispielsweise der Bewegungs-Sound oder der Sound für eine erfolgreiche Attacke nicht zu monoton wirken, sondern sich dynamisch an die Szene anpassen. 
 
-Wie schon erwähnt, wurden alle Sounds vorab definiert und in der Klasse als ein *SoundClip*-Array gespeichert. Die Klasse *SoundClip* ist nur als allgemeiner Speicherort für einen Sound genutzt und beinhaltet verschiedene Konfigurationsparameter, sowie die eigentliche AudioSource und den dazugehörigen Sound. Des Weiteren kann auch der Parameter *maxTimer* gesetzt werden, welcher später genutzt wird um zu überprüfen, ob der Sound erneut abgespielt werden kann oder nicht. Dies soll verhindern das *Sounds* doppelt oder zu schnell wieder abgespielt werden.
+Wie schon erwähnt, wurden alle Sounds vorab definiert und in der Klasse als ein *SoundClip*-Array gespeichert. Die Klasse *SoundClip* ist nur als allgemeiner Speicherort für einen Sound genutzt und beinhaltet verschiedene Konfigurationsparameter, sowie die eigentliche AudioSource und den dazugehörigen Sound. Des Weiteren kann auch der Parameter *maxTimer* gesetzt werden, welcher später genutzt wird um zu überprüfen, ob der Sound erneut abgespielt werden kann oder nicht. Dies soll verhindern, dass *Sounds* doppelt oder zu schnell wieder abgespielt werden.
 ```csharp
 [System.Serializable]
 public class SoundClip
@@ -2232,7 +2233,7 @@ public void PlaySound(Sound sound)
     }
 }
 ```
-Bevor jedoch die zuvor beschrieben Vorgänge durchgeführt werden können, wird überprüft, ob der Sound aktuell überhaupt abgespielt werden kann. Hierfür wird die Variable *maxTimer* aus der SoundClip Klasse verwendet. Mithilfe dieser Zahl wird geschaut, wie lange es her ist das der Sound abgespielt wurde und ob es jetzt wieder möglich ist. Sollte diese der Fall sein, wird der aktuelle Zeitstempel in Verbindung mit dem jeweiligen Sound dem soundTimer Dictionary hinzugefügt und der AudioClip abgespielt. Sollte der zu überprüfende Sound vorab nicht in dem *soundTimer* Dictionary hinzugefügt worden sein, wird der Überprüfungsvorgang übersprungen.
+Bevor jedoch die zuvor beschrieben Vorgänge durchgeführt werden können, wird überprüft, ob der Sound aktuell überhaupt abgespielt werden kann. Hierfür wird die Variable *maxTimer* aus der SoundClip Klasse verwendet. Mithilfe dieser Zahl wird geschaut, wie lange es her ist, dass der Sound abgespielt wurde und ob es jetzt wieder möglich ist. Sollte diese der Fall sein, wird der aktuelle Zeitstempel in Verbindung mit dem jeweiligen Sound dem soundTimer Dictionary hinzugefügt und der AudioClip abgespielt. Sollte der zu überprüfende Sound vorab nicht in dem *soundTimer* Dictionary hinzugefügt worden sein, wird der Überprüfungsvorgang übersprungen.
 ```csharp
 private Dictionary<Sound, float> soundTimer;
 
@@ -2292,7 +2293,7 @@ private SoundClip GetSoundClip(Sound sound)
 ```
 
 ## Statistics Klasse
-Die Statistics hat den Zweck, während des gesamten Spiels verschiedene Aktionen und Erfolge des Spielers zu speichern, damit diese am Ende des Spiels, wenn der Nutzer sterben sollte angezeigt werden können. Gespeichert werden die überlebten Runden, die Kill's, der Schaden, den der Spieler verursacht und das Geld das er beim Barkeeper ausgegeben hat. Damit die Klasse nur einmalig initialisiert werden kann, wurde auch hier ein Singelton-Mechanismus implementiert. So kann die Klasse außerdem von jeglichen anderen Scripten und Klassen verwendet werden.
+Die Statistics hat den Zweck, während des gesamten Spiels verschiedene Aktionen und Erfolge des Spielers zu speichern, damit diese am Ende des Spiels, wenn der Nutzer sterben sollte angezeigt werden können. Gespeichert werden die überlebten Runden, die Kill's, der Schaden, den der Spieler verursacht und das Geld, das er beim Barkeeper ausgegeben hat. Damit die Klasse nur einmalig initialisiert werden kann, wurde auch hier ein Singelton-Mechanismus implementiert. So kann die Klasse außerdem von jeglichen anderen Scripten und Klassen verwendet werden.
 ```csharp
 public class Statistics : MonoBehaviour
 {
