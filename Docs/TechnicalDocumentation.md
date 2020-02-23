@@ -123,20 +123,21 @@ welches die Information für andere Klassen wie z.B. der [HealthBar](#HealthBar)
 ```csharp
 public virtual void Damage(float damage, Equipment item = null)
 {
-	damage = Mathf.Clamp(damage, 0, maxHealth);
-	CurrentHealth -= damage;
-	OnDamaged?.Invoke(damage, item);
+    damage = Mathf.Clamp(damage, 0, maxHealth);
+    CurrentHealth -= damage;
+    OnDamaged?.Invoke(damage, item);
 
-	if (IsDead) OnDeath?.Invoke();
+    if (IsDead) OnDeath?.Invoke();
 }
 ```
 Die Methode *Heal* hingegen heilt den Spieler um die angegeben Lebenspunkte. Sie ruft außerdem das Event *OnHeal* auf um die Information über die neu hinzugefügten Lebenspunkte verschiedenen Klassen zur Verfügung zustellen.
 ```csharp
 public virtual void Heal(float amount)
 {
-	CurrentHealth += amount;
-	CurrentHealth = Mathf.Clamp(CurrentHealth, 0, maxHealth);
-	OnHealed?.Invoke(amount);
+    CurrentHealth += amount;
+    CurrentHealth = Mathf.Clamp(CurrentHealth, 0, maxHealth);
+
+    OnHealed?.Invoke(amount);
 }
 ```
 
@@ -164,25 +165,25 @@ Die Ausdauer wird verwendet, wenn der jeweilige Entity einen Angriff mit der Blo
 ```csharp
 public void AddMana(float amount)
 {
-CurrentMana += amount;
-CurrentMana = Mathf.Clamp(CurrentMana, 0f, maxMana);
-OnManaAdded?.Invoke();
+    CurrentMana += amount;
+    CurrentMana = Mathf.Clamp(CurrentMana, 0f, maxMana);
+    OnManaAdded?.Invoke();
 }
 
 public void UseMana(float amount = 1f)
 {
-	CurrentMana -= amount;
-	OnManaUsed?.Invoke();
+    CurrentMana -= amount;
+    OnManaUsed?.Invoke();
 }
 ```
 Mit der Zeit wird die Ausdauer automatisch mithilfe der Parameter *manaRegenerationSpeed* und *manaRegenerationAmount*  wieder aufgefüllt. Dies geschieht in der Update-Methode:
 ```csharp
 protected virtual void Update()
 {
-	if (!IsBlocking)
-	{
-		AddMana(manaRegenerationAmount * Time.deltaTime / manaRegenerationSpeed);
-	}
+    if (!IsBlocking)
+    {
+        AddMana(manaRegenerationAmount * Time.deltaTime / manaRegenerationSpeed);
+    }
 }
 ```
 
@@ -191,112 +192,108 @@ Auch diese Klasse ist eine Unterklasse der [Entity](##Entity) Klasse und wird al
 ```csharp
 public void UsePrimary()
 {
-	if (... && currentEquipment is Weapon)
-	{
-		EquipmentAnimation[] animations = currentEquipment.equipmentAnimations;
-		if (animations.Length != 0)
-		{
-			EquipmentAnimation animation = 
-				currentEquipment.equipmentAnimations[Random.Range(0, animations.Length)];
-			UpdateItemPosition(animation);
-			GetComponent<EntityAnimator>().SetEquipmentAnimation(animation);
-		}
-		currentItem.OnPrimary();
-	}
+    if (... && currentEquipment is Weapon)
+    {
+        EquipmentAnimation[] animations = currentEquipment.equipmentAnimations;
+        if (animations.Length != 0)
+        {
+            EquipmentAnimation animation = currentEquipment.equipmentAnimations[Random.Range(0, animations.Length)];
+            UpdateItemPosition(animation);
+            GetComponent<EntityAnimator>().SetEquipmentAnimation(animation);
+        }
+        currentItem.OnPrimary();
+    }
 }
 ```
 Die Methode *UseSecondary* hingegen wird genutzt die Zweitaktion des Items auszuführen. Auch hier kann diese nur ausgeführt werden, wenn es sich bei dem Item um eine Waffe handelt. 
 ```csharp
-public void UsePrimary()
+public void UseSecondary()
 {
-	if (... && currentEquipment is Weapon)
-	{
-		currentItem.OnSecondary();
-	}
+    if (... && currentEquipment is Weapon)
+    {
+        currentItem.OnSecondary();
+    }
 }
 ```
 Damit der Spieler mit dem aktuell ausgerüstete Item nicht nur angriffe, sondern diese auch benutzten und verbrauchen kann, gibt es die *UseSecondary* Methode. Sie kann nur ausgeführt werden, wenn es sich bei dem Gegenstand um ein Getränk handelt und callt für dieses die *OnPrimary* Methode. 
 ```csharp
 public void UseConsumable()
 {
-	if (... && currentEquipment is Drink)
-	{
-		currentItem.OnPrimary();
-	}
+    if (currentItem != null && currentItem is Consumable && currentEquipment != null && currentEquipment is Drink)
+    {
+        currentItem.OnPrimary();
+    }
 }
 ```
 Damit jeder Zeit neue Items ausgerüstet werden können, gibt es die Methode *EquipItem*. Diese erstellt eine Kopie aus dem Prefab des gegebenen Items. Ist das erstellte GameObject valide kann es ausgerüstet werden. Damit auch beispielsweise die [Entity](#Entity) diese Information bekommt, wird das Event *OnItemEquipped* gefeuert. Sollte der Spieler schon einen Gegenstand ausgerüstet haben, wird dieser mit der Methode *Unequip* abgelegt und das erstellte GameObject zerstört. Das Item bleibt weiterhin im Inventar des Spielers bestehen. Schlussendlich wird das neue Item ausgerüstet und in den dazugehörigen Parametern zwischen gespeichert. Der Parameter *currentItem* speichert in diesem Fall das erstellte GameObject und *currentEquipment* das eigentliche Item aus dem Inventar.
 ```csharp
 public void EquipItem(Equipment item)
 {
-	GameObject prefabCopy = Instantiate(item.prefab);
-	Equippable equippable = prefabCopy.GetComponent<Equippable>();
+    GameObject prefabCopy = Instantiate(item.prefab);
+    Equippable equippable = prefabCopy.GetComponent<Equippable>();
 
-	 if (equippable != null)
-	 {
-		 OnItemEquipped?.Invoke(item, currentEquipment);
-		 equippable.OnEquip();
-		 
-		 if (currentItem != null) Unequip();
-		 Equip(prefabCopy, item);
-		 
-		 currentItem = equippable;
-		 currentEquipment = item;
-	 }
- }
+    if (equippable != null)
+    {
+        OnItemEquipped?.Invoke(item, currentEquipment);
+        equippable.OnEquip();
+
+        if (currentItem != null) Unequip();
+        Equip(equippable, item);
+
+        currentItem = equippable;
+        currentEquipment = item;
+    }
+}
 ```
 Der eigentliche Prozess wird jedoch durch verschiedene Hilfsmethoden übernommen. Wird ein Gegenstand beispielsweise ausgerüstet, wird nach dem die Methode *EquipItem* aufgerufen wurde, die Methode *Equip* gecallt. Sie 
 Sucht mittels der gegebenen Standardhand, die richtige Position des Items und gibt das Item dem Entity schlussendlich in die Hand.
 ```csharp
 protected void Equip(Equippable equippable, Equipment item)
 {
-	currentHand = GetHandGameObject(item.defaultHand);
-	SetItemPosition(
-		equippable,
-		currentHand.transform,
-		item.defaultPosition,
-		item.defaultRotation
-	);
+    currentHand = GetHandGameObject(item.defaultHand);
+    SetItemPosition(equippable, currentHand.transform, item.defaultPosition, item.defaultRotation);
 }
 ```
 Die richtige Hand, in welcher das Item später vom Spieler gehalten werden soll, wird mit der Methode *GetHandGameObject* herausgefunden. Sie gibt jeweils das vorab definierte GameObject der jeweiligen Hand des Entity-Models zurück. 
 ```csharp
 private GameObject GetHandGameObject(Hand hand)
 {
-	if (hand == Hand.Left) return leftHand;
-	else return rightHand;
+    if (hand == Hand.Left) return leftHand;
+    else return rightHand;
 }
 ```
 Um für die verschiedenen Gegenstände auch unterschiedliche Positionen verwenden zu können, gibt es die Methode *SetItemPosition*, welche wie der Name schon sagt, die Position und Rotation des Items in der Entity-Hand überschreibt. Die hierfür notwendigen Parameter werden in dem [Equipment](#Equipment) Item gespeichert.
 ```csharp
-protected void SetItemPosition(Equippable e, Transform hand, Vector3 position, Vector3 rotation)
+protected void SetItemPosition(Equippable equippable, Transform hand, Vector3 position, Vector3 rotation)
 {
-	e.transform.parent = hand;
-	e.transform.localPosition = position;
-	e.transform.localEulerAngles = rotation;
+    equippable.transform.parent = hand;
+    equippable.transform.localPosition = position;
+    equippable.transform.localEulerAngles = rotation;
 }
 ```
 Die zu Beginn gesetzte Position und Rotation des Gegenstands kann im Nachhinein mit *UpdateItemPosition* noch verändert werden. Dies ist zwingend notwendig, da beispielsweise Waffen verschiedene Animationen besitzen. Dies hat zur Folge, dass die unterschiedlichen Gegenstände unter anderem zwischen den beiden Händen getauscht werden müssen und gegeben Falls die Position und die Rotation neu angepasst werden. Diese Parameter sind in dem jeweiligen [Equipment](#Equipment) Item gespeichert mittels der [EquipmentAnimation](#EquipmentAnimation) gespeichert.
 ```csharp
 public void UpdateItemPosition(EquipmentAnimation animation)
 {
-	UpdateItemPosition(animation.hand, animation.specificPosition, animation.specificRotation);
+    UpdateItemPosition(animation.hand, animation.specificPosition, animation.specificRotation);
 }
 
 public void UpdateItemPosition(Hand hand, Vector3 position, Vector3 rotation)
 {
-	currentHand = GetHandGameObject(hand);
-	SetItemPosition(currentItem, currentHand.transform, position, rotation);
+    currentHand = GetHandGameObject(hand);
+    SetItemPosition(currentItem, currentHand.transform, position, rotation);
 }
 ```
 Um einen Gegenstand letztendlich auch wirklich aus der Hand der Entität zu entfernen, damit ein neuer ausgerüstet werden kann, gibt es die Methode *Unequip*. Diese gibt die Parameter wieder frei, versteckt den Gegenstand in dem dieser Inaktiv gestellt wird und löscht den Gegenstand nach kurzer Zeit vollständig.
 ```csharp
 protected void Unequip()
 {
-	Destroy(currentItem, 10f);
-	currentItem.gameObject.SetActive(false);
-	currentItem = null;
-	currentHand = null;
+    Destroy(currentItem, 10f);
+
+    CurrentItem.gameObject.SetActive(false);
+    currentItem = null;
+    currentEquipment = null;
+    currentHand = null;
 }
 ```
 
@@ -316,17 +313,18 @@ Um dem Spieler einen erfolgreichen Treffer visuell besser darzustellen bzw. im a
 ```csharp
 public virtual void OnHit(int id)
 {
-	animator.SetInteger("HitAnimation", id);
-	animator.SetTrigger("Hit");
+    animator.SetInteger("HitAnimation", id);
+    animator.SetTrigger("Hit");
 }
 ```
 Damit sich die jeweilige Entität auch bewegen kann bzw. damit eine Bewegung zu sehen ist, gibt es die Methoden *Move*, *SetForward* und *SetStrafe*. Die letzteren sind dabei die Key-Methoden, welche die Vorwärts und Seitwärts-Geschwindigkeit dem *Animator* übergeben. Basierend auf den Parametern versucht der Animator dann, die verschiedenen Bewegungs-Animationen miteinander zu vermischen, damit letztendlich eine flüssige und für den Nutzer nachvollziehbare Bewegung entsteht.
 ```csharp
 public virtual void Move(float forward, float strafe)
 {
-	SetForward(forward);
-	SetStrafe(strafe);
+    SetForward(forward);
+    SetStrafe(strafe);
 }
+
 
 public void SetForward(float forward) => animator.SetFloat("Forward", forward);
 public void SetStrafe(float strafe) => animator.SetFloat("Strafe", strafe);
@@ -335,17 +333,18 @@ Da die Entität verschiedenen Items in den Händen halten kann und diese auch un
 ```csharp
 public void SetEquipment(Equipment item)
 {
-	int currentType = animator.GetInteger("Item");
-	int type = (int)item.type;
+    int currentType = animator.GetInteger("Item");
+    int type = (int)item.type;
 
-	if (currentType == type) return;
-	animator.SetInteger("Item", type);
+    if (currentType == type) return;
+
+    animator.SetInteger("Item", type);
 }
 
 public void SetEquipmentAnimation(EquipmentAnimation animation)
 {
-	if (animator.GetInteger("ItemAnimation") == animation.index) return;
-	animator.SetInteger("ItemAnimation", animation.index);
+    if (animator.GetInteger("ItemAnimation") == animation.index) return;
+    animator.SetInteger("ItemAnimation", animation.index);
 }
 ```
 Die meisten Methoden in der Klasse sind als *virtual* gekennzeichnet, damit sie von erbenden Klassen überschrieben werden können. Dies ist beispielsweise bei der Methode *Move* wichtig, welche die Parameter für die Bewegungs-Animation setzt, da sich Spieler und Gegner mit verschiedenen Mechaniken fortbewegen. 
@@ -443,12 +442,13 @@ Um einen besseren Spielfluss zu kreieren ist es möglich in der Klasse vorab zu 
 ```csharp
 public void OnRequestAttack(GameObject enemy)
 {
-	attackers.RemoveAll(attacker => attacker == null);
-	if (attackers.Count < simultaneousAttackers)
-	{
-		if (!attackers.Contains(enemy)) attackers.Add(enemy);
-		enemy.SendMessage("OnAllowAttack", gameObject);
-	}
+    attackers.RemoveAll(attacker => attacker == null);
+
+    if (attackers.Count < simultaneousAttackers)
+    {
+        if (!attackers.Contains(enemy)) attackers.Add(enemy);
+        enemy.SendMessage("OnAllowAttack", gameObject);
+    }
 }
 ```
 Die Methode *OnCancelAttack* hingegen wird genutzt, um einen aktuell zugelassenen Gegner wieder von der Liste zu entfernen, wenn dieser z.B. gestorben ist und somit den Spieler nicht mehr angreifen kann.
@@ -461,32 +461,36 @@ Die Klasse *PlayerStats* implementiert die Klasse  [EntityStats](#EntityStats) u
 ```csharp
 protected override void Start()
 {
-	... 
-	equipment = GetComponent<PlayerEquipment>();
-	equipment.OnItemEquipped += OnItemEquipped;
+    base.Start();
+
+    CurrentHealth = maxHealth;
+
+    equipment = GetComponent<PlayerEquipment>();
+    equipment.OnItemEquipped += OnItemEquipped;
 }
 
 public void OnItemEquipped(Equipment newItem, Equipment oldItem)
 {
-	if (newItem != null && newItem is Weapon)
-	{
-		damage = (newItem as Weapon).damage;
-	}
+    if (newItem != null && newItem is Weapon)
+    {
+        damage = (newItem as Weapon).damage;
+    }
 }
 ```
 Es wird außerdem die Methode *Damage* überschrieben, um den Spieler ein haptisches Feedback zu geben, wenn er Schaden durch einen Gegner erlitten hat. Dafür wird eine Coroutine gestartet, welche das Gamepad für einen kurzen Moment vibrieren lässt. Die stärke, der Vibration hängt dabei von der Größe des erlittenen Schadens ab.
 ```csharp
 public override void Damage(float damage, Equipment item = null)
 {
-	base.Damage(damage, item);
-	StopAllCoroutines();
-	StartCoroutine(StartGamePadVibration(damage));
+    base.Damage(damage, item);
+    StopAllCoroutines();
+    StartCoroutine(StartGamePadVibration(damage));
 }
+
 private IEnumerator StartGamePadVibration(float damage)
 {
-	Gamepad.current.SetMotorSpeeds(damage / 100, damage / 100);
-	yield return new WaitForSeconds(.5f);
-	Gamepad.current.SetMotorSpeeds(0, 0);
+    Gamepad.current.SetMotorSpeeds(damage / 100, damage / 100);
+    yield return new WaitForSeconds(.5f);
+    Gamepad.current.SetMotorSpeeds(0, 0);
 }
 ```
 ### PlayerEquipment Klasse
@@ -494,29 +498,32 @@ Die Klasse PlayerEquipment  erbt von der [EntityEquipment](#EntityEquipment) Kla
 ```csharp
 protected override void Start()
 {
-	base.Start();
-	inventory = Player.instance.inventory;
-	inventory.OnItemRemoved += OnItemRemoved;
+    base.Start();
 
-	hotbar = FindObjectOfType<Hotbar>();
-	hotbar.OnItemSelected += EquipItem;
+    inventory = Player.instance.inventory;
+    if (inventory == null) throw new NullReferenceException("Player inventory cannot be null");
+    inventory.OnItemRemoved += OnItemRemoved;
+
+    hotbar = FindObjectOfType<Hotbar>();
+    if (hotbar == null) throw new NullReferenceException("Hotbar cannot be null");
+    hotbar.OnItemSelected += EquipItem;
 }
 ```
 Die Methode *OnItemRemoved* wird gecallt, wenn ein Gegenstand aus dem Inventar des Spielers entfernt wurde. Sollte das entfernte Item, dem des aktuell ausgerüsteten entsprechen, wird die in der Basisklasse [EntityEquipment](#EntityEquipment) implementierte Methode  *Unequip* aufgerufen.
 ```csharp
-private void OnItemRemoved(object sender, InventoryEvent e)
+private void OnItemRemoved(Item item)
 {
-	if (e.item == currentEquipment) Unequip();
+    if (item == currentEquipment) Unequip();
 }
 ```
 Die *PlayerEquipment* Klasse speichert außerdem die Standardgegenstände, die der Spieler zum Beginn des Spiels erhält. Um dabei den ersten Gegenstand dieser Liste auszurüsten, damit es zum Beginn keine Fehler gibt und der Spieler automatisch seine Faust ausgerüstet hat gibt es die Methode *EquipFirstItem*.
 ```csharp
-public void EquipFirstItem()
+private void EquipFirstItem()
 {
-	if (defaultItems.Length != 0)
-	{
-		EquipItem(defaultItems[0] as Equipment);
-	}
+    if (defaultItems.Length != 0)
+    {
+        EquipItem(defaultItems[0] as Equipment);
+    }
 }
 ```
 ### PlayerInventory Klasse
@@ -599,63 +606,65 @@ Um Items hinzuzufügen oder zu entfernen gibt es die Methoden *AddItem* und *Rem
 ```csharp
 public void AddItem(Item item)
 {
-	if (item == null) return;
-	if (item.addToInventory)
-	{
-		InventorySlot freeSlot = FindStackableSlot(item);
-		if (freeSlot == null) freeSlot = FindNextEmptySlot();
-		if (freeSlot != null)
-		{
-			freeSlot.Add(item);
-			OnItemAdded?.Invoke(item);
-		}
-	}
+    if (item == null) return;
+    if (item.addToInventory)
+    {
+        InventorySlot freeSlot = FindStackableSlot(item);
+        if (freeSlot == null) freeSlot = FindNextEmptySlot();
+
+        if (freeSlot != null)
+        {
+            freeSlot.Add(item);
+            OnItemAdded?.Invoke(item);
+        }
+    }
 }
+
 public InventorySlot FindStackableSlot(Item item)
 {
-	foreach (InventorySlot slot in Slots)
-	{
-		if (slot.IsStackable(item)) return slot;
-	}
-	return null;
+    foreach (InventorySlot slot in Slots)
+    {
+        if (slot.IsStackable(item)) return slot;
+    }
+    return null;
 }
 
 public InventorySlot FindNextEmptySlot()
 {
-	foreach (InventorySlot slot in Slots)
-	{
-		if (slot.IsEmpty) return slot;
-	}
-	return null;
+    foreach (InventorySlot slot in Slots)
+    {
+        if (slot.IsEmpty) return slot;
+    }
+    return null;
 }
 ```
 Um Items zu entfernen, die sich im Inventar befinden, wenn diese z.B. verbraucht oder gelöscht wurden, kann die Methode *RemoveItem* genutzt werden. Sie sucht den gegebenen Gegenstand in den *InventorySlot*'s. Wurde das Item in einem Slot gefunden, wird es aus diesem entfernt und das Event *OnItemRemoved* um unter anderem die [Hotbar](#Hotbar) zu aktualisieren.
 ```csharp
 public void RemoveItem(Item item)
 {
-	if (item == null) return;
-	foreach (InventorySlot slot in Slots)
-	{
-		if (slot.Remove(item))
-		{
-			OnItemRemoved?.Invoke(item);
-			break;
-		}
-	}
+    if (item == null) return;
+    foreach (InventorySlot slot in Slots)
+    {
+        if (slot.Remove(item))
+        {
+            OnItemRemoved?.Invoke(item);
+            break;
+        }
+    }
 }
 ```
 Außerdem sind im Inventar die Methoden *AddMunition* und *UseMunition* implementiert um den Munitionsstand des Spielers zu verwalten. Des Weiteren wird auch hier ein entsprechendes Event gecallt, damit die UI-Elemente im HUD aktuell bleiben.
 ```csharp
 public void AddMunition(int ammount)
 {
-	currentMunition += ammount;
-	OnMunitionUpdate?.Invoke(currentMunition);
+    currentMunition += ammount;
+    OnMunitionUpdate?.Invoke(currentMunition);
 }
 
 public void UseMunition()
 {
-	currentMunition--;
-	OnMunitionUpdate?.Invoke(currentMunition);
+    currentMunition--;
+    OnMunitionUpdate?.Invoke(currentMunition);
 }
 ```
 
@@ -664,122 +673,124 @@ Die *PlayerControls* Klasse ist wohl mit die wichtigste im gesamten Spiel. Mit i
 ```csharp
 void Awake()
 {
-	inputActions = new PlayerInputActions();
-	inputActions.PlayerControls.Move.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
-	inputActions.PlayerControls.Rotation.performed += ctx => lookPosition = ctx.ReadValue<Vector2>();
+    inputActions = new PlayerInputActions();
+    inputActions.PlayerControls.Move.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
+    inputActions.PlayerControls.Rotation.performed += ctx => lookPosition = ctx.ReadValue<Vector2>();
 
-	inputActions.PlayerControls.Primary.performed += UsePrimary;
-	inputActions.PlayerControls.Secondary.performed += UseSecondary;
-	inputActions.PlayerControls.UseItem.performed += UseItem;
-	inputActions.PlayerControls.Pause.performed += PauseGame;
+    inputActions.PlayerControls.Primary.performed += UsePrimary;
+    inputActions.PlayerControls.Secondary.performed += UseSecondary;
+    inputActions.PlayerControls.UseItem.performed += UseItem;
+    inputActions.PlayerControls.Pause.performed += PauseGame;
 }
 ```
 Die Methoden *UsePrimary*, *UseSecondary* und *UseItem* werden aufgerufen, wenn der Nutzer die dazugehörige Taste betätigt hat. Sie triggern die primär oder sekundäre Aktion des aktuell ausgerüsteten Items mithilfe der [EntityEquipment](#EntityEquipment) Klasse. 
 ```csharp
 public void UsePrimary(CallbackContext ctx)
 {
-	if (GameState.instance.IsInTargetAcquisition) return;
-	equipment.UsePrimary();
+    if (GameState.instance.IsInTargetAcquisition) return;
+    equipment.UsePrimary();
 }
 
 public void UseSecondary(CallbackContext ctx)
 {
-	if (GameState.instance.IsInTargetAcquisition) return;
-	equipment.UseSecondary();
+    if (GameState.instance.IsInTargetAcquisition) return;
+    equipment.UseSecondary();
 }
 
 public void UseItem(CallbackContext ctx)
 {
-	if (GameState.instance.IsInTargetAcquisition) return;
-	equipment.UseConsumable();
+    if (GameState.instance.IsInTargetAcquisition) return;
+    equipment.UseConsumable();
 }
 ```
 In dieser Klasse wird außerdem die Funktion implementiert das Spiel zu pausieren. Dies geschieht mit der folgenden Methode.
 ```csharp
 public void PauseGame(CallbackContext ctx)
 {
-	GameState.instance.SetState(GameStateType.GamePaused);
+    GameState.instance.SetState(GameStateType.GamePaused);
 }
 ```
 Damit sich der Spieler jedoch letztendlich bewegen und rotieren kann wurde eine eigens dafür angepasste Steuerung implementiert. Die Bewegung des Spielers wird mittels der Input-Werte der Joysticks eines Gamepads oder der Pfeiltasten sowie der Bewegungsrichtung der Kamera kalkuliert. Diese Logik befindet sich in der *Update* Methode in welcher die Variable *desiredDirection* letztendlich für jeden Update-Zyklus neu ermittelt wird. Dieser Richtungsvektor gibt an, in welche Richtung sich der Spieler Bewegen soll und wie die Bewegungs-Animation durch den *Animator* erzeugt werden soll.
 ```csharp
 void Update()
 {
-	if (IsMovementEnabled)
-	{
-		float h = movementInput.x;
-		float v = movementInput.y;
+    if (IsMovementEnabled)
+    {
+        float h = movementInput.x;
+        float v = movementInput.y;
 
-		Vector3 input = new Vector3(h, 0f, v);
-		inputDirection = Vector3.Lerp(inputDirection, input, Time.deltaTime * 10f);
+        Vector3 input = new Vector3(h, 0f, v);
+        inputDirection = Vector3.Lerp(inputDirection, input, Time.deltaTime * 10f);
 
-		Vector3 cameraForward = mainCamera.transform.forward;
-		Vector3 cameraRight = mainCamera.transform.right;
+        Vector3 cameraForward = mainCamera.transform.forward;
+        Vector3 cameraRight = mainCamera.transform.right;
 
-		cameraForward.y = 0f;
-		cameraRight.y = 0f;
+        cameraForward.y = 0f;
+        cameraRight.y = 0f;
 
-		Vector3 desiredDirection = cameraForward * inputDirection.z + cameraRight * inputDirection.x;
+        Vector3 desiredDirection = cameraForward * inputDirection.z + cameraRight * inputDirection.x;
 
-		MovePlayer(desiredDirection);
-		RotatePlayer();
-		AnimatePlayerMovement(desiredDirection);
-	}
+        MovePlayer(desiredDirection);
+        RotatePlayer();
+        AnimatePlayerMovement(desiredDirection);
+    }
 }
 ```
 Mithilfe der *MovePlayer* Methode wird das Spieler-Model basierend auf dem übergebenen Parameter bewegt. Dieser wird auf der x- und z-Achse mit der vorab definierten Geschwindigkeit, der delta Zeit und sich selbst multipliziert. Dieser dadurch entstanden Bewegungsvektor wird dann an den *CharacterController*, welcher von Unity zur Verfügung gestellt wird, übergeben. Des Weiteren wird auf der y-Achse noch die Gravität errechnet, damit der Spieler von einer erhöhten Ebene herunterfallen und nicht in der Luft laufen kann.
 ```csharp
 private void MovePlayer(Vector3 desiredDirection)
 {
-	movement.Set(desiredDirection.x, movement.y, desiredDirection.z);
-	movement = movement * speed * Time.deltaTime;
+    movement.Set(desiredDirection.x, movement.y, desiredDirection.z);
+    movement = movement * speed * Time.deltaTime;
 
-	character.Move(movement);
+    character.Move(movement);
 
-	movement.y += (Physics.gravity.y * gravityScale * Time.deltaTime * 0.6f);
+    movement.y += (Physics.gravity.y * gravityScale * Time.deltaTime * 0.6f);
 }
 ```
 Mittels der gewünschten Bewegungsrichtung wird außerdem durch die [EntityAnimator](#EntityAnimator) Klasse eine Bewegungs-Animation "gebaut", welche zuvor in einem Blend-Tree definiert wurde. 
 ```csharp
 private void AnimatePlayerMovement(Vector3 desiredDirection)
 {
-	if (!playerAnimator) return;
+    if (!playerAnimator) return;
 
-	Vector3 movement = new Vector3(desiredDirection.x, 0f, desiredDirection.z);
-	float forward = Vector3.Dot(movement, playerModel.transform.forward);
-	float strafe = Vector3.Dot(movement, playerModel.transform.right);
-	playerAnimator.Move(forward, strafe);
+    Vector3 movement = new Vector3(desiredDirection.x, 0f, desiredDirection.z);
+    float forward = Vector3.Dot(movement, playerModel.transform.forward);
+    float strafe = Vector3.Dot(movement, playerModel.transform.right);
+
+    playerAnimator.Move(forward, strafe);
 }
 ```
 Damit sich das Spieler-Model auch rotieren lässt, gibt es die *RotatePlayer* Methode. Sie errechnet anhand der Kamerarichtung die Rotationsbewegung des Spielers. Sollte der Spieler jedoch zuvor im Zielerfassungsmodus einen Gegner ausgewählt haben, rotiert sich der Spieler nur noch in die Richtung des ausgewählten Gegners.
 ```csharp
 private void RotatePlayer()
 {
-	if (TargetAcquisition.instance.CurrentEnemy != null)
-	{
-		TurnPlayerToEnemy();
-		return;
-	}
+    if (TargetAcquisition.instance.CurrentEnemy != null)
+    {
+        TurnPlayerToEnemy();
+        return;
+    }
 
-	Vector2 input = lookPosition;
-	Vector3 lookDirection = new Vector3(input.x, 0, input.y);
+    Vector2 input = lookPosition;
+    Vector3 lookDirection = new Vector3(input.x, 0, input.y);
 
-	Vector3 lookRotation = mainCamera.transform.TransformDirection(lookDirection);
-	lookRotation = Vector3.ProjectOnPlane(lookRotation, Vector3.up);
+    Vector3 lookRotation = mainCamera.transform.TransformDirection(lookDirection);
+    lookRotation = Vector3.ProjectOnPlane(lookRotation, Vector3.up);
 
-	if (lookRotation != Vector3.zero)
-	{
-		Quaternion newRotation = Quaternion.LookRotation(lookRotation);
-		playerModel.transform.rotation = Quaternion.Lerp(playerModel.transform.rotation, newRotation, Time.deltaTime * 8f);
-	}
+    if (lookRotation != Vector3.zero)
+    {
+        Quaternion newRotation = Quaternion.LookRotation(lookRotation);
+        playerModel.transform.rotation = Quaternion.Lerp(playerModel.transform.rotation, newRotation, Time.deltaTime * 8f);
+    }
 }
 
 private void TurnPlayerToEnemy()
 {
-	Enemy enemy = TargetAcquisition.instance.CurrentEnemy;
-	Vector3 lookDirection = (enemy.transform.position - playerModel.transform.position).normalized;
-	Quaternion lookRotation = Quaternion.LookRotation(new Vector3(lookDirection.x, 0, lookDirection.z));
-	playerModel.transform.rotation = Quaternion.Lerp(playerModel.transform.rotation, lookRotation, Time.deltaTime * 10000f);
+    Enemy enemy = TargetAcquisition.instance.CurrentEnemy;
+
+    Vector3 lookDirection = (enemy.transform.position - playerModel.transform.position).normalized;
+    Quaternion lookRotation = Quaternion.LookRotation(new Vector3(lookDirection.x, 0, lookDirection.z));
+    playerModel.transform.rotation = Quaternion.Lerp(playerModel.transform.rotation, lookRotation, Time.deltaTime * 10000f);
 }
 ```
 ### TargetAcquisition Klasse
@@ -787,35 +798,41 @@ Die *TargetAcquisition* wurde implementiert um dem Nutzer die Möglichkeit zu bi
 ```csharp
 public void Toggle()
 {
-	if (!GameState.instance.IsInGame) return;
-	
-	IsEnabled = !IsEnabled;
-	Time.timeScale = IsEnabled ? 0.2f : 1.0f;
-	GameState.instance.SetState(IsEnabled ? GameStateType.TargetAcquisition : GameStateType.InGame);
-	
-	if (IsEnabled && CurrentEnemy == null)
-	{
-		SelectClosestEnemy();
-	}
+    if (!GameState.instance.IsInGame) return;
+
+    IsEnabled = !IsEnabled;
+    Time.timeScale = IsEnabled ? 0.2f : 1.0f;
+    GameState.instance.SetState(IsEnabled ? GameStateType.TargetAcquisition : GameStateType.InGame);
+
+    if (IsEnabled && CurrentEnemy == null)
+    {
+        SelectClosestEnemy();
+    }
 }
 
 public void SelectClosestEnemy()
 {
-	SelectEnemy(FindClosestEnemy());
+    SelectEnemy(FindClosestEnemy());
 }
 ```
 Das Auswählen eines einzelnen Gegners geschieht durch die *SelectEnemy* Methode, welche den aktuell ausgewählten Gegner durch den neuen ersetzt. Außerdem wird das Crosshair, was unter dem ausgewählten Gegner zusehen ist jenachdem de- und aktivert.
 ```csharp
-public void SelectEnemy(Enemy enemy) =>  SetCurrentEnemy(enemy);
+public void SelectEnemy(Enemy enemy) => SetCurrentEnemy(enemy);
 
 private void SetCurrentEnemy(Enemy enemy)
 {
-	if (CurrentEnemy != null) CurrentEnemy.SetCrosshairActive(false);
+    if (CurrentEnemy != null)
+    {
+        CurrentEnemy.SetCrosshairActive(false);
+    }
 
-	currentIndex = enemy == null ? -1 : enemies.IndexOf(enemy);
-	CurrentEnemy = enemy;
+    currentIndex = enemy == null ? -1 : enemies.IndexOf(enemy);
+    CurrentEnemy = enemy;
 
-	if (CurrentEnemy != null) CurrentEnemy.SetCrosshairActive(true);
+    if (CurrentEnemy != null)
+    {
+        CurrentEnemy.SetCrosshairActive(true);
+    }
 }
 ```
 Um beispielsweiße einen ausgewählten Gegner nicht mehr als solch einen Anzuzeigen, weil dieser beispielsweise gestorben ist, gibt es die Methode *UnselectCurrentEnemy*. Ihr kann auch der Übergabeparameter autoSelect übergeben werden, welcher standardmäßig auf *false* gesetzt ist. Ist er jedoch *true*, wir nach dem "abwählen" ein neuer Gegner ausgwählt und mit dem roten Crosshair angezeigt.
@@ -824,30 +841,33 @@ Um wie am Anfang den nähsten Gegner zu finden bzw. allgemein zwischen den Gegne
 ```csharp
 private void UpdateEnemies()
 {
-	enemies.Clear();
-	foreach (Enemy enemy in FindObjectsOfType<Enemy>())
-	{
-		if (enemy.stats.IsDead) continue;
-		enemies.Add(enemy);
-	}
+    enemies.Clear();
+    foreach (Enemy enemy in FindObjectsOfType<Enemy>())
+    {
+        if (enemy.stats.IsDead) continue;
+        enemies.Add(enemy);
+    }
 }
 ```
 Mit der vorher angesprochenen Methode *FindClosestEnemy* kann der näheste Gegner zum Spieler ermittelt werden. Sie wird vorallem bei der aktiverung des Moduses genutzt um den ersten Gegner zu markieren. Dies wird durch das errechnen der Distanzen zwischen dem Spieler und dem jeweiligen Gegner erreicht. Wurde der nähste Gegner ermittelt, gibt ihn die Methode zurück.
 ```csharp
 private Enemy FindClosestEnemy()
 {
-	Enemy enemy = null;
-	UpdateEnemies();
-	if (enemies != null && enemies.Count != 0)
-	{
-		Vector3 playerPositon = Player.instance.gameObject.transform.position;
-		for (int i = 0; i < enemies.Count; i++)
-		{
-			float distance = Vector3.Distance(enemies[i].transform.position, playerPositon);
-			if (distance < minDistance) enemy = enemies[i];
-		}
-	}
-	return enemy;
+    Enemy enemy = null;
+    UpdateEnemies();
+    if (enemies != null && enemies.Count != 0)
+    {
+        Vector3 playerPositon = Player.instance.gameObject.transform.position;
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            float distance = Vector3.Distance(enemies[i].transform.position, playerPositon);
+            if (distance < minDistance)
+            {
+                enemy = enemies[i];
+            }
+        }
+    }
+    return enemy;
 }
 ```
 
@@ -867,19 +887,36 @@ Die Item Klasse ist die zentrale Basisklasse, von der alle anderen Item Klassen 
 [CreateAssetMenu(fileName = "New Item", menuName = "Items/Item")]
 public class Item : ScriptableObject
 {
-	new public string name; // Der Name des Gegenstands, welcher im Shop sowie in der Hotbar genutzt wird.
-	public Sprite icon; // Eine Referenz zu dem Icon des Gegenstands, welches in der Hotbar und im Shop genutzt wird.
-	public ItemKind kind; // Der Typ des Items. Dieser kann entweder ItemKind.Consumable oder ItemKind.Weapon sein. 
+    new public string name;
+    public Sprite icon;
+    public ItemKind kind;
 
-	public bool addToInventory = true; // Für die Entscheidung ob das Item dem Inventar hinzugefügt werden kann oder nicht.
-	public bool isStackable = true; // Für die Entscheidung ob das Item stapelbar ist oder nicht.
-	public int maxStackSize = 1; // Die maximal größe des Stapels
-	public InventorySlot slot; // Eine Referenz zum InventorySlot in welchem das Item gespeichert wurde.
+    public bool addToInventory = true;
+    public bool isStackable = true;
+    public int maxStackSize = 1;
+    public InventorySlot slot;
 
-	public virtual void OnCollection()
-	{
-		Player.instance.inventory.AddItem(this);
-	}
+    public virtual void OnCollection()
+    {
+        Player.instance.inventory.AddItem(this);
+    }
+}
+
+public enum ItemKind
+{
+    Consumable,
+    Weapon
+}
+
+public enum ItemType
+{
+    Fist,
+    Revolver,
+    Bottle,
+    Knife,
+    Whiskey,
+    Beer,
+    Feuersaft
 }
 ```
 
@@ -890,16 +927,16 @@ Hinzu, welche Später den Geldbetrag des Money-Items beinhalten soll.
 [CreateAssetMenu(fileName = "New Money Item", menuName = "Items/Money")]
 public class Money : Item
 {
-	public int amount;
+    public int amount;
 }
 ```
 #### Munition Item Klasse
 Wie auch beim Money-Item, wird beim Munition-Item die Klasse [Item](#Item) implementiert und ebenfalls durch den Parameter *amount* erweitert, welcher später die Anzahl der Patronen beinhaltet, die der Spieler erhalten soll, wenn er das Item erworben hat.
 ```csharp
 [CreateAssetMenu(fileName = "New Munition", menuName = "Items/Munition")]
-public class Munition: Item
+public class Munition : Item
 {
-	public int amount;
+    public int amount;
 }
 ```
 #### Equipment Item Klasse
@@ -910,53 +947,54 @@ Des Weiteren implementiert die *Equipment* Klasse die Funktionsweise der Abnutzu
 [CreateAssetMenu(fileName = "New Equipment", menuName = "Items/Equipment")]
 public class Equipment : Item
 {
-	public delegate void DurationUpdate(float normalizedDuration);
-	public event DurationUpdate OnDurationUpdate;
+    public delegate void DurationUpdate(float normalizedDuration);
+    public event DurationUpdate OnDurationUpdate;
 
-	public ItemType type; 
-	public GameObject prefab;
+    public ItemType type;
+    public GameObject prefab;
 
-	public Hand defaultHand;
-	public Vector3 defaultPosition;
-	public Vector3 defaultRotation;
-	public Vector3 defaultDropRotation;
+    public bool hasDuration;
+    public float duration;
+    private float currentDuration;
 
-	public EquipmentAnimation[] equipmentAnimations;
+    public Hand defaultHand;
+    public Vector3 defaultPosition;
+    public Vector3 defaultRotation;
+    public Vector3 defaultDropRotation;
 
-	public bool hasDuration;
-	public float duration;
-	private float currentDuration;
+    public EquipmentAnimation[] equipmentAnimations;
 
-	...
+    ...
 
-	public bool UseItem()
-	{
-		currentDuration--;
-		OnDurationUpdate?.Invoke(NormalizedDuration);
+    public bool UseItem()
+    {
+        currentDuration--;
+        OnDurationUpdate?.Invoke(NormalizedDuration);
 
-		if (currentDuration <= 0)
-		{
-			Player.instance.inventory.RemoveItem(this);
-			return true;
-		}
+        if (currentDuration <= 0)
+        {
+            Player.instance.inventory.RemoveItem(this);
+            return true;
+        }
 
-		return false;
-	}
-	
-	...
+        return false;
+    }
+
+    ...
 }
 ```
 Zusätzlich werden in dieser Klasse auch die möglichen Animationen, durch die Hilfsklasse *EquipmentAnimation* gespeichert. Sie implementiert die Variablen,  *index*, *hand*, *specificPosition* und *specificRotation*. Diese Variablen werden genutzt um zum einen Festzustellen, welche Animation durch den  [EntityAnimator](#EntityAnimator)  abgespielt werden soll. Zum anderen werden sie benötigt um für die jeweilige Animation, den Gegenstand zwischen den Händen gegeben Falls zu tauschen und die Position und Rotation zu überschreiben. Damit diese Werte aber auch durch die [EntityEquipment](#EntityEquipment)  Klasse überschrieben werden, muss dies durch die Variablen *useSpecifcPosition* und *useSpecificRotation* aktiviert werden.
 ```csharp
 public class EquipmentAnimation
 {
-	public int index;
-	public Hand hand;
-	
-	public bool useSpecifcPosition;
-	public bool useSpecificRotation;
-	public Vector3 specificPosition;
-	public Vector3 specificRotation;
+    public int index;
+    public Hand hand;
+
+    public bool useSpecifcPosition;
+    public bool useSpecificRotation;
+
+    public Vector3 specificPosition;
+    public Vector3 specificRotation;
 }
 ```
 
@@ -966,9 +1004,8 @@ Die *Drink* Klasse dient als Speicherklasse für alle konsumierbaren Items und e
 [CreateAssetMenu(fileName = "New Drink", menuName = "Items/Drink")]
 public class Drink : Equipment
 {
-	public int healingAmount;
-	public float healingSpeed;
-	public float healingDelay;
+    public int healingAmount;
+    public float healingDelay;
 }
 ```
 #### Weapon Item Klasse 
@@ -977,7 +1014,7 @@ Die Weapon Klasse erbt ebenfalls von der [Equipment](#Equipment) Klasse und erwe
 [CreateAssetMenu(fileName = "New Weapon", menuName = "Items/Weapon")]
 public class Weapon : Equipment
 {
-	public float damage;
+    public float damage;
 }
 ```
 ### Collectable Item Klasse
@@ -985,56 +1022,79 @@ Die *Collectable* Klasse dient dazu, das grundsätzliche Verhalten zu implementi
 ```csharp
 public class Collectable : MonoBehaviour
 {
-	public Equipment item;
-	public bool isCollected = false;
+    public Equipment item;
+    public bool isCollected = false;
 
-	 private void OnTriggerEnter(Collider other)
-	 {
-		 if (other.CompareTag("Player") && !isCollected)
-		 {
-			 isCollected = true;
-			 item.OnCollection();
-			 OnCollection();
-		 }
-	 }
-	 
-	 public virtual void OnCollection()
-	 {
-		 Destroy(gameObject);
-	 }
- }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player") && !isCollected)
+        {
+            isCollected = true;
+            item.OnCollection();
+            OnCollection();
+        }
+    }
+
+    public virtual void OnCollection()
+    {
+        Destroy(gameObject);
+    }
+}
+
 ```
 ### Consumable Item Klasse
+Die Consumable Klasse implementiert das Verhalten der Getränke, welches durch die Parameter *healingAmount*, *healingSpeed* und *healingDelay* der *Drink* Basisklasse modifiziert werden kann. Da es sich bei konsumierbaren Gegenständen auch um Items handelt, die vom Spieler ausgerüstet werden können und müssen, erbt die Klasse von der *Equippable* Klasse diese Funktionalität. So ist es möglich das der Spieler die verschiedenen Getränke konsumieren kann, um seine Lebenspunkte wieder zu regenerieren.
+```csharp
+public class Consumable : Equippable
+{
+    public override void OnPrimary()
+    {
+        base.OnPrimary();
+        if (owner.combat.IsAttacking || owner.combat.IsBlocking || owner.combat.IsDrinking || owner.stats.HasFullLife) return;
+
+        owner.animator.OnPrimary();
+        StartCoroutine(StartHealing(item as Drink));
+    }
+
+    private IEnumerator StartHealing(Drink drink)
+    {
+        yield return new WaitForSeconds(drink.healingDelay);
+        owner.stats.Heal(drink.healingAmount);
+
+        Player.instance.inventory.RemoveItem(item);
+    }
+}
+```
 ### Equippable Item Klasse
 Mithilfe der Klasse *Equippabe*,  können Gegenstände primär und sekundär Aktionen ausführen, solang diese durch die Variablen *isPrimaryEnabled* und *isSecondaryEnabled* aktiviert sind. Die Methoden sind deshalb auch alle als virtual gekennzeichnet, damit sie durch die erbenden Klassen erweitert werden können. Aufgerufen werden diese hauptsächlich durch die [EntityEquipment](#EntityEquipment) Klasse.
 ```csharp
 public class Equippable : Collectable
 {
-	public bool isPrimaryEnabled = true;
-	public bool isSecondaryEnabled = false;
+    public bool isPrimaryEnabled = true;
+    public bool isSecondaryEnabled = false;
 
-	protected Entity owner;
+    protected Entity owner;
 
-	protected virtual void Start()
-	{
-		owner = GetComponentInParent<Entity>();
-		if (owner == null) throw new ArgumentException("The item owner can't be null!");
-	}
+    protected virtual void Start()
+    {
+        owner = GetComponentInParent<Entity>();
+        if (owner == null) throw new ArgumentException("The item owner can't be null!");
+    }
 
-	public virtual void OnPrimary()
-	{
-		if (!isPrimaryEnabled) return;
-	}
+    public virtual void OnPrimary()
+    {
+        if (!isPrimaryEnabled) return;
+    }
 
-	public virtual void OnSecondary()
-	{
-		if (!isSecondaryEnabled) return;
-	}
+    public virtual void OnSecondary()
+    {
+        if (!isSecondaryEnabled) return;
+    }
 
-	public virtual void OnEquip()
-	{
-		isCollected = true;
-	}
+    public void OnEquip()
+    {
+        isCollected = true;
+    }
 }
 ```
 ### Weapon Item Klasse
@@ -1044,64 +1104,166 @@ Trifft der Besitzer des Items beispielsweise einen Gegner, wird geschaut, ob die
 ```csharp
 void OnTriggerEnter(Collider other)
 {
-	if (hasCollided) return;
-	if (... && (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Player"))
-	{
-		if (owner.combat.IsAttacking)
-		{
-			Entity entity = other.gameObject.GetComponent<Entity>();
-			if (entity != null) OnHit(entity);
+    if (hasCollided) return;
+    if (... && (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Player"))
+    {
+        if (owner.combat.IsAttacking)
+        {
+            Entity entity = other.gameObject.GetComponent<Entity>();
+            if (entity != null) OnHit(entity);
 
-			hasCollided = true;
-		}
-	}
+            hasCollided = true;
+        }
+    }
 }
 
 void OnTriggerExit(Collider other)
 {
-	if (!hasCollided) return;
-	if (... && (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Player"))
-	{
-		hasCollided = false;
-	}
+    if (!hasCollided) return;
+    if (... && (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Player"))
+    {
+        hasCollided = false;
+    }
 }
 ```
 Wurde eine Entität erfolgreich getroffen und die Methode OnHit gecallt, werden die weiteren Prozesse gestartet. Zu diesen gehört die Abnutzung des benutzen Gegenstands und der Aufruf der *OnHit* Methode aus der [Entity](#Entity) Klasse.
 ```csharp
 public virtual void OnHit(Entity entity)
 {
-	if (entity.combat.IsBlocking && owner.equipment.CurrentEquipment.type == ItemType.Fist) return;
-	if (entity is Enemy && owner is Player && item.hasDuration)
-	{
-		bool isDestroyed = item.UseItem();
-		if (isDestroyed) return;
-	}
-	entity.OnHit(owner, item);
+    if (entity.combat.IsBlocking && owner.equipment.CurrentEquipment.type == ItemType.Fist) return;
+    if (entity is Enemy && owner is Player && item.hasDuration)
+    {
+        bool isDestroyed = item.UseItem();
+        if (isDestroyed) return;
+    }
+
+    entity.OnHit(owner, item);
 }
 ```
 Damit jede Waffe auch einen Cooldown besitzt und nur dann die Aktionen ausgeführt werden können, wenn der Cooldown abgelaufen ist, wurden die Methoden *OnPrimary* und *OnSecondary* mit dieser Funktionalität erweitert.
 ```csharp
 public override void OnPrimary()
 {
-	base.OnPrimary();
+    base.OnPrimary();
 
-	if (...&& (owner.combat.IsDrinking || owner.combat.IsAttacking || owner.combat.IsStunned)) return;
-	if (primaryCooldown <= 0f)
-	{
-		primaryCooldown = 1f / primaryAttackRate;
-		owner.animator.OnPrimary();
-	}
+    if (owner != null && owner.combat != null && (owner.combat.IsDrinking || owner.combat.IsAttacking || owner.combat.IsStunned)) return;
+    if (primaryCooldown <= 0f)
+    {
+        primaryCooldown = 1f / primaryAttackRate;
+        owner.animator.OnPrimary();
+    }
 }
 
 public override void OnSecondary()
 {
-	base.OnSecondary();
-	if (...&& (owner.combat.IsDrinking || owner.combat.IsAttacking || owner.combat.IsStunned)) return;
-	if (secondaryCooldown <= 0f && owner.combat.CurrentMana >= secondaryManaRequired)
-	{
-		secondaryCooldown = 1f / secondaryAttackRate;
-		owner.animator.OnSecondary();
-	}
+    base.OnSecondary();
+
+    if (owner != null && owner.combat != null && (owner.combat.IsDrinking || owner.combat.IsAttacking || owner.combat.IsStunned)) return;
+    if (secondaryCooldown <= 0f && owner.combat.CurrentMana >= secondaryManaRequired)
+    {
+        secondaryCooldown = 1f / secondaryAttackRate;
+        owner.animator.OnSecondary();
+    }
+}
+```
+
+#### Fist Weapon Klasse
+Die *Fist* Klasse erbt von der Weapon Item Klasse und erweitert die *OnSecondary*, damit es dem Spieler möglich ist, angriffe zu blockieren. Jeder geblockte Angriff kostet den Spieler Ausdauer. Sollte er keine mehr besitzen wird er auch wieder Schaden durch die Gegner nehmen. Außerdem wird die Methode OnHit überschrieben damit bei einem erfolgreichen Treffer der dazugehörige Sound abgespielt wird.
+```csharp
+public class Fist : WeaponItem
+{
+    public override void OnSecondary()
+    {
+        if (owner.combat.IsAttacking) return;
+        base.OnSecondary();
+        owner.combat.SetState(CombatState.FistBlock);
+        owner.combat.UseMana(20f);
+    }
+
+    public override void OnHit(Entity entity)
+    {
+        base.OnHit(entity);
+        AudioManager.instance.PlaySound(Sound.FistHit, entity.transform.position);
+    }
+}
+```
+#### Knife Weapon Klasse
+Auch die *Knife* Klasse implementiert die *WeaponItem* Klasse überschreibt jedoch nur die *OnHit* Methode. Das Messer hat nämlich die spezielle Fähigkeit den Gegner nach einem erfolgreichen Treffer noch weiter ausbluten zu lassen. Um diese Mechanik zu implementieren wird in der *OnHit* Methode eine Coroutine gestartet, welche dem Geschadeten über einen vordefinierten Zeitraum weiter Schaden hinzufügt.
+```csharp
+public class Knife : WeaponItem
+{
+    public float bleedOutDamage = 2f;
+    public float bleedOutTime = 10f;
+    public float timeBetweenDamage = 1f;
+
+    public override void OnHit(Entity entity)
+    {
+        base.OnHit(entity);
+        AudioManager.instance.PlaySound(Sound.KnifeHit, entity.transform.position);
+        StartCoroutine(KnifeBleedOut(entity));
+    }
+
+    private IEnumerator KnifeBleedOut(Entity entity)
+    {
+        var pastTime = 0f;
+        while (pastTime < bleedOutTime)
+        {
+            if (entity.stats.IsDead) yield break;
+
+            entity.stats.Damage(bleedOutDamage);
+            AudioManager.instance.PlaySound(Sound.FistHit, entity.transform.position);
+
+            pastTime++;
+            yield return new WaitForSeconds(timeBetweenDamage);
+        }
+    }
+}
+```
+#### Revolver Weapon Klasse
+Die *Revolver* Klasse implementiert die grundsätzlichen Funktionen des Revolvers, welchen der Spieler im Shop erwerben kann. Da der Revolver keine eigene Schuss-Animation besitzt und somit nicht der *CombatState* des jeweiligen Entities aktualisiert werden kann, wird ein eigener Cooldown implementiert. So kann verhindert werden, dass zu früh bzw. zu schnell geschossen werden kann. 
+Hat der Spieler außerdem einen Gegner durch den Zielerfassungsmodus ausgewählt, wird dieser direkt anvisiert und mit einem Schuss getötet. Ansonsten muss der Spieler versuchen selbst zu Zielen 
+```csharp
+public class Revolver : WeaponItem
+{
+    public Bullet bullet;
+    public Transform muzzle;
+    public MuzzleFlash muzzleFlash;
+    public float bulletSpeed;
+    public float fireRate = 1f;
+
+    private float cooldown = 0f;
+
+    void Update()
+    {
+        cooldown -= Time.deltaTime;
+    }
+
+    public override void OnPrimary()
+    {
+        if (Player.instance.inventory.HasMunition && cooldown <= 0f)
+        {
+            cooldown = 1f / fireRate;
+
+            AudioManager.instance.PlaySound(Sound.RevolverShoot);
+            muzzleFlash.Play();
+
+            Bullet newBullet = Instantiate(bullet, muzzle.position, muzzle.rotation) as Bullet;
+            newBullet.speed = bulletSpeed;
+            bullet.OnHit += OnHit;
+
+            if (TargetAcquisition.instance.CurrentEnemy != null)
+            {
+                Enemy enemy = TargetAcquisition.instance.CurrentEnemy;
+                Vector3 bulletDirection = enemy.transform.position - muzzle.position;
+
+                newBullet.transform.rotation = Quaternion.LookRotation(bulletDirection, Vector3.up);
+
+                OnHit(TargetAcquisition.instance.CurrentEnemy);
+            }
+
+            Player.instance.inventory.UseMunition();
+        }
+    }
 }
 ```
 
@@ -1110,31 +1272,32 @@ Die *GameState* Klasse speichert den aktuellen State des Spieles, was notwendig 
 ```csharp
 public void SetState(GameStateType newState)
 {
-	if (State == newState) return;
-	State = newState;
+    if (State == newState) return;
+    State = newState;
 
-	switch(newState)
-	{
-		case GameStateType.GamePaused:
-			TogglePauseMenu();
-			break;
+    switch (newState)
+    {
+        case GameStateType.GamePaused:
+            TogglePauseMenu();
+            break;
 
-		case GameStateType.GameOver:
-			ToggleGameOver();
-			break;
+        case GameStateType.GameOver:
+            ToggleGameOver();
+            break;
 
-		case GameStateType.InGame:
-			ToggleIngame();
-			break;
+        case GameStateType.InGame:
+            ToggleIngame();
+            break;
 
-		case GameStateType.InShop:
-			ToggleShop();
-			break;
+        case GameStateType.InShop:
+            ToggleShop();
+            break;
 
-		case GameStateType.TargetAcquisition:
-			ToggleTargetAcquisition();
-			break;
-	}
+        case GameStateType.TargetAcquisition:
+            ToggleTargetAcquisition();
+            break;
+
+    }
 }
 ```
 
@@ -1144,13 +1307,15 @@ Das Wave-System ist neben den anderen Spielmechaniken, wie das Kämpfen oder Bew
 ### WaveConfig Klasse
 Die *WaveConfig* wird genutzt um das Wave-System modular und dynamischer zu gestalten. Sie speichert wichtige Informationen, wie die Rundenzahl, in der die Config geladen werden soll, die dazugehörige Schwierigkeitsstufe, das Enemy-Prefab was zur Instantiierung notwendig ist und die für diese Runde vorgesehene *EnemyConfig*. Wird eine *WaveConfig* aktiviert, werden die zuvor aufgezählten Parameter an den *WaveSpawner* weiter gegeben, welcher dann letztendlich auch die *EnemyConfig* der aktuellen *WaveConfig* an die erzeugten Gegner übergibt.
 ```csharp
+[CreateAssetMenu(fileName = "New Wave Config", menuName = "Configs/Wave Config")]
 public class WaveConfig : ScriptableObject
 {
-	public int round;
-	public Difficulty difficulty;
-	public GameObject enemy;
+    public int round;
+    public Difficulty difficulty;
+    public GameObject enemy;
 
-	public EnemyConfig enemyConfig;
+    [Header("Enemy Config")]
+    public EnemyConfig enemyConfig;
 }
 ```
 #### EnemyConfig Klasse
@@ -1199,109 +1364,115 @@ Mittels der *Update* Methode wird zwischen den verschiedenen States gewechselt. 
 ```csharp
 void Update()
 {
-	if (enableWaveSpawner && (GameState.instance.State != GameStateType.GameOver || GameState.instance.State != GameStateType.GamePaused))
-	{
-		if (State == WaveState.Running)
-		{
-			if (IsEnemyAlive) return;
-			Player.instance.animator.OnVictory();
-			ResetWaveSpawner();
-		} 
-		
-		if(waveCountdown <= 0f)
-		{
-			 waveCountdown = 0f;
-			 if (State != WaveState.Spawning) StartNextWave();
-			 return;
-		 }
-		 
-		 waveCountdown -= Time.deltaTime;
-		 if (waveCountdown > 0f) OnWaveCountdownUpdate?.Invoke(waveCountdown);
-	 }
- }
+    if (enableWaveSpawner && (GameState.instance.State != GameStateType.GameOver || GameState.instance.State != GameStateType.GamePaused))
+    {
+        if (State == WaveState.Running)
+        {
+            if (IsEnemyAlive) return;
+            Player.instance.animator.OnVictory();
+            ResetWaveSpawner();
+        }
+
+        if (waveCountdown <= 0f)
+        {
+            waveCountdown = 0f;
+            if (State != WaveState.Spawning) StartNextWave();
+            return;
+        }
+
+        waveCountdown -= Time.deltaTime;
+        if (waveCountdown > 0f) OnWaveCountdownUpdate?.Invoke(waveCountdown);
+    }
+}
 
 private void ResetWaveSpawner()
 {
-	SetState(WaveState.Counting);
-	waveCountdown = timeBetweenWaves;
+    SetState(WaveState.Counting);
+    waveCountdown = timeBetweenWaves;
 }
+
 ```
 Ist aktuell eine Runde gestartet und die Gegner wurden erfolgreich erzeugt, muss immer wieder überprüft werden, ob von diesen Gegnern noch welche am Leben sind oder nicht. Hierfür wird die Methode *IsEnemyAlive* genutzt, welche im letzten Codebeispiel zu sehen war. Sie überprüft in kurzen Intervallen mithilfe der *GameObject.FindGameObjectWithTag* Funktion, ob noch Gegner leben oder nicht.
 ```csharp
 private bool IsEnemyAlive
 {
-	get
-	{
-		searchCountdown -= Time.deltaTime;
-		if (searchCountdown <= 0f)
-		{
-			searchCountdown = 1f;
-			if (GameObject.FindGameObjectWithTag("Enemy") == null) return false;
-		}
-		return true;
-	}
+    get
+    {
+        searchCountdown -= Time.deltaTime;
+        if (searchCountdown <= 0f)
+        {
+            searchCountdown = 1f;
+            if (GameObject.FindGameObjectWithTag("Enemy") == null) return false;
+        }
+        return true;
+    }
 }
+
 ```
 Um eine neue Runde zu starten und die Welle an Gegner zu erzeugen, wird die Methode *StartNextWave* genutzt. Sie lädt die aktuelle [WaveConfig](#WaveConfig), und starte eine Coroutine, welche dann die einzelnen Gegner an zufällig ausgewählten Spawnpoints erstellt. Um für jede Runde auch die richtige *WaveConfig* zu laden, wird jede einzelne in dem vorab definierten Array *configs*, basierend auf der jeweiligen Rundenzahl der Config mit der aktuellen verglichen. Sollte die Rundenzahl der speziellen WaveConfig mit der erspielten Rundenzahl übereinstimmen, wird diese Config von nun an verwendet. So ist gewährleistet, dass die Config's immer weiter ausgetauscht werden, solang es in dem Array welche gibt, die im Vergleich zur aktuellen Rundenzahl eine höher definierte besitzen.
 ```csharp
 private void StartNextWave()
 {
-	WaveConfig nextConfig = GetNextWaveConfig();
-	if (nextConfig != null) SetConfig(nextConfig);
-	
-	Rounds++;
-	StartCoroutine(SpawnRoutine());
-	Statistics.instance.AddRound();
+    WaveConfig nextConfig = GetNextWaveConfig();
+    if (nextConfig != null) SetConfig(nextConfig);
+
+    Rounds++;
+    Debug.LogFormat("Spawning Wave (num: {0}, difficulty: {1})", Rounds, CurrentDifficulty);
+
+    StartCoroutine(SpawnRoutine());
+    Statistics.instance.AddRound();
 }
 
 private WaveConfig GetNextWaveConfig()
 {
-	foreach (WaveConfig config in configs)
-	{
-		if (config.round == Rounds) return config;
-	}
-	return null;
+    foreach (WaveConfig config in configs)
+    {
+        if (config.round == Rounds) return config;
+    }
+    return null;
 }
 
 private void SetConfig(WaveConfig config)
 {
-	CurrentConfig = config;
-	CurrentDifficulty = config.difficulty;
+    Debug.LogFormat("Update wave config {0} (round: {1}, difficulty: {2}, enemy: {3}", config, config.round, config.difficulty, config.enemy.name);
+    CurrentConfig = config;
+    CurrentDifficulty = config.difficulty;
 }
 ```
 Erstellt werden die einzelnen Gegner letztendlich durch die Methode *SpawnRoutine*. Damit die Gegner an verschiedenen Positionen gespawnt werden, wird für jeden eine neue zufällige Position aus der Liste der  [SpawnPoint](#Spawnpoint)'s gewählt. Außerdem bekommt jeder Gegner bei der Initialisierung die *EnemyConfig* übergeben, welche in der aktuellen WaveConfig definiert ist. So ist garantiert, dass für die meisten Runden unterschiedliche Gegnertypen den Spieler angreifen.
 ```csharp
 private IEnumerator SpawnRoutine()
 {
-	SetState(WaveState.Spawning);
-	
-	for (int i = 0; i < Rounds * 1.25; i++)
-	{
-		SpawnPoint spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-		Enemy enemy = Instantiate(CurrentConfig.enemy, spawnPoint.Position, spawnPoint.Rotation).GetComponent<Enemy>();
-		
-		if (enemy != null) enemy.Init(CurrentConfig.enemyConfig);
-		
-		yield return new WaitForSeconds(1f);
-	}
-	
-	SetState(WaveState.Running);
-	yield break;
+    SetState(WaveState.Spawning);
+
+    for (int i = 0; i < Rounds * 1.25; i++)
+    {
+        SpawnPoint spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+
+
+        Enemy enemy = Instantiate(CurrentConfig.enemy, spawnPoint.Position, spawnPoint.Rotation).GetComponent<Enemy>();
+        if (enemy != null) enemy.Init(CurrentConfig.enemyConfig);
+
+        yield return new WaitForSeconds(1f);
+    }
+    SetState(WaveState.Running);
+    yield break;
 }
 ```
 ### Spawnpoint Klasse
-Die Spawnpoint Klasse wird ausschließlich genutzt, um die Position für den Punkt zu definieren. So konnte ein Prefab erstellt werden, das man einfach im Level platziert kann und dem WaveSpawner übergibt.```csharp
+Die Spawnpoint Klasse wird ausschließlich genutzt, um die Position für den Punkt zu definieren. So konnte ein Prefab erstellt werden, das man einfach im Level platziert kann und dem WaveSpawner übergibt.
+```csharp
 public class SpawnPoint : MonoBehaviour
 {
-	public Vector3 Position
-	{
-		get { return transform.position; }
-	}
+    public Vector3 Position
+    {
+        get { return transform.position; }
+    }
 
-	public Quaternion Rotation
-	{
-		get { return transform.rotation; }
-	}
+    public Quaternion Rotation
+    {
+        get { return transform.rotation; }
+    }
 }
 ```
 
@@ -1350,52 +1521,267 @@ public class HUDManager : MonoBehaviour
     public void DisplayInteractionHint(bool active) => interactionHint.gameObject.SetActive(active);
 }
 ```
-### HUD
+### HUD Elemente
+Das HUD besteht aus insgesamt 6 Elementen, von denen die meisten durchgehend für den Spieler zu sehen sind. Alle UI-Elemente bzw. deren Verwaltungsklassen können über den *HUDManager* erreicht werden.
+#### DamageOverlay Klasse
+Die DamageOverlay Klasse wird verwendet, um für einen kurzen Moment ein Overlay anzuzeigen, welches dem Spieler signalisieren soll, dass er von einem gegnerischen Angriff getroffen wurde. Hierfür wird ein vorgefertigtes GameObject durch eine Animation auf der Canvas angezeigt und nach einer bestimmten Zeit wieder ausgeblendet.
+```csharp
+public class DamageOverlay : MonoBehaviour
+{
+    public float time = 1f;
+    private EntityStats stats;
+    private Animator animator;
 
+    void Start()
+    {
+        animator = GetComponent<Animator>();
+        stats = Player.instance.stats;
+        stats.OnDamaged += OnTakeDamage;
+    }
+    
+    void OnTakeDamage(float damage, Equipment item)
+    {
+        if (GameState.instance.IsInGame)
+        {
+            StopAllCoroutines();
+            StartCoroutine(ShowDamgeOverlay());
+        }
+    }
+    
+    IEnumerator ShowDamgeOverlay()
+    {
+        animator.SetBool("damage", true);
+        yield return new WaitForSeconds(time);
+        animator.SetBool("damage", false);
+    }
+}
+```
+#### HealthBar und ManaBar Klasse
+Die HealthBar zeigt dem Spieler an, wie viele Lebenspunkte er noch besitzt. Hierfür werden die Events OnDamaged und OnHealed abonniert, welche dafür Zuständig sind das Healthbar-Image entsprechend anzuzeigen. Wie in dem Code Beispiel zu sehen ist, erbt die HealthBar Klasse von der *ShrinkBar* Klasse. Diese Klasse implementiert die grundsätzlich notwendigen Funktionen um eine Bar dynamisch zu füllen oder zu verkleinern.
+```csharp
+public class HealthBar : ShrinkBar
+{
+    private EntityStats stats;
 
+    void Start()
+    {
+        stats = Player.instance.stats;
+        stats.OnDamaged += OnDamaged;
+        stats.OnHealed += OnHealed;
+    }
+
+    void OnHealed(float amount)
+    {
+        SetBarFillAmount(stats.HealthNormalized);
+        AlignBars();
+    }
+
+    void OnDamaged(float damage, Equipment item)
+    {
+        ResetShrinkTimer();
+        SetBarFillAmount(stats.HealthNormalized);
+    }
+}
+
+public class ShrinkBar : MonoBehaviour
+{
+    public Image barImage;
+    public Image shrinkBarImage;
+    
+    public float maxShrinkTimer = 0.6f;
+    private float shrinkTimer;
+
+    void Update()
+    {
+        shrinkTimer -= Time.deltaTime;
+        if (shrinkTimer < 0)
+        {
+            if (barImage.fillAmount < shrinkBarImage.fillAmount)
+            {
+                float shrinkSpeed = 1f;
+                shrinkBarImage.fillAmount -= shrinkSpeed * Time.deltaTime;
+            }
+        }
+    }
+
+    protected void AlignBars()
+    {
+        shrinkBarImage.fillAmount = barImage.fillAmount;
+    }
+
+    protected void ResetShrinkTimer()
+    {
+        shrinkTimer = maxShrinkTimer;
+    }
+
+    protected void SetBarFillAmount(float amount)
+    {
+        barImage.fillAmount = amount;
+    }
+}
+```
+Die *ManaBar* Klasse, welche die Ausdauer des Spielers anzeigt, ist im Vergleich zur *HealthBar* so gut wie identisch. Der einzige unterschied liegt darin, dass anstatt den Events der EntityStats Klasse, die Events *OnManaAdded* und *OnManaUsed* der *EntityCombat* Klasse genutzt werden.
+
+#### MoneyInfo Klasse
+Die Klasse *MoneyInfo* wird während dem Spiel genutzt, um die Anzeige für das gesammelte Geld zu verwalten. Dies geschieht durch das Abonnieren der *OnMoneyReceived* und *OnMoneySpend*  Events. Damit der Nutzer ein besseres visuelles Feedback bekommt, ob er Geld verdient oder ausgegeben hat, wurden für die jeweiligen Szenarien Prefabs erstellt. Diese besitzen einen Text mit dem jeweiligen Betrag und der entsprechenden Farbe (rot für Verlust, grün für Gewinn), sowie einer Animation die das GameObject ein- und ausblenden lässt.
+```csharp
+public class MoneyInfo : MonoBehaviour
+{
+    public GameObject moneyRecived;
+    public GameObject moneySpend;
+    public float destroyText;
+    private Text currentBalanceText;
+
+    void Start()
+    {
+        currentBalanceText = GetComponent<Text>();
+        Player.instance.OnMoneyReceived += OnMoneyReceived;    
+        Player.instance.OnMoneySpend += OnMoneySpend;    
+    }
+
+    public void OnMoneyReceived(int amount, int currentBalance)
+    {
+        InstantiateMoneyText(moneyRecived, amount, "+");
+        StartCoroutine(MoneyUpdateRoutine(currentBalance, .7f));
+    }
+    
+    public void OnMoneySpend(int amount, int currentBalance)
+    {
+        InstantiateMoneyText(moneySpend, amount, "-");
+        StartCoroutine(MoneyUpdateRoutine(currentBalance, .1f));
+    }
+
+    private void InstantiateMoneyText(GameObject gameObject, int amount, string a)
+    {
+        GameObject popup = Instantiate(gameObject, transform);
+        popup.GetComponent<Text>().text = a + amount + "$";
+        Destroy(popup, destroyText);
+    }
+
+    private IEnumerator MoneyUpdateRoutine(int currentBalance, float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        currentBalanceText.text = "$ " + currentBalance;
+
+    }
+}
+```
+#### MunitionInfo Klasse
+Die MunitionInfo Klasse, ist teilweise ähnlich strukturiert wie die MoneyInfo Klasse, zeigt jedoch nur den aktuellen Munitionsstand des Spielers ohne weitere Animation oder jeglichem anderen Feedback an.
+```csharp
+public class MunitionInfo : MonoBehaviour
+{
+    public Text currentMunition;
+
+    void Start()
+    {
+        PlayerInventory inventory = Player.instance.inventory;
+        inventory.OnMunitionUpdate += OnMunitionUpdate;
+    }
+
+    public void OnMunitionUpdate(int currentAmount)
+    {
+        currentMunition.text = currentAmount.ToString();
+    }
+}
+```
+#### WaveInfo Klasse
+Die WaveInfo Klasse, wird verwendet um die erspielte Rundenzahl, den Countdown für die nächste Welle und die Skip-Info anzuzeigen. Hierfür wird auf die Events OnWaveStateUpdate und OnWaveCountdownUpdate gehört, welche von der *WaveSpawner* Klasse gefeuert werden. Ersteres der beiden Events, wird genutzt, um die aktuelle Rundenzahl sowie die Skip-Info für den eventuell laufenden Countdown anzuzeigen. Das Event *OnWaveCountdownUpdate* hingegen wird wie der Name schon sagt für die Darstellung des Countdowns genutzt. 
+```csharp
+public class WaveInfo : MonoBehaviour
+{
+    public Text stateOfGameText;
+    public Text skipCountdownText;
+
+    public Color defaultColor;
+    public Color warningColor;
+    public float nextRoundWarning;
+
+    void Start()
+    {
+        WaveSpawner waveSpawner = WaveSpawner.instance;
+        if (waveSpawner == null) throw new ArgumentNullException("WaveSpawner class cannot be null!");
+
+        waveSpawner.OnWaveStateUpdate += OnWaveStateUpdate;
+        waveSpawner.OnWaveCountdownUpdate += OnWaveCountdownUpdate;
+    }
+
+    public void OnWaveStateUpdate(WaveState state, int rounds)
+    {
+        if (state == WaveState.Counting)
+        {
+            skipCountdownText.gameObject.SetActive(true);
+        }
+
+        if (WaveSpawner.instance.IsWaveRunning)
+        {
+            skipCountdownText.gameObject.SetActive(false);
+
+            stateOfGameText.color = defaultColor;
+            stateOfGameText.text = string.Format("RUNDE {0}", rounds.ToString());
+        }
+    }
+
+    public void OnWaveCountdownUpdate(float countdown)
+    {
+        if (countdown <= nextRoundWarning)
+        {
+            skipCountdownText.gameObject.SetActive(false);
+            stateOfGameText.color = warningColor;
+        } else
+        {
+            stateOfGameText.color = defaultColor;
+        }
+
+        stateOfGameText.text = string.Format("NÄCHSTE RUNDE IN {0}s", Mathf.Floor(countdown).ToString());
+    }
+}
+```
 ### Shop
 Die *Shop* Klasse wird verwendet, um im Spiel den Shop zu öffnen, zu schließen und die Inhalte semi-dynamisch zu laden. Damit der Shop ordnungsgemäß funktioniert, müssen durch den Editor die verschiedenen Kategorien(*CategoryButton*) und Shop-Seiten(*ShopPage*) erstellt und übergeben werden. Der Nutzer kann so dann später zwischen den Kategorien und den dafür vorgesehen Shop-Seiten navigieren. Dies kann durch die Methode *OnPageSelected* erzielt werden, welche im Editor zwingend vorab an das OnClick-Event des jeweiligen Buttons gebindet werden muss. Die Methode fungiert letztendlich hauptsächlich "Austauschmethode". Sie deaktiviert die zuletzt geöffnete Shop-Seite, wenn bis zu diesem Zeitpunkt schon eine geöffnet wurde und aktiviert die neue Seite basierend auf der gegebenen ID.
 ```csharp
 public void OnPageSelected(int id)
 {
-	UpdateCategoryHighlight(id);
+    UpdateCategoryHighlight(id);
 
-	if (currentPage != null)
-	{
-		ShopPage newPage = shopPages[id];
-		currentPage.SetActive(false);
-		newPage.SetActive(true);
-		currentPage = newPage;
-		return;
-	}
+    if (currentPage != null)
+    {
+        ShopPage newPage = shopPages[id];
+        currentPage.SetActive(false);
+        newPage.SetActive(true);
+        currentPage = newPage;
+        return;
+    }
 
-	currentPage = shopPages[id];
-	currentPage.SetActive(true);
+    currentPage = shopPages[id];
+    currentPage.SetActive(true);
 }
 ```
 Die Klasse ShopPage, welche die einzelnen Seiten verwaltet implementiert die Methode *OnItemSelected*, welche benötigt wird, um die Informationen für das aktuell ausgewählte Item zu aktualisieren. Sie wird aufgerufen, wenn der Nutzer einen Button auf der linken Seite des Shops ausgewählt hat.
 ```csharp
 public class ShopPage : MonoBehaviour
 {
-	public ItemInfo itemInfo;
+    public ItemInfo itemInfo;
 
-	public void OnItemSelected(ShopItem item)
-	{
-		itemInfo.SetItem(item);
-	}
-	
-	...
+    public void OnItemSelected(ShopItem item)
+    {
+        itemInfo.SetItem(item);
+    }
+
+    ...
 }
 ```
 Für das Überschreiben der letzten Informationen ist die Klasse *ItemInfo* mit der Methode *SetItem* zuständig. 
 ```csharp
 public void SetItem(ShopItem shopItem)
 {
-	gameObject.SetActive(true);
-	title.text = shopItem.item.name.ToUpper();
-	price.text = "$" + shopItem.price.ToString();
-	info.text = shopItem.infoText.ToUpper();
-	image.sprite = shopItem.item.icon;
+    gameObject.SetActive(true);
+
+    title.text = shopItem.item.name.ToUpper();
+    price.text = "$" + shopItem.price.ToString();
+    info.text = shopItem.infoText.ToUpper();
+
+    image.sprite = shopItem.item.icon;
 }
 ```
 Die dafür benötigten Parameter bekommt werden durch die Klasse *ShopItem* übergeben, welches eine Referenz du dem jeweiligen Item, den dazugehörigen Preis und einen kurzen Text zur Beschreibung des Items beinhaltet. Die Klasse implementiert außerdem die *OnItemBought* Methode welche aufgerufen wird, wenn der Spieler dieses Item erwerben will. Sie fügt das gewünschte Item letztendlich dem Inventar des Spielers hinzu, zieht ihm den Preis von seinem aktuellen Budget ab und aktualisiert die Statistiken. 
@@ -1404,66 +1790,199 @@ Für das Munitions-Item gibt es für diesen Vorgang noch eine eigene Klasse in w
 [CreateAssetMenu(fileName = "ShopItem", menuName = "Shop/Item")]
 public class ShopItem : ScriptableObject
 {
-	public Item item;
-	public string infoText;
-	public int price;
+    public Item item;
+    public string infoText;
+    public int price;
 
-	public virtual void OnItemBought()
-	{
-		Player.instance.inventory.AddItem(item);
-		Player.instance.RemoveMoney(price);
+    public virtual void OnItemBought()
+    {
+        Player.instance.inventory.AddItem(item);
+        Player.instance.RemoveMoney(price);
 
-		Statistics.instance.AddMoney(price);
-	}
+        Statistics.instance.AddMoney(price);
+    }
 }
 ```
 Gegenstände kann der Spieler erwerben, in dem er einen der Buttons auf der linken Seite der jeweiligen Shop-Seite drückt. Durch diese Aktion wird die Methode *OnClick* getriggert, welche dann überprüft, ob der Spieler genug Geld für den Kauf hat, sein Inventar genug Platz bietet oder ob er das Item schon zu oft besitzt. Treffen diese Fälle zu, wird er durch einen kurzen Text unterhalb der Shop-UI informiert. Sollte jedoch keiner dieser Fälle zutreffen, wird der endgültige Kauf durch die Methode *ShopItem.OnItemBought*, welche zuvor schon näher beschrieben wurde, in die Wege geleitet.
 ```csharp
 public void OnClick()
 {
-	StopAllCoroutines();
-	eventText.text = "";
-	eventText.color = Color.white;
+    StopAllCoroutines();
+    eventText.text = "";
+    eventText.color = Color.white;
 
-	FadeIn(eventText, .5f);
-	PlayerInventory inventory = Player.instance.inventory;
-	if (inventory != null)
-	{
-		if (Player.instance.CurrentBalance < shopItem.price)
-		{
-			eventText.text = "Du hast nicht genug Geld!".ToUpper();
-			StartCoroutine(HideEventText());
-			return;
-		}
-		if (!(shopItem is Munition))
-		{
-			if (!inventory.HasItem(shopItem.item) && inventory.FindStackableSlot(shopItem.item) == null && inventory.FindNextEmptySlot() == null)
-			{
-				eventText.text = "Dein Inventar ist voll!".ToUpper();
-				StartCoroutine(HideEventText());
-				return;
-			}
+    FadeIn(eventText, .5f);
 
-			if (inventory.HasItem(shopItem.item) && inventory.FindStackableSlot(shopItem.item) == null)
-			{
-				eventText.text = "Du hast schon zu viele Items dieser Art".ToUpper();
-				StartCoroutine(HideEventText());
-				return;
-			}
-		}
-		shopItem.OnItemBought();
-	}
+    PlayerInventory inventory = Player.instance.inventory;
+    if (inventory != null)
+    {
+        if (Player.instance.CurrentBalance < shopItem.price)
+        {
+            eventText.text = "Du hast nicht genug Geld!".ToUpper();
+            StartCoroutine(HideEventText());
+            return;
+        }
+
+        if (!(shopItem is Munition))
+        {
+            if (!inventory.HasItem(shopItem.item) && inventory.FindStackableSlot(shopItem.item) == null && inventory.FindNextEmptySlot() == null)
+            {
+                eventText.text = "Dein Inventar ist voll!".ToUpper();
+                StartCoroutine(HideEventText());
+                return;
+            }
+
+            if (inventory.HasItem(shopItem.item) && inventory.FindStackableSlot(shopItem.item) == null)
+            {
+                eventText.text = "Du hast schon zu viele Items dieser Art".ToUpper();
+                StartCoroutine(HideEventText());
+                return;
+            }
+        }
+
+        shopItem.OnItemBought();
+    }
 }
 
 private IEnumerator HideEventText()
 {
-	yield return new WaitForSeconds(2f);
-	FadeOut(eventText, .5f);
-	yield return new WaitForSeconds(.5f);
-	eventText.text = "";
+    yield return new WaitForSeconds(2f);
+    FadeOut(eventText, .5f);
+    yield return new WaitForSeconds(.5f);
+
+    eventText.text = "";
 }
 ```
+
 ### Hotbar
+Die Hotbar Klasse wird verwendet, um dem Spieler unter anderem visuell darzustellen, welche Items er besitzt und welchen er davon zurzeit ausgerüstet hat. Die Items werden wie im Inventar durch einzelne Slots verwaltet. Diese Hotbarslots werden  durch die Events *OnItemAdded* und *OnItemRemoved* aus der PlayerInventory Klasse aktuell gehalten.
+
+Damit dieses Verhalten realisiert werden konnte, besitzt die*HotbarSlot* Klasse, die Methoden *Add* und *Clear*.  Die Add Methode dient ausschließlich dazu, zu Beginn ein Item dem Slot hinzuzufügen. Durch das hinzufügen, wird das Icon des Slots, der Stackcount sowie die Haltbarkeit angezeigt. Die zuvor angesprochene Haltbarkeit wird durch das Event OnDurationUpdate der [Equipment](#Equipment) Klasse aktuell gehalten. Damit der Slot für neue Items freigegeben werden kann, muss zuvor die Methode *Clear* aufgerufen worden sein.
+```csharp
+
+public class HotbarSlot : MonoBehaviour
+{
+    public Image background;
+    public Sprite selectedSprite;
+    public Sprite defaultSprite;
+
+    public Equipment item;
+    public Image icon;
+    public Sprite iconPlaceholder;
+    public Text count;
+    public GameObject durationPanel;
+    public Image durationImage;
+
+    public void Add(Equipment item)
+    {
+        this.item = item;
+
+        icon.sprite = item.icon;
+        icon.color = Color.white;
+        icon.enabled = true;
+
+        if (item.isStackable)
+        {
+            count.gameObject.SetActive(true);
+            count.text = item.slot.Count.ToString();
+        }
+
+        if (item.hasDuration)
+        {
+            durationPanel.SetActive(true);
+            durationImage.fillAmount = 1;
+            item.OnDurationUpdate += OnDurationUpdate;
+        }
+    }
+    
+    public void Clear()
+    {
+        ...
+    }
+    
+    public void UpdateCount(int currenCount) => count.text = currenCount.ToString();
+    
+    public void OnDurationUpdate(float normalizedDuration) => durationImage.fillAmount = normalizedDuration;
+}
+
+```
+
+Um der Hotbar neue Gegenstände hinzuzufügen, wird die Methode *OnItemAdded* genutzt, welche automatisch aufgerufen wird, wenn das Event *PlayerInventory.OnItemAdded* gefeuert wurde. Diese Methode sucht dann für das neue Item einen Slot, in welchem sich schon Items vom gleichen Typ befinden. Sollte hierbei jedoch kein *HotbarSlot* gefunden werden, wird versucht einen noch nicht befüllten zu finden. Nur wenn letztendlich auch ein HotbarSlot gefunden wurde, wird der Gegenstand diesem hinzugefügt. 
+```csharp
+
+    private void OnItemAdded(Item item)
+    {
+        HotbarSlot slot = FindHotbarSlot(item);
+        if (slot == null) slot = FindEmptyHotbarSlot();
+
+        if (slot != null && item is Equipment)
+        {
+            slot.Add(item as Equipment);
+        }
+    }
+    
+	private HotbarSlot FindHotbarSlot(Item item)
+    {
+        foreach (HotbarSlot slot in slots)
+        {
+            if (slot.item != null && slot.item.name == item.name) return slot;
+        }
+        return null;
+    }
+
+    private HotbarSlot FindEmptyHotbarSlot()
+    {
+        foreach (HotbarSlot slot in slots) if (slot.item == null) return slot;
+        return null;
+    }
+	
+```
+Damit auch Items aus der Hotbar entfernt werden können, wird die Methode *OnItemRemoved* genutzt, welche durch das gleichnamige Event aufgerufen wird.  Sie versucht das Item in der Hotbar zu finden und zuerst den Stack-Count zu aktualisieren. Sollte der Spieler keinen Gegenstand von dem jeweiligen Itemtyp besitzen, wird er vollständig aus der Hotbar verschwinden. Danach wird automatisch die gesamte Hotbar durch die *UpdateItems* Methode geleert und anschließend wieder befüllt um zwischen drin leere Hotbarslots zu vermeiden.
+```csharp
+    
+    private void OnItemRemoved(Item item)
+    {
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (i == item.slot.Id)
+            {
+                int itemCount = item.slot.Count;
+                slots[i].UpdateCount(itemCount);
+
+                if (itemCount == 0)
+                {
+                    slots[i].Clear();
+                    UpdateItems();
+                    SelectLastItem();
+                }
+
+                if (itemCount > 0) SelectItem(currentItemIndex);
+                break;
+            }
+        }
+    }
+
+    private void UpdateItems()
+    {
+        for (int i = 0; i < slots.Length; i++) slots[i].Clear();
+
+        List<InventorySlot> inventorySlots = new List<InventorySlot>(inventory.Slots);
+        inventorySlots.RemoveAll(slot => slot.Count == 0);
+
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (List.InBounds(i, inventorySlots.Count))
+            {
+                Item item = inventorySlots[i].FirstItem;
+                if (item != null && item is Equipment)
+                {
+                    slots[i].Add(item as Equipment);
+                }
+            }
+        }
+    }
+    
+```
 
 ## AudioManager Klasse
 Die *AudioManager* Klasse wird genutzt, um verschiedene vorab definierte Sounds abzuspielen. Hierfür wird die Methode *PlaySound* genutzt. Diese überladene Methode kann entweder einen Sound an einer Stelle oder allgemein abspielen. Dies ist notwendig, damit beispielsweise der Bewegungs-Sound oder der Sound für eine erfolgreiche Attacke nicht zu monoton wirken, sondern sich dynamisch an die Szene anpassen. 
@@ -1494,36 +2013,38 @@ Um  den Effekt zu erreichen, dass der Sound an einer speziellen Position abgespi
 ```csharp
 public void PlaySound(Sound sound, Vector3 position)
 {
-	if (CanPlay(sound))
-	{
-		GameObject soundGameObject = new GameObject("Sound");
-		soundGameObject.transform.position = position;
+    if (CanPlay(sound))
+    {
+        GameObject soundGameObject = new GameObject("Sound");
+        soundGameObject.transform.position = position;
 
-		AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
-		SoundClip soundClip = GetSoundClip(sound);
+        AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
+        SoundClip soundClip = GetSoundClip(sound);
 
-		SetAudioSourceConfig(audioSource, soundClip);
-		audioSource.Play();
+        SetAudioSourceConfig(audioSource, soundClip);
+        audioSource.Play();
 
-		Destroy(soundGameObject, audioSource.clip.length);
-	}
+        Destroy(soundGameObject, audioSource.clip.length);
+    }
 }
 ```
 Die zweite Methode nimmt nur einen *Sound* als Übergabeparameter entgegen. Sie unterscheidet sich zu ersten Methode nur dadurch, dass ein allgemeines GameObject ohne Position verwendet wurde.
 ```csharp
 public void PlaySound(Sound sound)
 {
-	if (CanPlay(sound))
-	{
-		if (oneShotGameObject == null)
-		{
-			oneShotGameObject = new GameObject("One Shot Sound");
-			oneShotAudioSource = oneShotGameObject.AddComponent<AudioSource>();
-		}
-		SoundClip soundClip = GetSoundClip(sound);
-		SetAudioSourceConfig(oneShotAudioSource, soundClip);
-		oneShotAudioSource.PlayOneShot(oneShotAudioSource.clip);
-	}
+    if (CanPlay(sound))
+    {
+        if (oneShotGameObject == null)
+        {
+            oneShotGameObject = new GameObject("One Shot Sound");
+            oneShotAudioSource = oneShotGameObject.AddComponent<AudioSource>();
+        }
+
+        SoundClip soundClip = GetSoundClip(sound);
+        SetAudioSourceConfig(oneShotAudioSource, soundClip);
+
+        oneShotAudioSource.PlayOneShot(oneShotAudioSource.clip);
+    }
 }
 ```
 Bevor jedoch die zuvor beschrieben Vorgänge durchgeführt werden können, wird überprüft, ob der Sound aktuell überhaupt abgespielt werden kann. Hierfür wird die Variable *maxTimer* aus der SoundClip Klasse verwendet. Mithilfe dieser Zahl wird geschaut, wie lange es her ist das der Sound abgespielt wurde und ob es jetzt wieder möglich ist. Sollte diese der Fall sein, wird der aktuelle Zeitstempel in Verbindung mit dem jeweiligen Sound dem soundTimer Dictionary hinzugefügt und der AudioClip abgespielt. Sollte der zu überprüfende Sound vorab nicht in dem *soundTimer* Dictionary hinzugefügt worden sein, wird der Überprüfungsvorgang übersprungen.
@@ -1532,55 +2053,56 @@ private Dictionary<Sound, float> soundTimer;
 
 void Start()
 {
-	soundTimer = new Dictionary<Sound, float>();
-	soundTimer[Sound.PlayerMove] = 0f;
+    soundTimer = new Dictionary<Sound, float>
+    {
+        [Sound.PlayerMove] = 0f
+    };
 }
-
-...
 
 private bool CanPlay(Sound sound)
 {
-	foreach (KeyValuePair<Sound, float> soundTime in soundTimer)
-	{
-		if (soundTime.Key == sound)
-		{
-			float lastTimePlayed = soundTimer[sound];
-			float maxTimer = GetSoundClip(sound).maxTimer;
-			                 
-			if (lastTimePlayed + maxTimer < Time.time)
-			{
-				soundTimer[sound] = Time.time;
-				return true;
-			}
-			return false;
-		}
-	}
-	return true;
+    foreach (KeyValuePair<Sound, float> soundTime in soundTimer)
+    {
+        if (soundTime.Key == sound)
+        {
+            float lastTimePlayed = soundTimer[sound];
+            float maxTimer = GetSoundClip(sound).maxTimer;
+
+            if (lastTimePlayed + maxTimer < Time.time)
+            {
+                soundTimer[sound] = Time.time;
+                return true;
+            }
+            return false;
+        }
+    }
+    return true;
 }
 ```
 In den vorherigen Methoden wurden unter anderem die Funktionen *SetAudioSourceConfig* und *GetSoundClip* genutzt, welche nun für ein besseres Verständnis aufgezeigt werden.
 ```csharp
 private void SetAudioSourceConfig(AudioSource audioSource, SoundClip soundClip)
 {
-	audioSource.clip = soundClip.clip;
-	audioSource.volume = soundClip.volume;
-	audioSource.maxDistance = soundClip.maxDistance;
-	audioSource.spatialBlend = soundClip.spatialBlend;
-	audioSource.rolloffMode = AudioRolloffMode.Linear;
-	audioSource.dopplerLevel = 0f;
+    audioSource.clip = soundClip.clip;
+    audioSource.volume = soundClip.volume;
+    audioSource.maxDistance = soundClip.maxDistance;
+    audioSource.spatialBlend = soundClip.spatialBlend;
+    audioSource.loop = soundClip.loop;
+    audioSource.rolloffMode = AudioRolloffMode.Linear;
+    audioSource.dopplerLevel = 0f;
 }
 
 private SoundClip GetSoundClip(Sound sound)
 {
-	foreach (SoundClip soundClip in soundClips)
-	{
-		if (soundClip.sound == sound)
-		{
-			return soundClip;
-		}
-	}
+    foreach (SoundClip soundClip in soundClips)
+    {
+        if (soundClip.sound == sound)
+        {
+            return soundClip;
+        }
+    }
 
-	return null;
+    return null;
 }
 ```
 
