@@ -1103,7 +1103,7 @@ public void SetState(GameStateType newState)
 Das Wave-System ist neben den anderen Spielmechaniken, wie das Kämpfen oder Bewegen des Spielers essenziell. Um dieses System so modular wie möglich zu gestalten, wurde die eigentliche Logik für die Verwaltung der Schwierigkeitsstufen aus der *WaveSpawner* Klasse heraus genommen und in der *WaveConfig*  Klasse implementiert. So ist es möglich jeder Zeit für verschiedene Abschnitten im Spielverlauf, verschiedene Konfigurationen zu benutzten, um dadurch letztendlich die Schwierigkeit dynamisch anzupassen. 
 
 ### WaveConfig Klasse
-Die *WaveConfig* wird genutzt um das Wave-System modular und dynamischer zu gestalten. Sie speichert wichtige Informationen, wie die Rundenzahl, in der die Config geladen werden soll, die dazugehörige Schwierigkeitsstufe, das Enemy-Prefab was zur Instantiierung notwendig ist und die für diese Runde vorgesehene *EnemyConfig*. Wird eine *WaveConfig* aktiviert, werden die zuvor aufgezählten Parameter an den *WaveSpawner* weiter gegeben.
+Die *WaveConfig* wird genutzt um das Wave-System modular und dynamischer zu gestalten. Sie speichert wichtige Informationen, wie die Rundenzahl, in der die Config geladen werden soll, die dazugehörige Schwierigkeitsstufe, das Enemy-Prefab was zur Instantiierung notwendig ist und die für diese Runde vorgesehene *EnemyConfig*. Wird eine *WaveConfig* aktiviert, werden die zuvor aufgezählten Parameter an den *WaveSpawner* weiter gegeben, welcher dann letztendlich auch die *EnemyConfig* der aktuellen *WaveConfig* an die erzeugten Gegner übergibt.
 ```csharp
 public class WaveConfig : ScriptableObject
 {
@@ -1115,7 +1115,37 @@ public class WaveConfig : ScriptableObject
 }
 ```
 #### EnemyConfig Klasse
+In der *EnemyConfig* Klasse können neben der Referenz zu einer *EnemyStatsConfig* auch die möglichen Money-Drops sowie die verschiedenen Waffen definiert werden, die der Gegner eventuell bekommen kann. Das *moneyDrops* wird also beispielsweise genutzt, wenn der Gegner gestorben ist. Der Spieler erhält für den Kill dann einen gewissen Betrag an Geld, welcher zufällig aus dieser List entnommen wurde. 
+```csharp
+public class EnemyConfig : ScriptableObject
+{
+    public EnemyStatsConfig stats;
+
+    public int[] moneyDrops;
+    public RandomItem[] items;
+}
+```
+Damit die Gegner wie schon zuvor erwähnt auch mit verschiedenen Waffen spawnen, gibt es das Array *items*. In diesem können vorab alle Items gespeichert werden, die der Gegner eventuell ausrüsten können sollte. Damit letztendlich bei der Erzeugung ein zufälliges Item aus der Liste gezogen wird, wurde die Klasse *RandomItem* implementiert. Diese speichert neben der eigentlichen Wahrscheinlichkeit für das Item auch eine Referenz für das Item selbst, sowie die Variablen *damageOverride* und *healthOverride*. Die letzten beiden Variablen können dafür genutzt werden, den Standardschaden oder die Standardlebenspunkte zu überschreiben, was teilweise notwendig ist, da der Gegner erst im Verlauf des Spiels mit diversen Waffen mehr Schaden machen darf.
+```csharp
+public class RandomItem
+{
+    public int percentage;
+    public Equipment item;
+    public int damageOverride;
+    public int healthOverride;
+}
+```
+
 #### EnemyStatsConfig
+Die *EnemyStatsConfig* speichert die Standardlebenspunkte die Gegner bekommen soll und den Schaden den er verursacht. Diese Werte können jedoch durch die *EnemyConfig* Klasse überschrieben werden.
+```csharp
+public class EnemyStatsConfig : ScriptableObject
+{
+    public float maxHealth;
+    public float minHealth;
+    public float damage;
+}
+```
 
 ### WaveSpawner Klasse
 Die WaveSpawner Klasse implementiert die eigentliche Logik des Erstellens der Wellen und der dazugehörigen Gegner. Um immer klar definieren zu können in welchem Zustand sich der WaveSpawner aktuell befindet und um so vorzubeugen, dass der Spieler durch etwaige Bugs beispielsweise die Runde vorzeitig überspringen könnte oder zu viele Gegner gespawnt werden, wurde das Enum WaveState implementiert. Der WaveSpawner kann immer nur einen dieser definierten Zustände annehmen. 
@@ -1200,7 +1230,7 @@ private void SetConfig(WaveConfig config)
 	CurrentDifficulty = config.difficulty;
 }
 ```
-Erstellt werden die einzelnen Gegner letztendlich durch die Methode *SpawnRoutine*. Damit die Gegner an verschiedenen Positionen gespawnt werden, wird für jeden eine neue zufällige Position aus der Liste der  [SpawnPoint](#Spawnpoint)'s gewählt. Außerdem bekommt jeder Gegner bei der Initialisierung die *EnemyConfig* übergeben die in der aktuellen WaveConfig definiert ist. So ist garantiert, dass für die meisten Runden unterschiedliche Gegnertypen den Spieler angreifen.
+Erstellt werden die einzelnen Gegner letztendlich durch die Methode *SpawnRoutine*. Damit die Gegner an verschiedenen Positionen gespawnt werden, wird für jeden eine neue zufällige Position aus der Liste der  [SpawnPoint](#Spawnpoint)'s gewählt. Außerdem bekommt jeder Gegner bei der Initialisierung die *EnemyConfig* übergeben, welche in der aktuellen WaveConfig definiert ist. So ist garantiert, dass für die meisten Runden unterschiedliche Gegnertypen den Spieler angreifen.
 ```csharp
 private IEnumerator SpawnRoutine()
 {
