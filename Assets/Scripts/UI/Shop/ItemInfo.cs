@@ -1,10 +1,11 @@
-﻿using UnityEngine.UI;
+﻿using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using Utils;
 
 namespace Shop
 {
-    public class ItemInfo : FadeGraphic
+    public class ItemInfo : MonoBehaviour
     {
         public Text title;
         public Text price;

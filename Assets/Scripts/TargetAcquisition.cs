@@ -128,12 +128,9 @@ public class TargetAcquisition : MonoBehaviour
         Time.timeScale = IsEnabled ? 0.2f : 1.0f;
         GameState.instance.SetState(IsEnabled ? GameStateType.TargetAcquisition : GameStateType.InGame);
 
-        if (IsEnabled)
+        if (IsEnabled && CurrentEnemy == null)
         {
-            if (CurrentEnemy == null)
-            {
-                SelectClosestEnemy();
-            }
+            SelectClosestEnemy();
         }
     }
 
@@ -187,10 +184,7 @@ public class TargetAcquisition : MonoBehaviour
     /// Selects the given enemy.
     /// </summary>
     /// <param name="enemy">The enemy which should get selected</param>
-    public void SelectEnemy(Enemy enemy)
-    {
-        SetCurrentEnemy(enemy);
-    }
+    public void SelectEnemy(Enemy enemy) =>  SetCurrentEnemy(enemy);
 
     /// <summary>
     /// Selects an enemy from the <see cref="enemies"/> list by the given index.

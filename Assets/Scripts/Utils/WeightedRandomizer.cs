@@ -32,6 +32,7 @@ namespace Utils
 
             int roll = random.Next(0, sum);
             T selected = sortedSpawnRate[sortedSpawnRate.Count - 1].Key;
+
             foreach (var spawn in sortedSpawnRate)
             {
                 if (roll < spawn.Value)

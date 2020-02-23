@@ -3,7 +3,6 @@
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
-    using UnityEngine.UI;
     using static UnityEngine.InputSystem.InputAction;
 
     /// <summary>
@@ -55,13 +54,13 @@
         public event WaveCountdownUpdate OnWaveCountdownUpdate;
 
         [Header("Spawnpoints")]
-        public List<SpawnPoint> spawnPoints;
+        public SpawnPoint[] spawnPoints;
 
         [Header("Settings")]
         public bool enableWaveSpawner = true;
         public bool enableDebug = false;
         public float timeBetweenWaves = 31f;
-        public List<WaveConfig> configs;
+        public WaveConfig[] configs;
 
         public WaveState State { get; protected set; }
         public Difficulty CurrentDifficulty { get; protected set; }
@@ -151,10 +150,7 @@
         private void StartNextWave()
         {
             WaveConfig nextConfig = GetNextWaveConfig();
-            if (nextConfig != null)
-            {
-                SetConfig(nextConfig);
-            }
+            if (nextConfig != null) SetConfig(nextConfig);
 
             Rounds++;
             Debug.LogFormat("Spawning Wave (num: {0}, difficulty: {1})", Rounds, CurrentDifficulty);
@@ -190,7 +186,7 @@
 
             for (int i = 0; i < Rounds * 1.25; i++)
             {
-                SpawnPoint spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
+                SpawnPoint spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
 
 
                 Enemy enemy = Instantiate(CurrentConfig.enemy, spawnPoint.Position, spawnPoint.Rotation).GetComponent<Enemy>();
@@ -252,10 +248,7 @@
                 if (searchCountdown <= 0f)
                 {
                     searchCountdown = 1f;
-                    if (GameObject.FindGameObjectWithTag("Enemy") == null)
-                    {
-                        return false;
-                    }
+                    if (GameObject.FindGameObjectWithTag("Enemy") == null) return false;
                 }
                 return true;
             }

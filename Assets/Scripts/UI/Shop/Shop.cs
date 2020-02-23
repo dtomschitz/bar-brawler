@@ -1,8 +1,9 @@
-﻿using Utils;
+﻿using UnityEngine;
+using Utils;
 
 namespace Shop
 {
-    public class Shop : FadeCanvasGroup
+    public class Shop : MonoBehaviour
     {
         public CategoryButton[] categoryButtons;
         public ShopPage[] shopPages;
