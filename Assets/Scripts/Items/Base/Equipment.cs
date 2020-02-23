@@ -2,6 +2,17 @@
 
 namespace Items
 {
+
+    /// <summary> 
+    /// Class <c>Equipment</c> extends the Item class and is used to give items
+    /// the option to get equipped by the <see cref="EntityEquipment"/> class. In
+    /// order to use equip this item correctly, the class has to store the default
+    /// position, rotation and player hand. With this data the <see cref="EntityEquipment"/>^
+    /// can the set the item in the hand of the player.
+    ///
+    /// The class also stores the differen <see cref="EquipmentAnimation"/> in order
+    /// to provide the functionalty of playing different animations for an item.
+    /// </summary>
     [CreateAssetMenu(fileName = "New Equipment", menuName = "Items/Equipment")]
     public class Equipment : Item
     {
@@ -30,6 +41,12 @@ namespace Items
             currentDuration = duration;
         }
 
+        /// <summary>
+        /// Gets triggerd if the user used an item and will update the duration
+        /// of the item. If the item is broke the method will also remove the
+        /// item from the inventory of the player
+        /// </summary>
+        /// <returns></returns>
         public bool UseItem()
         {
             currentDuration--;

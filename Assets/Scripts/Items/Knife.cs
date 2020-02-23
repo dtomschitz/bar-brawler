@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace Items
 {
+    /// <summary>
+    /// Class <c>Knife</c> implements the mechanics of the knife item. 
+    /// </summary>
     public class Knife : WeaponItem
     {
         [Header("Knife Attributes")]
@@ -10,6 +13,10 @@ namespace Items
         public float bleedOutTime = 10f;
         public float timeBetweenDamage = 1f;
 
+        /// <summary>
+        /// Starts the bleeding effect and playes the hit sound of the knife.
+        /// </summary>
+        /// <param name="entity"></param>
         public override void OnHit(Entity entity)
         {
             base.OnHit(entity);

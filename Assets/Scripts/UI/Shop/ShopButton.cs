@@ -7,6 +7,10 @@ using Utils;
 
 namespace Shop
 {
+    /// <summary>
+    /// Class <c>ShopButton</c> is used as an management script to detect wether
+    /// the user wants to buy an item or not. 
+    /// </summary>
     public class ShopButton : FadeGraphic, ISelectHandler
     {
         public Text title;
@@ -19,6 +23,10 @@ namespace Shop
             title.text = shopItem.item.name.ToUpper();
         }
 
+        /// <summary>
+        /// Gets triggerd if the user has selected an shop button.
+        /// </summary>
+        /// <param name="eventData"></param>
         public void OnSelect(BaseEventData eventData)
         {
             GetComponentInParent<ShopPage>().OnItemSelected(shopItem);
@@ -26,6 +34,12 @@ namespace Shop
 
         public Text eventText;
 
+
+        /// <summary>
+        /// Gets triggered if the user pressed the current selected button. This
+        /// method will then start validating whether the user can buy the
+        /// associated item or not.
+        /// </summary>
         public void OnClick()
         {
             StopAllCoroutines();

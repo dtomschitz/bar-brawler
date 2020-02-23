@@ -16,6 +16,10 @@ namespace Shop
             OnPageSelected(0);
         }
 
+        /// <summary>
+        /// Opens the associated <see cref="ShopPage"/> trough the given id.
+        /// </summary>
+        /// <param name="id">The index of the shop page in the set <see cref="shopPages"/> array.</param>
         public void OnPageSelected(int id)
         {
             UpdateCategoryHighlight(id);

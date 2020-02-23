@@ -2,6 +2,11 @@
 
 namespace Items
 {
+    /// <summary>
+    /// Class <c>WeaponItem</c> is used to handle weapon specific functionalities such
+    /// as an cooldown of the given item. Additionaly the mechanic of the hit
+    /// detection of an item is implemented in this class. 
+    /// </summary>
     public class WeaponItem : Equippable
     {
         public float primaryAttackRate = 20f;
@@ -21,6 +26,11 @@ namespace Items
             secondaryCooldown -= Time.deltaTime;
         }
 
+        /// <summary>
+        /// Gets triggered if the entity hits another entity an will call the
+        /// <see cref="OnHit(Entity)"/> method.
+        /// </summary>
+        /// <param name="other"></param>
         void OnTriggerEnter(Collider other)
         {
             if (hasCollided) return;
@@ -45,6 +55,11 @@ namespace Items
             }
         }
 
+        /// <summary>
+        /// This method is used to update the duration of the used item and attacks
+        /// the stats of the attacked entity.
+        /// </summary>
+        /// <param name="entity">The entity which got attacked.</param>
         public virtual void OnHit(Entity entity)
         {
             if (entity.combat.IsBlocking && owner.equipment.CurrentEquipment.type == ItemType.Fist) return;
@@ -57,6 +72,9 @@ namespace Items
             entity.OnHit(owner, item);
         }
 
+        /// <summary>
+        /// Overrides the base method and adds an cooldown mechanic to it.
+        /// </summary>
         public override void OnPrimary()
         {
             base.OnPrimary();
@@ -69,6 +87,9 @@ namespace Items
             }
         }
 
+        /// <summary>
+        /// Overrides the base method and adds an cooldown mechanic to it.
+        /// </summary>
         public override void OnSecondary()
         {
             base.OnSecondary();

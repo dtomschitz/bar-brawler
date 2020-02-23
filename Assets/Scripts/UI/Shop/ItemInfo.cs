@@ -5,6 +5,10 @@ using Utils;
 
 namespace Shop
 {
+    /// <summary>
+    /// Class <c>ItemInfo</c> is used to display some informations about the
+    /// item on the right side of the shop ui.
+    /// </summary>
     public class ItemInfo : MonoBehaviour
     {
         public Text title;
@@ -12,6 +16,10 @@ namespace Shop
         public Image image;
         public TextMeshProUGUI info;
 
+        /// <summary>
+        /// Updates the information based of the given item.
+        /// </summary>
+        /// <param name="shopItem"></param>
         public void SetItem(ShopItem shopItem)
         {
             gameObject.SetActive(true);

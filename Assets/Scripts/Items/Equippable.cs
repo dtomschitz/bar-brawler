@@ -2,6 +2,12 @@
 
 namespace Items
 {
+    /// <summary>
+    /// Class <c>Equippable</c> is used as an base class for all game objects which
+    /// gould get equipped by the <see cref="EntityEquipment"/> class. This class
+    /// implements also the methods for triggering the primary and secondary
+    /// actions from the respective item.
+    /// </summary>
     public class Equippable : Collectable
     {
         public bool isPrimaryEnabled = true;

@@ -2,6 +2,11 @@
 
 namespace Items
 {
+    /// <summary>
+    /// Class <c>Item</c> is uses as an base class for all other item variations.
+    /// It stores informations such the name, the icon, the item kind and some
+    /// more infomrations which are relevant for the inventory of the player.
+    /// </summary>
     [CreateAssetMenu(fileName = "New Item", menuName = "Items/Item")]
     public class Item : ScriptableObject
     {
