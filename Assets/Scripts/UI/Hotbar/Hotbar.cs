@@ -76,7 +76,7 @@ public class Hotbar : MonoBehaviour
     /// <param name="ctx"></param>
     public void SelectNextItem(CallbackContext ctx)
     {
-        if (GameState.instance.IsInTargetAcquisition/* || Player.instance.combat.IsInAction*/) return;
+        if (GameState.instance.IsInTargetAcquisition || Player.instance.combat.IsInAction) return;
         SelectNextItem();
     }
 
@@ -89,7 +89,7 @@ public class Hotbar : MonoBehaviour
     /// <param name="ctx"></param>
     public void SelectLastItem(CallbackContext ctx)
     {
-        if (GameState.instance.IsInTargetAcquisition/* || Player.instance.combat.IsInAction*/) return;
+        if (GameState.instance.IsInTargetAcquisition || Player.instance.combat.IsInAction) return;
         SelectLastItem();
     }
 

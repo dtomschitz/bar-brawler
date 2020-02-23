@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a2aa9d47e12d7d43850c70b912bfa27, type: 3}
   m_Name: EnemyConfig2
   m_EditorClassIdentifier: 
-  stats: {fileID: 11400000, guid: 2b9d63653513adc4884c27c2a16e9110, type: 2}
+  stats: {fileID: 11400000, guid: 6ad5e2fe56376ed4fb0023d875ab54ea, type: 2}
   combat: {fileID: 0}
   moneyDrops: 010000000200000003000000
   items:

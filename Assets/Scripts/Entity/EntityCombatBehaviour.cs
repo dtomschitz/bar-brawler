@@ -16,7 +16,7 @@ public class EntityCombatBehaviour : StateMachineBehaviour
                 Equipment item = player.equipment.CurrentEquipment;
                 if (item != null && item.IsDrink)
                 {
-                   // FindObjectOfType<AudioManager>().Play("Drinking");
+                    AudioManager.instance.PlaySound(Sound.Drinking);
                 }
             }
         }

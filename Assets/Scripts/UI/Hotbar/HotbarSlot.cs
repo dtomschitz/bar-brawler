@@ -72,27 +72,18 @@ public class HotbarSlot : MonoBehaviour
     /// Updates the visual stack count of the item.
     /// </summary>
     /// <param name="currenCount">The current count of this specific item.</param>
-    public void UpdateCount(int currenCount)
-    {
-        count.text = currenCount.ToString();
-    }
+    public void UpdateCount(int currenCount) => count.text = currenCount.ToString();
 
     /// <summary>
     /// Updates the duration bar fill amount with the given normalized duration
     /// of the item.
     /// </summary>
     /// <param name="normalizedDuration">The normalized duration of the current set item.</param>
-    public void OnDurationUpdate(float normalizedDuration)
-    {
-        durationImage.fillAmount = normalizedDuration;
-    }
+    public void OnDurationUpdate(float normalizedDuration) => durationImage.fillAmount = normalizedDuration;
 
     /// <summary>
     /// This method can be used to mark this specific <see cref="HotbarSlot"/>
     /// as selected.
     /// </summary>
-    public void SetSelected(bool selected)
-    {
-        background.sprite = selected ? selectedSprite : defaultSprite;
-    }
+    public void SetSelected(bool selected) => background.sprite = selected ? selectedSprite : defaultSprite;
 }

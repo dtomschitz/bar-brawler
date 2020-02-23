@@ -9,7 +9,8 @@ public enum Sound
     FistHit,
     KnifeHit,
     RevolverShoot,
-    ReceiveMoney
+    ReceiveMoney,
+    Drinking,
 }
 
 /// <summary>
@@ -50,7 +51,16 @@ public class AudioManager : MonoBehaviour
 
     void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+        } else
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        DontDestroyOnLoad(gameObject);
     }
 
     #endregion;
@@ -63,8 +73,10 @@ public class AudioManager : MonoBehaviour
 
     void Start()
     {
-        soundTimer = new Dictionary<Sound, float>();
-        soundTimer[Sound.PlayerMove] = 0f;
+        soundTimer = new Dictionary<Sound, float>
+        {
+            [Sound.PlayerMove] = 0f
+        };
     }
 
     /// <summary>
@@ -133,6 +145,7 @@ public class AudioManager : MonoBehaviour
         audioSource.volume = soundClip.volume;
         audioSource.maxDistance = soundClip.maxDistance;
         audioSource.spatialBlend = soundClip.spatialBlend;
+        audioSource.loop = soundClip.loop;
         audioSource.rolloffMode = AudioRolloffMode.Linear;
         audioSource.dopplerLevel = 0f;
     }
