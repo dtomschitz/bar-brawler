@@ -90,7 +90,7 @@ Das GameOver-Overlay wird aufgerufen, wenn der Spieler stirbt. Das Menü wird du
 
 # Implementierung
 ## Entity
-Die *Entity* Klasse, ist die Hauptklasse für die Gegner, den Spieler und den Barkeeper. Sie implementiert die wichtigsten übergreifenden Methoden. Zu diesen gehören zum einen die *OnHit* und *OnDamaged* sowie die *OnDeath* Methode. Die letzten zwei Methoden stellen dabei die Brücke zwischen der [EntityStats](#EntityStats) Klasse und dieser Klasse, welche als Hauptklasse fungiert dar. Sie abonnieren die Events aus der  [EntityStats](#EntityStats) Klasse und werden aufgerufen, sobald diese gefeuert wurden. Die Methode *OnHit* hingegen muss an der Stelle wo ein Kollisionstreffer erkannt wurde gecallt werden. Alle Methoden in der Klasse sind außerdem als virtual gegenzeichnet damit sie von den erbenden Klassen überschrieben werden können. Damit diese Hauptklasse nicht zu voll wurde, sind die einzelnen Parts wie die Verwaltung der Lebenspunkte oder des Combat States in verschiedene Klasse unterteilt, welche in den folgenden Abschnitten näher erläutert werden.
+Die *Entity* Klasse, ist die Hauptklasse für die Gegner, den Spieler und den Barkeeper. Sie implementiert die wichtigsten übergreifenden Methoden. Zu diesen gehören zum einen die *OnHit* und *OnDamaged* sowie die *OnDeath* Methode. Die letzten zwei Methoden stellen dabei die Brücke zwischen der [EntityStats](#EntityStats) Klasse und dieser Klasse dar. Sie abonnieren die Events aus der  [EntityStats](#EntityStats) Klasse und werden aufgerufen, sobald diese gefeuert wurden. Die *OnHit* Methode muss hingegen an der Stelle aufgerufen werden, wo ein Kollisionstreffer erkannt wurde. Alle Methoden in der Klasse sind außerdem als „virtual“ gegenzeichnet, damit sie von den erbenden Klassen überschrieben werden können. Um die Hauptklasse nicht zu überladen, sind einzelne Parts, wie die Verwaltung der Lebenspunkte oder die Combat States in verschiedene Klassen unterteilt. Diese sollen in den folgenden Abschnitten näher erläutert werden.
 ```csharp
 public class Entity : MonoBehaviour
 {
@@ -118,8 +118,8 @@ public class Entity : MonoBehaviour
 ```
 
 ### EntityStats Klasse
-Die *EntityStats* Klasse fungiert, als Basisklasse für alle Dinge die mit den Lebenspunkten des Entites zu tun hat. Sie implementiert beispielsweise die Methoden *Damage* und *Heal*. Erstere fügt dem Spieler den angegebenen Schaden hinzu, in dem dieser von der aktuellen Anzahl an Lebenspunkten subtrahiert wird. Zusätzlich wird das Event *OnDamaged* gefeuert,
-welches die Information für andere Klassen wie z.B. der [HealthBar](#HealthBar) Klasse anbieten soll. Sollt außerdem der Spieler nach Abzug der angebenden Lebenspunkte keine mehr besitzen, wird das Event *OnDeath* gecallt, welches beispielsweise dafür sorgt, dass die Todesanimation gestartet und das GameOver-Menü angezeigt wird.
+Die *EntityStats* Klasse fungiert als Basisklasse für alle Elemente, die mit den Lebenspunkten des Entites zu tun haben. Sie implementiert beispielsweise die Methoden *Damage* und *Heal*. Erstere fügt dem Spieler den angegebenen Schaden hinzu, in dem dieser von der aktuellen Anzahl an Lebenspunkten subtrahiert wird. Zusätzlich wird das Event *OnDamaged* gefeuert,
+welches die Information für andere Klassen wie z.B. der [HealthBar](#HealthBar) Klasse anbieten soll. Sollte der Spieler nach dem Abzug keine Lebenspunkte mehr besitzen, wird das Event *OnDeath* aufgerufen, das unter anderem dafür sorgt, dass die Todesanimation gestartet und das GameOver-Menü angezeigt wird.
 ```csharp
 public virtual void Damage(float damage, Equipment item = null)
 {
@@ -130,7 +130,7 @@ public virtual void Damage(float damage, Equipment item = null)
     if (IsDead) OnDeath?.Invoke();
 }
 ```
-Die Methode *Heal* hingegen heilt den Spieler um die angegeben Lebenspunkte. Sie ruft außerdem das Event *OnHeal* auf um die Information über die neu hinzugefügten Lebenspunkte verschiedenen Klassen zur Verfügung zustellen.
+Die Methode *Heal* heilt den Spieler um die angegeben Lebenspunkte. Sie ruft außerdem das Event *OnHeal* auf, um die Information über die neu hinzugefügten Lebenspunkte verschiedenen Klassen zur Verfügung zustellen.
 ```csharp
 public virtual void Heal(float amount)
 {
@@ -142,9 +142,9 @@ public virtual void Heal(float amount)
 ```
 
 ### EntityCombat Klasse
-Die *EntityCombat* Klasse ist ebenfalls eine Unterklasse und wird als Basisklasse für alle Kampf relevanten Dingen genutzt. Dazu gehört das Verwalten des Combat States der jeweiligen Entität sowie das der Mana Regeneration. 
+Die *EntityCombat* Klasse ist ebenfalls eine Unterklasse und wird als Basisklasse für alle kampfrelevanten Elemente genutzt. Dazu gehört das Verwalten des Combat States, der jeweiligen Entität, sowie das der Ausdauer. 
 #### Combat State
-Der Combat State definiert den aktuellen allgemeinen Zustand der Entität. Je nachdem in welchem Zustand sich der jeweilige Entity befindet, kann dieser verschiedene Aktionen ausführen oder nicht. Ist der aktuelle Combat State beispielsweise auf *Drinking* gesetzt, kann der Spieler keine Angriffe mehr ausführen. Der Combat State kann dabei die folgenden Enum-Werte annehmen: 
+Der Combat State definiert den aktuellen allgemeinen Zustand der Entität. Abhängig vom Zustand, in der sich der jeweilige Entity befindet, kann dieser verschiedene Aktionen ausführen oder nicht. Ist der aktuelle Combat State beispielsweise auf *Drinking* gesetzt, kann der Spieler keine Angriffe mehr ausführen. Der Combat State kann dabei die folgenden Enum-Werte annehmen: 
 ```csharp
 public enum CombatState
 {
@@ -160,7 +160,7 @@ public enum CombatState
 ```
 
 #### Ausdauer
-Die Ausdauer wird verwendet, wenn der jeweilige Entity einen Angriff mit der Blocken-Taste abwehrt. Für jeden erfolgreich abgewehrten Angriff verliert die Entität Ausdauer. Durch die Methoden *AddMana* und *UseMana* kann Ausdauer hinzugefügt oder entfernt werden. Jedes Mal wird außerdem das entsprechende Event gefeuert, um über die Aktualisierung zu informieren.
+Die Ausdauer wird verwendet, wenn der jeweilige Entity einen Angriff mit der Blocken-Taste abwehrt. Für jeden erfolgreich abgewehrten Angriff verliert die Entität Ausdauer. Durch die Methoden *AddMana* und *UseMana* kann Ausdauer hinzugefügt oder entfernt werden. Jedes Mal wird dadurch das entsprechende Event gefeuert, um über die Aktualisierung zu informieren.
 
 ```csharp
 public void AddMana(float amount)
@@ -188,7 +188,7 @@ protected virtual void Update()
 ```
 
 ### EntityEquipment Klasse
-Auch diese Klasse ist eine Unterklasse der [Entity](##Entity) Klasse und wird als Basisklasse für das Verwalten der Ausrüstung der jeweiligen Entität genutzt und speichert den jeweils ausgerüsteten Gegenstand zwischen. Außerdem kann durch ´die Methoden *UsePrimary*, *UseSecondary* und *UseConsumable* die definierten Aktionen der jeweiligen Gegenstände ausgeführt werden. Die *UsePrimary* dient dazu die Hauptaktion auszuführen und kann nur getriggert werden, wenn es sich bei dem Item um eine Waffe handelt.  Sie wählt außerdem eine zufällige Animation, aus die für das benutzten der Waffe abgespielt werden soll und aktualisiert die Handposition des Items. 
+Auch diese Klasse ist eine Unterklasse der [Entity](##Entity) Klasse und wird als Basisklasse für das Verwalten der Ausrüstung, der jeweiligen Entität genutzt und speichert den jeweils ausgerüsteten Gegenstand zwischen. Außerdem können durch ´die Methoden *UsePrimary*, *UseSecondary* und *UseConsumable* die definierten Aktionen der jeweiligen Gegenstände ausgeführt werden. Die *UsePrimary* dient dazu die Hauptaktion auszuführen und kann nur getriggert werden, wenn es sich bei dem Item um eine Waffe handelt.  Sie wählt außerdem eine zufällige Animation aus, die für das Benutzten der Waffe abgespielt werden soll und aktualisiert die Handposition des Items. 
 ```csharp
 public void UsePrimary()
 {
@@ -205,7 +205,7 @@ public void UsePrimary()
     }
 }
 ```
-Die Methode *UseSecondary* hingegen wird genutzt die Zweitaktion des Items auszuführen. Auch hier kann diese nur ausgeführt werden, wenn es sich bei dem Item um eine Waffe handelt. 
+Die Methode *UseSecondary* wird genutzt, um die Zweitaktion des Items auszuführen. Auch hier kann diese nur ausgeführt werden, wenn es sich bei dem Item um eine Waffe handelt. 
 ```csharp
 public void UseSecondary()
 {
@@ -215,7 +215,7 @@ public void UseSecondary()
     }
 }
 ```
-Damit der Spieler mit dem aktuell ausgerüstete Item nicht nur angriffe, sondern diese auch benutzten und verbrauchen kann, gibt es die *UseSecondary* Methode. Sie kann nur ausgeführt werden, wenn es sich bei dem Gegenstand um ein Getränk handelt und callt für dieses die *OnPrimary* Methode. 
+Das ausgerüstete Item muss neben einer Angriffsfunktion eine Nutzen- und Verbrauchsfunktion besitzen, damit die Funktionalität eines Getränkes erfüllt werden kann. Durch die *UseSecondary* Methode, die ausgeführt werden kann, wenn es sich um ein Getränk handelt, ist dies möglich. Die *UseSecondary* Methode ruft dann für dieses Getränk die *OnPrimary* Methode auf.
 ```csharp
 public void UseConsumable()
 {
@@ -225,7 +225,7 @@ public void UseConsumable()
     }
 }
 ```
-Damit jeder Zeit neue Items ausgerüstet werden können, gibt es die Methode *EquipItem*. Diese erstellt eine Kopie aus dem Prefab des gegebenen Items. Ist das erstellte GameObject valide kann es ausgerüstet werden. Damit auch beispielsweise die [Entity](#Entity) diese Information bekommt, wird das Event *OnItemEquipped* gefeuert. Sollte der Spieler schon einen Gegenstand ausgerüstet haben, wird dieser mit der Methode *Unequip* abgelegt und das erstellte GameObject zerstört. Das Item bleibt weiterhin im Inventar des Spielers bestehen. Schlussendlich wird das neue Item ausgerüstet und in den dazugehörigen Parametern zwischen gespeichert. Der Parameter *currentItem* speichert in diesem Fall das erstellte GameObject und *currentEquipment* das eigentliche Item aus dem Inventar.
+Damit zur jeden Zeit neue Items ausgerüstet werden können, gibt es die Methode *EquipItem*. Diese erstellt eine Kopie aus dem Prefab des gegebenen Items. Ist das erstellte GameObject valide, kann es ausgerüstet werden. Damit auch beispielsweise die [Entity](#Entity) diese Information bekommt, wird das Event *OnItemEquipped* gefeuert. Sollte der Spieler schon einen Gegenstand ausgerüstet haben, wird dieser mit der Methode *Unequip* abgelegt und das erstellte GameObject zerstört. Das Item bleibt weiterhin im Inventar des Spielers bestehen. Schließlich wird das neue Item ausgerüstet und in den dazugehörigen Parametern zwischen gespeichert. Der Parameter *currentItem* speichert in diesem Fall das erstellte GameObject und *currentEquipment*, das eigentliche Item aus dem Inventar.
 ```csharp
 public void EquipItem(Equipment item)
 {
@@ -245,8 +245,7 @@ public void EquipItem(Equipment item)
     }
 }
 ```
-Der eigentliche Prozess wird jedoch durch verschiedene Hilfsmethoden übernommen. Wird ein Gegenstand beispielsweise ausgerüstet, wird nach dem die Methode *EquipItem* aufgerufen wurde, die Methode *Equip* gecallt. Sie 
-Sucht mittels der gegebenen Standardhand, die richtige Position des Items und gibt das Item dem Entity schlussendlich in die Hand.
+Der eigentliche Prozess wird jedoch durch verschiedene Hilfsmethoden übernommen. Wird ein Gegenstand beispielsweise ausgerüstet, wird nachdem die Methode *EquipItem* aufgerufen wurde, die Methode *Equip* ebenfalls aufgerufen. Sie sucht mittels der gegebenen Standardhand, die richtige Position des Items und gibt das Item dem Entity in die Hand.
 ```csharp
 protected void Equip(Equippable equippable, Equipment item)
 {
@@ -254,7 +253,7 @@ protected void Equip(Equippable equippable, Equipment item)
     SetItemPosition(equippable, currentHand.transform, item.defaultPosition, item.defaultRotation);
 }
 ```
-Die richtige Hand, in welcher das Item später vom Spieler gehalten werden soll, wird mit der Methode *GetHandGameObject* herausgefunden. Sie gibt jeweils das vorab definierte GameObject der jeweiligen Hand des Entity-Models zurück. 
+Die richtige Hand, in der das Item später vom Spieler gehalten werden soll, wird durch die Methode *GetHandGameObject* ermittelt. Sie gibt jeweils das vorab definierte GameObject der jeweiligen Hand des Entity-Models zurück. 
 ```csharp
 private GameObject GetHandGameObject(Hand hand)
 {
@@ -262,7 +261,7 @@ private GameObject GetHandGameObject(Hand hand)
     else return rightHand;
 }
 ```
-Um für die verschiedenen Gegenstände auch unterschiedliche Positionen verwenden zu können, gibt es die Methode *SetItemPosition*, welche wie der Name schon sagt, die Position und Rotation des Items in der Entity-Hand überschreibt. Die hierfür notwendigen Parameter werden in dem [Equipment](#Equipment) Item gespeichert.
+Um für die verschiedenen Gegenstände auch unterschiedliche Positionen verwenden zu können, gibt es die Methode *SetItemPosition*, die wie der Name schon sagt, die Position und Rotation des Items in der Entity-Hand überschreibt. Die hierfür notwendigen Parameter werden in dem [Equipment](#Equipment) Item gespeichert.
 ```csharp
 protected void SetItemPosition(Equippable equippable, Transform hand, Vector3 position, Vector3 rotation)
 {
@@ -271,7 +270,7 @@ protected void SetItemPosition(Equippable equippable, Transform hand, Vector3 po
     equippable.transform.localEulerAngles = rotation;
 }
 ```
-Die zu Beginn gesetzte Position und Rotation des Gegenstands kann im Nachhinein mit *UpdateItemPosition* noch verändert werden. Dies ist zwingend notwendig, da beispielsweise Waffen verschiedene Animationen besitzen. Dies hat zur Folge, dass die unterschiedlichen Gegenstände unter anderem zwischen den beiden Händen getauscht werden müssen und gegeben Falls die Position und die Rotation neu angepasst werden. Diese Parameter sind in dem jeweiligen [Equipment](#Equipment) Item gespeichert mittels der [EquipmentAnimation](#EquipmentAnimation) gespeichert.
+Die zu Beginn gesetzte Position und Rotation des Gegenstands kann im Nachhinein mit *UpdateItemPosition* noch verändert werden. Dies ist zwingend notwendig, da beispielsweise Waffen verschiedene Animationen besitzen. Dies hat zur Folge, dass die unterschiedlichen Gegenstände unter anderem zwischen den beiden Händen getauscht werden müssen und gegebenenfalls die Position und die Rotation neu angepasst werden. Diese Parameter sind in dem jeweiligen [Equipment](#Equipment) Item mittels der [EquipmentAnimation](#EquipmentAnimation) gespeichert.
 ```csharp
 public void UpdateItemPosition(EquipmentAnimation animation)
 {
@@ -284,7 +283,7 @@ public void UpdateItemPosition(Hand hand, Vector3 position, Vector3 rotation)
     SetItemPosition(currentItem, currentHand.transform, position, rotation);
 }
 ```
-Um einen Gegenstand letztendlich auch wirklich aus der Hand der Entität zu entfernen, damit ein neuer ausgerüstet werden kann, gibt es die Methode *Unequip*. Diese gibt die Parameter wieder frei, versteckt den Gegenstand in dem dieser Inaktiv gestellt wird und löscht den Gegenstand nach kurzer Zeit vollständig.
+Damit ein Gegenstand aus der Hand der Entität entfernt werden kann, damit ein neuer ausgerüstet werden kann, gibt es die Methode *Unequip*. Diese gibt die Parameter wieder frei, versteckt den Gegenstand indem dieser inaktiv gestellt wird und löscht den Gegenstand nach kurzer Zeit vollständig.
 ```csharp
 protected void Unequip()
 {
@@ -298,18 +297,18 @@ protected void Unequip()
 ```
 
 ### EntityAnimator Klasse
-Die EntityAnimator Klasse ist wie alle vorherigen Klassen, eine Unterklasse der [Entity](#Entity) Klasse und dient als Basisklasse dazu jegliche Animationen für Entites zu verwalten. Um dies zu gewährleisten implementiert die Klasse für alle möglichen Animationen verschiedene Methoden um diese zu triggern, zu aktiveren oder zu deaktivieren. Die Methode *OnPrimary* dient hier beispielsweise um die aktuell ausgewählte und zu einem bestimmten Item zugehörige Animation abzuspielen, wenn die primäre Aktion ausgeführt wurde.  Für die sekundäre Attacke gibt es die äquivalente *OnSecondary* Methode, welche aufgerufen wird, wenn der Nutzer die sekundäre Aktion des aktuell ausgerüsteten Items getriggert hat.
+Die EntityAnimator Klasse ist wie alle vorherigen Klassen, eine Unterklasse der [Entity](#Entity) Klasse und dient dazu, als Basisklasse jegliche Animationen für Entites zu verwalten. Um dies zu gewährleisten, implementiert die Klasse für alle möglichen Animationen verschiedene Methoden, um diese zu triggern, zu aktiveren oder zu deaktivieren. Die Methode *OnPrimary* dient beispielsweise dazu, die aktuell ausgewählte und zu einem bestimmten Item zugehörige Animation abzuspielen, wenn die primäre Aktion ausgeführt wurde.  Für die sekundäre Attacke gibt es die äquivalente *OnSecondary* Methode, welche aufgerufen wird, wenn der Nutzer die sekundäre Aktion des aktuell ausgerüsteten Items getriggert hat.
 ```csharp
 public virtual void OnPrimary() => animator.SetTrigger("Primary");
 public virtual void OnSecondary() => animator.SetTrigger("Secondary");
 ```
-Sollte der Spieler eine weitere Runde überlebt haben wird die Methode *OnVictory* aufgerufen, um die Jubel-Animation abzuspielen. Diese wird auch verwendet, wenn der Spieler sterben sollte, jedoch für die Gegner. Um eine Todes-Animation abzuspielen wird die *OnDeath* Methode aufgerufen, welche für alle Entities gleich ist. 
+Sollte der Spieler eine weitere Runde überlebt haben, wird die Methode *OnVictory* aufgerufen, um die Jubel-Animation abzuspielen. Diese wird auch verwendet, wenn der Spieler sterben sollte, jedoch für die Gegner. Um eine Todes-Animation abzuspielen wird die *OnDeath* Methode aufgerufen, welche für alle Entities gleich ist. 
 
 ```csharp
 public virtual void OnDeath() => animator.SetTrigger("Death");
 public virtual void OnVictory() => animator.SetTrigger("Victory");
 ```
-Um dem Spieler einen erfolgreichen Treffer visuell besser darzustellen bzw. im auch Umgekehrt zu zeigen, wann er getroffen wurde, gibt es die Methode *OnHit* welche basierend auf der gegeben ID die jeweilige Hit-Animation abspielt.
+Um dem Spieler einen erfolgreichen Treffer visuell besser darzustellen bzw. ihm auch umgekehrt zu zeigen, wann er getroffen wurde, gibt es die Methode *OnHit* welche basierend auf der gegeben ID die jeweilige Hit-Animation abspielt.
 ```csharp
 public virtual void OnHit(int id)
 {
@@ -317,7 +316,7 @@ public virtual void OnHit(int id)
     animator.SetTrigger("Hit");
 }
 ```
-Damit sich die jeweilige Entität auch bewegen kann bzw. damit eine Bewegung zu sehen ist, gibt es die Methoden *Move*, *SetForward* und *SetStrafe*. Die letzteren sind dabei die Key-Methoden, welche die Vorwärts und Seitwärts-Geschwindigkeit dem *Animator* übergeben. Basierend auf den Parametern versucht der Animator dann, die verschiedenen Bewegungs-Animationen miteinander zu vermischen, damit letztendlich eine flüssige und für den Nutzer nachvollziehbare Bewegung entsteht.
+Damit sich die jeweilige Entität auch bewegen kann bzw. damit eine Bewegung zu sehen ist, gibt es die Methoden *Move*, *SetForward* und *SetStrafe*. Die letzteren sind dabei die Key-Methoden, welche die Vorwärts und Seitwärts-Geschwindigkeit dem *Animator* übergeben. Basierend auf den Parametern versucht der Animator dann die verschiedenen Bewegungs-Animationen miteinander zu vermischen, damit letztendlich eine flüssige und für den Nutzer nachvollziehbare Bewegung entsteht.
 ```csharp
 public virtual void Move(float forward, float strafe)
 {
@@ -329,7 +328,7 @@ public virtual void Move(float forward, float strafe)
 public void SetForward(float forward) => animator.SetFloat("Forward", forward);
 public void SetStrafe(float strafe) => animator.SetFloat("Strafe", strafe);
 ```
-Da die Entität verschiedenen Items in den Händen halten kann und diese auch unterschiedliche Animationen besitzen, gibt es die Methoden *SetEquipment* und *SetEquipmentAnimation*. Erstere aktualisiert die Item ID im *Animator*, damit dort die richtigen Transitions aktiviert werden und *SetEquipmentAnimation* hingegen die Animations-ID 
+Da die Entität verschiedenen Items in den Händen halten kann und diese auch unterschiedliche Animationen besitzen, gibt es die Methoden *SetEquipment* und *SetEquipmentAnimation*. Erstere aktualisiert die Item ID im *Animator*, damit dort die richtigen Transitions aktiviert werden und die *SetEquipmentAnimation* hingegen die Animations-ID. 
 ```csharp
 public void SetEquipment(Equipment item)
 {
@@ -350,7 +349,7 @@ public void SetEquipmentAnimation(EquipmentAnimation animation)
 Die meisten Methoden in der Klasse sind als *virtual* gekennzeichnet, damit sie von erbenden Klassen überschrieben werden können. Dies ist beispielsweise bei der Methode *Move* wichtig, welche die Parameter für die Bewegungs-Animation setzt, da sich Spieler und Gegner mit verschiedenen Mechaniken fortbewegen. 
 
 ### EntityCombatBehaviour Klasse
-Die *EntityCombatBehaviour* Klasse wird als StateMachine verwendet und wird für die meisten Animationen, die der Spieler triggern kann genutzt. Die primäre Aufgabe dieser Klasse ist es, den *CombatState* der jeweiligen Entität zu aktualisieren, was durch die *Entity.combat.SetState* Methode erreicht wird. Dieser wird der aktuell ausgerüstete Gegenstand der Entität übergeben, 
+Die *EntityCombatBehaviour* Klasse wird als StateMachine verwendet und wird für die meisten Animationen, die der Spieler triggern kann genutzt. Die primäre Aufgabe dieser Klasse ist es, den *CombatState* der jeweiligen Entität zu aktualisieren, was durch die *Entity.combat.SetState* Methode erreicht wird. Dieser wird dem aktuell ausgerüsteten Gegenstand der Entität übergeben.
 ```csharp
 public class EntityCombatBehaviour : StateMachineBehaviour
 {
@@ -378,8 +377,8 @@ public class EntityCombatBehaviour : StateMachineBehaviour
 ```
 
 ## Player Klasse
-Die Player Klasse erbt von der Basisklasse [Entity](#Entity), wird als *Singelton* genutzt und implementiert alle notwendigen Methoden damit der Spieler als Entität gehandhabt werden kann um beispielsweise schaden zu erleiden oder Angriffe zu tätigen.
- Die Klasse wird außerdem durch die Methoden *AddMoney* und *RemoveMoney* erweitert. Diese dienen dazu dem Spieler Geld durch beispielsweise erfolgreiche Tötungen zu geben oder durch Investitionen zu nehmen. Die jeweiligen Methoden feuern zusätzlich noch die dazugehörigen Events, damit unter anderem die Anzeigen im Hud aktuell sind und der Spieler im Shop nur die Items erwerben kann, welche sein Budget nicht überschreiten. Des Weiteren wurde die Methode *OnDeath* aus der [Entity](#Entity)  Klasse überschrieben, um für alle noch lebenden Gegner die Erfolgs-Animation abzuspielen und den [GameState](#GameState) zu aktualisieren. Dies führt letztendlich dann dazu, dass das GameOver-Menü angezeigt wird.
+Die Player Klasse erbt von der Basisklasse [Entity](#Entity), wird als *Singelton* genutzt. Sie implementiert alle notwendigen Methoden, damit der Spieler als Entität gehandhabt werden kann, um beispielsweise schaden zu erleiden oder Angriffe zu tätigen.
+ Die Klasse wird außerdem durch die Methoden *AddMoney* und *RemoveMoney* erweitert. Diese dienen dazu, dem Spieler Geld durch erfolgreiche Tötungen zu geben oder durch Investitionen zu nehmen. Die jeweiligen Methoden feuern zusätzlich noch die dazugehörigen Events, damit unter anderem die Anzeigen im Hud aktuell sind und der Spieler im Shop nur die Items erwerben kann, welche sein Budget nicht überschreiten. Des Weiteren wurde die Methode *OnDeath* aus der [Entity](#Entity)  Klasse überschrieben, um für alle noch lebenden Gegner die Erfolgs-Animation abzuspielen und den [GameState](#GameState) zu aktualisieren. Dies führt dazu, dass das GameOver-Menü angezeigt wird.
 ```csharp
 public class Player : Entity
 {
@@ -438,7 +437,7 @@ public class PlayerAnimator : EntityAnimator
 
 ### PlayerCombat Klasse
 Die Klasse *PlayerCombat* implementiert die Klasse  [EntityCombat](#EntityCombat) und fügt zusätzliche Methoden hinzu, die genutzt werden, um die Angriffe verschiedener Gegner besser zu managen. 
-Um einen besseren Spielfluss zu kreieren ist es möglich in der Klasse vorab zu definieren, wie viele Angreifer gleichzeitig den Spieler attackieren können. Die beiden Methoden *OnRequestAttack* und *OnCancelAttack* verwalten dieses beschriebe Szenario. *OnRequestAttack* wird dabei genutzt um die Anfrage eines einzelnen Gegners zu validieren.  Dies geschieht in dem überprüft wird, wie viele Attackierer es aktuell gibt und wie groß die maximale Anzahl sein darf. Ist der Angriff eines weiteren Gegners möglich, wird dieser in die Liste mit aufgenommen und hat ab dann das Recht den Spieler jeder Zeit anzugreifen.
+Um einen besseren Spielfluss zu kreieren, ist es möglich in der Klasse vorab zu definieren, wie viele Angreifer gleichzeitig den Spieler attackieren können. Die beiden Methoden *OnRequestAttack* und *OnCancelAttack* verwalten dieses beschriebe Szenario. *OnRequestAttack* wird dabei genutzt um die Anfrage eines einzelnen Gegners zu validieren.  Dies geschieht indem überprüft wird, wie viele Attackierer es aktuell gibt und wie groß die maximale Anzahl sein darf. Ist der Angriff eines weiteren Gegners möglich, wird dieser in die Liste mit aufgenommen und hat ab dann das Recht den Spieler jeder Zeit anzugreifen.
 ```csharp
 public void OnRequestAttack(GameObject enemy)
 {
@@ -477,7 +476,7 @@ public void OnItemEquipped(Equipment newItem, Equipment oldItem)
     }
 }
 ```
-Es wird außerdem die Methode *Damage* überschrieben, um den Spieler ein haptisches Feedback zu geben, wenn er Schaden durch einen Gegner erlitten hat. Dafür wird eine Coroutine gestartet, welche das Gamepad für einen kurzen Moment vibrieren lässt. Die stärke, der Vibration hängt dabei von der Größe des erlittenen Schadens ab.
+Es wird außerdem die Methode *Damage* überschrieben, um den Spieler ein haptisches Feedback zu geben, wenn er Schaden durch einen Gegner erlitten hat. Dafür wird eine Coroutine gestartet, welche das Gamepad für einen kurzen Moment vibrieren lässt. Die Stärke der Vibration hängt dabei von der Größe des erlittenen Schadens ab.
 ```csharp
 public override void Damage(float damage, Equipment item = null)
 {
@@ -494,7 +493,7 @@ private IEnumerator StartGamePadVibration(float damage)
 }
 ```
 ### PlayerEquipment Klasse
-Die Klasse PlayerEquipment  erbt von der [EntityEquipment](#EntityEquipment) Klasse und überschreibt die *Start* Methode, um die Events *OnItemRemoved* und *OnItemSelected* zu abonnieren. Das Event *OnItemSelected*  spielt dabei die wichtigste Rolle, da dieses gefeuert wird, wenn der Spieler einen neuen Gegenstand in seinem Inventar ausgewählt hat. Da der Spieler im Vergleich zu den Gegner zwischen seinen Items variieren kann, muss deshalb die Methode *EquipItem* welche in der Basisklasse [EntityEquipment](#EntityEquipment)  implementiert wurde dieses Event abonnieren. 
+Die Klasse PlayerEquipment  erbt von der [EntityEquipment](#EntityEquipment) Klasse und überschreibt die *Start* Methode, um die Events *OnItemRemoved* und *OnItemSelected* zu abonnieren. Das Event *OnItemSelected*  spielt dabei die wichtigste Rolle, da dieses gefeuert wird, wenn der Spieler einen neuen Gegenstand in seinem Inventar ausgewählt hat. Da der Spieler im Vergleich zu den Gegnern zwischen seinen Items variieren kann, muss deshalb die Methode *EquipItem*, die in der Basisklasse [EntityEquipment](#EntityEquipment)  implementiert wurde, dieses Event abonnieren. 
 ```csharp
 protected override void Start()
 {
@@ -653,7 +652,7 @@ public void RemoveItem(Item item)
     }
 }
 ```
-Außerdem sind im Inventar die Methoden *AddMunition* und *UseMunition* implementiert um den Munitionsstand des Spielers zu verwalten. Des Weiteren wird auch hier ein entsprechendes Event gecallt, damit die UI-Elemente im HUD aktuell bleiben.
+Außerdem sind im Inventar die Methoden *AddMunition* und *UseMunition* implementiert, um den Munitionsstand des Spielers zu verwalten. Des Weiteren wird auch hier ein entsprechendes Event aufgerufen, damit die UI-Elemente im HUD aktuell bleiben.
 ```csharp
 public void AddMunition(int ammount)
 {
@@ -710,7 +709,7 @@ public void PauseGame(CallbackContext ctx)
     GameState.instance.SetState(GameStateType.GamePaused);
 }
 ```
-Damit sich der Spieler jedoch letztendlich bewegen und rotieren kann wurde eine eigens dafür angepasste Steuerung implementiert. Die Bewegung des Spielers wird mittels der Input-Werte der Joysticks eines Gamepads oder der Pfeiltasten sowie der Bewegungsrichtung der Kamera kalkuliert. Diese Logik befindet sich in der *Update* Methode in welcher die Variable *desiredDirection* letztendlich für jeden Update-Zyklus neu ermittelt wird. Dieser Richtungsvektor gibt an, in welche Richtung sich der Spieler Bewegen soll und wie die Bewegungs-Animation durch den *Animator* erzeugt werden soll.
+Damit sich der Spieler jedoch letztendlich bewegen und rotieren kann, wurde eine eigens dafür angepasste Steuerung implementiert. Die Bewegung des Spielers wird mittels der Input-Werte der Joysticks eines Gamepads oder der Pfeiltasten sowie der Bewegungsrichtung der Kamera kalkuliert. Diese Logik befindet sich in der *Update* Methode, in der die Variable *desiredDirection* letztendlich für jeden Update-Zyklus neu ermittelt wird. Dieser Richtungsvektor gibt an, in welche Richtung sich der Spieler Bewegen soll und wie die Bewegungs-Animation durch den *Animator* erzeugt werden soll.
 ```csharp
 void Update()
 {
@@ -794,7 +793,7 @@ private void TurnPlayerToEnemy()
 }
 ```
 ### TargetAcquisition Klasse
-Die *TargetAcquisition* wurde implementiert um dem Nutzer die Möglichkeit zu bieten einzelne Gegner besser anzuvisieren bzw. anzugreifen. Dies geschieht in einem Zeitlupen-Modus, in welchem der Spieler dann durch die dafür vorgesehenen Tasten, die einzelnen Gegner anwählen kann und den Zielerfassungsmodus schlussendlich verlässt. Um diesen zu aktiveren gibt es die *Toggle* Methode.  Sie aktiviert oder deaktiviert den Zeitlupen-Modus und aktualisiert den GameState entsprechend. Sollte der Zielerfassungsmodus zum ersten Mal aktiviert werden, wird außerdem automatisch der erste Gegner in der Nähe des Spielers mittels der *SelectClosestEnemy* Methode ausgewählt
+Die *TargetAcquisition* wurde implementiert, um dem Nutzer die Möglichkeit zu bieten einzelne Gegner besser anzuvisieren bzw. anzugreifen. Dies geschieht in einem Zeitlupen-Modus, in dem der Spieler dann durch die dafür vorgesehenen Tasten, die einzelnen Gegner anwählen kann und den Zielerfassungsmodus schlussendlich verlässt. Um Diesen zu aktiveren gibt es die *Toggle* Methode.  Sie aktiviert oder deaktiviert den Zeitlupen-Modus und aktualisiert den GameState entsprechend. Sollte der Zielerfassungsmodus zum ersten Mal aktiviert werden, wird außerdem automatisch der erste Gegner in der Nähe des Spielers mittels der *SelectClosestEnemy* Methode ausgewählt.
 ```csharp
 public void Toggle()
 {
@@ -815,7 +814,7 @@ public void SelectClosestEnemy()
     SelectEnemy(FindClosestEnemy());
 }
 ```
-Das Auswählen eines einzelnen Gegners geschieht durch die *SelectEnemy* Methode, welche den aktuell ausgewählten Gegner durch den neuen ersetzt. Außerdem wird das Crosshair, was unter dem ausgewählten Gegner zusehen ist jenachdem de- und aktivert.
+Das Auswählen eines einzelnen Gegners geschieht durch die *SelectEnemy* Methode, welche den aktuell ausgewählten Gegner durch den neuen ersetzt. Außerdem wird das Crosshair, was unter dem ausgewählten Gegner zusehen ist, entweder deaktiviert oder aktiviert.
 ```csharp
 public void SelectEnemy(Enemy enemy) => SetCurrentEnemy(enemy);
 
@@ -835,9 +834,9 @@ private void SetCurrentEnemy(Enemy enemy)
     }
 }
 ```
-Um beispielsweiße einen ausgewählten Gegner nicht mehr als solch einen Anzuzeigen, weil dieser beispielsweise gestorben ist, gibt es die Methode *UnselectCurrentEnemy*. Ihr kann auch der Übergabeparameter autoSelect übergeben werden, welcher standardmäßig auf *false* gesetzt ist. Ist er jedoch *true*, wir nach dem "abwählen" ein neuer Gegner ausgwählt und mit dem roten Crosshair angezeigt.
+Um einen ausgewählten Gegner nicht mehr als solch einen anzuzeigen, weil dieser beispielsweise gestorben ist, gibt es die Methode *UnselectCurrentEnemy*. Ihr kann auch der Übergabeparameter autoSelect übergeben werden, welcher standardmäßig auf *false* gesetzt ist. Ist er jedoch *true*, wird nach dem "Abwählen" ein neuer Gegner ausgewählt und mit dem roten Crosshair angezeigt.
 
-Um wie am Anfang den nähsten Gegner zu finden bzw. allgemein zwischen den Gegner hin und her wechseln zu können gibt es die Methoden *UpdateEnemies* und *FindClosestEnemy*. Die UpdateEnemies Methode dient hierbei dazu eine Liste an lebenden Gegner immer aktuell zuhalten, solang sich der Spieler im TargetAcquisition-Modus befindet. Nur so ist es auch möglich, das der Nutzer mittels der dafür vorgesehenen Tasten zwischen den lebenden Gegnern hin und her wählen kann. 
+Um wie am Anfang den nächstgelegenen Gegner zu finden bzw. allgemein zwischen den Gegner hin und her wechseln zu können gibt es die Methoden *UpdateEnemies* und *FindClosestEnemy*. Die UpdateEnemies Methode dient hierbei dazu, eine Liste an lebenden Gegner immer aktuell zuhalten, solange sich der Spieler im TargetAcquisition-Modus befindet. Nur so ist es auch möglich, dass der Nutzer mittels der dafür vorgesehenen Tasten zwischen den lebenden Gegnern hin und her wählen kann.  
 ```csharp
 private void UpdateEnemies()
 {
@@ -849,7 +848,7 @@ private void UpdateEnemies()
     }
 }
 ```
-Mit der vorher angesprochenen Methode *FindClosestEnemy* kann der näheste Gegner zum Spieler ermittelt werden. Sie wird vorallem bei der aktiverung des Moduses genutzt um den ersten Gegner zu markieren. Dies wird durch das errechnen der Distanzen zwischen dem Spieler und dem jeweiligen Gegner erreicht. Wurde der nähste Gegner ermittelt, gibt ihn die Methode zurück.
+Mit der vorher angesprochenen Methode *FindClosestEnemy* kann der nächstgelegene Gegner zum Spieler ermittelt werden. Sie wird vor allem bei der Aktivierung des Modus genutzt, um den ersten Gegner zu markieren. Dies wird durch das Errechnen der Distanzen zwischen dem Spieler und dem jeweiligen Gegner erreicht. Wurde der nächstgelegene Gegner ermittelt, gibt ihn die Methode zurück.
 ```csharp
 private Enemy FindClosestEnemy()
 {
@@ -872,7 +871,7 @@ private Enemy FindClosestEnemy()
 ```
 
 ## Enemy Klasse
-Die *Enemy* Klasse erbt ebenso wie die *Player* Klasse von der Basisklasse *Entity* und implementiert/erweitert alle wichtigen Methoden. Erweitert wird beispielsweise die *OnDeath* Methode, damit dem Spieler bei einem erfolgreichen Kill, Geld gegeben wird, sich die Statistik aktualisiert und letztendlich das GameObject des Gegners zerstört wird. Wie viel Geld der Spieler erhalten kann, wird vorab durch das *moneyDrops* Array definiert. Aus diesem wird ein Wert zufällig ausgewählt. Außerdem wird der *NavMeshAgent* und die Kollision-Box deaktiviert, damit der Gegner nicht mehr den Spieler verfolgt und dieser auch nicht mehr mit dem toten Gegner kollidieren kann.
+Die *Enemy* Klasse erbt wie die *Player* Klasse von der Basisklasse *Entity* und implementiert/erweitert alle wichtigen Methoden. Erweitert wird beispielsweise die *OnDeath* Methode, damit dem Spieler bei einem erfolgreichen Kill, Geld gegeben wird, sich die Statistik aktualisiert und das GameObject des Gegners zerstört wird. Wie viel Geld der Spieler erhalten kann, wird vorab durch das *moneyDrops* Array definiert. Aus diesem wird ein Wert zufällig ausgewählt. Außerdem wird der *NavMeshAgent* und die Kollision-Box deaktiviert, damit der Gegner nicht mehr den Spieler verfolgt und dieser auch nicht mehr mit dem toten Gegner kollidieren kann.
 ```csharp
 public override void OnDeath()
 {
@@ -890,7 +889,7 @@ public override void OnDeath()
     Destroy(gameObject, 5f);
 }
 ```
-Damit der Gegner für jede Runde neu konfiguriert werden kann, gibt es die Methode *Init*, welche in der *WaveSpawner* Klasse  aufgerufen wird.  Sie übergibt alle wichtigen Parameter an die dafür vorgesehen Skripte und Variablen. Außerdem wird das Startitem mittels des deklarierten und initialisierten Arrays *EnemyConfig.items* zufällig ausgewählt. Hierfür wird die Methode *GetRandomItem* genutzt, welche das Array in einen *WeightedRandomizer* lädt und aus diesem einen Gegenstand auswählt. Die Klasse *WeightedRandomizer* ist eine von dritten erstelle Klasse ([https://wiki.unity3d.com/index.php/WeightedRandomizer](https://wiki.unity3d.com/index.php/WeightedRandomizer)).
+Damit der Gegner für jede Runde neu konfiguriert werden kann, gibt es die Methode *Init*, welche in der *WaveSpawner* Klasse  aufgerufen wird.  Sie übergibt alle wichtigen Parameter an die dafür vorgesehen Skripte und Variablen. Außerdem wird das Startitem mittels des deklarierten und initialisierten Arrays *EnemyConfig.items* zufällig ausgewählt. Hierfür wird die Methode *GetRandomItem* genutzt, welche das Array in einen *WeightedRandomizer* lädt und aus diesem einen Gegenstand auswählt. Die Klasse *WeightedRandomizer* ist eine von Dritten erstelle Klasse ([https://wiki.unity3d.com/index.php/WeightedRandomizer](https://wiki.unity3d.com/index.php/WeightedRandomizer)).
 ```csharp
 public void Init(EnemyConfig config)
 {
@@ -1009,7 +1008,7 @@ public void ShowDamagePopup(double damage)
     popup.GetComponent<TextMesh>().text = damage.ToString();
 }
 ```
-Damit basierend auf den verschiedenen Runden die Gegner auch unterschiedliche Lebens- und Damagepunkte haben können gibt es die *EnemyStatsConfig* welche in einem späteren Kapitel näher erläutert wird. Mittels der *Init* Methode können die deklarierten Variablen aus der *EnemyStatsConfig* in die *EnemyStats* Klasse geladen werden.
+Damit basierend auf den verschiedenen Runden, die Gegner auch unterschiedliche Lebens- und Damagepunkte haben können, gibt es die *EnemyStatsConfig*, die in einem späteren Kapitel näher erläutert wird. Mittels der *Init* Methode können die deklarierten Variablen aus der *EnemyStatsConfig* in die *EnemyStats* Klasse geladen werden.
 ```csharp
 public void Init(EnemyStatsConfig config)
 {
@@ -1027,7 +1026,7 @@ public void Init(EnemyStatsConfig config)
 }
 ```
 ### EnemyCombat Klasse
-Die *EnemyCombat* Klasse erbt von der *EntityCombat* Klasse und erweitert diese ebenso wie die *EnemyStats* Klasse durch die Methode *Init*. In diesem fall, lädt diese jedoch eine *EnemyCombatConfig*
+Die *EnemyCombat* Klasse erbt von der *EntityCombat* Klasse und erweitert diese ebenso wie die *EnemyStats* Klasse durch die Methode *Init*. In diesem Fall, lädt diese jedoch eine *EnemyCombatConfig*
 ```csharp
 public void Init(EnemyCombatConfig config)
 {
@@ -1039,7 +1038,7 @@ public void Init(EnemyCombatConfig config)
 }
 ```
 ### EnemyAnimator
-Wie alle vorherigen Klassen erbt auch die *EnemyAnimator* Klasse von einer der Entity-Basisklassen. In diesem Fall ist es die *EntityAnimator* Klasse, welch nur durch die Funktion für die Bewegungs-Animation erweitert wird.  In jedem Update-Zyklus wird die aktuelle vorwärts Geschwindigkeit ermittelt und diese an die Basisklasse übergeben. So kann schlussendlich die Bewegungs-Animation durch den *Animator* erstellt werden.
+Wie alle vorherigen Klassen, erbt auch die *EnemyAnimator* Klasse von einer der Entity-Basisklassen. In diesem Fall ist es die *EntityAnimator* Klasse, die nur durch die Funktion für die Bewegungs-Animation erweitert wird.  In jedem Update-Zyklus wird die aktuelle Vorwärtsgeschwindigkeit ermittelt und diese an die Basisklasse übergeben. So kann die Bewegungs-Animation durch den *Animator* erstellt werden.
 ```csharp
 public class EnemyAnimator : EntityAnimator
 {
@@ -1060,15 +1059,15 @@ public class EnemyAnimator : EntityAnimator
 ```
 
 ## Barkeeper Klasse
-Die Barkeeper Klasse wird genutzt damit der Spieler mit diesem an der Bar interagieren kann, um somit den [Shop](#Shop) zu schließen oder zu öffnen. Dies wird erreicht in dem in der Klasse gespeichert wird, ob sich der Spieler in Reichweite befindet oder nicht. Außerdem Spielt der aktuelle [GameState](#GameState) eine wichtige Rolle. Ist dieser nämlich auf *GameStateType.GamePaused* oder *GameStateType.GameOver* kann der Shop nicht geöffnet werden. Auch wenn sich der Spieler aktuell in einer Runde befindet, kann nicht mehr mit dem Barkeeper interagiert werden. Die Klasse hat somit ausschließlich den Zweck den Shop zu öffnen und zu schließen.
+Die Barkeeper Klasse wird genutzt, damit der Spieler mit diesem an der Bar interagieren kann, um somit den [Shop](#Shop) zu schließen oder zu öffnen. Dies wird erreicht, indem in der Klasse gespeichert wird, ob sich der Spieler in Reichweite befindet oder nicht. Außerdem spielt der aktuelle [GameState](#GameState) eine wichtige Rolle. Ist dieser nämlich auf *GameStateType.GamePaused* oder *GameStateType.GameOver* kann der Shop nicht geöffnet werden. Auch wenn sich der Spieler aktuell in einer Runde befindet, kann nicht mehr mit dem Barkeeper interagiert werden. Die Klasse hat somit ausschließlich den Zweck den Shop zu öffnen und zu schließen.
 
 ## Items
 
 ### Base Items
-Da die verschiedenen Items auch unterschiedliche Parameter speicher müssen, wurden anhand der verschiedenen Itemtypen, die es im Spiel gibt, verschiedene Basisklassen implementiert. Die hauptsächliche Aufgabe dieser Klassen besteht also darin, die verschiedenen Parameter des Gegenstands und das Prefab zu speichern. Zu diesen Parameter gehören z.B. die initiale Position in der Hand, die maximale Stapel Größe,  eine Referenz auf das Icon sowie der Name. 
+Da die verschiedenen Items auch unterschiedliche Parameter speichern müssen, wurden anhand der verschiedenen Itemtypen, die es im Spiel gibt, verschiedene Basisklassen implementiert. Die hauptsächliche Aufgabe dieser Klassen besteht also darin, die verschiedenen Parameter des Gegenstands und das Prefab zu speichern. Zu diesen Parameter gehören z.B. die initiale Position in der Hand, die maximale Stapel Größe,  eine Referenz auf das Icon sowie der Name. 
 
 #### Item Klasse
-Die Item Klasse ist die zentrale Basisklasse, von der alle anderen Item Klassen erben. Sie deklariert die wichtigsten Parameter wie z.B. den Namen, Itemtyp oder die Referenz zum Icon. Des Weiteren implementiert sie die Methode *OnCollection* welche aufgerufen wird, wenn der Spieler ein Item eingesammelt hat. Durch diese wird der Gegenstand dann zum Inventar hinzugefügt, wenn dies aktiviert ist.
+Die Item Klasse ist die zentrale Basisklasse, von der alle anderen Item Klassen erben. Sie deklariert die wichtigsten Parameter, wie z.B. den Namen, Itemtyp oder die Referenz zum Icon. Des Weiteren implementiert sie die Methode *OnCollection*, welche aufgerufen wird, wenn der Spieler ein Item eingesammelt hat. Durch diese wird der Gegenstand dann zum Inventar hinzugefügt, wenn dies aktiviert ist.
 ```csharp
 [CreateAssetMenu(fileName = "New Item", menuName = "Items/Item")]
 public class Item : ScriptableObject
