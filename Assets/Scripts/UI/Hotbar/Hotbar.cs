@@ -150,7 +150,7 @@ public class Hotbar : MonoBehaviour
     /// <param name="index">The position of the item in the hotbar.</param>
     private void SelectItem(Item item, int index)
     {
-        if (item != null && item is Equipment && index != currentItemIndex)
+        if (item != null && item is Equipment)
         {
             StopAllCoroutines();
 
@@ -213,9 +213,11 @@ public class Hotbar : MonoBehaviour
                     slots[i].Clear();
                     UpdateItems();
                     SelectLastItem();
+                } else
+                {
+                    SelectItem(0);
+           
                 }
-
-                if (itemCount > 0) SelectItem(currentItemIndex);
                 break;
             }
         }

@@ -26,7 +26,7 @@ public class Player : Entity
     public PlayerControls controls;
     public PlayerInventory inventory;
 
-    public int CurrentBalance { get; set; } = 300;
+    public int CurrentBalance { get; set; }
 
     /// <summary>
     /// This method gets called if the player died and will then trigger the

@@ -20,7 +20,7 @@ namespace Items
             yield return new WaitForSeconds(drink.healingDelay);
             owner.stats.Heal(drink.healingAmount);
 
-            Player.instance.inventory.RemoveItem(item);
+           // Player.instance.inventory.RemoveItem(item);
         }
     }
 }

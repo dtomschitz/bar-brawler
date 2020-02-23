@@ -36,7 +36,7 @@ public class EntityCombatBehaviour : StateMachineBehaviour
                 Equipment item = player.equipment.CurrentEquipment;
                 if (item != null && item.IsDrink)
                 {
-                    //player.inventory.RemoveItem(item);
+                    Player.instance.inventory.RemoveItem(item);
                 }
             }
         }
