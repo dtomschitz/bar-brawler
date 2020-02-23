@@ -7,19 +7,19 @@ Um sich gegen die stärkeren Wellen zu wehren, bekommen sie pro besiegtem Gegner
 # Entwicklung
 ## Team
 [Christof Schwarzenberger](https://gitlab.mi.hdm-stuttgart.de/cs267)
-Zuständig für Modellierung des Raumes, Designer für Grafiken wie Plakate, Shop.
+Modellierung der relevanten Spielgegenstände und Designer für Grafiken.
 
 [David Tomschitz](https://gitlab.mi.hdm-stuttgart.de/dt035)
-Gameplay Entwicklung. Entity-, Item- und Shop-System, Spielmechaniken
+Gameplay Entwicklung. Entity-, Item- und Shop-System, Spielmechaniken.
 
 [Duane Englert](https://gitlab.mi.hdm-stuttgart.de/de030)
-Gameplay Entwicklungund Game Designer. Fokus auf Wave System und Overlay Erstellung.
+Gameplay Entwicklung und Game Design. Fokus auf Wave System und Overlay erstellung.
 
 [Florian Rapp](https://gitlab.mi.hdm-stuttgart.de/fr061)
-Modellierung der Details im Raum, sowie erstellen der Texturen.
+Modellierung der relevanten Spielgegenstände und Erstellung der Texturen.
 
 [Sundar Arz](https://gitlab.mi.hdm-stuttgart.de/sa070)
-Erstellen der Charaktere, seine Outfits und Raumdetails 
+Modellierung der Charaktere und Erstellung der Texturen.
 
 ## Genutzte Hardware
 ## Genutzte Werkzeuge und Engine
