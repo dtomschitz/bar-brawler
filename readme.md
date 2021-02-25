@@ -98,8 +98,6 @@ Spieler die Möglichkeit neue Gegenstände zu erwerben, die ihm im Kampf gegen d
 Gegner nützlich sein können. Wird der Spieler außer Gefecht gesetzt, wird der gesamte
 Fortschritt zurückgesetzt und das Spiel beginnt erneut.
 
-[![Everything Is AWESOME](http://i.imgur.com/Ot5DWAW.png)](https://youtu.be/StTqXEQ2l-Y?t=35s "Everything Is AWESOME")
-
 # Spielmechaniken
 ## Ausdauer
 Der Spieler besitzt während dem Kämpfen eine Ausdauer, diese wird hauptsächliche
