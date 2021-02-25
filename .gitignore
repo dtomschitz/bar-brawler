@@ -46,4 +46,4 @@ sysinfo.txt
 crashlytics-build.properties
 
 *.docx
-*.DS_Store
+.DS_Store
