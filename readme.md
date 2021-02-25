@@ -98,6 +98,8 @@ Spieler die Möglichkeit neue Gegenstände zu erwerben, die ihm im Kampf gegen d
 Gegner nützlich sein können. Wird der Spieler außer Gefecht gesetzt, wird der gesamte
 Fortschritt zurückgesetzt und das Spiel beginnt erneut.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/3NBKz3npV_k" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 # Spielmechaniken
 ## Ausdauer
 Der Spieler besitzt während dem Kämpfen eine Ausdauer, diese wird hauptsächliche
