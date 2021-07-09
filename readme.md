@@ -298,34 +298,6 @@ in der Bar platziert werden kann
 - Regale Schränke für die Bar
 - Bilderrahmen
 
-# Milestones
-**1. Prototyp**
-Der erste Prototyp soll eine simples Layout des Levels ohne jegliche Texturen und die Hauptmechaniken beinhalten. Zu diesen Zählt: 
-1.	die Steuerung des Spielers
-2.  eine einfache Physik (Collision, Springen, Treffer)
-3.	eine einfache KI die den Spieler angreift
-4.	ein System um die Gegner in Wellen auf den Spieler zu kommen zu lassen
-5. *Simple Schlag Animationen sowohl für den Gegner als auch für den Spieler*	
-
-**Milestone 1: Fertiges Konzeptdokument und Projektplan (06.11.2019)**
-- [ ] Konzeptdokument
-- [ ] Projektplan
-
-**Milesonte 2**: Spielbarer Prototyp - *01.12.2019*
-- [ ] Game Design Dokument
-- [ ] Angepasster Projektplan
-- [ ] Prototyp 1.
-
-**Milestone 3**:
-- [ ] Vortrag beim MI-Präsentationstag
-- [ ] Vorführung bei der MediaNight
-
-**Milestone 4**:
-- [ ] Projektdokumentation
-- [ ] Assets und Source Code
-- [ ] Lauffähige Version des Spiels
-- [ ] Vollständiger Eintrag in der Stage  
-
 # Screenshots
 
 ![Main Menu](/Docs/Screenshots/MainMenu.png)
