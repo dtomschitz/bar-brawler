@@ -6,6 +6,11 @@ In einem wellenbasierten Brawler übernimmst du die Rolle des gesetzlosen Bill M
 der in der Lage ist verschiedene Waffen geschickt einzusetzen, um sich zu verteidigen.
 Raufe dich mit den anderen Gästen - Kaufe dir neue Waffen - Trinke deinen Feuersaft.
 
+# Gameplay 
+<p align="center">
+  <img src="/Docs/Gameplay.gif" alt="animated" />
+</p>
+
 # Story
 Die Hintergrundgeschichte zu Bar Brawler dient einzig und allein dem Zweck das
 Szenario und die Motivation des Spiels zu erklären:
